@@ -1,4 +1,4 @@
-# $\text{CO}^2$ Emissions Directory structure
+# $\text{CO}_2$ Emissions Directory structure
 
 ```
 .
