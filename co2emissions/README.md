@@ -3,6 +3,7 @@
 ```
 .
 ├── docs                               # Documentation/citations
+├── external datasets                  # Scraped data sets
 ├── model_parameters                   # 'Optimal' parameters for each model (`.p`)
 ├── models                             # Models for each scope
 ├── output_graphs                      # Graph images saved as `.png`
