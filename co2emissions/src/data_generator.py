@@ -148,6 +148,7 @@ class DataGenerator:
         df = pd.DataFrame()
         for feature, stats in self.stats.target_features.items():
             df[feature] = DistributionGenerator.generate_distribution(stats, n)
+        # df.to_csv('synthetic_features.csv')
         return df
 
     def generate_target_vars(self, num_years=6, num_companies=100, seed=42):
@@ -169,7 +170,9 @@ class DataGenerator:
             'commuting': np.random.normal(70, 14, num_years * num_companies),
             'upstream_distribution': np.random.normal(90, 18, num_years * num_companies)
         }
-        return pd.DataFrame(data)
+        df = pd.DataFrame(data)
+        # df.to_csv('synthetic_target.csv')
+        return df
 
     def generate_example_data(self, num_years=6, num_companies=100, seed=42):
         target_df = self.generate_target_vars(num_years, num_companies, seed)
