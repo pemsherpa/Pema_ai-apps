@@ -14,7 +14,6 @@ from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
 from steps.decarb_weight import DecarbWeight
 import pandas as pd
-from itertools import permutations
 from steps.flight_decarb_step import FlightDecarbStep
 
 class DecarbEngine:
@@ -89,7 +88,7 @@ class DecarbEngine:
         savings += flight_step.compute_savings()
 
         # return flight
-        return_flight = self.get_return_flight_options(self.weights)
+        return_flight = self.get_return_flight_options()
         return_flight_step = self.create_flight_step(return_flight)
         self.steps.append(return_flight_step)
         savings += return_flight_step.compute_savings()
@@ -100,7 +99,6 @@ class DecarbEngine:
         return_flight_savings = return_flight['Price'].iloc[0]
         return_flight_emissions = return_flight['Carbon Emissions'].iloc[0]
         return_flight_step = FlightDecarbStep(
-            step_type=DecarbStepType.FLIGHTS,
             cur_cost=return_flight_savings * 1.1, # fake
             new_cost=return_flight_savings,
             cur_emissions=return_flight_emissions * 1.1, # fake
@@ -216,8 +214,6 @@ def main():
     run_commute_and_flight()
     # run_electric_main()
     
-
-
 if __name__ == "__main__":
     main()
     

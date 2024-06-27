@@ -1,6 +1,7 @@
 from geopy.distance import geodesic
 import requests
 import time
+from itertools import permutations
 
 class BusinessCommutingAnalyzer:
     def __init__(self, commuting_data,google_api,oil_price_api,firm_location,df_dynamic):

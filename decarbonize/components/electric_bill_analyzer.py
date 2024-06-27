@@ -27,8 +27,6 @@ class ElectricityBillAnalyzer:
             })
 
         return comparisons
-    #def region_finder(self):
-
 
     def recommend_providers(self, bill):
         recommendations = self.analyze_bill(bill)
@@ -111,7 +109,6 @@ class ElectricityBillAnalyzer:
             'new_carbon': new_carbon,
             'carbon_savings': carbon_savings
         }
-
 
     def notify_user(self, email, message):
 

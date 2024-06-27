@@ -2,7 +2,11 @@ import requests
 import pandas as pd
 from datetime import datetime
 
-class FlightDataAnalyzer:
+ONE_WAY_CODE = "2"
+ROUNDTRIP_CODE = "1"
+
+class FlightDataAnalyzer:    
+
     def __init__(self, api_key, weights,origin, destination, departure_date, return_date=None):
         self.api = api_key
         self.origin = origin
@@ -10,6 +14,7 @@ class FlightDataAnalyzer:
         self.departure_date = departure_date
         self.return_date = return_date
         self.weights = weights
+        self.flight_url = "https://serpapi.com/search"
 
         self.flights_economy = self.search_flights_serpapi(origin, destination, departure_date, '1', return_date)
         self.flights_premium_economy = self.search_flights_serpapi(origin, destination, departure_date, '2', return_date)
@@ -136,7 +141,6 @@ class FlightDataAnalyzer:
         return info_economy, info_business, graph_economy,  graph_business
 
     def search_flights_serpapi(self, origin, destination, departure_date, travel_class, return_date=None, token=None):
-        url = "https://serpapi.com/search"
         params = {
             "engine": "google_flights",
             "q": f"flights from {origin} to {destination} on {departure_date}",
@@ -144,7 +148,7 @@ class FlightDataAnalyzer:
             "departure_id": origin,
             "arrival_id": destination,
             "outbound_date": departure_date,
-            "type": "1" if return_date else "2",  # 1 for round trip; 2 for one way
+            "type": ROUNDTRIP_CODE if return_date else ONE_WAY_CODE, 
             "show_hidden": "true",
             "travel_class": travel_class
         }
@@ -153,13 +157,13 @@ class FlightDataAnalyzer:
         if token:
             params["departure_token"] = token
 
-        response = requests.get(url, params=params)
+        response = requests.get(self.flight_url, params=params)
 
         if response.status_code == 200:
             return response.json()
         else:
-            print(f"Error: {response.status_code} - {response.text}")
-            return None
+            err_msg = f"Error: {response.status_code} - {response.text}"
+            raise Exception('search_flights_serpapi:', err_msg)
 
     def compare_stops(self):
         # Calculate median price by number of stops and travel class
