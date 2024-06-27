@@ -1,5 +1,6 @@
 from geopy.distance import geodesic
 import requests
+import time
 
 class BusinessCommutingAnalyzer:
     def __init__(self, commuting_data,google_api,oil_price_api,firm_location,df_dynamic):

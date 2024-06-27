@@ -1,4 +1,6 @@
 import requests
+import pandas as pd
+from datetime import datetime
 
 class FlightDataAnalyzer:
     def __init__(self, api_key, weights,origin, destination, departure_date, return_date=None):

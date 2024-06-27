@@ -13,21 +13,9 @@ from components.flight_data_analyzer import FlightDataAnalyzer
 from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
 from steps.decarb_weight import DecarbWeight
-
-google_maps_api_key = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
-flight_api_key = '7b97097f97bcea06b3c9c8b81e864da1f686069cdfba1dfd89834eec702b8f16'
-oil_price_api = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
-
 import pandas as pd
-import matplotlib.pyplot as plt
-import re
-import seaborn as sns
-import numpy as np
-import time
 from itertools import permutations
-from scipy.stats import zscore
-
-from datetime import datetime
+from steps.flight_decarb_step import FlightDecarbStep
 
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data, origin, destination, departure_date,firm,weights,return_date=None):
@@ -214,7 +202,6 @@ def run_commute_and_flight():
         'distance': [10, 10, 10],
         'cost_per_km': [0.1, 0.2, 0.7]
     })
-
 
     weights =  DecarbWeight(0.4, 0.3, 0.2, 0.1) 
     decarb_engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,return_date)
