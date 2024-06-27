@@ -28,23 +28,6 @@ from scipy.stats import zscore
 from datetime import datetime
 from enum import Enum
 
-
-
-
-
-#flights
-
-origin = "LAX"
-destination = "JFK"
-departure_date = "2024-07-01"
-return_date = "2024-07-03"
-firm = '2107 Addison St, Berkeley, CA'
-
-weights = DecarbWeight(0.4,0.3,0.2,0.1)
-flight = FlightDataAnalyzer(flight_api_key, weights,origin, destination, departure_date, return_date)
-
-flight.get_return_tickets()
-
 class FlightDataAnalyzer:
     def __init__(self, api_key, weights,origin, destination, departure_date, return_date=None):
         self.api = api_key
@@ -71,10 +54,7 @@ class FlightDataAnalyzer:
 
 
     def get_optimal_flight(self, df_all_flights):
-
-
         df_all_flights['Price Z-Score'] = (df_all_flights['Price'] - df_all_flights['Price'].mean()) / df_all_flights['Price'].std()
-
         df_all_flights['Duration Z-Score'] = (df_all_flights['Duration'] - df_all_flights['Duration'].mean()) / df_all_flights['Duration'].std()
         df_all_flights['Stops Z-Score'] = (df_all_flights['Stops'] - df_all_flights['Stops'].mean()) / df_all_flights['Stops'].std()
         df_all_flights['Carbon Emissions Z-Score'] = (df_all_flights['Carbon Emissions'] - df_all_flights['Carbon Emissions'].mean() )/ df_all_flights['Carbon Emissions'].std()
@@ -91,7 +71,6 @@ class FlightDataAnalyzer:
         return df_best_trade_off_flights
 
     def get_return_tickets(self):
-
         temp  = self.get_optimal_flight(self.df_all_flights)
         self.dep_token = temp['token'].iloc[0]
 
@@ -144,8 +123,6 @@ class FlightDataAnalyzer:
                          typical_carbon_emissions = 'N/A'
                          difference_in_percent = 'N/A'
 
-
-
                     travel_class_name = segment['travel_class']
 
                     flight_key = (carrier_code, flight_number, departure_time, arrival_time)
@@ -177,19 +154,12 @@ class FlightDataAnalyzer:
         temp_df_business = pd.DataFrame(lst_business, columns=['time', 'price'])
         temp_df_business['time'] = temp_df_business['time'].apply(datetime.fromtimestamp)
 
-       # temp_df_first_class = pd.DataFrame(lst_first_class, columns=['time', 'price'])
-        #temp_df_first_class['time'] = temp_df_first_class['time'].apply(datetime.fromtimestamp)
-
         graph_economy = temp_df_economy.plot.line(x='time', y='price')
-       # graph_premium_economy = temp_df_premium.plot.line(x='time', y='price')
         graph_business = temp_df_business.plot.line(x='time', y='price')
-       # graph_first_class = temp_df_first_class.plot.line(x='time', y='price')
 
         info_economy = self.flights_economy['price_insights']['price_history'][:-1]
-       # info_premium_economy = self.flights_premium_economy['price_insights']['price_history'][:-1]
         info_business = self.flights_business['price_insights']['price_history'][:-1]
-        #info_first_class = self.flights_first_class['price_insights']['price_history'][:-1]
-
+ 
         return info_economy, info_business, graph_economy,  graph_business
 
     def search_flights_serpapi(self, origin, destination, departure_date, travel_class, return_date=None, token=None):
@@ -210,7 +180,6 @@ class FlightDataAnalyzer:
         if token:
             params["departure_token"] = token
 
-
         response = requests.get(url, params=params)
 
         if response.status_code == 200:
@@ -224,42 +193,21 @@ class FlightDataAnalyzer:
         out = self.df_all_flights.groupby(['Stops', 'Travel Class'])['Price'].median().unstack()
         return out
 
-
     def non_economy_cheaper_than_economy(self):
         median_price_economy = self.df_all_flights[self.df_all_flights['Travel Class'] == 'Economy']['Price'].median()
         non_economy_cheaper_than_economy = self.df_all_flights[(self.df_all_flights['Travel Class'] != 'Economy') & (self.df_all_flights['Price'] <= median_price_economy)]
         return non_economy_cheaper_than_economy
 
-firm = '2107 Addison St, Berkeley, CA'
-commuting_data = pd.DataFrame({
-    'ID': [1, 2, 3],
-    'method':['car','uber','car'],
-    'locations':['1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA '],
-    'frequency': [22, 20, 18],
-    'cost_per_km':[0.1,0.2,0.3]
-
-})
-
-df_dynamic = pd.DataFrame({
-    'method': ['bus', 'train', 'uber'],
-    'distance': [10, 10, 10],
-    'cost_per_km': [0.1, 0.2, 0.7]
-})
-BusinessCommutingAnalyzer(commuting_data,google_maps_api_key,oil_price_api,firm,df_dynamic).calculate_current_costs_and_emissions()
-
 class BusinessCommutingAnalyzer:
     def __init__(self, commuting_data,google_api,oil_price_api,firm_location,df_dynamic):
         self.commuting_data = commuting_data
-        #self.carbon_data = carbon_data
         self.google_maps_api_key = google_api
         self.oil_api = oil_price_api
         self.firm_location = firm_location
         self.df_dynamic = df_dynamic
 
-
         cur_people = self.commuting_data
         cur_people_location = cur_people['locations']
-        #print(cur_people)
 
         employee_coords = [self.geocode_location(location) for location in cur_people_location]
         firm_coords = self.geocode_location(firm_location)
@@ -268,16 +216,11 @@ class BusinessCommutingAnalyzer:
             print("Failed to geocode all locations.")
             return None
 
-          # Calculate distances
+        # Calculate distances
         distances_from_firm = [geodesic(firm_coords, coord).kilometers for coord in employee_coords]
-
-
-
         cur_people['distance'] = distances_from_firm
         self.commuting_data = cur_people
         print(self.commuting_data)
-
-        #self.commuting_data['distance'] = self.calculate_distance(self.firm_location,self.commuting_data['locations'])
 
     def calculate_current_costs_and_emissions(self):
         total_cost = 0
@@ -292,30 +235,23 @@ class BusinessCommutingAnalyzer:
 
         return total_cost, total_carbon
 
-
-
-
     def geocode_location(self,location):
-    # (latitude, longitude) using Google Maps Geocoding API
+      # (latitude, longitude) using Google Maps Geocoding API
       base_url = "https://maps.googleapis.com/maps/api/geocode/json"
       params = {
           "address": location,
           "key": self.google_maps_api_key
       }
-      #print(params)
       response = requests.get(base_url, params=params)
       if response.status_code == 200:
           data = response.json()
-          #print(data)
           if data['results']:
-              #print(1)
               latitude = data['results'][0]['geometry']['location']['lat']
               longitude = data['results'][0]['geometry']['location']['lng']
               return (latitude, longitude)
       return None
 
     def get_state_code(self,coords):
-
       base_url = "https://maps.googleapis.com/maps/api/geocode/json"
       params = {"latlng": f"{coords[0]},{coords[1]}", "key": self.google_maps_api_key}
       response = requests.get(base_url, params=params)
@@ -338,7 +274,6 @@ class BusinessCommutingAnalyzer:
           return None
 
     def get_local_gas_price(self,state_code):
-
       if self.oil_api:
           base_url = f"https://api.eia.gov/v2/petroleum/pri/gnd/data/?api_key={self.oil_api}&frequency=weekly&data[0]=value&facets[duoarea][]=S{state_code}&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=1"
           response = requests.get(base_url)
@@ -350,20 +285,13 @@ class BusinessCommutingAnalyzer:
       return 4
 
     def stipent_individual(self,df_survey,firm_location,employee_ID, cur_stipend, num_change_days,mpg):
-
       cur_person = df_survey.loc[df_survey['ID'] == employee_ID,['locations','frequency']]
-
-
       state_code = self.get_state_code(self.geocode_location(cur_person['locations']))
-
       cur_person['cost_per_km'] = (self.get_local_gas_price(state_code)/mpg) / 1.609344
-
       firm_coords = self.geocode_location(firm_location)
       employee_coords = self.geocode_location(cur_person['locations'])
       distance = geodesic(firm_coords, employee_coords).kilometers
       cur_person['distance'] = distance
-      #print(cur_person)
-
       cur_cost = cur_person['distance'].values[0] * cur_person['frequency'].values[0] * cur_person['cost_per_km'].values[0]
 
       dic = {}
@@ -421,7 +349,6 @@ class BusinessCommutingAnalyzer:
                 if route:
                     total_distance = sum(leg['distance']['value'] for leg in route['legs']) / 1000  # Convert to kilometers
                     total_duration = sum(leg['duration']['value'] for leg in route['legs']) / 60  # Convert to minutes
-
                     if total_distance < min_distance:
                         min_distance = total_distance
                         min_duration = total_duration
@@ -429,7 +356,6 @@ class BusinessCommutingAnalyzer:
                         best_order = waypoints + [final_destination]  # Append final destination at the end
 
         if best_route:
-
             return {
                 "route": best_route,
                 "total_distance_km": min_distance,
@@ -438,27 +364,19 @@ class BusinessCommutingAnalyzer:
             }
         return None
 
-
     def carpool_savings(self, df_survey, firm_location, employee_ids, cur_stipend, num_carpool_days, mpg):
 
       # Get the current details of each person
       firm_coords = self.geocode_location(firm_location)
-      #print(1)
       cur_people = df_survey[df_survey['ID'].isin(employee_ids)]
       cur_people_location = cur_people['locations']
-      #print(cur_people)
-
       employee_coords = [self.geocode_location(location) for location in cur_people_location]
-      #employee_locations = df_survey.loc[df_survey['ID']==employee_ids,'locations']
-      #print(employee_coords)
       if None in employee_coords or firm_coords is None:
           print("Failed to geocode all locations.")
           return None
 
         # Calculate distances
       distances_from_firm = [geodesic(firm_coords, coord).kilometers for coord in employee_coords]
-
-
 
       cur_people['distance'] = distances_from_firm
       # caveat
@@ -469,21 +387,16 @@ class BusinessCommutingAnalyzer:
 
       optimal_distance = self.find_optimal_route(firm_location, cur_people_location)['total_distance_km']
       duration = self.find_optimal_route(firm_location, cur_people_location)['total_duration_min']
-      #print(optimal_distance)
-      #print(duration)
       carpool_cost = min(cur_people['cost_per_km'] )
       new_cost_carpool_days = (optimal_distance*num_carpool_days*carpool_cost)
 
       new_cost_original_days = cur_people['distance']*cur_people['cost_per_km']*(cur_people['frequency']-num_carpool_days)
       new_cost_total = new_cost_carpool_days+new_cost_original_days
-      #print(new_cost_total)
       new_carbon = duration*0.2
 
       net_cost = new_cost_total - cur_costs
       cash = net_cost*0.9
       return net_cost,cash,new_carbon
-
-# newest!!!!!!!!!!!!!!!!!
 
 class DecarbWeight:
     def __init__(self, price_weight, duration_weight,stop_weight,carbon_weight):
@@ -538,7 +451,7 @@ class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data, origin, destination, departure_date,firm,weights,return_date=None):
 
         self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
-        #self.FLIGHT_API_KEY = '7b97097f97bcea06b3c9c8b81e864da1f686069cdfba1dfd89834eec702b8f16'
+        self.FLIGHT_API_KEY = '7b97097f97bcea06b3c9c8b81e864da1f686069cdfba1dfd89834eec702b8f16'
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.firm = firm
         self.dynamic = dynamic_data
@@ -547,31 +460,28 @@ class DecarbEngine:
         #print(self.weights)
 
         self.commuting_analyzer = BusinessCommutingAnalyzer(commuting_data, self.GOOGLE_MAPS_API_KEY, self.OIL_PRICE_API_KEY,self.firm,self.dynamic)
-        #self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
+        self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
         self.steps = []
-
-
 
     def analyze_commuting_costs(self):
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
 
-    # def analyze_flight_costs(self):
-    #    return self.flight_analyzer.get_optimal_flight(self.flight_analyzer.df_all_flights)
+    def analyze_flight_costs(self):
+        return self.flight_analyzer.get_optimal_flight(self.flight_analyzer.df_all_flights)
 
-    # def get_return_flight_options(self):
-    #    return self.flight_analyzer.get_return_tickets()
+    def get_return_flight_options(self):
+        return self.flight_analyzer.get_return_tickets()
 
-    # def compare_flight_stops(self):
-    #    return self.flight_analyzer.compare_stops()
+    def compare_flight_stops(self):
+       return self.flight_analyzer.compare_stops()
 
-    # def non_economy_cheaper_than_economy(self):
-    #    return self.flight_analyzer.non_economy_cheaper_than_economy()
+    def non_economy_cheaper_than_economy(self):
+       return self.flight_analyzer.non_economy_cheaper_than_economy()
 
-    # def get_price_insights(self):
-    #    return self.flight_analyzer.price_insights()
+    def get_price_insights(self):
+       return self.flight_analyzer.price_insights()
 
     def run_decarb_engine(self):
-
         savings = 0
 
         # commuting costs and emissions for individual
@@ -590,68 +500,48 @@ class DecarbEngine:
         savings += commuting_step.compute_savings()
 
         # commuting cost for carpool
-
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
         commuting_step = DecarbStep(
             step_type=DecarbStepType.COMMUTING,
             cur_cost=commuting_costs,
-
             new_cost = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,
                                                                        [1,2,3], 50,2,30)[0],
             new_emissions = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,
                                                                        [1,2,3], 50,2,30)[2],
-
             cur_emissions=commuting_emissions,
-
             description="Analyze commuting costs and emissions for carpool"
         )
         self.steps.append(commuting_step)
         savings += commuting_step.compute_savings()
-
-
-
-
-
-
-      #flight costs
-        # optimal_flight = self.analyze_flight_costs()
-        # print(optimal_flight)
-        # flight_savings = optimal_flight['Price'].iloc[0]
-        # flight_emissions = optimal_flight['Carbon Emissions'].iloc[0]
-        # flight_step = FlightDecarbStep(
-        #     step_type=DecarbStepType.FLIGHTS,
-        #     cur_cost=flight_savings * 1.1,  # fake num
-        #     new_cost=flight_savings,
-        #     cur_emissions=flight_emissions * 1.1,  # fake num
-        #     new_emissions=flight_emissions,
-        #     description="Analyze flight costs and emissions",
-        #     num_stops=optimal_flight['Stops'].iloc[0]
-        # )
-        # self.steps.append(flight_step)
-        # savings += flight_step.compute_savings()
-
-
-
+        
+        #flight costs
+        optimal_flight = self.analyze_flight_costs()
+        print(optimal_flight)
+        flight_step = self.create_flight_step(optimal_flight)
+        self.steps.append(flight_step)
+        savings += flight_step.compute_savings()
 
         # return flight
-        # return_flight = self.get_return_flight_options(self.weights)
-        # return_flight_savings = return_flight['Price'].iloc[0]
-        # return_flight_emissions = return_flight['Carbon Emissions'].iloc[0]
-        # return_flight_step = FlightDecarbStep(
-        #     step_type=DecarbStepType.FLIGHTS,
-        #     cur_cost=return_flight_savings * 1.1, # fake
-        #     new_cost=return_flight_savings,
-        #     cur_emissions=return_flight_emissions * 1.1, # fake
-        #     new_emissions=return_flight_emissions,
-        #     description="Analyze return flight costs and emissions",
-        #     num_stops=return_flight['Stops'].iloc[0]
-        # )
-        # self.steps.append(return_flight_step)
-        # savings += return_flight_step.compute_savings()
-
-
+        return_flight = self.get_return_flight_options(self.weights)
+        return_flight_step = self.create_flight_step(return_flight)
+        self.steps.append(return_flight_step)
+        savings += return_flight_step.compute_savings()
 
         return self.steps
+
+    def create_flight_step(self, return_flight):
+        return_flight_savings = return_flight['Price'].iloc[0]
+        return_flight_emissions = return_flight['Carbon Emissions'].iloc[0]
+        return_flight_step = FlightDecarbStep(
+            step_type=DecarbStepType.FLIGHTS,
+            cur_cost=return_flight_savings * 1.1, # fake
+            new_cost=return_flight_savings,
+            cur_emissions=return_flight_emissions * 1.1, # fake
+            new_emissions=return_flight_emissions,
+            description="Analyze return flight costs and emissions",
+            num_stops=return_flight['Stops'].iloc[0]
+        )
+        return return_flight_step
 
 origin = "LAX"
 destination = "JFK"
