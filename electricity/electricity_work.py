@@ -9,6 +9,11 @@ Original file is located at
 
 import pandas as pd
 
+from lcbelectricityrateplan import LCBElectricityRatePlan
+from sectors.lcbsector import LCBSector
+from sectors.smbsector import SMBSector
+from smbelectricityrateplan import SMBElectricityRatePlan
+
 file_path = 'Electricity Rate Plan.xlsx'
 sheets = pd.read_excel(file_path, sheet_name=None)
 
@@ -73,6 +78,106 @@ print(final_result)
 
 import subprocess
 
+def create_smb_sector(A1NTBStotal_usage, A1NTBWtotal_usage, A1BSpeak_usage):
+    smb_sector = SMBSector(A1NTBStotal_usage, A1NTBWtotal_usage, A1BSpeak_usage)
+
+    usage_data = {
+        'A1NTBStotal_usage': ...,  # User provided
+        'A1NTBWtotal_usage': ...,  # User provided
+        'A1BSpeak_usage': ...,  # User provided
+        'A1BSpartpeak_usage': ...,  # User provided
+        'A1BSoffpeak_usage': ...,  # User provided
+        'A1BWpartpeak_usage': ...,  # User provided
+        'A1BWoffpeak_usage': ...,  # User provided
+        'B1BSpeak_usage': ...,  # User provided
+        'B1BSpartpeak_usage': ...,  # User provided
+        'B1BSoffpeak_usage': ...,  # User provided
+        'B1BWpeak_usage': ...,  # User provided
+        'B1BWsuperoffpeak_usage': ...,  # User provided
+        'B1BWoffpeak_usage': ...,  # User provided
+        'B1STBSpeak_usage': ...,  # User provided
+        'B1STBSpartpeak_usage': ...,  # User provided
+        'B1STBSoffpeak_usage': ...,  # User provided
+        'B1STBWpeak_usage': ...,  # User provided
+        'B1STBWpartpeak_usage': ...,  # User provided
+        'B1STBWsuperoffpeak_usage': ...,  # User provided
+        'B1STBWoffpeak_usage': ...,  # User provided
+        'B6BSpeak_usage': ...,  # User provided
+        'B6BSoffpeak_usage': ...,  # User provided
+        'B6BWpeak_usage': ...,  # User provided
+        'B6BWsuperoffpeak_usage': ...,  # User provided
+        'B6BWoffpeak_usage': ...,  # User provided
+        'B10SVBSpeak_usage': ...,  # User provided
+        'B10SVBSpartpeak_usage': ...,  # User provided
+        'B10SVBSoffpeak_usage': ...,  # User provided
+        'B10SVBWpeak_usage': ...,  # User provided
+        'B10SVBWsuperoffpeak_usage': ...,  # User provided
+        'B10SVBWoffpeak_usage': ...,  # User provided
+        'B10PVBSpeak_usage': ...,  # User provided
+        'B10PVBSpartpeak_usage': ...,  # User provided
+        'B10PVBSoffpeak_usage': ...,  # User provided
+        'B10PVBWpeak_usage': ...,  # User provided
+        'B10PVBWsuperoffpeak_usage': ...,  # User provided
+        'B10PVBWoffpeak_usage': ...,  # User provided
+        'B10TVBSpeak_usage': ...,  # User provided
+        'B10TVBSpartpeak_usage': ...,  # User provided
+        'B10TVBSoffpeak_usage': ...,  # User provided
+        'B10TVBWpeak_usage': ...,  # User provided
+        'B10TVBWsuperoffpeak_usage': ...,  # User provided
+        'B10TVBWoffpeak_usage': ...,  # User provided
+        'meter_input': ...,  # User provided
+        'time_in_use': ...,  # User provided
+        'max_15min_usage': ...,  # User provided
+        'B1STB_highest_demand_15mins': ...,  # User provided
+    }
+    return smb_sector
+
+def create_lcb_sector(B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage):
+    lcb_sector = LCBSector(B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage)
+
+    usage_data = {
+            'B19SVBSpeak_usage': 100,  # User provided
+    'B19SVBSpartpeak_usage': 50,  # User provided
+    'B19SVBSoffpeak_usage': 200,  # User provided
+    'B19SVBWpeak_usage': 100,  # User provided
+    'B19SVBWsuperoffpeak_usage': 50,  # User provided
+    'B19SVBWoffpeak_usage': 200,  # User provided
+    'B19PVBSpeak_usage': 100,  # User provided
+    'B19PVBSpartpeak_usage': 50,  # User provided
+    'B19PVBSoffpeak_usage': 200,  # User provided
+    'B19PVBWpeak_usage': 100,  # User provided
+    'B19PVBWsuperoffpeak_usage': 50,  # User provided
+    'B19PVBWoffpeak_usage': 200,  # User provided
+    'B19TVBSpeak_usage': 100,  # User provided
+    'B19TVBSpartpeak_usage': 50,  # User provided
+    'B19TVBSoffpeak_usage': 200,  # User provided
+    'B19TVBWpeak_usage': 100,  # User provided
+    'B19TVBWsuperoffpeak_usage': 50,  # User provided
+    'B19TVBWoffpeak_usage': 200,  # User provided
+    'B20SVBSpeak_usage': 100,  # User provided
+    'B20SVBSpartpeak_usage': 50,  # User provided
+    'B20SVBSoffpeak_usage': 200,  # User provided
+    'B20SVBWpeak_usage': 100,  # User provided
+    'B20SVBWsuperoffpeak_usage': 50,  # User provided
+    'B20SVBWoffpeak_usage': 200,  # User provided
+    'B20PVBSpeak_usage': 100,  # User provided
+    'B20PVBSpartpeak_usage': 50,  # User provided
+    'B20PVBSoffpeak_usage': 200,  # User provided
+    'B20PVBWpeak_usage': 100,  # User provided
+    'B20PVBWsuperoffpeak_usage': 50,  # User provided
+    'B20PVBWoffpeak_usage': 200,  # User provided
+    'B20TVBSpeak_usage': 100,  # User provided
+    'B20TVBSpartpeak_usage': 50,  # User provided
+    'B20TVBSoffpeak_usage': 200,  # User provided
+    'B20TVBWpeak_usage': 100,  # User provided
+    'B20TVBWsuperoffpeak_usage': 50,  # User provided
+    'B20TVBWoffpeak_usage': 200,  # User provided
+    'meter_input': 5,  # User provided
+    'time_in_use': 10,  # User provided
+    'max_15min_usage': 100,  # User provided
+    }
+    return lcb_sector
+
 def check_condition_and_run(user_sector, user_bundled):
 
     condition1 = (user_sector == 'Large Commercial and Industrial' and user_bundled == 'Yes')
@@ -81,7 +186,13 @@ def check_condition_and_run(user_sector, user_bundled):
     condition4 = (user_sector == 'Small and Medium Business' and user_bundled == 'No')
 
     if condition1:
-        result1 = subprocess.run(['python', 'lcbelectricityrateplan.py'], capture_output=True, text=True)
+        #result1 = subprocess.run(['python', 'lcbelectricityrateplan.py'], capture_output=True, text=True)
+        lcb_sector = create_lcb_sector()
+        rate_plan = LCBElectricityRatePlan('Electricity Rate Plan.xlsx', 'Bundled Peak Time Price', usage_data)
+        result = rate_plan.optimize()
+        print("Optimal solution:", result['x'])
+        print("Optimal objective value:", result['objective'])
+
         print("Output:", result1.stdout)
         print("Errors:", result1.stderr)
     elif condition2:
@@ -89,7 +200,11 @@ def check_condition_and_run(user_sector, user_bundled):
         print("Output:", result2.stdout)
         print("Errors:", result2.stderr)
     elif condition3:
-        result3 = subprocess.run(['python', 'smbelectricityrateplan.py'], capture_output=True, text=True)
+        # result3 = subprocess.run(['python', 'smbelectricityrateplan.py'], capture_output=True, text=True)
+        smb_sector = create_smb_sector()
+        rate_plan = SMBElectricityRatePlan('Electricity Rate Plan.xlsx', 'Bundled Peak Time Price', usage_data)
+        result = rate_plan.optimize()
+
         print("Output:", result3.stdout)
         print("Errors:", result3.stderr)
     elif condition4:

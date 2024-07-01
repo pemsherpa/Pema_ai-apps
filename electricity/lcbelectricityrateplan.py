@@ -11,6 +11,8 @@ from scipy.optimize import minimize
 from scipy.optimize import Bounds
 import pandas as pd
 
+from sectors.lcbsector import LCBSector
+
 class LCBElectricityRatePlan:
     def __init__(self, file_path, sheet_name, usage_data):
         self.df = pd.read_excel(file_path, sheet_name=sheet_name)
@@ -147,51 +149,3 @@ class LCBElectricityRatePlan:
      obj_val = self.objective(x_opt)
 
      return {'x': x_opt, 'objective': obj_val}
-
-
-usage_data = {
-    'B19SVBSpeak_usage': 100,  # User provided
-    'B19SVBSpartpeak_usage': 50,  # User provided
-    'B19SVBSoffpeak_usage': 200,  # User provided
-    'B19SVBWpeak_usage': 100,  # User provided
-    'B19SVBWsuperoffpeak_usage': 50,  # User provided
-    'B19SVBWoffpeak_usage': 200,  # User provided
-    'B19PVBSpeak_usage': 100,  # User provided
-    'B19PVBSpartpeak_usage': 50,  # User provided
-    'B19PVBSoffpeak_usage': 200,  # User provided
-    'B19PVBWpeak_usage': 100,  # User provided
-    'B19PVBWsuperoffpeak_usage': 50,  # User provided
-    'B19PVBWoffpeak_usage': 200,  # User provided
-    'B19TVBSpeak_usage': 100,  # User provided
-    'B19TVBSpartpeak_usage': 50,  # User provided
-    'B19TVBSoffpeak_usage': 200,  # User provided
-    'B19TVBWpeak_usage': 100,  # User provided
-    'B19TVBWsuperoffpeak_usage': 50,  # User provided
-    'B19TVBWoffpeak_usage': 200,  # User provided
-    'B20SVBSpeak_usage': 100,  # User provided
-    'B20SVBSpartpeak_usage': 50,  # User provided
-    'B20SVBSoffpeak_usage': 200,  # User provided
-    'B20SVBWpeak_usage': 100,  # User provided
-    'B20SVBWsuperoffpeak_usage': 50,  # User provided
-    'B20SVBWoffpeak_usage': 200,  # User provided
-    'B20PVBSpeak_usage': 100,  # User provided
-    'B20PVBSpartpeak_usage': 50,  # User provided
-    'B20PVBSoffpeak_usage': 200,  # User provided
-    'B20PVBWpeak_usage': 100,  # User provided
-    'B20PVBWsuperoffpeak_usage': 50,  # User provided
-    'B20PVBWoffpeak_usage': 200,  # User provided
-    'B20TVBSpeak_usage': 100,  # User provided
-    'B20TVBSpartpeak_usage': 50,  # User provided
-    'B20TVBSoffpeak_usage': 200,  # User provided
-    'B20TVBWpeak_usage': 100,  # User provided
-    'B20TVBWsuperoffpeak_usage': 50,  # User provided
-    'B20TVBWoffpeak_usage': 200,  # User provided
-    'meter_input': 5,  # User provided
-    'time_in_use': 10,  # User provided
-    'max_15min_usage': 100,  # User provided
-}
-
-rate_plan = LCBElectricityRatePlan('Electricity Rate Plan.xlsx', 'Bundled Peak Time Price', usage_data)
-result = rate_plan.optimize()
-print("Optimal solution:", result['x'])
-print("Optimal objective value:", result['objective'])
