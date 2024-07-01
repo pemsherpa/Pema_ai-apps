@@ -10,7 +10,7 @@ Original file is located at
 from scipy.optimize import minimize
 from scipy.optimize import Bounds
 import pandas as pd
-
+import lcbsector.py
 from sectors.lcbsector import LCBSector
 
 class LCBElectricityRatePlan:
@@ -82,53 +82,53 @@ class LCBElectricityRatePlan:
         usage_data = self.usage_data
         meter_input, time_in_use, max_15min_usage = usage_data['meter_input'], usage_data['time_in_use'], usage_data['max_15min_usage']
 
-        B19SVBSprice = (self.parameters['B19SVBSpeakprice'] * usage_data['B19SVBSpeak_usage'] +
-                        self.parameters['B19SVBSpartpeakprice'] * usage_data['B19SVBSpartpeak_usage'] +
-                        self.parameters['B19SVBSoffpeakprice'] * usage_data['B19SVBSoffpeak_usage'])
-        B19SVBWprice = (self.parameters['B19SVBWpeakprice'] * usage_data['B19SVBWpeak_usage'] +
-                        self.parameters['B19SVBWsuperoffpeakprice'] * usage_data['B19SVBWsuperoffpeak_usage'] +
-                        self.parameters['B19SVBWoffpeakprice'] * usage_data['B19SVBWoffpeak_usage'])
-        B19SVBprice = B19SVBSprice + B19SVBWprice + self.parameters['B19SVB_Customer_Charge'] * meter_input * time_in_use + self.parameters['B19SVB_demand_rate'] * max_15min_usage
+        B19SVBSprice = (self.parameters['B19SVBSpeakprice'] * usage_data.B19SVBSpeak_usage +
+                        self.parameters['B19SVBSpartpeakprice'] * usage_data.B19SVBSpartpeak_usage +
+                        self.parameters['B19SVBSoffpeakprice'] * usage_data.B19SVBSoffpeak_usage)
+        B19SVBWprice = (self.parameters['B19SVBWpeakprice'] * usage_data.B19SVBWpeak_usage +
+                        self.parameters['B19SVBWsuperoffpeakprice'] * usage_data.B19SVBWsuperoffpeak_usage +
+                        self.parameters['B19SVBWoffpeakprice'] * usage_data.B19SVBWoffpeak_usage)
+        B19SVBprice = B19SVBSprice + B19SVBWprice + self.parameters['B19SVB_Customer_Charge'] * usage_data.meter_input * usage_data.time_in_use + self.parameters['B19SVB_demand_rate'] * usage_data.max_15min_usage
 
-        B19PVBSprice = (self.parameters['B19PVBSpeakprice'] * usage_data['B19PVBSpeak_usage'] +
-                        self.parameters['B19PVBSpartpeakprice'] * usage_data['B19PVBSpartpeak_usage'] +
-                        self.parameters['B19PVBSoffpeakprice'] * usage_data['B19PVBSoffpeak_usage'])
-        B19PVBWprice = (self.parameters['B19PVBWpeakprice'] * usage_data['B19PVBWpeak_usage'] +
-                        self.parameters['B19PVBWsuperoffpeakprice'] * usage_data['B19PVBWsuperoffpeak_usage'] +
-                        self.parameters['B19PVBWoffpeakprice'] * usage_data['B19PVBWoffpeak_usage'])
-        B19PVBprice = B19PVBSprice + B19PVBWprice + self.parameters['B19PVB_Customer_Charge'] * meter_input * time_in_use + self.parameters['B19PVB_demand_rate'] * max_15min_usage
+        B19PVBSprice = (self.parameters['B19PVBSpeakprice'] * usage_data.B19PVBSpeak_usage +
+                        self.parameters['B19PVBSpartpeakprice'] * usage_data.B19PVBSpartpeak_usage +
+                        self.parameters['B19PVBSoffpeakprice'] * usage_data.B19PVBSoffpeak_usage)
+        B19PVBWprice = (self.parameters['B19PVBWpeakprice'] * usage_data.B19PVBWpeak_usage +
+                        self.parameters['B19PVBWsuperoffpeakprice'] * usage_data.B19PVBWsuperoffpeak_usage +
+                        self.parameters['B19PVBWoffpeakprice'] * usage_data.B19PVBWoffpeak_usage)
+        B19PVBprice = B19PVBSprice + B19PVBWprice + self.parameters['B19PVB_Customer_Charge'] * usage_data.meter_input * usage_data.time_in_use + self.parameters['B19PVB_demand_rate'] * usage_data.max_15min_usage
 
-        B19TVBSprice = (self.parameters['B19TVBSpeakprice'] * usage_data['B19TVBSpeak_usage'] +
-                        self.parameters['B19TVBSpartpeakprice'] * usage_data['B19TVBSpartpeak_usage'] +
-                        self.parameters['B19TVBSoffpeakprice'] * usage_data['B19TVBSoffpeak_usage'])
-        B19TVBWprice = (self.parameters['B19TVBWpeakprice'] * usage_data['B19TVBWpeak_usage'] +
-                        self.parameters['B19TVBWsuperoffpeakprice'] * usage_data['B19TVBWsuperoffpeak_usage'] +
-                        self.parameters['B19TVBWoffpeakprice'] * usage_data['B19TVBWoffpeak_usage'])
-        B19TVBprice = B19TVBSprice + B19TVBWprice + self.parameters['B19TVB_Customer_Charge'] * meter_input * time_in_use + self.parameters['B19TVB_demand_rate'] * max_15min_usage
+        B19TVBSprice = (self.parameters['B19TVBSpeakprice'] * usage_data.B19TVBSpeak_usage +
+                        self.parameters['B19TVBSpartpeakprice'] * usage_data.B19TVBSpartpeak_usage +
+                        self.parameters['B19TVBSoffpeakprice'] * usage_data.B19TVBSoffpeak_usage)
+        B19TVBWprice = (self.parameters['B19TVBWpeakprice'] * usage_data.B19TVBWpeak_usage +
+                        self.parameters['B19TVBWsuperoffpeakprice'] * usage_data.B19TVBWsuperoffpeak_usage +
+                        self.parameters['B19TVBWoffpeakprice'] * usage_data.B19TVBWoffpeak_usage)
+        B19TVBprice = B19TVBSprice + B19TVBWprice + self.parameters['B19TVB_Customer_Charge'] * usage_data.meter_input * usage_data.time_in_use + self.parameters['B19TVB_demand_rate'] * usage_data.max_15min_usage
 
-        B20SVBSprice = (self.parameters['B20SVBSpeakprice'] * usage_data['B20SVBSpeak_usage'] +
-                        self.parameters['B20SVBSpartpeakprice'] * usage_data['B20SVBSpartpeak_usage'] +
-                        self.parameters['B20SVBSoffpeakprice'] * usage_data['B20SVBSoffpeak_usage'])
-        B20SVBWprice = (self.parameters['B20SVBWpeakprice'] * usage_data['B20SVBWpeak_usage'] +
-                        self.parameters['B20SVBWsuperoffpeakprice'] * usage_data['B20SVBWsuperoffpeak_usage'] +
-                        self.parameters['B20SVBWoffpeakprice'] * usage_data['B20SVBWoffpeak_usage'])
-        B20SVBprice = B20SVBSprice + B20SVBWprice + self.parameters['B20SVB_Customer_Charge'] * meter_input * time_in_use + self.parameters['B20SVB_demand_rate'] * max_15min_usage
+        B20SVBSprice = (self.parameters['B20SVBSpeakprice'] * usage_data.B20SVBSpeak_usage +
+                        self.parameters['B20SVBSpartpeakprice'] * usage_data.B20SVBSpartpeak_usage +
+                        self.parameters['B20SVBSoffpeakprice'] * usage_data.B20SVBSoffpeak_usage)
+        B20SVBWprice = (self.parameters['B20SVBWpeakprice'] * usage_data.B20SVBWpeak_usage +
+                        self.parameters['B20SVBWsuperoffpeakprice'] * usage_data.B20SVBWsuperoffpeak_usage +
+                        self.parameters['B20SVBWoffpeakprice'] * usage_data.B20SVBWoffpeak_usage)
+        B20SVBprice = B20SVBSprice + B20SVBWprice + self.parameters['B20SVB_Customer_Charge'] * usage_data.meter_input * usage_data.time_in_use + self.parameters['B20SVB_demand_rate'] * usage_data.max_15min_usage
 
-        B20PVBSprice = (self.parameters['B20PVBSpeakprice'] * usage_data['B20PVBSpeak_usage'] +
-                        self.parameters['B20PVBSpartpeakprice'] * usage_data['B20PVBSpartpeak_usage'] +
-                        self.parameters['B20PVBSoffpeakprice'] * usage_data['B20PVBSoffpeak_usage'])
-        B20PVBWprice = (self.parameters['B20PVBWpeakprice'] * usage_data['B20PVBWpeak_usage'] +
-                        self.parameters['B20PVBWsuperoffpeakprice'] * usage_data['B20PVBWsuperoffpeak_usage'] +
-                        self.parameters['B20PVBWoffpeakprice'] * usage_data['B20PVBWoffpeak_usage'])
-        B20PVBprice = B20PVBSprice + B20PVBWprice + self.parameters['B20PVB_Customer_Charge'] * meter_input * time_in_use + self.parameters['B20PVB_demand_rate'] * max_15min_usage
+        B20PVBSprice = (self.parameters['B20PVBSpeakprice'] * usage_data.B20PVBSpeak_usage +
+                        self.parameters['B20PVBSpartpeakprice'] * usage_data.B20PVBSpartpeak_usage +
+                        self.parameters['B20PVBSoffpeakprice'] * usage_data.B20PVBSoffpeak_usage)
+        B20PVBWprice = (self.parameters['B20PVBWpeakprice'] * usage_data.B20PVBWpeak_usage +
+                        self.parameters['B20PVBWsuperoffpeakprice'] * usage_data.B20PVBWsuperoffpeak_usage +
+                        self.parameters['B20PVBWoffpeakprice'] * usage_data.B20PVBWoffpeak_usage)
+        B20PVBprice = B20PVBSprice + B20PVBWprice + self.parameters['B20PVB_Customer_Charge'] * usage_data.meter_input * usage_data.time_in_use + self.parameters['B20PVB_demand_rate'] * usage_data.max_15min_usage
 
-        B20TVBSprice = (self.parameters['B20TVBSpeakprice'] * usage_data['B20TVBSpeak_usage'] +
-                        self.parameters['B20TVBSpartpeakprice'] * usage_data['B20TVBSpartpeak_usage'] +
-                        self.parameters['B20TVBSoffpeakprice'] * usage_data['B20TVBSoffpeak_usage'])
-        B20TVBWprice = (self.parameters['B20TVBWpeakprice'] * usage_data['B20TVBWpeak_usage'] +
-                        self.parameters['B20TVBWsuperoffpeakprice'] * usage_data['B20TVBWsuperoffpeak_usage'] +
-                        self.parameters['B20TVBWoffpeakprice'] * usage_data['B20TVBWoffpeak_usage'])
-        B20TVBprice = B20TVBSprice + B20TVBWprice + self.parameters['B20TVB_Customer_Charge'] * meter_input * time_in_use + self.parameters['B20TVB_demand_rate'] * max_15min_usage
+        B20TVBSprice = (self.parameters['B20TVBSpeakprice'] * usage_data.B20TVBSpeak_usage +
+                        self.parameters['B20TVBSpartpeakprice'] * usage_data.B20TVBSpartpeak_usage +
+                        self.parameters['B20TVBSoffpeakprice'] * usage_data.B20TVBSoffpeak_usage)
+        B20TVBWprice = (self.parameters['B20TVBWpeakprice'] * usage_data.B20TVBWpeak_usage +
+                        self.parameters['B20TVBWsuperoffpeakprice'] * usage_data.B20TVBWsuperoffpeak_usage +
+                        self.parameters['B20TVBWoffpeakprice'] * usage_data.B20TVBWoffpeak_usage)
+        B20TVBprice = B20TVBSprice + B20TVBWprice + self.parameters['B20TVB_Customer_Charge'] * usage_data.meter_input * usage_data.time_in_use + self.parameters['B20TVB_demand_rate'] * usage_data.max_15min_usage
 
         return (B19SVBprice * B19SVB + B19PVBprice * B19PVB + B19TVBprice * B19TVB + B20SVBprice * B20SVB + B20PVBprice * B20PVB + B20TVBprice * B20TVB)
 

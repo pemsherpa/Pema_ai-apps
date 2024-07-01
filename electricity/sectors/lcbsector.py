@@ -1,48 +1,53 @@
 class LCBSector:
-    def __init__(self, B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage):
+    def __init__(self, B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage,
+                 B19SVBWpeak_usage,B19SVBWsuperoffpeak_usage,B19SVBWoffpeak_usage,
+                 B19PVBSpeak_usage,B19PVBSpartpeak_usage,B19PVBSoffpeak_usage,
+                 B19PVBWpeak_usage,B19PVBWsuperoffpeak_usage,B19PVBWoffpeak_usage,
+                 B19TVBSpeak_usage,B19TVBSpartpeak_usage,B19TVBSoffpeak_usage,
+                 B19TVBWpeak_usage,B19TVBWsuperoffpeak_usage,B19TVBWoffpeak_usage,
+                 B20SVBSpeak_usage, B20SVBSpartpeak_usage, B20SVBSoffpeak_usage,
+                 B20SVBWpeak_usage,B20SVBWsuperoffpeak_usage,B20SVBWoffpeak_usage,
+                 B20PVBSpeak_usage,B20PVBSpartpeak_usage,B20PVBSoffpeak_usage,
+                 B20PVBWpeak_usage,B20PVBWsuperoffpeak_usage,B20PVBWoffpeak_usage,
+                 B20TVBSpeak_usage,B20TVBSpartpeak_usage,B20TVBSoffpeak_usage,
+                 B20TVBWpeak_usage,B20TVBWsuperoffpeak_usage,B20TVBWoffpeak_usage,
+                 meter_input,time_in_use,max_15min_usage):
         self.B19SVBSpeak_usage = B19SVBSpeak_usage
         self.B19SVBSpartpeak_usage = B19SVBSpartpeak_usage
         self.B19SVBSoffpeak_usage = B19SVBSoffpeak_usage
-        # TODO Jinduo please complete
-
-usage_data = {
-    'B19SVBSpeak_usage': 100,  # User provided
-    'B19SVBSpartpeak_usage': 50,  # User provided
-    'B19SVBSoffpeak_usage': 200,  # User provided
-    'B19SVBWpeak_usage': 100,  # User provided
-    'B19SVBWsuperoffpeak_usage': 50,  # User provided
-    'B19SVBWoffpeak_usage': 200,  # User provided
-    'B19PVBSpeak_usage': 100,  # User provided
-    'B19PVBSpartpeak_usage': 50,  # User provided
-    'B19PVBSoffpeak_usage': 200,  # User provided
-    'B19PVBWpeak_usage': 100,  # User provided
-    'B19PVBWsuperoffpeak_usage': 50,  # User provided
-    'B19PVBWoffpeak_usage': 200,  # User provided
-    'B19TVBSpeak_usage': 100,  # User provided
-    'B19TVBSpartpeak_usage': 50,  # User provided
-    'B19TVBSoffpeak_usage': 200,  # User provided
-    'B19TVBWpeak_usage': 100,  # User provided
-    'B19TVBWsuperoffpeak_usage': 50,  # User provided
-    'B19TVBWoffpeak_usage': 200,  # User provided
-    'B20SVBSpeak_usage': 100,  # User provided
-    'B20SVBSpartpeak_usage': 50,  # User provided
-    'B20SVBSoffpeak_usage': 200,  # User provided
-    'B20SVBWpeak_usage': 100,  # User provided
-    'B20SVBWsuperoffpeak_usage': 50,  # User provided
-    'B20SVBWoffpeak_usage': 200,  # User provided
-    'B20PVBSpeak_usage': 100,  # User provided
-    'B20PVBSpartpeak_usage': 50,  # User provided
-    'B20PVBSoffpeak_usage': 200,  # User provided
-    'B20PVBWpeak_usage': 100,  # User provided
-    'B20PVBWsuperoffpeak_usage': 50,  # User provided
-    'B20PVBWoffpeak_usage': 200,  # User provided
-    'B20TVBSpeak_usage': 100,  # User provided
-    'B20TVBSpartpeak_usage': 50,  # User provided
-    'B20TVBSoffpeak_usage': 200,  # User provided
-    'B20TVBWpeak_usage': 100,  # User provided
-    'B20TVBWsuperoffpeak_usage': 50,  # User provided
-    'B20TVBWoffpeak_usage': 200,  # User provided
-    'meter_input': 5,  # User provided
-    'time_in_use': 10,  # User provided
-    'max_15min_usage': 100,  # User provided
-}
+        self.B19SVBWpeak_usage = B19SVBWpeak_usage
+        self.B19SVBWsuperoffpeak_usage = B19SVBWsuperoffpeak_usage
+        self.B19SVBWoffpeak_usage = B19SVBWoffpeak_usage
+        self.B19PVBSpeak_usage = B19PVBSpeak_usage
+        self.B19PVBSpartpeak_usage = B19PVBSpartpeak_usage
+        self.B19PVBSoffpeak_usage = B19PVBSoffpeak_usage
+        self.B19PVBWpeak_usage = B19PVBWpeak_usage
+        self.B19PVBWsuperoffpeak_usage = B19PVBWsuperoffpeak_usage
+        self.B19PVBWoffpeak_usage = B19PVBWoffpeak_usage
+        self.B19TVBSpeak_usage = B19TVBSpeak_usage
+        self.B19TVBSpartpeak_usage = B19TVBSpartpeak_usage
+        self.B19TVBSoffpeak_usage = B19TVBSoffpeak_usage
+        self.B19TVBWpeak_usage = B19TVBWpeak_usage
+        self.B19TVBWsuperoffpeak_usage = B19TVBWsuperoffpeak_usage
+        self.B19TVBWoffpeak_usage = B19TVBWoffpeak_usage
+        self.B20SVBSpeak_usage = B20SVBSpeak_usage
+        self.B20SVBSpartpeak_usage = B20SVBSpartpeak_usage
+        self.B20SVBSoffpeak_usage = B20SVBSoffpeak_usage
+        self.B20SVBWpeak_usage = B20SVBWpeak_usage
+        self.B20SVBWsuperoffpeak_usage = B20SVBWsuperoffpeak_usage
+        self.B20SVBWoffpeak_usage = B20SVBWoffpeak_usage
+        self.B20PVBSpeak_usage = B20PVBSpeak_usage
+        self.B20PVBSpartpeak_usage = B20PVBSpartpeak_usage
+        self.B20PVBSoffpeak_usage = B20PVBSoffpeak_usage
+        self.B20PVBWpeak_usage = B20PVBWpeak_usage
+        self.B20PVBWsuperoffpeak_usage = B20PVBWsuperoffpeak_usage
+        self.B20PVBWoffpeak_usage = B20PVBWoffpeak_usage
+        self.B20TVBSpeak_usage = B20TVBSpeak_usage
+        self.B20TVBSpartpeak_usage = B20TVBSpartpeak_usage
+        self.B20TVBSoffpeak_usage = B20TVBSoffpeak_usage
+        self.B20TVBWpeak_usage = B20TVBWpeak_usage
+        self.B20TVBWsuperoffpeak_usage = B20TVBWsuperoffpeak_usage
+        self.B20TVBWoffpeak_usage = B20TVBWoffpeak_usage
+        self.meter_input = meter_input
+        self.time_in_use = time_in_use
+        self.max_15min_usage = max_15min_usage
