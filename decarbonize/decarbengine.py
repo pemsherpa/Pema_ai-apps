@@ -60,7 +60,8 @@ class DecarbEngine:
                                                                  50, 2,30)[2],
             cur_emissions=commuting_emissions,
             new_emissions=commuting_emissions * 0.9,  # fake num
-            description="Analyze commuting costs and emissions for individual"
+            description="Analyze commuting costs and emissions for individual",
+            ranking_zscore=1.0
         )
         self.steps.append(commuting_step)
         savings += commuting_step.compute_savings()
