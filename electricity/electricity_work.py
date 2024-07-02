@@ -192,6 +192,7 @@ def check_condition_and_run(user_sector, user_bundled):
         result = rate_plan.optimize()
         print("Optimal solution:", result['x'])
         print("Optimal objective value:", result['objective'])
+        print("Optimal solution:", { name for i, name in enumerate(['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']) if result['x'][i] == 1})
 
         print("Output:", result1.stdout)
         print("Errors:", result1.stderr)
@@ -204,9 +205,13 @@ def check_condition_and_run(user_sector, user_bundled):
         smb_sector = create_smb_sector()
         rate_plan = SMBElectricityRatePlan('Electricity Rate Plan.xlsx', 'Bundled Peak Time Price', usage_data)
         result = rate_plan.optimize()
-
+        print("Optimal solution:", result['x'])
+        print("Optimal objective value:", result['objective'])
+        print("Optimal solution:", { name for i, name in enumerate(['A1NTB', 'A1B', 'B1B', 'B1STB', 'B6B', 'B10SVB', 'B10PVB', 'B10TVB', 'A1NTB_poly', 'A1NTB_single', 'A1B_poly', 'A1B_single', 'B1B_poly', 'B1B_single', 'B1STB_poly', 'B1STB_single', 'B6B_poly', 'B6B_single']) if result['x'][i] == 1})
+        
         print("Output:", result3.stdout)
         print("Errors:", result3.stderr)
+        
     elif condition4:
         result4 = subprocess.run(['python', 'smuelectricityrateplan.py'], capture_output=True, text=True)
         print("Output:", result4.stdout)
