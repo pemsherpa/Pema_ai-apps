@@ -15,9 +15,10 @@ class ElectricDecarbStep(DecarbStep):
         base_description = super().generate_step_description()
         return f"{base_description}"
     
-    def get_carbon_from_electric(self):
+    def get_carbon_from_electric(self, kwh_used):
         # Make API request for electric
-        pass
+        # TODO fix with API call
+        return kwh_used * 1.5
 
     def get_new_carbon_from_electric(self, cur_emissions, cur_renewable, new_renewable):
         cur_emissions * (new_renewable - cur_renewable)
