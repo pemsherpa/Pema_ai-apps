@@ -186,28 +186,28 @@ class ElectricityWork:
 
         if condition1:
             lcb_sector = self.create_lcb_sector()
-            rate_plan = LCBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', usage_data)
+            rate_plan = LCBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', lcb_sector)
             result = rate_plan.optimize()
             print("Optimal solution:", result['x'])
             print("Optimal objective value:", result['objective'])
             print("Optimal solution:", {name for i, name in enumerate(['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']) if result['x'][i] == 1})
         elif condition2:
             lcu_sector = self.create_lcu_sector()
-            rate_plan = LCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', usage_data)
+            rate_plan = LCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', lcu_sector)
             result = rate_plan.optimize()
             print("Optimal solution:", result['x'])
             print("Optimal objective value:", result['objective'])
             print("Optimal solution:", {name for i, name in enumerate(['B19SVU', 'B19PVU', 'B19TVU', 'B19U', 'B20SVU', 'B20PVU', 'B20TVU', 'B20U']) if result['x'][i] == 1})
         elif condition3:
             smb_sector = self.create_smb_sector()
-            rate_plan = SMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', usage_data)
+            rate_plan = SMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', smb_sector)
             result = rate_plan.optimize()
             print("Optimal solution:", result['x'])
             print("Optimal objective value:", result['objective'])
             print("Optimal solution:", {name for i, name in enumerate(['A1NTB', 'A1B', 'B1B', 'B1STB', 'B6B', 'B10SVB', 'B10PVB', 'B10TVB', 'A1NTB_poly', 'A1NTB_single', 'A1B_poly', 'A1B_single', 'B1B_poly', 'B1B_single', 'B1STB_poly', 'B1STB_single', 'B6B_poly', 'B6B_single']) if result['x'][i] == 1})
         elif condition4:
             smu_sector = self.create_smu_sector()
-            rate_plan = SMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', usage_data)
+            rate_plan = SMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', smu_sector)
             result = rate_plan.optimize()
             print("Optimal solution:", result['x'])
             print("Optimal objective value:", result['objective'])

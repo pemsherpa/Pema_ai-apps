@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1Va1NjMDqAxny9SmY2yMU9ZPrJCkJ9T66
 """
 
-class SMBSector:
+class SMUSector:
     def __init__(self, A1NTUStotal_usage, A1NTUWtotal_usage, A1USpeak_usage,
                  A1USpartpeak_usage, A1USoffpeak_usage, A1UWpartpeak_usage,
                  A1UWoffpeak_usage, B1USpeak_usage, B1USpartpeak_usage, B1USoffpeak_usage,

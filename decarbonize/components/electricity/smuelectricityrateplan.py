@@ -30,9 +30,6 @@ class SMUElectricityRatePlan:
         self.usage_data = usage_data
         self.load_parameters()
 
-
-
-
     def get_sum(self):
         col_sum = ['Generation', 'Distribution', 'Transmission', 'Transmission Rate Adjustments',
                    'Reliability Services', 'Public Purpose Programs', 'Nuclear Decommissioning',
