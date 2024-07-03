@@ -223,8 +223,9 @@ class ElectricityWork:
         new_renewable= 
         kwh_used= 
         description=
+        difficulty=2
 
-        electric_step = ElectricDecarbStep(cur_cost, new_cost, cur_renewable, new_renewable, kwh_used, description)
+        electric_step = ElectricDecarbStep(cur_cost, new_cost, cur_renewable, new_renewable, kwh_used, description, difficulty)
 
         return electric_step
 

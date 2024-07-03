@@ -77,7 +77,8 @@ class DecarbEngine:
             new_emissions = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,
                                                                        [1,2,3], 50,2,30)[2],
             cur_emissions=commuting_emissions,
-            description="Analyze commuting costs and emissions for carpool"
+            description="Analyze commuting costs and emissions for carpool", 
+            difficulty=5
         )
         self.steps.append(commuting_step)
         savings += commuting_step.compute_savings()
@@ -85,13 +86,13 @@ class DecarbEngine:
         #flight costs
         optimal_flight = self.analyze_flight_costs()
         print(optimal_flight)
-        flight_step = self.create_flight_step(optimal_flight)
+        flight_step = self.create_flight_step(optimal_flight, 3)
         self.steps.append(flight_step)
         savings += flight_step.compute_savings()
 
         # return flight
         return_flight = self.get_return_flight_options()
-        return_flight_step = self.create_flight_step(return_flight)
+        return_flight_step = self.create_flight_step(return_flight, 3.5)
         self.steps.append(return_flight_step)
         savings += return_flight_step.compute_savings()
 
@@ -104,9 +105,10 @@ class DecarbEngine:
         self.steps.append(electric_step)
         savings += electric_step.compute_savings()
 
+        #Order the steps based on ZScore: 1st item to be which action the user takes first.
         return self.steps
 
-    def create_flight_step(self, return_flight):
+    def create_flight_step(self, return_flight, difficulty):
         return_flight_savings = return_flight['Price'].iloc[0]
         return_flight_emissions = return_flight['Carbon Emissions'].iloc[0]
         return_flight_step = FlightDecarbStep(
@@ -115,7 +117,8 @@ class DecarbEngine:
             cur_emissions=return_flight_emissions * 1.1, # fake
             new_emissions=return_flight_emissions,
             description="Analyze return flight costs and emissions",
-            num_stops=return_flight['Stops'].iloc[0]
+            num_stops=return_flight['Stops'].iloc[0],
+            difficulty=difficulty
         )
         return return_flight_step
 
