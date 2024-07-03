@@ -13,6 +13,10 @@ from lcbelectricityrateplan import LCBElectricityRatePlan
 from sectors.lcbsector import LCBSector
 from sectors.smbsector import SMBSector
 from smbelectricityrateplan import SMBElectricityRatePlan
+from smuelectricityrateplan import SMUElectricityRatePlan
+from lcuelectricityrateplan import LCUElectricityRatePlan
+from sectors.smusector import SMUSector
+from sectors.lcusector import LCUSector
 
 class ElectricityWork:
     def __init__(self, file_path):
@@ -112,7 +116,67 @@ class ElectricityWork:
                  B20TVBSpeak_usage,B20TVBSpartpeak_usage,B20TVBSoffpeak_usage,
                  B20TVBWpeak_usage,B20TVBWsuperoffpeak_usage,B20TVBWoffpeak_usage,
                  meter_input,time_in_use,max_15min_usage)
-        return lcb_sector
+        return lcb_sector()
+
+    def create_smu_sector(self, A1NTUStotal_usage, A1NTUWtotal_usage, A1USpeak_usage,
+                 A1USpartpeak_usage, A1USoffpeak_usage, A1UWpartpeak_usage,
+                 A1UWoffpeak_usage, B1USpeak_usage, B1USpartpeak_usage, B1USoffpeak_usage,
+                 B1UWpeak_usage, B1UWsuperoffpeak_usage, B1UWoffpeak_usage,
+                 B1STUSpeak_usage, B1STUSpartpeak_usage, B1STUSoffpeak_usage,
+                 B1STUWpeak_usage, B1STUWpartpeak_usage, B1STUWsuperoffpeak_usage,
+                 B1STUWoffpeak_usage, B6USpeak_usage, B6USoffpeak_usage,
+                 B6UWpeak_usage, B6UWsuperoffpeak_usage,B6UWoffpeak_usage,
+                 B10SVUSpeak_usage,B10SVUSpartpeak_usage,B10SVUSoffpeak_usage,
+                 B10SVUWpeak_usage, B10SVUWsuperoffpeak_usage, B10SVUWoffpeak_usage,
+                 B10PVUSpeak_usage,B10PVUSpartpeak_usage,B10PVUSoffpeak_usage,
+                 B10PVUWpeak_usage,B10PVUWsuperoffpeak_usage,B10PVUWoffpeak_usage,
+                 B10TVUSpeak_usage, B10TVUSpartpeak_usage,B10TVUSoffpeak_usage,
+                 B10TVUWpeak_usage,B10TVUWsuperoffpeak_usage, B10TVUWoffpeak_usage,
+                 meter_input,time_in_use, max_15min_usage,B1STU_highest_demand_15mins):
+        smu_sector= SMUSector(A1NTUStotal_usage, A1NTUWtotal_usage, A1USpeak_usage,
+                 A1USpartpeak_usage, A1USoffpeak_usage, A1UWpartpeak_usage,
+                 A1UWoffpeak_usage, B1USpeak_usage, B1USpartpeak_usage, B1USoffpeak_usage,
+                 B1UWpeak_usage, B1UWsuperoffpeak_usage, B1UWoffpeak_usage,
+                 B1STUSpeak_usage, B1STUSpartpeak_usage, B1STUSoffpeak_usage,
+                 B1STUWpeak_usage, B1STUWpartpeak_usage, B1STUWsuperoffpeak_usage,
+                 B1STUWoffpeak_usage, B6USpeak_usage, B6USoffpeak_usage,
+                 B6UWpeak_usage, B6UWsuperoffpeak_usage,B6UWoffpeak_usage,
+                 B10SVUSpeak_usage,B10SVUSpartpeak_usage,B10SVUSoffpeak_usage,
+                 B10SVUWpeak_usage, B10SVUWsuperoffpeak_usage, B10SVUWoffpeak_usage,
+                 B10PVUSpeak_usage,B10PVUSpartpeak_usage,B10PVUSoffpeak_usage,
+                 B10PVUWpeak_usage,B10PVUWsuperoffpeak_usage,B10PVUWoffpeak_usage,
+                 B10TVUSpeak_usage, B10TVUSpartpeak_usage,B10TVUSoffpeak_usage,
+                 B10TVUWpeak_usage,B10TVUWsuperoffpeak_usage, B10TVUWoffpeak_usage,
+                 meter_input,time_in_use, max_15min_usage,B1STU_highest_demand_15mins)
+        return smu_sector
+
+    def create_lcu_sector(self, B19SVUSpeak_usage, B19SVUSpartpeak_usage, B19SVUSoffpeak_usage,
+                 B19SVUWpeak_usage,B19SVUWsuperoffpeak_usage,B19SVUWoffpeak_usage,Summer_highest_usage_B19SV,Winter_highest_usage_B19SV,
+                 B19PVUSpeak_usage,B19PVUSpartpeak_usage,B19PVUSoffpeak_usage,
+                 B19PVUWpeak_usage,B19PVUWsuperoffpeak_usage,B19PVUWoffpeak_usage,Summer_highest_usage_B19PV,Winter_highest_usage_B19PV,
+                 B19TVUSpeak_usage,B19TVUSpartpeak_usage,B19TVUSoffpeak_usage,
+                 B19TVUWpeak_usage,B19TVUWsuperoffpeak_usage,B19TVUWoffpeak_usage,Summer_highest_usage_B19TV,Winter_highest_usage_B19TV,
+                 B20SVUSpeak_usage, B20SVUSpartpeak_usage, B20SVUSoffpeak_usage,
+                 B20SVUWpeak_usage,B20SVUWsuperoffpeak_usage,B20SVUWoffpeak_usage,Summer_highest_usage_B20SV,Winter_highest_usage_B20SV,
+                 B20PVUSpeak_usage,B20PVUSpartpeak_usage,B20PVUSoffpeak_usage,
+                 B20PVUWpeak_usage,B20PVUWsuperoffpeak_usage,B20PVUWoffpeak_usage,Summer_highest_usage_B20PV,Winter_highest_usage_B20PV,
+                 B20TVUSpeak_usage,B20TVUSpartpeak_usage,B20TVUSoffpeak_usage,
+                 B20TVUWpeak_usage,B20TVUWsuperoffpeak_usage,B20TVUWoffpeak_usage,Summer_highest_usage_B20TV,Winter_highest_usage_B20TV,
+                 meter_input,time_in_use,max_15min_usage):
+        lcu_sector = LCUSector(B19SVUSpeak_usage, B19SVUSpartpeak_usage, B19SVUSoffpeak_usage,
+                 B19SVUWpeak_usage,B19SVUWsuperoffpeak_usage,B19SVUWoffpeak_usage,Summer_highest_usage_B19SV,Winter_highest_usage_B19SV,
+                 B19PVUSpeak_usage,B19PVUSpartpeak_usage,B19PVUSoffpeak_usage,
+                 B19PVUWpeak_usage,B19PVUWsuperoffpeak_usage,B19PVUWoffpeak_usage,Summer_highest_usage_B19PV,Winter_highest_usage_B19PV,
+                 B19TVUSpeak_usage,B19TVUSpartpeak_usage,B19TVUSoffpeak_usage,
+                 B19TVUWpeak_usage,B19TVUWsuperoffpeak_usage,B19TVUWoffpeak_usage,Summer_highest_usage_B19TV,Winter_highest_usage_B19TV,
+                 B20SVUSpeak_usage, B20SVUSpartpeak_usage, B20SVUSoffpeak_usage,
+                 B20SVUWpeak_usage,B20SVUWsuperoffpeak_usage,B20SVUWoffpeak_usage,Summer_highest_usage_B20SV,Winter_highest_usage_B20SV,
+                 B20PVUSpeak_usage,B20PVUSpartpeak_usage,B20PVUSoffpeak_usage,
+                 B20PVUWpeak_usage,B20PVUWsuperoffpeak_usage,B20PVUWoffpeak_usage,Summer_highest_usage_B20PV,Winter_highest_usage_B20PV,
+                 B20TVUSpeak_usage,B20TVUSpartpeak_usage,B20TVUSoffpeak_usage,
+                 B20TVUWpeak_usage,B20TVUWsuperoffpeak_usage,B20TVUWoffpeak_usage,Summer_highest_usage_B20TV,Winter_highest_usage_B20TV,
+                 meter_input,time_in_use,max_15min_usage)
+        return lcu_sector
 
     def check_condition_and_run(self, user_sector, user_bundled, usage_data):
         condition1 = (user_sector == 'Large Commercial and Industrial' and user_bundled == 'Yes')
@@ -128,9 +192,12 @@ class ElectricityWork:
             print("Optimal objective value:", result['objective'])
             print("Optimal solution:", {name for i, name in enumerate(['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']) if result['x'][i] == 1})
         elif condition2:
-            result2 = subprocess.run(['python', 'lcuelectricityrateplan.py'], capture_output=True, text=True)
-            print("Output:", result2.stdout)
-            print("Errors:", result2.stderr)
+            lcu_sector = self.create_lcu_sector()
+            rate_plan = LCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', usage_data)
+            result = rate_plan.optimize()
+            print("Optimal solution:", result['x'])
+            print("Optimal objective value:", result['objective'])
+            print("Optimal solution:", {name for i, name in enumerate(['B19SVU', 'B19PVU', 'B19TVU', 'B19U', 'B20SVU', 'B20PVU', 'B20TVU', 'B20U']) if result['x'][i] == 1})
         elif condition3:
             smb_sector = self.create_smb_sector()
             rate_plan = SMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', usage_data)
@@ -139,9 +206,12 @@ class ElectricityWork:
             print("Optimal objective value:", result['objective'])
             print("Optimal solution:", {name for i, name in enumerate(['A1NTB', 'A1B', 'B1B', 'B1STB', 'B6B', 'B10SVB', 'B10PVB', 'B10TVB', 'A1NTB_poly', 'A1NTB_single', 'A1B_poly', 'A1B_single', 'B1B_poly', 'B1B_single', 'B1STB_poly', 'B1STB_single', 'B6B_poly', 'B6B_single']) if result['x'][i] == 1})
         elif condition4:
-            result4 = subprocess.run(['python', 'smuelectricityrateplan.py'], capture_output=True, text=True)
-            print("Output:", result4.stdout)
-            print("Errors:", result4.stderr)
+            smu_sector = self.create_smu_sector()
+            rate_plan = SMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', usage_data)
+            result = rate_plan.optimize()
+            print("Optimal solution:", result['x'])
+            print("Optimal objective value:", result['objective'])
+            print("Optimal solution:", {name for i, name in enumerate(['A1NTU', 'A1U', 'B1U', 'B1STU', 'B6U', 'B10SVU', 'B10PVU', 'B10TVU', 'A1NTU_poly', 'A1NTU_single', 'A1U_poly', 'A1U_single', 'B1U_poly', 'B1U_single', 'B1STU_poly', 'B1STU_single', 'B6U_poly', 'B6U_single']) if result['x'][i] == 1})
         else:
             print("Condition not met, not running the script.")
 
