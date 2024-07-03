@@ -21,5 +21,5 @@ class ElectricDecarbStep(DecarbStep):
         return kwh_used * 1.5
 
     def get_new_carbon_from_electric(self, cur_emissions, cur_renewable, new_renewable):
-        cur_emissions * (new_renewable - cur_renewable)
+        cur_emissions = cur_emissions * (new_renewable - cur_renewable)
         return cur_emissions
