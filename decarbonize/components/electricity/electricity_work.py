@@ -8,131 +8,85 @@ Original file is located at
 """
 
 import pandas as pd
-
+import subprocess
 from lcbelectricityrateplan import LCBElectricityRatePlan
 from sectors.lcbsector import LCBSector
 from sectors.smbsector import SMBSector
 from smbelectricityrateplan import SMBElectricityRatePlan
 
-file_path = 'Electricity Rate Plan.xlsx'
-sheets = pd.read_excel(file_path, sheet_name=None)
+class ElectricityWork:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.sheets = pd.read_excel(self.file_path, sheet_name=None)
+        self.pge_service_df = self.sheets['PG&E Service Area']
+        self.cca_df = self.sheets['CCA']
+        self.joint_rate_plan_df = self.sheets['Joint Rate Plan']
+        self.bundled_peak_time_price_df = self.sheets['Bundled Peak Time Price']
+        self.unbundled_peak_time_price_df = self.sheets['Unbundled Peak Time Price']
 
-pge_service_df = sheets['PG&E Service Area']
-
-def check_zip_code(zip_code):
-    if zip_code in pge_service_df['PG&E Service area Zip Code'].values:
-        return "In PG&E service"
-    else:
-        return "Not in PG&E service"
-
-user_zip_code = 95347
-result1 = check_zip_code(user_zip_code)
-
-print(result1)
-
-cca_df = sheets['CCA']
-
-def match_cca_service(zip_code):
-    for column in cca_df.columns:
-        if user_zip_code in cca_df[column].values:
-            return f"Matched in CCA: {column}"
-    return "No CCA"
-
-result2 = match_cca_service(result1)
-
-print(result2)
-
-joint_rate_plan_df = sheets['Joint Rate Plan']
-bundled_peak_time_price_df = sheets['Bundled Peak Time Price']
-unbundled_peak_time_price_df = sheets['Unbundled Peak Time Price']
-
-def get_matched_rows(zip_code, user_sector, user_bundled):
-    result1 = check_zip_code(zip_code)
-    result2 = match_cca_service(zip_code)
-
-    if "Matched in CCA" in result2:
-        matched_column = result2.split(": ")[1]
-        location_matched_rows = joint_rate_plan_df[joint_rate_plan_df['Location'] == matched_column]
-
-        final_matched_rows = location_matched_rows[location_matched_rows['Sector'] == user_sector]
-
-        return final_matched_rows
-    elif "No CCA" in result2:
-        if user_bundled == "Yes":
-            sector_matched_rows = bundled_peak_time_price_df[bundled_peak_time_price_df['Sector'] == user_sector]
+    def check_zip_code(self, zip_code):
+        if zip_code in self.pge_service_df['PG&E Service area Zip Code'].values:
+            return "In PG&E service"
         else:
-            sector_matched_rows = unbundled_peak_time_price_df[unbundled_peak_time_price_df['Sector'] == user_sector]
+            return "Not in PG&E service"
 
-        return sector_matched_rows
-    else:
-        return "No matching rows in joint rate plan", "No matching rows in joint rate comparison"
+    def match_cca_service(self, zip_code):
+        for column in self.cca_df.columns:
+            if zip_code in self.cca_df[column].values:
+                return f"Matched in CCA: {column}"
+        return "No CCA"
 
+    def get_matched_rows(self, zip_code, user_sector, user_bundled):
+        result1 = self.check_zip_code(zip_code)
+        result2 = self.match_cca_service(zip_code)
 
-user_sector = 'Large Commercial and Industrial'
-user_bundled = 'Yes'
+        if "Matched in CCA" in result2:
+            matched_column = result2.split(": ")[1]
+            location_matched_rows = self.joint_rate_plan_df[self.joint_rate_plan_df['Location'] == matched_column]
+            final_matched_rows = location_matched_rows[location_matched_rows['Sector'] == user_sector]
+            return final_matched_rows
+        elif "No CCA" in result2:
+            if user_bundled == "Yes":
+                sector_matched_rows = self.bundled_peak_time_price_df[self.bundled_peak_time_price_df['Sector'] == user_sector]
+            else:
+                sector_matched_rows = self.unbundled_peak_time_price_df[self.unbundled_peak_time_price_df['Sector'] == user_sector]
+            return sector_matched_rows
+        else:
+            return "No matching rows in joint rate plan", "No matching rows in joint rate comparison"
 
-final_result = get_matched_rows(user_zip_code, user_sector, user_bundled)
+    def create_smb_sector(self, A1NTBStotal_usage, A1NTBWtotal_usage, A1BSpeak_usage,
+                 A1BSpartpeak_usage, A1BSoffpeak_usage, A1BWpartpeak_usage,
+                 A1BWoffpeak_usage, B1BSpeak_usage, B1BSpartpeak_usage, B1BSoffpeak_usage,
+                 B1BWpeak_usage, B1BWsuperoffpeak_usage, B1BWoffpeak_usage,
+                 B1STBSpeak_usage, B1STBSpartpeak_usage, B1STBSoffpeak_usage,
+                 B1STBWpeak_usage, B1STBWpartpeak_usage, B1STBWsuperoffpeak_usage,
+                 B1STBWoffpeak_usage, B6BSpeak_usage, B6BSoffpeak_usage,
+                 B6BWpeak_usage, B6BWsuperoffpeak_usage,B6BWoffpeak_usage,
+                 B10SVBSpeak_usage,B10SVBSpartpeak_usage,B10SVBSoffpeak_usage,
+                 B10SVBWpeak_usage, B10SVBWsuperoffpeak_usage, B10SVBWoffpeak_usage,
+                 B10PVBSpeak_usage,B10PVBSpartpeak_usage,B10PVBSoffpeak_usage,
+                 B10PVBWpeak_usage,B10PVBWsuperoffpeak_usage,B10PVBWoffpeak_usage,
+                 B10TVBSpeak_usage, B10TVBSpartpeak_usage,B10TVBSoffpeak_usage,
+                 B10TVBWpeak_usage,B10TVBWsuperoffpeak_usage, B10TVBWoffpeak_usage,
+                 meter_input,time_in_use, max_15min_usage,B1STB_highest_demand_15mins):
+        smb_sector = SMBSector(A1NTBStotal_usage, A1NTBWtotal_usage, A1BSpeak_usage,
+                 A1BSpartpeak_usage, A1BSoffpeak_usage, A1BWpartpeak_usage,
+                 A1BWoffpeak_usage, B1BSpeak_usage, B1BSpartpeak_usage, B1BSoffpeak_usage,
+                 B1BWpeak_usage, B1BWsuperoffpeak_usage, B1BWoffpeak_usage,
+                 B1STBSpeak_usage, B1STBSpartpeak_usage, B1STBSoffpeak_usage,
+                 B1STBWpeak_usage, B1STBWpartpeak_usage, B1STBWsuperoffpeak_usage,
+                 B1STBWoffpeak_usage, B6BSpeak_usage, B6BSoffpeak_usage,
+                 B6BWpeak_usage, B6BWsuperoffpeak_usage,B6BWoffpeak_usage,
+                 B10SVBSpeak_usage,B10SVBSpartpeak_usage,B10SVBSoffpeak_usage,
+                 B10SVBWpeak_usage, B10SVBWsuperoffpeak_usage, B10SVBWoffpeak_usage,
+                 B10PVBSpeak_usage,B10PVBSpartpeak_usage,B10PVBSoffpeak_usage,
+                 B10PVBWpeak_usage,B10PVBWsuperoffpeak_usage,B10PVBWoffpeak_usage,
+                 B10TVBSpeak_usage, B10TVBSpartpeak_usage,B10TVBSoffpeak_usage,
+                 B10TVBWpeak_usage,B10TVBWsuperoffpeak_usage, B10TVBWoffpeak_usage,
+                 meter_input,time_in_use, max_15min_usage,B1STB_highest_demand_15mins)
+        return smb_sector
 
-print("Matched rows:")
-print(final_result)
-
-import subprocess
-
-def create_smb_sector(A1NTBStotal_usage, A1NTBWtotal_usage, A1BSpeak_usage):
-    smb_sector = SMBSector(A1NTBStotal_usage, A1NTBWtotal_usage, A1BSpeak_usage)
-
-    usage_data = {
-        'A1NTBStotal_usage': ...,  # User provided
-        'A1NTBWtotal_usage': ...,  # User provided
-        'A1BSpeak_usage': ...,  # User provided
-        'A1BSpartpeak_usage': ...,  # User provided
-        'A1BSoffpeak_usage': ...,  # User provided
-        'A1BWpartpeak_usage': ...,  # User provided
-        'A1BWoffpeak_usage': ...,  # User provided
-        'B1BSpeak_usage': ...,  # User provided
-        'B1BSpartpeak_usage': ...,  # User provided
-        'B1BSoffpeak_usage': ...,  # User provided
-        'B1BWpeak_usage': ...,  # User provided
-        'B1BWsuperoffpeak_usage': ...,  # User provided
-        'B1BWoffpeak_usage': ...,  # User provided
-        'B1STBSpeak_usage': ...,  # User provided
-        'B1STBSpartpeak_usage': ...,  # User provided
-        'B1STBSoffpeak_usage': ...,  # User provided
-        'B1STBWpeak_usage': ...,  # User provided
-        'B1STBWpartpeak_usage': ...,  # User provided
-        'B1STBWsuperoffpeak_usage': ...,  # User provided
-        'B1STBWoffpeak_usage': ...,  # User provided
-        'B6BSpeak_usage': ...,  # User provided
-        'B6BSoffpeak_usage': ...,  # User provided
-        'B6BWpeak_usage': ...,  # User provided
-        'B6BWsuperoffpeak_usage': ...,  # User provided
-        'B6BWoffpeak_usage': ...,  # User provided
-        'B10SVBSpeak_usage': ...,  # User provided
-        'B10SVBSpartpeak_usage': ...,  # User provided
-        'B10SVBSoffpeak_usage': ...,  # User provided
-        'B10SVBWpeak_usage': ...,  # User provided
-        'B10SVBWsuperoffpeak_usage': ...,  # User provided
-        'B10SVBWoffpeak_usage': ...,  # User provided
-        'B10PVBSpeak_usage': ...,  # User provided
-        'B10PVBSpartpeak_usage': ...,  # User provided
-        'B10PVBSoffpeak_usage': ...,  # User provided
-        'B10PVBWpeak_usage': ...,  # User provided
-        'B10PVBWsuperoffpeak_usage': ...,  # User provided
-        'B10PVBWoffpeak_usage': ...,  # User provided
-        'B10TVBSpeak_usage': ...,  # User provided
-        'B10TVBSpartpeak_usage': ...,  # User provided
-        'B10TVBSoffpeak_usage': ...,  # User provided
-        'B10TVBWpeak_usage': ...,  # User provided
-        'B10TVBWsuperoffpeak_usage': ...,  # User provided
-        'B10TVBWoffpeak_usage': ...,  # User provided
-        'meter_input': ...,  # User provided
-        'time_in_use': ...,  # User provided
-        'max_15min_usage': ...,  # User provided
-        'B1STB_highest_demand_15mins': ...,  # User provided
-    }
-    return smb_sector
-
-def create_lcb_sector(B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage,
+    def create_lcb_sector(self, B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage,
                  B19SVBWpeak_usage,B19SVBWsuperoffpeak_usage,B19SVBWoffpeak_usage,
                  B19PVBSpeak_usage,B19PVBSpartpeak_usage,B19PVBSoffpeak_usage,
                  B19PVBWpeak_usage,B19PVBWsuperoffpeak_usage,B19PVBWoffpeak_usage,
@@ -140,12 +94,12 @@ def create_lcb_sector(B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_u
                  B19TVBWpeak_usage,B19TVBWsuperoffpeak_usage,B19TVBWoffpeak_usage,
                  B20SVBSpeak_usage, B20SVBSpartpeak_usage, B20SVBSoffpeak_usage,
                  B20SVBWpeak_usage,B20SVBWsuperoffpeak_usage,B20SVBWoffpeak_usage,
-                 B20PVBSpeak_usage,B20PVBSpartpeak_usage,B20PVBSoffpeak_usage,
-                 B20PVBWpeak_usage,B20PVBWsuperoffpeak_usage,B20PVBWoffpeak_usage,
+                 B20PVBSpeak_usage,B20PVBSpartpeak_usage,B20PVBWpeak_usage,
+                 B20PVBWsuperoffpeak_usage,B20PVBWoffpeak_usage,
                  B20TVBSpeak_usage,B20TVBSpartpeak_usage,B20TVBSoffpeak_usage,
                  B20TVBWpeak_usage,B20TVBWsuperoffpeak_usage,B20TVBWoffpeak_usage,
                  meter_input,time_in_use,max_15min_usage):
-    lcb_sector = LCBSector(B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage,
+        lcb_sector = LCBSector(B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage,
                  B19SVBWpeak_usage,B19SVBWsuperoffpeak_usage,B19SVBWoffpeak_usage,
                  B19PVBSpeak_usage,B19PVBSpartpeak_usage,B19PVBSoffpeak_usage,
                  B19PVBWpeak_usage,B19PVBWsuperoffpeak_usage,B19PVBWoffpeak_usage,
@@ -153,52 +107,48 @@ def create_lcb_sector(B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_u
                  B19TVBWpeak_usage,B19TVBWsuperoffpeak_usage,B19TVBWoffpeak_usage,
                  B20SVBSpeak_usage, B20SVBSpartpeak_usage, B20SVBSoffpeak_usage,
                  B20SVBWpeak_usage,B20SVBWsuperoffpeak_usage,B20SVBWoffpeak_usage,
-                 B20PVBSpeak_usage,B20PVBSpartpeak_usage,B20PVBSoffpeak_usage,
-                 B20PVBWpeak_usage,B20PVBWsuperoffpeak_usage,B20PVBWoffpeak_usage,
+                 B20PVBSpeak_usage,B20PVBSpartpeak_usage,B20PVBWpeak_usage,
+                 B20PVBWsuperoffpeak_usage,B20PVBWoffpeak_usage,
                  B20TVBSpeak_usage,B20TVBSpartpeak_usage,B20TVBSoffpeak_usage,
                  B20TVBWpeak_usage,B20TVBWsuperoffpeak_usage,B20TVBWoffpeak_usage,
                  meter_input,time_in_use,max_15min_usage)
-    return lcb_sector
+        return lcb_sector
 
-def check_condition_and_run(user_sector, user_bundled):
+    def check_condition_and_run(self, user_sector, user_bundled, usage_data):
+        condition1 = (user_sector == 'Large Commercial and Industrial' and user_bundled == 'Yes')
+        condition2 = (user_sector == 'Large Commercial and Industrial' and user_bundled == 'No')
+        condition3 = (user_sector == 'Small and Medium Business' and user_bundled == 'Yes')
+        condition4 = (user_sector == 'Small and Medium Business' and user_bundled == 'No')
 
-    condition1 = (user_sector == 'Large Commercial and Industrial' and user_bundled == 'Yes')
-    condition2 = (user_sector == 'Large Commercial and Industrial' and user_bundled == 'No')
-    condition3 = (user_sector == 'Small and Medium Business' and user_bundled == 'Yes')
-    condition4 = (user_sector == 'Small and Medium Business' and user_bundled == 'No')
+        if condition1:
+            lcb_sector = self.create_lcb_sector()
+            rate_plan = LCBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', usage_data)
+            result = rate_plan.optimize()
+            print("Optimal solution:", result['x'])
+            print("Optimal objective value:", result['objective'])
+            print("Optimal solution:", {name for i, name in enumerate(['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']) if result['x'][i] == 1})
+        elif condition2:
+            result2 = subprocess.run(['python', 'lcuelectricityrateplan.py'], capture_output=True, text=True)
+            print("Output:", result2.stdout)
+            print("Errors:", result2.stderr)
+        elif condition3:
+            smb_sector = self.create_smb_sector()
+            rate_plan = SMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', usage_data)
+            result = rate_plan.optimize()
+            print("Optimal solution:", result['x'])
+            print("Optimal objective value:", result['objective'])
+            print("Optimal solution:", {name for i, name in enumerate(['A1NTB', 'A1B', 'B1B', 'B1STB', 'B6B', 'B10SVB', 'B10PVB', 'B10TVB', 'A1NTB_poly', 'A1NTB_single', 'A1B_poly', 'A1B_single', 'B1B_poly', 'B1B_single', 'B1STB_poly', 'B1STB_single', 'B6B_poly', 'B6B_single']) if result['x'][i] == 1})
+        elif condition4:
+            result4 = subprocess.run(['python', 'smuelectricityrateplan.py'], capture_output=True, text=True)
+            print("Output:", result4.stdout)
+            print("Errors:", result4.stderr)
+        else:
+            print("Condition not met, not running the script.")
 
-    if condition1:
-        #result1 = subprocess.run(['python', 'lcbelectricityrateplan.py'], capture_output=True, text=True)
-        lcb_sector = create_lcb_sector()
-        rate_plan = LCBElectricityRatePlan('Electricity Rate Plan.xlsx', 'Bundled Peak Time Price', usage_data)
-        result = rate_plan.optimize()
-        print("Optimal solution:", result['x'])
-        print("Optimal objective value:", result['objective'])
-        print("Optimal solution:", { name for i, name in enumerate(['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']) if result['x'][i] == 1})
 
-        print("Output:", result1.stdout)
-        print("Errors:", result1.stderr)
-    elif condition2:
-        result2 = subprocess.run(['python', 'lcuelectricityrateplan.py'], capture_output=True, text=True)
-        print("Output:", result2.stdout)
-        print("Errors:", result2.stderr)
-    elif condition3:
-        # result3 = subprocess.run(['python', 'smbelectricityrateplan.py'], capture_output=True, text=True)
-        smb_sector = create_smb_sector()
-        rate_plan = SMBElectricityRatePlan('Electricity Rate Plan.xlsx', 'Bundled Peak Time Price', usage_data)
-        result = rate_plan.optimize()
-        print("Optimal solution:", result['x'])
-        print("Optimal objective value:", result['objective'])
-        print("Optimal solution:", { name for i, name in enumerate(['A1NTB', 'A1B', 'B1B', 'B1STB', 'B6B', 'B10SVB', 'B10PVB', 'B10TVB', 'A1NTB_poly', 'A1NTB_single', 'A1B_poly', 'A1B_single', 'B1B_poly', 'B1B_single', 'B1STB_poly', 'B1STB_single', 'B6B_poly', 'B6B_single']) if result['x'][i] == 1})
-        
-        print("Output:", result3.stdout)
-        print("Errors:", result3.stderr)
-        
-    elif condition4:
-        result4 = subprocess.run(['python', 'smuelectricityrateplan.py'], capture_output=True, text=True)
-        print("Output:", result4.stdout)
-        print("Errors:", result4.stderr)
-    else:
-        print("Condition not met, not running the script.")
-
-check_condition_and_run(user_sector, user_bundled)
+ew = ElectricityWork('Electricity Rate Plan.xlsx')
+user_sector = 'Large Commercial and Industrial'
+user_bundled = 'Yes'
+user_zip_code = 95347
+usage_data = {} 
+ew.check_condition_and_run(user_sector, user_bundled, usage_data)
