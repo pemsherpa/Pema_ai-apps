@@ -17,9 +17,10 @@ from smuelectricityrateplan import SMUElectricityRatePlan
 from lcuelectricityrateplan import LCUElectricityRatePlan
 from sectors.smusector import SMUSector
 from sectors.lcusector import LCUSector
+from steps.electric_decarb_step import ElectricDecarbStep
 
 class ElectricityWork:
-    def __init__(self, file_path):
+    def __init__(self, file_path, user_zip_code):
         self.file_path = file_path
         self.sheets = pd.read_excel(self.file_path, sheet_name=None)
         self.pge_service_df = self.sheets['PG&E Service Area']
@@ -27,6 +28,7 @@ class ElectricityWork:
         self.joint_rate_plan_df = self.sheets['Joint Rate Plan']
         self.bundled_peak_time_price_df = self.sheets['Bundled Peak Time Price']
         self.unbundled_peak_time_price_df = self.sheets['Unbundled Peak Time Price']
+        self.user_zip_code = user_zip_code
 
     def check_zip_code(self, zip_code):
         if zip_code in self.pge_service_df['PG&E Service area Zip Code'].values:
@@ -116,7 +118,7 @@ class ElectricityWork:
                  B20TVBSpeak_usage,B20TVBSpartpeak_usage,B20TVBSoffpeak_usage,
                  B20TVBWpeak_usage,B20TVBWsuperoffpeak_usage,B20TVBWoffpeak_usage,
                  meter_input,time_in_use,max_15min_usage)
-        return lcb_sector()
+        return lcb_sector
 
     def create_smu_sector(self, A1NTUStotal_usage, A1NTUWtotal_usage, A1USpeak_usage,
                  A1USpartpeak_usage, A1USoffpeak_usage, A1UWpartpeak_usage,
@@ -183,43 +185,64 @@ class ElectricityWork:
         print("Optimal objective value:", result['objective'])
         print("Optimal solution:", {name for i, name in enumerate(keys) if result['x'][i] == 1})
         
-    def check_condition_and_run(self, user_sector, user_bundled, usage_data):
+    def check_condition_and_run(self, user_sector, user_bundled):
         condition1 = (user_sector == 'Large Commercial and Industrial' and user_bundled == 'Yes')
         condition2 = (user_sector == 'Large Commercial and Industrial' and user_bundled == 'No')
         condition3 = (user_sector == 'Small and Medium Business' and user_bundled == 'Yes')
         condition4 = (user_sector == 'Small and Medium Business' and user_bundled == 'No')
 
+        rate_plan = None 
+        keys = []
         if condition1:
             lcb_sector = self.create_lcb_sector()
             rate_plan = LCBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', lcb_sector)
-            result = rate_plan.optimize()            
-            keys = ['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']
-            self.print_result(result, keys)
+            keys = ['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']            
         elif condition2:
             lcu_sector = self.create_lcu_sector()
             rate_plan = LCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', lcu_sector)
-            result = rate_plan.optimize()
             keys = ['B19SVU', 'B19PVU', 'B19TVU', 'B19U', 'B20SVU', 'B20PVU', 'B20TVU', 'B20U']
-            self.print_result(result, keys)
         elif condition3:
             smb_sector = self.create_smb_sector()
             rate_plan = SMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', smb_sector)
-            result = rate_plan.optimize()
             keys = ['A1NTB', 'A1B', 'B1B', 'B1STB', 'B6B', 'B10SVB', 'B10PVB', 'B10TVB', 'A1NTB_poly', 'A1NTB_single', 'A1B_poly', 'A1B_single', 'B1B_poly', 'B1B_single', 'B1STB_poly', 'B1STB_single', 'B6B_poly', 'B6B_single']
-            self.print_result(result, keys)   
         elif condition4:
             smu_sector = self.create_smu_sector()
             rate_plan = SMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', smu_sector)
-            result = rate_plan.optimize()
             keys = ['A1NTU', 'A1U', 'B1U', 'B1STU', 'B6U', 'B10SVU', 'B10PVU', 'B10TVU', 'A1NTU_poly', 'A1NTU_single', 'A1U_poly', 'A1U_single', 'B1U_poly', 'B1U_single', 'B1STU_poly', 'B1STU_single', 'B6U_poly', 'B6U_single']
-            self.print_result(result, keys)   
         else:
-            print("Condition not met, not running the script.")
+            err_msg = "Condition not met, not running the script."
+            print(err_msg)
+            raise Exception(err_msg)
+        
+        result = rate_plan.optimize()     
+        self.print_result(result, keys)
+        
+        new_cost=
+        cur_cost= 
+        cur_renewable= 
+        new_renewable= 
+        kwh_used= 
+        description=
+
+        electric_step = ElectricDecarbStep(cur_cost, new_cost, cur_renewable, new_renewable, kwh_used, description)
+
+        return electric_step
 
 
-ew = ElectricityWork('Electricity Rate Plan.xlsx')
-user_sector = 'Large Commercial and Industrial'
-user_bundled = 'Yes'
-user_zip_code = 95347
-usage_data = {} 
-ew.check_condition_and_run(user_sector, user_bundled, usage_data)
+# Defining main function 
+def main(): 
+    print("hey there") 
+    user_zip_code = 95347
+    ew = ElectricityWork('Electricity Rate Plan.xlsx', user_zip_code)
+    user_sector = 'Large Commercial and Industrial'
+    user_bundled = 'Yes'
+    
+    ew.check_condition_and_run(user_sector, user_bundled)
+  
+  
+# Using the special variable  
+# __name__ 
+if __name__=="__main__": 
+    main() 
+
+

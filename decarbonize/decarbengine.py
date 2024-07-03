@@ -9,6 +9,7 @@ Original file is located at
 
 from components.biz_commute_analyzer import BusinessCommutingAnalyzer
 from components.electric_bill_analyzer import ElectricityBillAnalyzer
+from components.electricity.electricity_work import ElectricityWork
 from components.flight_data_analyzer import FlightDataAnalyzer
 from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
@@ -93,6 +94,15 @@ class DecarbEngine:
         return_flight_step = self.create_flight_step(return_flight)
         self.steps.append(return_flight_step)
         savings += return_flight_step.compute_savings()
+
+        user_zip_code = 95347
+        ew = ElectricityWork('Electricity Rate Plan.xlsx', user_zip_code)
+        
+        user_sector = 'Large Commercial and Industrial'
+        user_bundled = 'Yes'
+        electric_step = ew.check_condition_and_run(user_sector, user_bundled)
+        self.steps.append(electric_step)
+        savings += electric_step.compute_savings()
 
         return self.steps
 
