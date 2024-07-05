@@ -216,34 +216,6 @@ class ElectricityWork:
         
         result = rate_plan.optimize()     
         self.print_result(result, keys)
-        
-        new_cost=
-        cur_cost= 
-        cur_renewable= 
-        new_renewable= 
-        kwh_used= 
-        description=
-        difficulty=2
 
-        electric_step = ElectricDecarbStep(cur_cost, new_cost, cur_renewable, new_renewable, kwh_used, description, difficulty)
-
-        return electric_step
-
-
-# Defining main function 
-def main(): 
-    print("hey there") 
-    user_zip_code = 95347
-    ew = ElectricityWork('Electricity Rate Plan.xlsx', user_zip_code)
-    user_sector = 'Large Commercial and Industrial'
-    user_bundled = 'Yes'
-    
-    ew.check_condition_and_run(user_sector, user_bundled)
-  
-  
-# Using the special variable  
-# __name__ 
-if __name__=="__main__": 
-    main() 
 
 
