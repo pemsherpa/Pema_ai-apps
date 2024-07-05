@@ -1,6 +1,6 @@
 
 class DecarbStep:
-    def __init__(self, step_type, cur_cost, new_cost, cur_emissions, new_emissions, description, difficulty):
+    def __init__(self, step_type, user_current_plan, cur_cost, new_cost, cur_emissions, new_emissions, description, difficulty):
         self.step_type = step_type
         self.cur_cost = cur_cost
         self.new_cost = new_cost
@@ -8,7 +8,20 @@ class DecarbStep:
         self.new_emissions = new_emissions
         self.description = description
         self.difficulty = difficulty
+        self.user_current_plan = user_current_plan
         
+    
+    def get_new_cost(self):
+        user_zip_code = 95347
+        ew = ElectricityWork('Electricity Rate Plan.xlsx', user_zip_code)
+        
+        user_sector = 'Large Commercial and Industrial'
+        user_bundled = 'Yes'
+        user_current_plan = 'B19SVB'
+        new_cost = ew.check_condition_and_run(user_sector, user_bundled)
+        self.steps.append(new_cost)
+        return new_cost
+
     def compute_zscore(self):
         # (cost savings, carbon savings, difficulty)
         self.cost_savings = self.compute_savings()

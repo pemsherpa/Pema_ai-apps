@@ -96,18 +96,7 @@ class DecarbEngine:
         self.steps.append(return_flight_step)
         savings += return_flight_step.compute_savings()
 
-        user_zip_code = 95347
-        ew = ElectricityWork('Electricity Rate Plan.xlsx', user_zip_code)
         
-        user_sector = 'Large Commercial and Industrial'
-        user_bundled = 'Yes'
-        electric_step = ew.check_condition_and_run(user_sector, user_bundled)
-        self.steps.append(electric_step)
-        savings += electric_step.compute_savings()
-
-        #Order the steps based on ZScore: 1st item to be which action the user takes first.
-        return self.steps
-
     def create_flight_step(self, return_flight, difficulty):
         return_flight_savings = return_flight['Price'].iloc[0]
         return_flight_emissions = return_flight['Carbon Emissions'].iloc[0]
@@ -122,7 +111,50 @@ class DecarbEngine:
         )
         return return_flight_step
 
-def run_electric_main():
+    def run_electric_main():
+
+
+        user_zip_code = 95347
+        ew = ElectricityWork('Electricity Rate Plan.xlsx', user_zip_code)
+        
+        user_sector = 'Large Commercial and Industrial'
+        user_bundled = 'Yes'
+        user_current_plan = 'B19SVB'
+
+        #Order the steps based on ZScore: 1st item to be which action the user takes first.
+        return self.steps
+
+        new_cost = ew.check_condition_and_run(user_sector, user_bundled)
+        cur_cost = 
+        cur_renewable = 
+        new_renewable = 
+        kwh_used = 
+        description =
+        difficulty = 2
+
+        electric_step = ElectricDecarbStep(cur_cost, new_cost, cur_renewable, new_renewable, kwh_used, description, difficulty)
+
+        return electric_step
+
+
+# Defining main function 
+def main(): 
+    print("hey there") 
+    user_zip_code = 95347
+    ew = ElectricityWork('Electricity Rate Plan.xlsx', user_zip_code)
+    user_sector = 'Large Commercial and Industrial'
+    user_bundled = 'Yes'
+    
+    ew.check_condition_and_run(user_sector, user_bundled)
+  
+  
+# Using the special variable  
+# __name__ 
+if __name__=="__main__": 
+    main() 
+
+
+
     providers = [
         {'name': 'Provider A', 'location': 'Location 1', 'cost_per_kwh': 0.15, 'carbon_per_kwh': 0.5},
         {'name': 'Provider B', 'location': 'Location 1', 'cost_per_kwh': 0.12, 'carbon_per_kwh': 0.4},
