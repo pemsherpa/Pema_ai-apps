@@ -12,19 +12,19 @@ class ElectricDecarbStep(DecarbStep):
         super().__init__(DecarbStepType.ELECTRICITY, cur_cost, new_cost, cur_emissions, new_emissions, description, difficulty)
 
     def get_cur_cost(self):
-        user_zip_code = 95347
         ce = CurrentElectricity('Electricity Rate Plan.xlsx', user_zip_code)
-        user_current_plan = 'B19_SV'
+        lcb_sector = lcb_usage_data
+        smb_sector = smb_usage_data
         cur_cost = ce.check_condition_and_run(user_current_plan)
         self.steps.append(cur_cost)
         return cur_cost
 
     def get_new_cost(self):
-        user_zip_code = 95347
         ew = ElectricityWork('Electricity Rate Plan.xlsx', user_zip_code)
-        
-        user_sector = 'Large Commercial and Industrial'
-        user_bundled = 'Yes'
+        lcb_sector = lcb_usage_data
+        smb_sector = smb_usage_data
+        lcu_sector = lcu_usage_data
+        smu_sector = smu_usage_data
         new_cost = ew.check_condition_and_run(user_sector, user_bundled)
         self.steps.append(new_cost)
         return new_cost
@@ -45,3 +45,31 @@ class ElectricDecarbStep(DecarbStep):
     def get_new_carbon_from_electric(self, cur_emissions, cur_renewable, new_renewable):
         cur_emissions = cur_emissions * (new_renewable - cur_renewable)
         return cur_emissions
+
+
+# User Input, now is fake
+
+user_zip_code = 95347
+user_sector = 'Large Commercial and Industrial'
+user_bundled = 'Yes'
+user_current_plan = 'B19_SV'
+kwh_used = 10000
+current_electricbill_price = 100000
+
+lcb_usage_data = LCBSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
+                           161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
+                           110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
+                           50, 38, 199, 80, 155)
+smb_usage_data = SMBSector(20, 30, 101,37, 167, 174,41,179,187,140, 165,
+                           174,174, 185, 196,166, 8, 71,184, 81, 158,28, 57, 122,
+                           170, 21, 31,69, 110, 28,70, 45, 54,73, 76, 178,13, 88,
+                           23,156, 96, 169,181, 56, 169,107, 119, 127)
+lcu_usage_data = LCUSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
+                           161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
+                           110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
+                           50, 38, 199, 80, 155)
+smu_usage_data = SMUSector(20, 30, 101,37, 167, 174,41,179,187,140, 165,
+                           174,174, 185, 196,166, 8, 71,184, 81, 158,28, 57, 122,
+                           170, 21, 31,69, 110, 28,70, 45, 54,73, 76, 178,13, 88,
+                           23,156, 96, 169,181, 56, 169,107, 119, 127)
+
