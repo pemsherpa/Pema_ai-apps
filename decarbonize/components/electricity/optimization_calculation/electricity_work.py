@@ -29,21 +29,21 @@ class ElectricityWork:
         self.unbundled_peak_time_price_df = self.sheets['Unbundled Peak Time Price']
         self.user_zip_code = user_zip_code
 
-    def check_zip_code(self, zip_code):
-        if zip_code in self.pge_service_df['PG&E Service area Zip Code'].values:
+    def check_zip_code(self, user_zip_code):
+        if user_zip_code in self.pge_service_df['PG&E Service area Zip Code'].values:
             return "In PG&E service"
         else:
             return "Not in PG&E service"
 
-    def match_cca_service(self, zip_code):
+    def match_cca_service(self, user_zip_code):
         for column in self.cca_df.columns:
-            if zip_code in self.cca_df[column].values:
+            if user_zip_code in self.cca_df[column].values:
                 return f"Matched in CCA: {column}"
         return "No CCA"
 
-    def get_matched_rows(self, zip_code, user_sector, user_bundled):
-        result1 = self.check_zip_code(zip_code)
-        result2 = self.match_cca_service(zip_code)
+    def get_matched_rows(self, user_zip_code, user_sector, user_bundled):
+        result1 = self.check_zip_code(user_zip_code)
+        result2 = self.match_cca_service(user_zip_code)
 
         if "Matched in CCA" in result2:
             matched_column = result2.split(": ")[1]

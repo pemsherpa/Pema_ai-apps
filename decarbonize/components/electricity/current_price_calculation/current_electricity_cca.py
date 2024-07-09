@@ -18,14 +18,14 @@ class Currentelectricity_cca:
         self.jrp_plans_df = pd.read_excel(file_path, sheet_name='Joint Rate Plan')
 
 
-    def check_pge_cca_service_area(self, zip_code):
-        result = self.df_pge_service[self.df_pge_service['PG&E Service area Zip Code'] == zip_code]
+    def check_pge_cca_service_area(self, user_zip_code):
+        result = self.df_pge_service[self.df_pge_service['PG&E Service area Zip Code'] == user_zip_code]
         if result.empty:
             return None
 
         cca_column = []
         for column in self.cca_df.columns:
-            if zip_code in self.cca_df[column].values:
+            if user_zip_code in self.cca_df[column].values:
                 cca_column.append(column)
         if not cca_column:
             return None
@@ -44,7 +44,7 @@ class Currentelectricity_cca:
 
         return sector_plans
 
-    def fetch_total_cost(self, zip_code, user_sector, company,plan):
+    def fetch_total_cost(self, user_zip_code, user_sector, company, plan):
 
         service_area = self.check_pge_cca_service_area(zip_code)
         if service_area is None:
@@ -71,5 +71,5 @@ class Currentelectricity_cca:
         return total_cost
 
 electricity = Currentelectricity_cca(file_path, user_zip_code)
-total_cost = electricity.fetch_total_cost(zip_code, sector,  company,plan)
+total_cost = electricity.fetch_total_cost(user_zip_code, sector,company,plan)
 print(f"Total Cost: {total_cost}")
