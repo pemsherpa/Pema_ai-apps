@@ -27,7 +27,6 @@ from steps.decarb_step_type import DecarbStepType
 from steps.decarb_weight import DecarbWeight
 import pandas as pd
 from steps.flight_decarb_step import FlightDecarbStep
-from steps.electric_decarb_step import ElectricDecarbStep
 
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data, origin, destination, departure_date,firm,weights,return_date=None):
@@ -135,6 +134,10 @@ class DecarbEngine:
         user_cur_renewable = 0.1
         ranking_zscore = 10
 
+        user_current_company = "test pge"
+        user_cost_weight = 0.6
+        user_renewable_weight = 0.4 
+
         UseCCA = 'No'
         HasCCA = 'No'
 
@@ -156,27 +159,15 @@ class DecarbEngine:
                                     131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
                                     96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
 
-        test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, 
-                                user_current_plan, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
-                                smu_usage_data, ranking_zscore)
-        
+        test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
+                                user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
+                                smu_usage_data, ranking_zscore)        
+
         return test.compute_electricbill_savings()
 
         
 
-        
-        
-       
-
-
-
 # Defining main function 
-    
-
-    
-
-   
-   
    
     def run_commute_and_flight():
         origin = "LAX"

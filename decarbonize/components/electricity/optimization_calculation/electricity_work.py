@@ -209,7 +209,7 @@ class ElectricityWork:
             rate_plan = SMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', smu_sector)
             keys = ['A1NTU', 'A1U', 'B1U', 'B1STU', 'B6U', 'B10SVU', 'B10PVU', 'B10TVU', 'A1NTU_poly', 'A1NTU_single', 'A1U_poly', 'A1U_single', 'B1U_poly', 'B1U_single', 'B1STU_poly', 'B1STU_single', 'B6U_poly', 'B6U_single']
         else:
-            err_msg = "Condition not met, not running the script."
+            err_msg = "check_condition_and_run: Condition not met, not running the script."
             print(err_msg)
             raise Exception(err_msg)
         

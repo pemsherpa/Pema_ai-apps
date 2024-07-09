@@ -17,7 +17,7 @@ class ElectricDecarbStep():
         self.user_zip_code = user_zip_code
         self.user_sector = user_sector
         self.user_bundled = user_bundled
-        self.user_current_company=user_company
+        self.user_current_company=user_current_company
         self.user_current_plan = user_current_plan
         self.user_cost_weight=user_cost_weight
         self.user_renewable_weight=user_renewable_weight
@@ -38,7 +38,7 @@ class ElectricDecarbStep():
         
 
     def get_cur_cost(self, UseCCA):
-        ce = CurrentElectricity('Electricity Rate Plan.xlsx', self.user_zip_code)
+        ce = CurrentElectricity('Electricity Rate Plan.xlsx', self.user_zip_code, self.lcb_usage_data, self.smb_usage_data, self.lcu_usage_data, self.smu_usage_data)
         ce_cca= Currentelectricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code)
         lcb_sector = self.lcb_usage_data
         smb_sector = self.smb_usage_data
@@ -92,18 +92,16 @@ class ElectricDecarbStep():
 user_zip_code = 95948
 user_sector = 'Large Commercial and Industrial'
 user_bundled = 'Yes'
-user_current_plan = 'B19_SV'
+user_current_plan = 'B19SV'
 kwh_used = 10000
 user_cur_cost = 100000
 difficulty = 2
 user_cur_renewable = 0.1
 ranking_zscore = 10
-user_company= 'PG&E'
-user_cost_weight=0.4
-user_renewable_weight=0.6
-if(user_cost_weight+ user_renewable_weight!=1):
-    print("Invalid weights")
 
+user_current_company = "test pge"
+user_cost_weight = 0.6
+user_renewable_weight = 0.4 
 
 UseCCA = 'No'
 HasCCA = 'No'
@@ -113,22 +111,22 @@ lcb_usage_data = LCBSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
                             110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
                             50, 38, 199, 80, 155, 1)
 smb_usage_data = SMBSector(21, 96, 50, 170, 38, 180, 190, 176, 139, 9, 47, 149, 
-                           64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
-                           131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
-                           96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
+                            64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
+                            131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
+                            96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
 lcu_usage_data = LCUSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
-                        161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
-                        110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
-                        50, 38, 199, 80, 155, 1, 99, 14, 118, 141, 121, 
-                        31, 198, 108, 44, 54, 22, 31)
+                            161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
+                            110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
+                            50, 38, 199, 80, 155, 1, 99, 14, 118, 141, 121, 
+                            31, 198, 108, 44, 54, 22, 31)
 smu_usage_data = SMUSector(21, 96, 50, 170, 38, 180, 190, 176, 139, 9, 47, 149, 
-                           64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
-                           131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
-                           96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
+                            64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
+                            131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
+                            96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
 
-test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, 
-                          user_current_plan, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
-                          smu_usage_data, ranking_zscore)
+test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
+                        user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
+                        smu_usage_data, ranking_zscore)        
 test.compute_electricbill_savings()
 
 # User Input, now is fake
