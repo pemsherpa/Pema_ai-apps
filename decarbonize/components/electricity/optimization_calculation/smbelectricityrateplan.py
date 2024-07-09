@@ -154,24 +154,24 @@ class SMBElectricityRatePlan:
                 B6Bprice * B6B + B10SVBprice * B10SVB + B10PVBprice * B10PVB + B10TVBprice * B10TVB)
 
     def optimize(self):
-     objective = lambda x: self.objective(x)
-     constraints = [
-        {'type': 'eq', 'fun': lambda x: x[0] + x[1] + x[2] + x[3] + x[4] + x[5] + x[6] + x[7] - 1},
-        {'type': 'eq', 'fun': lambda x: x[5] + x[6] + x[7] - x[4]},
-        {'type': 'eq', 'fun': lambda x: x[8] + x[9] - 1},  # A1NTB poly + single
-        {'type': 'eq', 'fun': lambda x: x[10] + x[11] - 1},  # A1B poly + single
-        {'type': 'eq', 'fun': lambda x: x[12] + x[13] - 1},  # B1B poly + single
-        {'type': 'eq', 'fun': lambda x: x[14] + x[15] - 1},  # B1STB poly + single
-        {'type': 'eq', 'fun': lambda x: x[16] + x[17] - 1},  # B6B poly + single
-     ]
-     bounds = Bounds([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
-     x0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+         objective = lambda x: self.objective(x)
+         constraints = [
+            {'type': 'eq', 'fun': lambda x: x[0] + x[1] + x[2] + x[3] + x[4] + x[5] + x[6] + x[7] - 1},
+            {'type': 'eq', 'fun': lambda x: x[5] + x[6] + x[7] - x[4]},
+            {'type': 'eq', 'fun': lambda x: x[8] + x[9] - 1},  # A1NTB poly + single
+            {'type': 'eq', 'fun': lambda x: x[10] + x[11] - 1},  # A1B poly + single
+            {'type': 'eq', 'fun': lambda x: x[12] + x[13] - 1},  # B1B poly + single
+            {'type': 'eq', 'fun': lambda x: x[14] + x[15] - 1},  # B1STB poly + single
+            {'type': 'eq', 'fun': lambda x: x[16] + x[17] - 1},  # B6B poly + single
+         ]
+         bounds = Bounds([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+         x0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-     result = minimize(objective, x0, method='SLSQP', constraints=constraints, bounds=bounds)
+         result = minimize(objective, x0, method='SLSQP', constraints=constraints, bounds=bounds)
 
-    # Round results to enforce binary constraints
-     x_opt = [round(xi) for xi in result.x]
-     obj_val = self.objective(x_opt)
+        # Round results to enforce binary constraints
+         x_opt = [round(xi) for xi in result.x]
+         obj_val = self.objective(x_opt)
 
-     return {'x': x_opt, 'objective': obj_val}
+         return {'x': x_opt, 'objective': obj_val}
 

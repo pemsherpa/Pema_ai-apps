@@ -131,19 +131,19 @@ class LCBElectricityRatePlan:
         return (B19SVBprice * B19SVB + B19PVBprice * B19PVB + B19TVBprice * B19TVB + B20SVBprice * B20SVB + B20PVBprice * B20PVB + B20TVBprice * B20TVB)
 
     def optimize(self):
-     objective = lambda x: self.objective(x)
-     constraints = [
-        {'type': 'eq', 'fun': lambda x: x[3] + x[7] - 1},
-        {'type': 'eq', 'fun': lambda x: x[0] + x[1] + x[2] - x[3]},
-        {'type': 'eq', 'fun': lambda x: x[4] + x[5] + x[6] - x[7]},
-     ]
-     bounds = Bounds([0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1])
-     x0 = [0, 0, 0, 0, 1, 0, 0, 1]
+         objective = lambda x: self.objective(x)
+         constraints = [
+            {'type': 'eq', 'fun': lambda x: x[3] + x[7] - 1},
+            {'type': 'eq', 'fun': lambda x: x[0] + x[1] + x[2] - x[3]},
+            {'type': 'eq', 'fun': lambda x: x[4] + x[5] + x[6] - x[7]},
+         ]
+         bounds = Bounds([0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1])
+         x0 = [0, 0, 0, 0, 1, 0, 0, 1]
 
-     result = minimize(objective, x0, method='SLSQP', constraints=constraints, bounds=bounds)
+         result = minimize(objective, x0, method='SLSQP', constraints=constraints, bounds=bounds)
 
-    # Round results to enforce binary constraints
-     x_opt = [round(xi) for xi in result.x]
-     obj_val = self.objective(x_opt)
+        # Round results to enforce binary constraints
+         x_opt = [round(xi) for xi in result.x]
+         obj_val = self.objective(x_opt)
 
-     return {'x': x_opt, 'objective': obj_val}
+         return {'x': x_opt, 'objective': obj_val}
