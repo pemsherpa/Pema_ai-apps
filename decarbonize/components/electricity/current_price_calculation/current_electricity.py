@@ -10,6 +10,8 @@ Original file is located at
 import pandas as pd
 from components.electricity.current_price_calculation.currentlcbelectricityrateplan import currentLCBElectricityRatePlan
 from components.electricity.current_price_calculation.currentsmbelectricityrateplan import currentSMBElectricityRatePlan
+from components.electricity.current_price_calculation.currentlcuelectricityrateplan import currentLCUElectricityRatePlan
+from components.electricity.current_price_calculation.currentsmuelectricityrateplan import currentSMUElectricityRatePlan
 from components.electricity.sectors.lcbsector import LCBSector
 from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.smbsector import SMBSector
@@ -116,6 +118,65 @@ class CurrentElectricity:
                  meter_input,time_in_use,max_15min_usage)
         return lcb_sector
 
+    def create_smu_sector(self, A1NTUStotal_usage, A1NTUWtotal_usage, A1USpeak_usage,
+                 A1USpartpeak_usage, A1USoffpeak_usage, A1UWpartpeak_usage,
+                 A1UWoffpeak_usage, B1USpeak_usage, B1USpartpeak_usage, B1USoffpeak_usage,
+                 B1UWpeak_usage, B1UWsuperoffpeak_usage, B1UWoffpeak_usage,
+                 B1STUSpeak_usage, B1STUSpartpeak_usage, B1STUSoffpeak_usage,
+                 B1STUWpeak_usage, B1STUWpartpeak_usage, B1STUWsuperoffpeak_usage,
+                 B1STUWoffpeak_usage, B6USpeak_usage, B6USoffpeak_usage,
+                 B6UWpeak_usage, B6UWsuperoffpeak_usage,B6UWoffpeak_usage,
+                 B10SVUSpeak_usage,B10SVUSpartpeak_usage,B10SVUSoffpeak_usage,
+                 B10SVUWpeak_usage, B10SVUWsuperoffpeak_usage, B10SVUWoffpeak_usage,
+                 B10PVUSpeak_usage,B10PVUSpartpeak_usage,B10PVUSoffpeak_usage,
+                 B10PVUWpeak_usage,B10PVUWsuperoffpeak_usage,B10PVUWoffpeak_usage,
+                 B10TVUSpeak_usage, B10TVUSpartpeak_usage,B10TVUSoffpeak_usage,
+                 B10TVUWpeak_usage,B10TVUWsuperoffpeak_usage, B10TVUWoffpeak_usage,
+                 meter_input,time_in_use, max_15min_usage,B1STU_highest_demand_15mins):
+        smu_sector= SMUSector(A1NTUStotal_usage, A1NTUWtotal_usage, A1USpeak_usage,
+                 A1USpartpeak_usage, A1USoffpeak_usage, A1UWpartpeak_usage,
+                 A1UWoffpeak_usage, B1USpeak_usage, B1USpartpeak_usage, B1USoffpeak_usage,
+                 B1UWpeak_usage, B1UWsuperoffpeak_usage, B1UWoffpeak_usage,
+                 B1STUSpeak_usage, B1STUSpartpeak_usage, B1STUSoffpeak_usage,
+                 B1STUWpeak_usage, B1STUWpartpeak_usage, B1STUWsuperoffpeak_usage,
+                 B1STUWoffpeak_usage, B6USpeak_usage, B6USoffpeak_usage,
+                 B6UWpeak_usage, B6UWsuperoffpeak_usage,B6UWoffpeak_usage,
+                 B10SVUSpeak_usage,B10SVUSpartpeak_usage,B10SVUSoffpeak_usage,
+                 B10SVUWpeak_usage, B10SVUWsuperoffpeak_usage, B10SVUWoffpeak_usage,
+                 B10PVUSpeak_usage,B10PVUSpartpeak_usage,B10PVUSoffpeak_usage,
+                 B10PVUWpeak_usage,B10PVUWsuperoffpeak_usage,B10PVUWoffpeak_usage,
+                 B10TVUSpeak_usage, B10TVUSpartpeak_usage,B10TVUSoffpeak_usage,
+                 B10TVUWpeak_usage,B10TVUWsuperoffpeak_usage, B10TVUWoffpeak_usage,
+                 meter_input,time_in_use, max_15min_usage,B1STU_highest_demand_15mins)
+        return smu_sector
+
+    def create_lcu_sector(self, B19SVUSpeak_usage, B19SVUSpartpeak_usage, B19SVUSoffpeak_usage,
+                 B19SVUWpeak_usage,B19SVUWsuperoffpeak_usage,B19SVUWoffpeak_usage,Summer_highest_usage_B19SV,Winter_highest_usage_B19SV,
+                 B19PVUSpeak_usage,B19PVUSpartpeak_usage,B19PVUSoffpeak_usage,
+                 B19PVUWpeak_usage,B19PVUWsuperoffpeak_usage,B19PVUWoffpeak_usage,Summer_highest_usage_B19PV,Winter_highest_usage_B19PV,
+                 B19TVUSpeak_usage,B19TVUSpartpeak_usage,B19TVUSoffpeak_usage,
+                 B19TVUWpeak_usage,B19TVUWsuperoffpeak_usage,B19TVUWoffpeak_usage,Summer_highest_usage_B19TV,Winter_highest_usage_B19TV,
+                 B20SVUSpeak_usage, B20SVUSpartpeak_usage, B20SVUSoffpeak_usage,
+                 B20SVUWpeak_usage,B20SVUWsuperoffpeak_usage,B20SVUWoffpeak_usage,Summer_highest_usage_B20SV,Winter_highest_usage_B20SV,
+                 B20PVUSpeak_usage,B20PVUSpartpeak_usage,B20PVUSoffpeak_usage,
+                 B20PVUWpeak_usage,B20PVUWsuperoffpeak_usage,B20PVUWoffpeak_usage,Summer_highest_usage_B20PV,Winter_highest_usage_B20PV,
+                 B20TVUSpeak_usage,B20TVUSpartpeak_usage,B20TVUSoffpeak_usage,
+                 B20TVUWpeak_usage,B20TVUWsuperoffpeak_usage,B20TVUWoffpeak_usage,Summer_highest_usage_B20TV,Winter_highest_usage_B20TV,
+                 meter_input,time_in_use,max_15min_usage):
+        lcu_sector = LCUSector(B19SVUSpeak_usage, B19SVUSpartpeak_usage, B19SVUSoffpeak_usage,
+                 B19SVUWpeak_usage,B19SVUWsuperoffpeak_usage,B19SVUWoffpeak_usage,Summer_highest_usage_B19SV,Winter_highest_usage_B19SV,
+                 B19PVUSpeak_usage,B19PVUSpartpeak_usage,B19PVUSoffpeak_usage,
+                 B19PVUWpeak_usage,B19PVUWsuperoffpeak_usage,B19PVUWoffpeak_usage,Summer_highest_usage_B19PV,Winter_highest_usage_B19PV,
+                 B19TVUSpeak_usage,B19TVUSpartpeak_usage,B19TVUSoffpeak_usage,
+                 B19TVUWpeak_usage,B19TVUWsuperoffpeak_usage,B19TVUWoffpeak_usage,Summer_highest_usage_B19TV,Winter_highest_usage_B19TV,
+                 B20SVUSpeak_usage, B20SVUSpartpeak_usage, B20SVUSoffpeak_usage,
+                 B20SVUWpeak_usage,B20SVUWsuperoffpeak_usage,B20SVUWoffpeak_usage,Summer_highest_usage_B20SV,Winter_highest_usage_B20SV,
+                 B20PVUSpeak_usage,B20PVUSpartpeak_usage,B20PVUSoffpeak_usage,
+                 B20PVUWpeak_usage,B20PVUWsuperoffpeak_usage,B20PVUWoffpeak_usage,Summer_highest_usage_B20PV,Winter_highest_usage_B20PV,
+                 B20TVUSpeak_usage,B20TVUSpartpeak_usage,B20TVUSoffpeak_usage,
+                 B20TVUWpeak_usage,B20TVUWsuperoffpeak_usage,B20TVUWoffpeak_usage,Summer_highest_usage_B20TV,Winter_highest_usage_B20TV,
+                 meter_input,time_in_use,max_15min_usage)
+        return lcu_sector
 
     def print_result(self, result, keys):
         print("Current Price:", result['objective'])
@@ -123,9 +184,13 @@ class CurrentElectricity:
     def check_condition_and_run(self, user_current_plan):
         condition1_keys = ['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']
         condition2_keys = ['A1NTB', 'A1B', 'B1B', 'B1STB', 'B6B', 'B10SVB', 'B10PVB', 'B10TVB', 'A1NTB_poly', 'A1NTB_single', 'A1B_poly', 'A1B_single', 'B1B_poly', 'B1B_single', 'B1STB_poly', 'B1STB_single', 'B6B_poly', 'B6B_single']
+        condition3_keys=  ['B19SVU', 'B19PVU', 'B19TVU', 'B19U', 'B20SVU', 'B20PVU', 'B20TVU', 'B20U']
+        condition4_keys=  ['A1NTU', 'A1U', 'B1U', 'B1STU', 'B6U', 'B10SVU', 'B10PVU', 'B10TVU', 'A1NTU_poly', 'A1NTU_single', 'A1U_poly', 'A1U_single', 'B1U_poly', 'B1U_single', 'B1STU_poly', 'B1STU_single', 'B6U_poly', 'B6U_single']
 
         condition1 = user_current_plan in condition1_keys
         condition2 = user_current_plan in condition2_keys
+        condition3 = user_current_plan in condition3_keys
+        condition4 = user_current_plan in condition4_keys
 
         rate_plan = None
         keys = []
@@ -138,6 +203,14 @@ class CurrentElectricity:
             smb_sector = self.create_smb_sector()
             rate_plan = currentSMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', smb_sector)
             keys = condition2_keys
+        elif condition3:
+            lcu_sector = self.create_lcu_sector()
+            rate_plan = currentLCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', lcu_sector)
+            keys = condition3_keys
+        elif condition4:
+            smu_sector = self.create_smu_sector()
+            rate_plan = currentSMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', smu_sector)
+            keys = condition4_keys
         else:
             err_msg = "Condition not met, not running the script."
             print(err_msg)
