@@ -2,7 +2,7 @@
 from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
 from components.electricity.optimization_calculation.electricity_work import ElectricityWork
 from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
-from components.electricity.current_price_calculation.cca_switch import electricity_cca
+from components.electricity.optimization_calculation.cca_optimised.py import electricity_cca
 from components.electricity.sectors.lcbsector import LCBSector
 from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.smbsector import SMBSector
@@ -12,7 +12,7 @@ from steps.decarb_step_type import DecarbStepType
 from components.electricity.optimization_calculation import *
 class ElectricDecarbStep():
 
-    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, smu_usage_data, ranking_zscore):
+    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan,user_cost_weight,self.user_renewable_weight,user_cost_weight UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, smu_usage_data, ranking_zscore):
         
         self.user_cur_cost = user_cur_cost
         self.kwh_used = kwh_used
@@ -21,6 +21,8 @@ class ElectricDecarbStep():
         self.user_bundled = user_bundled
         self.user_current_company=user_company
         self.user_current_plan = user_current_plan
+        self.user_cost_weight=user_cost_weight
+        self.user_renewable_weight=user_renewable_weight
         self.UseCCA = UseCCA
         self.HasCCA = HasCCA
         self.lcb_usage_data = lcb_usage_data
@@ -56,7 +58,7 @@ class ElectricDecarbStep():
         ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code)
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code)
         if HasCCA == 'Yes':
-            new_cost = switch_cca.optimize_plans(self.user_sector, self.user_company,self.user_zip_code)
+            new_cost = switch_cca.get_optimized_plan(self.user_sector, self.user_company,self.user_zip_code,self.user_current_plan,self.user_cost_weight, self.user_renewable_weight)
             self.steps.append(new_cost)
         elif HasCCA == 'No':
             new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
@@ -98,6 +100,12 @@ user_cur_cost = 100000
 difficulty = 2
 user_cur_renewable = 0.1
 ranking_zscore = 10
+user_company= 'PG&E'
+user_cost_weight=0.4
+user_renewable_weight=0.6
+if(user_cost_weight+ user_renewable_weight!=1):
+    print("Invalid weights")
+
 
 UseCCA = 'No'
 HasCCA = 'No'
