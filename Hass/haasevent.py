@@ -14,7 +14,3 @@ class HaasEvent:
     def save_emissions(self, emissions_student_obj, emissions_nonstudent_obj):
         self.emissions_student_obj = emissions_student_obj
         self.emissions_nonstudent_obj = emissions_nonstudent_obj
-        print("save_emissions: emissions_student_obj from event ") 
-        print(emissions_student_obj)
-        print("save_emissions: emissions_nonstudent_obj from event ") 
-        print(emissions_nonstudent_obj)
