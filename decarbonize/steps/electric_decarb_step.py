@@ -1,6 +1,7 @@
 
 from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
 from components.electricity.optimization_calculation.electricity_work import ElectricityWork
+from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
 from components.electricity.sectors.lcbsector import LCBSector
 from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.smbsector import SMBSector
@@ -10,13 +11,14 @@ from steps.decarb_step_type import DecarbStepType
 from components.electricity.optimization_calculation import *
 class ElectricDecarbStep():
 
-    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_plan, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, smu_usage_data, ranking_zscore):
+    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, smu_usage_data, ranking_zscore):
         
         self.user_cur_cost = user_cur_cost
         self.kwh_used = kwh_used
         self.user_zip_code = user_zip_code
         self.user_sector = user_sector
         self.user_bundled = user_bundled
+        self.user_current_company=user_company
         self.user_current_plan = user_current_plan
         self.UseCCA = UseCCA
         self.HasCCA = HasCCA
@@ -36,10 +38,11 @@ class ElectricDecarbStep():
 
     def get_cur_cost(self, UseCCA):
         ce = CurrentElectricity('Electricity Rate Plan.xlsx', self.user_zip_code)
+        ce_cca= Currentelectricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code)
         lcb_sector = self.lcb_usage_data
         smb_sector = self.smb_usage_data
         if UseCCA == 'Yes':
-            cur_cost = []#Gowri to do (with CCA)（if company is using CCA now)
+            cur_cost = ce_cca.fetch_total_cost(self.user_zip_code,self.user_sector,self.user_current_plan,self.user_current_company)
             self.steps.append(cur_cost)
         elif UseCCA == 'No':
             cur_cost = ce.check_condition_and_run(self.user_current_plan)
