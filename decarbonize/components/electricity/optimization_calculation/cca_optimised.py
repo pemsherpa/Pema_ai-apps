@@ -57,7 +57,7 @@ class electricity_cca:
 
         return prices
 
-    def optimize_plans(self, price, current_total_cost, current_renewable_percentage):
+    def optimize_plans(self, price):
         # Normalize total cost and renewable energy percentage
         df = pd.DataFrame(price)
         df['Cost Score'] = 1 / df['Total Cost']
@@ -87,7 +87,7 @@ def get_optimized_plan(file_path, zip_code, sector, company, current_plan_name, 
         price = erp.fetch_caa_plan_price(sector, fetched_plans, area)
         
 
-        final_result = erp.optimize_plans(price, current_total_cost, current_renewable_percentage)
+        final_result = erp.optimize_plans(price)
         return final_result
     else:
         
