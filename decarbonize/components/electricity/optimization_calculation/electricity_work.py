@@ -8,16 +8,15 @@ Original file is located at
 """
 
 import pandas as pd
-import subprocess
-from lcbelectricityrateplan import LCBElectricityRatePlan
-from sectors.lcbsector import LCBSector
-from sectors.smbsector import SMBSector
-from smbelectricityrateplan import SMBElectricityRatePlan
-from smuelectricityrateplan import SMUElectricityRatePlan
-from lcuelectricityrateplan import LCUElectricityRatePlan
-from sectors.smusector import SMUSector
-from sectors.lcusector import LCUSector
-from steps.electric_decarb_step import ElectricDecarbStep
+
+from components.electricity.optimization_calculation.lcbelectricityrateplan import LCBElectricityRatePlan
+from components.electricity.optimization_calculation.lcuelectricityrateplan import LCUElectricityRatePlan
+from components.electricity.optimization_calculation.smuelectricityrateplan import SMUElectricityRatePlan
+from components.electricity.optimization_calculation.smbelectricityrateplan import SMBElectricityRatePlan
+from components.electricity.sectors.lcbsector import LCBSector
+from components.electricity.sectors.lcusector import LCUSector
+from components.electricity.sectors.smbsector import SMBSector
+from components.electricity.sectors.smusector import SMUSector
 
 class ElectricityWork:
     def __init__(self, file_path, user_zip_code):

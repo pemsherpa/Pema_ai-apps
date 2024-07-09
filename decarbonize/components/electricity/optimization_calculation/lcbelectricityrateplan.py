@@ -10,8 +10,6 @@ Original file is located at
 from scipy.optimize import minimize
 from scipy.optimize import Bounds
 import pandas as pd
-import lcbsector.py
-from sectors.lcbsector import LCBSector
 
 class LCBElectricityRatePlan:
     def __init__(self, file_path, sheet_name, lcb_usage_data):

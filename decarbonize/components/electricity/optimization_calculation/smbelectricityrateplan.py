@@ -11,8 +11,6 @@ from scipy.optimize import minimize
 from scipy.optimize import Bounds
 import pandas as pd
 
-from sectors.lcbsector import SMBSector
-
 class SMBElectricityRatePlan:
     def __init__(self, file_path, sheet_name, smb_usage_data):
         self.df = pd.read_excel(file_path, sheet_name=sheet_name)

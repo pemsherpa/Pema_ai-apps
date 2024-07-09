@@ -8,8 +8,6 @@ Original file is located at
 """
 
 import pandas as pd
-import lcbsector.py
-from sectors.lcbsector import LCBSector
 
 class currentLCBElectricityRatePlan:
     def __init__(self, file_path, sheet_name, lcb_usage_data):

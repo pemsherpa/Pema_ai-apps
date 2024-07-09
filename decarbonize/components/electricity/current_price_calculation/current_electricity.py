@@ -8,11 +8,12 @@ Original file is located at
 """
 
 import pandas as pd
-from currentlcbelectricityrateplan import currentLCBElectricityRatePlan
-from sectors.lcbsector import LCBSector
-from sectors.smbsector import SMBSector
-from currentsmbelectricityrateplan import currentSMBElectricityRatePlan
-from steps.electric_decarb_step import ElectricDecarbStep
+from components.electricity.current_price_calculation.currentlcbelectricityrateplan import currentLCBElectricityRatePlan
+from components.electricity.current_price_calculation.currentsmbelectricityrateplan import currentSMBElectricityRatePlan
+from components.electricity.sectors.lcbsector import LCBSector
+from components.electricity.sectors.lcusector import LCUSector
+from components.electricity.sectors.smbsector import SMBSector
+from components.electricity.sectors.smusector import SMUSector
 
 class CurrentElectricity:
     def __init__(self, file_path, user_zip_code):

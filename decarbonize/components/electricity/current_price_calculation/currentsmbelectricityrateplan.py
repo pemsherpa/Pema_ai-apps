@@ -8,8 +8,6 @@ Original file is located at
 """
 
 import pandas as pd
-import smbsector.py
-from sectors.lcbsector import SMBSector
 
 class currentSMBElectricityRatePlan:
     def __init__(self, file_path, sheet_name, smb_usage_data):
@@ -121,7 +119,7 @@ class currentSMBElectricityRatePlan:
 
         B6BSprice = (self.parameters['B6BSpeakprice'] * smb_usage_data.B6BSpeak_usage +
                      self.parameters['B6BSoffpeakprice'] * smb_usage_data.B6BSoffpeak_usage)
-        B6BWprice = (self.parameters['B6BWpeakprice'] * usage_data.B6BWpeak_usage +
+        B6BWprice = (self.parameters['B6BWpeakprice'] * smb_usage_data.B6BWpeak_usage +
                      self.parameters['B6BWsuperoffpeakprice'] * smb_usage_data.B6BWsuperoffpeak_usage +
                      self.parameters['B6BWoffpeakprice'] * smb_usage_data.B6BWoffpeak_usage)
         B6Bprice = B6BSprice + B6BWprice + (self.parameters['B6B_polyprice'] * B6B_poly + self.parameters['B6B_singleprice'] * B6B_single) * smb_usage_data.meter_input * smb_usage_data.time_in_use

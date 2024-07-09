@@ -20,8 +20,6 @@ from scipy.optimize import minimize
 from scipy.optimize import Bounds
 import pandas as pd
 
-from sectors.lcusector import LCUSector
-
 class LCUElectricityRatePlan:
     def __init__(self, file_path, sheet_name, lcu_usage_data):
         self.df = pd.read_excel(file_path, sheet_name=sheet_name)
