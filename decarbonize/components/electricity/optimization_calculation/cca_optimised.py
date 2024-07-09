@@ -1,6 +1,6 @@
 import pandas as pd
 
-class Currentelectricity_cca:
+class electricity_cca:
     def __init__(self, file_path, cost_weight, renewable_weight):
         self.file_path = file_path
         self.cost_weight = user_cost_weight
