@@ -44,7 +44,7 @@ class Currentelectricity_cca:
 
         return sector_plans
 
-    def fetch_total_cost(self, user_zip_code, user_sector, company, plan):
+    def fetch_total_cost(self, zip_code, user_sector, company, plan):
 
         service_area = self.check_pge_cca_service_area(zip_code)
         if service_area is None:
@@ -70,6 +70,6 @@ class Currentelectricity_cca:
 
         return total_cost
 
-electricity = Currentelectricity_cca(file_path, user_zip_code)
-total_cost = electricity.fetch_total_cost(user_zip_code, sector,company,plan)
-print(f"Total Cost: {total_cost}")
+#electricity = Currentelectricity_cca(file_path, user_zip_code)
+#total_cost = electricity.fetch_total_cost(user_zip_code, sector,company,plan)
+#print(f"Total Cost: {total_cost}")

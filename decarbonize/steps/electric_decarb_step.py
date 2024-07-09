@@ -2,13 +2,11 @@
 from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
 from components.electricity.optimization_calculation.electricity_work import ElectricityWork
 from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
-from components.electricity.optimization_calculation.cca_optimised.py import electricity_cca
+from components.electricity.optimization_calculation.cca_optimised import electricity_cca
 from components.electricity.sectors.lcbsector import LCBSector
 from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smusector import SMUSector
-from steps.decarb_step import DecarbStep
-from steps.decarb_step_type import DecarbStepType
 from components.electricity.optimization_calculation import *
 class ElectricDecarbStep():
 

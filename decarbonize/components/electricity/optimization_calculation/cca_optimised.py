@@ -1,10 +1,12 @@
 import pandas as pd
 
+from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
+
 class electricity_cca:
     def __init__(self, file_path, cost_weight, renewable_weight):
         self.file_path = file_path
-        self.cost_weight = user_cost_weight
-        self.renewable_weight = user_renewable_weight
+        self.cost_weight = cost_weight
+        self.renewable_weight = renewable_weight
         self.df_pge_service = pd.read_excel(file_path, sheet_name='PG&E Service Area')
         self.cca_df = pd.read_excel(file_path, sheet_name='CCA')
         self.jrp_plans_df = pd.read_excel(file_path, sheet_name='Joint Rate Plan')
@@ -94,5 +96,5 @@ def get_optimized_plan(file_path, zip_code, sector, company, current_plan_name, 
         return None
 
 
-final_result = get_optimized_plan(file_path, user_zip_code, user_sector, user_company, user_current_plan, user_current_total_cost, user_current_renewable_percentage, user_cost_weight, user_renewable_weight)
-print("Optimization Result:", final_result)
+#final_result = get_optimized_plan(file_path, user_zip_code, user_sector, user_company, user_current_plan, user_current_total_cost, user_current_renewable_percentage, user_cost_weight, user_renewable_weight)
+#print("Optimization Result:", final_result)
