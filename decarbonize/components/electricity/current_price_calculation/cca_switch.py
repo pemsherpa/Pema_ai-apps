@@ -9,7 +9,7 @@ Original file is located at
 
 import pandas as pd
 
-class Currentelectricity_cca:
+class electricity_cca:
     def __init__(self, file_path, user_zip_code):
         self.file_path = file_path
         self.df_pge_service = pd.read_excel(file_path, sheet_name='PG&E Service Area')
