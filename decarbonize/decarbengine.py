@@ -8,14 +8,26 @@ Original file is located at
 """
 
 from components.biz_commute_analyzer import BusinessCommutingAnalyzer
-from components.electric_bill_analyzer import ElectricityBillAnalyzer
-from components.electricity.electricity_work import ElectricityWork
+from components.electricity.optimization_calculation.electricity_work import ElectricityWork
+from components.electricity.optimization_calculation.lcbelectricityrateplan import LCBElectricityRatePlan
+from components.electricity.optimization_calculation.lcuelectricityrateplan import LCUElectricityRatePlan
+from components.electricity.optimization_calculation.smuelectricityrateplan import SMUElectricityRatePlan
+from components.electricity.optimization_calculation.smbelectricityrateplan import SMBElectricityRatePlan
+from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
+from components.electricity.current_price_calculation.currentlcbelectricityrateplan import currentLCBElectricityRatePlan
+from components.electricity.current_price_calculation.currentsmbelectricityrateplan import currentSMBElectricityRatePlan
+from steps.electric_decarb_step import ElectricDecarbStep
+from components.electricity.sectors.lcbsector import LCBSector
+from components.electricity.sectors.lcusector import LCUSector
+from components.electricity.sectors.smbsector import SMBSector
+from components.electricity.sectors.smusector import SMUSector
 from components.flight_data_analyzer import FlightDataAnalyzer
 from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
 from steps.decarb_weight import DecarbWeight
 import pandas as pd
 from steps.flight_decarb_step import FlightDecarbStep
+from steps.electric_decarb_step import ElectricDecarbStep
 
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data, origin, destination, departure_date,firm,weights,return_date=None):
@@ -78,7 +90,7 @@ class DecarbEngine:
                                                                        [1,2,3], 50,2,30)[2],
             cur_emissions=commuting_emissions,
             description="Analyze commuting costs and emissions for carpool", 
-            difficulty=5
+            difficulty= 3
         )
         self.steps.append(commuting_step)
         savings += commuting_step.compute_savings()
@@ -111,155 +123,93 @@ class DecarbEngine:
         )
         return return_flight_step
 
-    def run_electric_main():
-
-
-        user_zip_code = 95347
-        ew = ElectricityWork('Electricity Rate Plan.xlsx', user_zip_code)
-        
+    
+    def run_electric():
+        user_zip_code = 95948
         user_sector = 'Large Commercial and Industrial'
         user_bundled = 'Yes'
-        user_current_plan = 'B19SVB'
-
-        #Order the steps based on ZScore: 1st item to be which action the user takes first.
-        return self.steps
-
-        new_cost = ew.check_condition_and_run(user_sector, user_bundled)
-        cur_cost = 
-        cur_renewable = 
-        new_renewable = 
-        kwh_used = 
-        description =
+        user_current_plan = 'B19_SV'
+        kwh_used = 10000
+        user_cur_cost = 100000
         difficulty = 2
+        user_cur_renewable = 0.1
+        ranking_zscore = 10
 
-        electric_step = ElectricDecarbStep(cur_cost, new_cost, cur_renewable, new_renewable, kwh_used, description, difficulty)
+        UseCCA = 'No'
+        HasCCA = 'No'
 
-        return electric_step
+        lcb_usage_data = LCBSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
+                            161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
+                            110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
+                            50, 38, 199, 80, 155)
+        smb_usage_data = SMBSector(20, 30, 101,37, 167, 174,41,179,187,140, 165,
+                                174,174, 185, 196,166, 8, 71,184, 81, 158,28, 57, 122,
+                                170, 21, 31,69, 110, 28,70, 45, 54,73, 76, 178,13, 88,
+                                23,156, 96, 169,181, 56, 169,107, 119, 127)
+        lcu_usage_data = LCUSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
+                                161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
+                                110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
+                                50, 38, 199, 80, 155)
+        smu_usage_data = SMUSector(20, 30, 101,37, 167, 174,41,179,187,140, 165,
+                                174,174, 185, 196,166, 8, 71,184, 81, 158,28, 57, 122,
+                                170, 21, 31,69, 110, 28,70, 45, 54,73, 76, 178,13, 88,
+                                23,156, 96, 169,181, 56, 169,107, 119, 127)
+
+        test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, 
+                                user_current_plan, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
+                                smu_usage_data, ranking_zscore)
+        
+        return test.compute_electricbill_savings()
+
+        
+
+        
+        
+       
+
 
 
 # Defining main function 
-def main(): 
-    print("hey there") 
-    user_zip_code = 95347
-    ew = ElectricityWork('Electricity Rate Plan.xlsx', user_zip_code)
-    user_sector = 'Large Commercial and Industrial'
-    user_bundled = 'Yes'
     
-    ew.check_condition_and_run(user_sector, user_bundled)
-  
-  
-# Using the special variable  
-# __name__ 
-if __name__=="__main__": 
-    main() 
 
-
-
-    providers = [
-        {'name': 'Provider A', 'location': 'Location 1', 'cost_per_kwh': 0.15, 'carbon_per_kwh': 0.5},
-        {'name': 'Provider B', 'location': 'Location 1', 'cost_per_kwh': 0.12, 'carbon_per_kwh': 0.4},
-        {'name': 'Provider C', 'location': 'Location 2', 'cost_per_kwh': 0.10, 'carbon_per_kwh': 0.3},
-        {'name': 'Provider D', 'location': 'Location 2', 'cost_per_kwh': 0.13, 'carbon_per_kwh': 0.2},
-    ]
-
-    # electricity bill
-    electricity_bill = {
-        'location': 'Location 1',
-        'total_consumption_kwh': 500,
-        'total_cost': 75  # Assume current provider's cost per kWh is 0.15
-    }
-
-    # historical data
-    historical_data = [
-        {'consumption_kwh': 450, 'cost': 67.5},
-        {'consumption_kwh': 500, 'cost': 75},
-        {'consumption_kwh': 480, 'cost': 72}
-    ]
-
-    # current tariff
-    current_tariff = {
-        'total_consumption_kwh': 500,
-        'total_cost': 75,
-        'peak_consumption_kwh': 300,
-        'off_peak_consumption_kwh': 200
-    }
-
-    # new tariffs
-    new_tariffs = [
-        {'name': 'Tariff A', 'flat_rate': 0.14},
-        {'name': 'Tariff B', 'peak_rate': 0.16, 'off_peak_rate': 0.08}
-    ]
-
-    # Create class
-    analyzer = ElectricityBillAnalyzer(providers)
-
-    # Get recommendations
-    recommendations = analyzer.recommend_providers(electricity_bill)
-    print("Provider Recommendations:")
-    for recommendation in recommendations:
-        print(recommendation)
-
-    # Analyze historical data
-    historical_analysis = analyzer.analyze_historical_data(historical_data)
-    print("\nHistorical Data Analysis:")
-    print(historical_analysis)
-
-    # Compare tariffs
-    tariff_comparisons = analyzer.compare_tariffs(current_tariff, new_tariffs)
-    print("\nTariff Comparisons:")
-    for comparison in tariff_comparisons:
-        print(comparison)
-
-    # Suggest carbon offsets
-    carbon_savings = 200
-    carbon_offset_suggestions = analyzer.suggest_carbon_offsets(carbon_savings)
-    print("\nCarbon Offset Suggestions:")
-    for suggestion in carbon_offset_suggestions:
-        print(suggestion)
-
-    # Notify
-    analyzer.notify_user("tunan_li@berkely.edu", "We found a better electricity plan for you!")
-
-    # Integrate with UI
-    user_input = {'bill': electricity_bill}
-    ui_recommendations = analyzer.integrate_with_ui(user_input)
-    print("\nUI Integration Recommendations:")
-    for recommendation in ui_recommendations:
-        print(recommendation)
-
-def run_commute_and_flight():
-    origin = "LAX"
-    destination = "JFK"
-    departure_date = "2024-07-01"
-    return_date = "2024-07-10"
-    firm = '2107 Addison St, Berkeley, CA'
-    commuting_data = pd.DataFrame({
-        'ID': [1, 2, 3],
-        'method':['car','uber','car'],
-        'locations':['1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA '],
-        'frequency': [22, 20, 18],
-        'cost_per_km':[0.1,0.2,0.3]
-    })
-
-    df_dynamic = pd.DataFrame({
-        'method': ['bus', 'train', 'uber'],
-        'distance': [10, 10, 10],
-        'cost_per_km': [0.1, 0.2, 0.7]
-    })
-
-    weights =  DecarbWeight(0.4, 0.3, 0.2, 0.1) 
-    decarb_engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,return_date)
-    decarb_steps = decarb_engine.run_decarb_engine()
-
-    for step in decarb_steps:
-        print(step.generate_step_description())
-        print(f"Savings: ${step.compute_savings()}")
-        print(f"Emissions Savings: {step.compute_emissions_savings()} kg CO2\n")
-
-def main():
-    run_commute_and_flight()
-    # run_electric_main()
     
-if __name__ == "__main__":
-    main()
-    
+
+   
+   
+   
+    def run_commute_and_flight():
+        origin = "LAX"
+        destination = "JFK"
+        departure_date = "2024-07-01"
+        return_date = "2024-07-10"
+        firm = '2107 Addison St, Berkeley, CA'
+        commuting_data = pd.DataFrame({
+            'ID': [1, 2, 3],
+            'method':['car','uber','car'],
+            'locations':['1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA '],
+            'frequency': [22, 20, 18],
+            'cost_per_km':[0.1,0.2,0.3]
+        })
+
+        df_dynamic = pd.DataFrame({
+            'method': ['bus', 'train', 'uber'],
+            'distance': [10, 10, 10],
+            'cost_per_km': [0.1, 0.2, 0.7]
+        })
+
+        weights =  DecarbWeight(0.4, 0.3, 0.2, 0.1) 
+        decarb_engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,return_date)
+        decarb_steps = decarb_engine.run_decarb_engine()
+
+        for step in decarb_steps:
+            print(step.generate_step_description())
+            print(f"Savings: ${step.compute_savings()}")
+            print(f"Emissions Savings: {step.compute_emissions_savings()} kg CO2\n")
+
+    def main():
+        DecarbEngine.run_commute_and_flight()
+        DecarbEngine.run_electric_main()
+        
+    if __name__ == "__main__":
+        main()
+        

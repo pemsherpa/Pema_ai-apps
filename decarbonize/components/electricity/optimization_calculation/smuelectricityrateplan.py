@@ -20,7 +20,7 @@ from scipy.optimize import minimize
 from scipy.optimize import Bounds
 import pandas as pd
 
-from sectors.smusector import SMUSector
+from components.electricity.sectors.smusector import SMUSector
 
 class SMUElectricityRatePlan:
     def __init__(self, file_path, sheet_name, smu_usage_data):

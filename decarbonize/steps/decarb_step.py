@@ -1,14 +1,19 @@
 
-class DecarbElectricStep:
-    def __init__(self, step_type, user_current_plan, cur_cost, new_cost,  cur_renewable, new_renewable, description, difficulty):
+from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
+from components.electricity.optimization_calculation.electricity_work import ElectricityWork
+
+
+
+
+class DecarbStep:
+    def __init__(self, step_type, cur_cost, new_cost,cur_emissions,new_emissions,description,ranking_zscore):
         self.step_type = step_type
         self.cur_cost = cur_cost
         self.new_cost = new_cost
-        self.cur_emissions = cur_emissions
-        self.new_emissions = new_emissions
-        self.description = description
-        self.difficulty = difficulty
-        self.user_current_plan = user_current_plan
+        self.cur_emissions = 1
+        self.new_emissions = 1
+        self.ranking_zscore = ranking_zscore
+
         
     def get_cur_cost(self):
         user_zip_code = 95347
@@ -16,7 +21,7 @@ class DecarbElectricStep:
         user_current_plan = 'B19SVB'
         new_cost = ce.check_condition_and_run(user_current_plan)
         self.steps.append(new_cost)
-        return cur_cost
+        return self.cur_cost
 
     
     def get_new_cost(self):
@@ -34,8 +39,9 @@ class DecarbElectricStep:
         # (cost savings, carbon savings, difficulty)
         self.cost_savings = self.compute_savings()
         self.emission_savings = self.compute_emissions_savings()
-        #TODO: Tunan compute ZScore
-        self.ranking_zscore = self.difficulty 
+
+        
+        self.ranking_zscore = (self.difficulty + self.cost_savings + self.emission_savings)/3
 
     def compute_savings(self):
         return self.cur_cost - self.new_cost
