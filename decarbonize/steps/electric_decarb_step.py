@@ -2,6 +2,7 @@
 from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
 from components.electricity.optimization_calculation.electricity_work import ElectricityWork
 from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
+from components.electricity.current_price_calculation.cca_switch import electricity_cca
 from components.electricity.sectors.lcbsector import LCBSector
 from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.smbsector import SMBSector
@@ -53,8 +54,9 @@ class ElectricDecarbStep():
 
     def get_new_cost(self, HasCCA):
         ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code)
+        switch_cca=electricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code)
         if HasCCA == 'Yes':
-            new_cost = []#Gowri to do(with CCA, switch plan and consider switch company)
+            new_cost = switch_cca.optimize_plans(self.user_sector, self.user_company,self.user_zip_code)
             self.steps.append(new_cost)
         elif HasCCA == 'No':
             new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
