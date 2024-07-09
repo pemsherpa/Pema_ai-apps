@@ -39,7 +39,7 @@ class ElectricDecarbStep():
         lcb_sector = self.lcb_usage_data
         smb_sector = self.smb_usage_data
         if UseCCA == 'Yes':
-            cur_cost = []#Gowri to do (with CCA)(e.x. user_current_bill_price * (ratio_of_CCA_A1_plan / ratio_of_PGE_A1_plan))
+            cur_cost = []#Gowri to do (with CCA)（if company is using CCA now)
             self.steps.append(cur_cost)
         elif UseCCA == 'No':
             cur_cost = ce.check_condition_and_run(self.user_current_plan)
@@ -51,7 +51,7 @@ class ElectricDecarbStep():
     def get_new_cost(self, HasCCA):
         ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code)
         if HasCCA == 'Yes':
-            new_cost = []#Gowri to do(with CCA, switch plan switch company)
+            new_cost = []#Gowri to do(with CCA, switch plan and consider switch company)
             self.steps.append(new_cost)
         elif HasCCA == 'No':
             new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
