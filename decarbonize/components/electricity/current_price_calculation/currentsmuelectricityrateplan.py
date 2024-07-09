@@ -10,7 +10,7 @@ Original file is located at
 import pandas as pd
 
 
-class SMUElectricityRatePlan:
+class currentSMUElectricityRatePlan:
     def __init__(self, file_path, sheet_name, smu_usage_data):
         self.df = pd.read_excel(file_path, sheet_name=sheet_name)
         self.get_sum()
