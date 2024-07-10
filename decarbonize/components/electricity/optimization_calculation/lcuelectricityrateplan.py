@@ -102,7 +102,7 @@ class LCUElectricityRatePlan:
     def objective(self, x):
         B19SVU, B19PVU, B19TVU, B19U, B20SVU, B20PVU, B20TVU,B20U=x
         lcu_usage_data = self.lcu_usage_data
-        meter_input, time_in_use, max_15min_usage = lcu_usage_data['meter_input'], lcu_usage_data['time_in_use'], lcu_usage_data['max_15min_usage']
+        meter_input, time_in_use = lcu_usage_data['meter_input'], lcu_usage_data['time_in_use']
 
         B19SVUSprice = (self.parameters['B19SVUSpeakprice'] * lcu_usage_data['B19SVUSpeak_usage'] +
                      self.parameters['B19SVUSpartpeakprice'] * lcu_usage_data['B19SVUSpartpeak_usage'] +

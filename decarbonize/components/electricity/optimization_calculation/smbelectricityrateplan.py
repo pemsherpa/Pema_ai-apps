@@ -90,7 +90,7 @@ class SMBElectricityRatePlan:
     def objective(self, x):
         A1NTB, A1B, B1B, B1STB, B6B, B10SVB, B10PVB, B10TVB, A1NTB_poly, A1NTB_single, A1B_poly, A1B_single, B1B_poly, B1B_single, B1STB_poly, B1STB_single, B6B_poly, B6B_single = x
         smb_usage_data = self.smb_usage_data
-        meter_input, time_in_use, max_15min_usage, B1STB_highest_demand_15mins = smb_usage_data['meter_input'], smb_usage_data['time_in_use'], smb_usage_data['max_15min_usage'], smb_usage_data['B1STB_highest_demand_15mins']
+        #meter_input, time_in_use, max_15min_usage, B1STB_highest_demand_15mins = smb_usage_data['meter_input'], smb_usage_data['time_in_use'], smb_usage_data['max_15min_usage'], smb_usage_data['B1STB_highest_demand_15mins']
 
         A1NTBprice = (self.parameters['A1NTBS'] * smb_usage_data.A1NTBStotal_usage +
                       self.parameters['A1NTBW'] * smb_usage_data.A1NTBWtotal_usage +

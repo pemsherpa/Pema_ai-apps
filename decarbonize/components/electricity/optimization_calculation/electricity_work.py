@@ -19,7 +19,7 @@ from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smusector import SMUSector
 
 class ElectricityWork:
-    def __init__(self, file_path, user_zip_code):
+    def __init__(self, file_path, user_zip_code,lcb_sector, smb_sector, lcu_sector, smu_sector):
         self.file_path = file_path
         self.sheets = pd.read_excel(self.file_path, sheet_name=None)
         self.pge_service_df = self.sheets['PG&E Service Area']
@@ -28,6 +28,11 @@ class ElectricityWork:
         self.bundled_peak_time_price_df = self.sheets['Bundled Peak Time Price']
         self.unbundled_peak_time_price_df = self.sheets['Unbundled Peak Time Price']
         self.user_zip_code = user_zip_code
+
+        self.lcb_sector = lcb_sector
+        self.smb_sector = smb_sector
+        self.lcu_sector = lcu_sector
+        self.smu_sector = smu_sector
 
     def check_zip_code(self, user_zip_code):
         if user_zip_code in self.pge_service_df['PG&E Service area Zip Code'].values:
@@ -183,6 +188,9 @@ class ElectricityWork:
         print("Optimal solution:", result['x'])
         print("Optimal objective value:", result['objective'])
         print("Optimal solution:", {name for i, name in enumerate(keys) if result['x'][i] == 1})
+
+    def print_cost(self,result):
+        print(result['objective'])
         
     def check_condition_and_run(self, user_sector, user_bundled):
         condition1 = (user_sector == 'Large Commercial and Industrial' and user_bundled == 'Yes')
@@ -193,20 +201,20 @@ class ElectricityWork:
         rate_plan = None 
         keys = []
         if condition1:
-            lcb_sector = self.create_lcb_sector()
-            rate_plan = LCBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', lcb_sector)
+            
+            rate_plan = LCBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.lcb_sector)
             keys = ['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']            
         elif condition2:
-            lcu_sector = self.create_lcu_sector()
-            rate_plan = LCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', lcu_sector)
+            
+            rate_plan = LCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.lcu_sector)
             keys = ['B19SVU', 'B19PVU', 'B19TVU', 'B19U', 'B20SVU', 'B20PVU', 'B20TVU', 'B20U']
         elif condition3:
-            smb_sector = self.create_smb_sector()
-            rate_plan = SMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', smb_sector)
+            
+            rate_plan = SMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.smb_sector)
             keys = ['A1NTB', 'A1B', 'B1B', 'B1STB', 'B6B', 'B10SVB', 'B10PVB', 'B10TVB', 'A1NTB_poly', 'A1NTB_single', 'A1B_poly', 'A1B_single', 'B1B_poly', 'B1B_single', 'B1STB_poly', 'B1STB_single', 'B6B_poly', 'B6B_single']
         elif condition4:
-            smu_sector = self.create_smu_sector()
-            rate_plan = SMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', smu_sector)
+            
+            rate_plan = SMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.smu_sector)
             keys = ['A1NTU', 'A1U', 'B1U', 'B1STU', 'B6U', 'B10SVU', 'B10PVU', 'B10TVU', 'A1NTU_poly', 'A1NTU_single', 'A1U_poly', 'A1U_single', 'B1U_poly', 'B1U_single', 'B1STU_poly', 'B1STU_single', 'B6U_poly', 'B6U_single']
         else:
             err_msg = "check_condition_and_run: Condition not met, not running the script."
@@ -215,6 +223,9 @@ class ElectricityWork:
         
         result = rate_plan.optimize()     
         self.print_result(result, keys)
+
+        cost= rate_plan.optimize()
+        self.print_cost(cost,keys)
 
 
 

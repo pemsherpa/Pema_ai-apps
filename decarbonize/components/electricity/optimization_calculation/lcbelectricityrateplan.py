@@ -78,7 +78,7 @@ class LCBElectricityRatePlan:
     def objective(self, x):
         B19SVB, B19PVB, B19TVB, B19B, B20SVB, B20PVB, B20TVB, B20B = x
         lcb_usage_data = self.lcb_usage_data
-        meter_input, time_in_use, max_15min_usage = lcb_usage_data['meter_input'], lcb_usage_data['time_in_use'], lcb_usage_data['max_15min_usage']
+        #meter_input, time_in_use, max_15min_usage = lcb_usage_data['meter_input'], lcb_usage_data['time_in_use'], lcb_usage_data['max_15min_usage']
 
         B19SVBSprice = (self.parameters['B19SVBSpeakprice'] * lcb_usage_data.B19SVBSpeak_usage +
                         self.parameters['B19SVBSpartpeakprice'] * lcb_usage_data.B19SVBSpartpeak_usage +

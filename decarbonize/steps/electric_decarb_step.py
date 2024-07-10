@@ -54,21 +54,41 @@ class ElectricDecarbStep():
             pass
         return cur_cost
 
-    def get_new_cost(self, HasCCA):
-        ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code)
+    def get_new_plan(self, HasCCA):
+        ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.lcb_usage_data,self.smb_usage_data,self.lcu_usage_data,self.smu_usage_data)
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
+        
         if HasCCA == 'Yes':
             new_cost = switch_cca.get_optimized_plan(self.user_sector, self.user_current_company,self.user_zip_code,self.user_current_plan,self.user_cost_weight, self.user_renewable_weight)
             self.steps.append(new_cost)
         elif HasCCA == 'No':
             new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
-            self.steps.append(new_cost)
+            plan=ew.print_plan()
+            self.steps.append(plan)
         else:
             pass
-        return new_cost
+        return plan
+    
+    def get_new_cost(self, HasCCA):
+        ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.lcb_usage_data,self.smb_usage_data,self.lcu_usage_data,self.smu_usage_data)
+        switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
+        
+        if HasCCA == 'Yes':
+            new_cost = switch_cca.get_optimized_plan(self.user_sector, self.user_current_company,self.user_zip_code,self.user_current_plan,self.user_cost_weight, self.user_renewable_weight)
+            self.steps.append(new_cost)
+        elif HasCCA == 'No':
+            new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
+            cost=ew.print_cost()
+            self.steps.append(cost)
+        else:
+            pass
+        return cost
+
 
     def compute_electricbill_savings(self):
-        saving = (self.get_cur_cost(self.UseCCA) - self.get_new_cost(self.HasCCA))/self.get_cur_cost(self.UseCCA) * self.user_cur_cost
+        current_cost=self.get_cur_cost(self.UseCCA)
+        new_cost=self.get_new_cost(self.HasCCA)
+        saving = (current_cost - new_cost)/current_cost * self.user_cur_cost
         return saving
     
     def get_cur_renewable(self, UseCCA, user_zip_code):
@@ -91,7 +111,7 @@ class ElectricDecarbStep():
         
         return emissions_saved
 
-user_zip_code = 95948
+user_zip_code = 93926 #95948
 user_sector = 'Large Commercial and Industrial'
 user_bundled = 'Yes'
 user_current_plan = 'B19SVB'
@@ -101,7 +121,7 @@ difficulty = 2
 user_cur_renewable = 0.1
 ranking_zscore = 10
 
-user_current_company = "test pge"
+user_current_company = 'PG&E'
 user_cost_weight = 0.6
 user_renewable_weight = 0.4 
 
