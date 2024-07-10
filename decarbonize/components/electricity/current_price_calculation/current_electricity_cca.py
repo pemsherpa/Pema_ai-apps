@@ -31,7 +31,7 @@ class Currentelectricity_cca:
             return None
         return cca_column
 
-    def get_plans(self, area, sector): #Removed company and plan as parameters
+    def get_plans(self, area, sector): 
         possible_plans = []
         for cca_area in area:
             match = self.jrp_plans_df[self.jrp_plans_df['Location'] == cca_area][['Plan']]
