@@ -76,7 +76,7 @@ class currentLCBElectricityRatePlan:
     def objective(self, x):
         B19SVB, B19PVB, B19TVB, B19B, B20SVB, B20PVB, B20TVB, B20B = x
         lcb_usage_data = self.lcb_usage_data
-        meter_input, time_in_use, max_15min_usage = lcb_usage_data['meter_input'], lcb_usage_data['time_in_use'], lcb_usage_data['max_15min_usage']
+        
 
         B19SVBSprice = (self.parameters['B19SVBSpeakprice'] * lcb_usage_data.B19SVBSpeak_usage +
                         self.parameters['B19SVBSpartpeakprice'] * lcb_usage_data.B19SVBSpartpeak_usage +
@@ -129,17 +129,17 @@ class currentLCBElectricityRatePlan:
         return (B19SVBprice * B19SVB + B19PVBprice * B19PVB + B19TVBprice * B19TVB + B20SVBprice * B20SVB + B20PVBprice * B20PVB + B20TVBprice * B20TVB)
 
     def currentprice(self, user_current_plan):
-        if user_current_plan == 'B-19_SV':
+        if user_current_plan == 'B19SVB':
           x0 = [1, 0, 0, 1, 0, 0, 0, 0]
-        elif user_current_plan == 'B-19_PV':
+        elif user_current_plan == 'B19PVB':
           x0 = [0, 1, 0, 1, 0, 0, 0, 0]
-        elif user_current_plan == 'B-19_TV':
+        elif user_current_plan == 'B19TVB':
           x0 = [0, 0, 1, 1, 0, 0, 0, 0]
-        elif user_current_plan == 'B-20_SV':
+        elif user_current_plan == 'B20SVB':
           x0 = [0, 0, 0, 0, 1, 0, 0, 1]
-        elif user_current_plan == 'B-20_PV':
+        elif user_current_plan == 'B20PVB':
           x0 = [0, 0, 0, 0, 0, 1, 0, 1]
-        elif user_current_plan == 'B-20_TV':
+        elif user_current_plan == 'B20TVB':
           x0 = [0, 0, 0, 0, 0, 0, 1, 1]
         else:
           raise ValueError(f"Plan {user_current_plan} is not recognized.")

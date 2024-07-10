@@ -163,17 +163,17 @@ class currentLCUElectricityRatePlan:
         return(B19Uprice * B19U + B20Uprice * B20U)
 
     def currentprice(self, user_current_plan):
-        if user_current_plan == 'B-19_SV':
+        if user_current_plan == 'B19SVU':
           x0 = [1, 0, 0, 1, 0, 0, 0, 0]
-        elif user_current_plan == 'B-19_PV':
+        elif user_current_plan == 'B19PVU':
           x0 = [0, 1, 0, 1, 0, 0, 0, 0]
-        elif user_current_plan == 'B-19_TV':
+        elif user_current_plan == 'B19TVU':
           x0 = [0, 0, 1, 1, 0, 0, 0, 0]
-        elif user_current_plan == 'B-20_SV':
+        elif user_current_plan == 'B20SVU':
           x0 = [0, 0, 0, 0, 1, 0, 0, 1]
-        elif user_current_plan == 'B-20_PV':
+        elif user_current_plan == 'B20PVU':
           x0 = [0, 0, 0, 0, 0, 1, 0, 1]
-        elif user_current_plan == 'B-20_TV':
+        elif user_current_plan == 'B20TVU':
           x0 = [0, 0, 0, 0, 0, 0, 1, 1]
         else:
           raise ValueError(f"Plan {user_current_plan} is not recognized.")

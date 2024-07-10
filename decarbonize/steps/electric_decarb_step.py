@@ -28,6 +28,7 @@ class ElectricDecarbStep():
         self.lcu_usage_data = lcu_usage_data
         self.smu_usage_data = smu_usage_data
         self.ranking_zscore = ranking_zscore
+        self.steps = []
         self.cur_cost = self.get_cur_cost(UseCCA)
         self.new_cost = self.get_new_cost(HasCCA)
         self.saving = self.compute_electricbill_savings()
@@ -35,6 +36,7 @@ class ElectricDecarbStep():
         self.new_renewable = self.get_new_renewable()
         self.cur_emission = self.get_carbon_from_electric(kwh_used)
         self.emissions_saved = self.get_new_carbon_from_electric()
+        
         
 
     def get_cur_cost(self, UseCCA):
@@ -92,7 +94,7 @@ class ElectricDecarbStep():
 user_zip_code = 95948
 user_sector = 'Large Commercial and Industrial'
 user_bundled = 'Yes'
-user_current_plan = 'B19SV'
+user_current_plan = 'B19SVB'
 kwh_used = 10000
 user_cur_cost = 100000
 difficulty = 2

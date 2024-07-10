@@ -127,7 +127,7 @@ class DecarbEngine:
         user_zip_code = 95948
         user_sector = 'Large Commercial and Industrial'
         user_bundled = 'Yes'
-        user_current_plan = 'B19_SV'
+        user_current_plan = 'B19SVB'
         kwh_used = 10000
         user_cur_cost = 100000
         difficulty = 2
