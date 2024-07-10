@@ -56,9 +56,9 @@ class ElectricDecarbStep():
 
     def get_new_cost(self, HasCCA):
         ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code)
-        switch_cca=electricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code)
+        switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
         if HasCCA == 'Yes':
-            new_cost = switch_cca.get_optimized_plan(self.user_sector, self.user_company,self.user_zip_code,self.user_current_plan,self.user_cost_weight, self.user_renewable_weight)
+            new_cost = switch_cca.get_optimized_plan(self.user_sector, self.user_current_company,self.user_zip_code,self.user_current_plan,self.user_cost_weight, self.user_renewable_weight)
             self.steps.append(new_cost)
         elif HasCCA == 'No':
             new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
@@ -111,7 +111,7 @@ HasCCA = 'No'
 lcb_usage_data = LCBSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
                             161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
                             110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
-                            50, 38, 199, 80, 155, 1)
+                            50, 38, 199, 80, 155,1)
 smb_usage_data = SMBSector(21, 96, 50, 170, 38, 180, 190, 176, 139, 9, 47, 149, 
                             64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
                             131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
