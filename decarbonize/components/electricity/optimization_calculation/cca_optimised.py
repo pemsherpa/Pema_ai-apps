@@ -126,7 +126,7 @@ class  electricity_cca:
             price = self.fetch_caa_plan_price(sector, fetched_plans, area)
 
             final_result = self.optimize_renewable(price)
-            print(final_result)
+           
             return final_result
         else:
             return None

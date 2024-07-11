@@ -59,7 +59,7 @@ class Currentelectricity_cca:
         (self.jrp_plans_df['Electrical Company Name'] == company) &
         (self.jrp_plans_df['Plan'] == plan)
       ]
-
+      
       if matched_rows.empty:
         return 0
 

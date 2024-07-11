@@ -45,7 +45,7 @@ class ElectricDecarbStep():
         lcb_sector = self.lcb_usage_data
         smb_sector = self.smb_usage_data
         if UseCCA == 'Yes':
-            cur_cost = ce_cca.fetch_total_cost(self.user_zip_code,self.user_sector,self.user_current_plan,self.user_current_company)
+            cur_cost = ce_cca.fetch_total_cost(self.user_zip_code,self.user_sector,self.user_current_company,self.user_current_plan)
             self.steps.append(cur_cost)
             
         elif UseCCA == 'No':
@@ -96,7 +96,7 @@ class ElectricDecarbStep():
         print(current_cost)
         print(new_plan)
         
-        saving = (current_cost - new_cost)/100* self.user_cur_cost
+        saving = (current_cost - new_cost)/current_cost* self.user_cur_cost
         return saving
     
     def get_current_renewable_percentage(self, UseCCA, user_zip_code):

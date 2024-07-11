@@ -184,7 +184,7 @@ class ElectricityWork:
                  meter_input,time_in_use,max_15min_usage)
         return lcu_sector
     
-    def print_result(self, result, keys):
+    def get_result(self, result, keys):
         number_result = result['x']
         optimal_solution_value = result['objective']
         optimal_plan_name = {name for i, name in enumerate(keys) if result['x'][i] == 1}
@@ -221,8 +221,8 @@ class ElectricityWork:
             raise Exception(err_msg)
         
         result = rate_plan.optimize()
-        print(self.print_result(result, keys)[2])
-        return result['objective']
+        optimal_solution_name=self.get_result(result, keys)[2]
+        return result['objective'],optimal_solution_name
 
 
 
