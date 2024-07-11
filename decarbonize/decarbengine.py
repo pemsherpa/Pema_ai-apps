@@ -158,17 +158,14 @@ class DecarbEngine:
                                     64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
                                     131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
                                     96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
-
+        
         test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
                                 user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
-                                smu_usage_data, ranking_zscore)
-        CES = test.saving
-        Carbon_Saving = test.get_new_carbon_from_electric()   
-        return CES, Carbon_Saving
+                                smu_usage_data, ranking_zscore, difficulty)
+        ces = test.saving
+        carbon_saving = test.get_electric_carbon_savings()   
+        return ces, carbon_saving
         
-
-        
-
 # Defining main function 
    
     def run_commute_and_flight():

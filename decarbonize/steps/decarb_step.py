@@ -1,8 +1,5 @@
-
 from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
 from components.electricity.optimization_calculation.electricity_work import ElectricityWork
-
-
 
 
 class DecarbStep:
@@ -22,7 +19,6 @@ class DecarbStep:
         new_cost = ce.check_condition_and_run(user_current_plan)
         self.steps.append(new_cost)
         return self.cur_cost
-
     
     def get_new_cost(self):
         user_zip_code = 95347
@@ -39,8 +35,6 @@ class DecarbStep:
         # (cost savings, carbon savings, difficulty)
         self.cost_savings = self.compute_savings()
         self.emission_savings = self.compute_emissions_savings()
-
-        
         self.ranking_zscore = (self.difficulty + self.cost_savings + self.emission_savings)/3
 
     def compute_savings(self):

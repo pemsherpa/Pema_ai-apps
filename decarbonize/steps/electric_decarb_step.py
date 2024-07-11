@@ -8,11 +8,13 @@ from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smusector import SMUSector
 from components.electricity.optimization_calculation import *
+from steps.decarb_step import DecarbStep
+from steps.decarb_step_type import DecarbStepType
 
-class ElectricDecarbStep():
 
-    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan,user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, smu_usage_data, ranking_zscore):
-        
+class ElectricDecarbStep(DecarbStep):
+
+    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan,user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, smu_usage_data, ranking_zscore, difficulty):
         self.user_cur_cost = user_cur_cost
         self.kwh_used = kwh_used
         self.user_zip_code = user_zip_code
@@ -36,17 +38,19 @@ class ElectricDecarbStep():
         get_current_renewable_percentage = self.get_current_renewable_percentage(UseCCA, user_zip_code)
         new_renewable = self.get_new_renewable()
         self.cur_emission = self.get_carbon_from_electric(kwh_used)
-        self.emissions_saved = self.get_new_carbon_from_electric()
+        self.emissions_saved = self.get_electric_carbon_savings()
+        self.difficulty = difficulty
+        new_emissions = self.get_new_electric_emissions()
+        
+        description = "zipcode: " + str(self.user_zip_code) + " cur_cost: " + str(self.cur_cost) + " self.new_cost: " + str(self.new_cost)
+        super().__init__(DecarbStepType.ELECTRICITY, user_cur_cost, self.new_cost, self.cur_emission, new_emissions, description, self.difficulty)
         
     def get_cur_cost(self, UseCCA):
         ce = CurrentElectricity('Electricity Rate Plan.xlsx', self.user_zip_code, self.lcb_usage_data, self.smb_usage_data, self.lcu_usage_data, self.smu_usage_data)
         ce_cca= Currentelectricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code)
-        lcb_sector = self.lcb_usage_data
-        smb_sector = self.smb_usage_data
         if UseCCA == 'Yes':
             cur_cost = ce_cca.fetch_total_cost(self.user_zip_code,self.user_sector,self.user_current_company,self.user_current_plan)
             self.steps.append(cur_cost)
-            
         elif UseCCA == 'No':
             cur_cost = ce.check_condition_and_run(self.user_current_plan)
             self.steps.append(cur_cost)
@@ -60,8 +64,6 @@ class ElectricDecarbStep():
         
         if HasCCA == 'Yes':
             plan= switch_cca.get_optimized_plan(self.user_zip_code, self.user_sector)
-            
-            
             self.steps.append(plan)
         elif HasCCA == 'No':
             plan= ew.check_condition_and_run(self.user_sector, self.user_bundled)
@@ -102,10 +104,7 @@ class ElectricDecarbStep():
         if UseCCA == 'Yes':
             cca_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='CCA')
             joint_rate_plan_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name = 'Joint Rate Plan')
-
-
             plan_column = None
-
 
             for column in cca_df.columns:
                 if user_zip_code in cca_df[column].values:
@@ -134,14 +133,15 @@ class ElectricDecarbStep():
         if self.HasCCA=='Yes':
             renew_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
             new_renewable = renew_cca.get_optimized_renewable(self.user_zip_code, self.user_sector)
-            return (new_renewable)
+            return float(new_renewable)
        
         elif self.HasCCA == 'No':
             joint_rate_plan_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name = 'Joint Rate Plan')
             current_renewable_percentage = joint_rate_plan_df.loc[joint_rate_plan_df['Electrical Company Name'] == 'PG&E', 'Renewable Energy Percentage'].values[0]
             return float(current_renewable_percentage)
         else:
-            return f"Error, please reanswer the UseCCA question."
+            print("Error, please reanswer the UseCCA question.")
+            return -1
    
    
     def get_carbon_from_electric(self, kwh_used):
@@ -151,10 +151,18 @@ class ElectricDecarbStep():
         return cur_emission
 
 
-    def get_new_carbon_from_electric(self):
+    def get_electric_carbon_savings(self):
         current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code))
         new_renewable = float(self.get_new_renewable())
         carbon_from_electric = float(self.get_carbon_from_electric(self.kwh_used))
-        emissions_saved = carbon_from_electric * (new_renewable - current_renewable_percentage)
+        # TODO: fix later how to get the carbon from renewable percentage
+        emissions_saved = carbon_from_electric * (1 - (new_renewable - current_renewable_percentage) / current_renewable_percentage)
+        return emissions_saved
+    
+    def get_new_electric_emissions(self):
+        current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code))
+        new_renewable = float(self.get_new_renewable())
+        carbon_from_electric = float(self.get_carbon_from_electric(self.kwh_used))
+        emissions_saved = carbon_from_electric * (1 - (new_renewable - current_renewable_percentage))
         return emissions_saved
 

@@ -188,7 +188,7 @@ class ElectricityWork:
         number_result = result['x']
         optimal_solution_value = result['objective']
         optimal_plan_name = {name for i, name in enumerate(keys) if result['x'][i] == 1}
-        return number_result, optimal_solution_value, optimal_plan_name
+        return (number_result, optimal_solution_value, optimal_plan_name)
 
         
     def check_condition_and_run(self, user_sector, user_bundled):
@@ -222,8 +222,5 @@ class ElectricityWork:
         
         result = rate_plan.optimize()
         optimal_solution_name=self.get_result(result, keys)[2]
-        return result['objective'],optimal_solution_name
-
-
-
-
+        print("check_condition_and_run: Optimal Solution is " + optimal_solution_name)
+        return result['objective']
