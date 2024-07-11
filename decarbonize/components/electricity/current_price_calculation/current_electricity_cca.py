@@ -66,8 +66,3 @@ class Currentelectricity_cca:
       total_cost = matched_rows['Total Cost'].values[0]
 
       return float(total_cost)
-
-
-#electricity = Currentelectricity_cca(file_path, user_zip_code)
-#total_cost = electricity.fetch_total_cost(user_zip_code, sector,company,plan)
-#print(f"Total Cost: {total_cost}")

@@ -12,6 +12,5 @@ class DecarbWeight:
       lst = [self.price_weight,self.duration_weight,self.stop_weight,self.carbon_weight]
 
       total = sum(lst)
-      print(total)
-
+      
       return round(total,2)==1

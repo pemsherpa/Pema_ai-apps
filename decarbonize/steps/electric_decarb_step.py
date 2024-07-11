@@ -8,6 +8,7 @@ from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smusector import SMUSector
 from components.electricity.optimization_calculation import *
+
 class ElectricDecarbStep():
 
     def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan,user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, smu_usage_data, ranking_zscore):
@@ -37,8 +38,6 @@ class ElectricDecarbStep():
         self.cur_emission = self.get_carbon_from_electric(kwh_used)
         self.emissions_saved = self.get_new_carbon_from_electric()
         
-        
-
     def get_cur_cost(self, UseCCA):
         ce = CurrentElectricity('Electricity Rate Plan.xlsx', self.user_zip_code, self.lcb_usage_data, self.smb_usage_data, self.lcu_usage_data, self.smu_usage_data)
         ce_cca= Currentelectricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code)
@@ -57,7 +56,7 @@ class ElectricDecarbStep():
 
     def get_new_plan(self, HasCCA):
         ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.lcb_usage_data,self.smb_usage_data,self.lcu_usage_data,self.smu_usage_data)
-        switch_cca=electricity_cca('Electricity Rate Plan.xlsx', user_cost_weight,user_renewable_weight)
+        switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight,self.user_renewable_weight)
         
         if HasCCA == 'Yes':
             plan= switch_cca.get_optimized_plan(self.user_zip_code, self.user_sector)
@@ -132,12 +131,12 @@ class ElectricDecarbStep():
     def get_new_renewable(self):
         #new_renewable = 56
         #return new_renewable
-        if HasCCA=='Yes':
+        if self.HasCCA=='Yes':
             renew_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
             new_renewable = renew_cca.get_optimized_renewable(self.user_zip_code, self.user_sector)
             return (new_renewable)
        
-        elif HasCCA == 'No':
+        elif self.HasCCA == 'No':
             joint_rate_plan_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name = 'Joint Rate Plan')
             current_renewable_percentage = joint_rate_plan_df.loc[joint_rate_plan_df['Electrical Company Name'] == 'PG&E', 'Renewable Energy Percentage'].values[0]
             return float(current_renewable_percentage)
@@ -153,57 +152,9 @@ class ElectricDecarbStep():
 
 
     def get_new_carbon_from_electric(self):
-
-
         current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code))
         new_renewable = float(self.get_new_renewable())
         carbon_from_electric = float(self.get_carbon_from_electric(self.kwh_used))
-
-
         emissions_saved = carbon_from_electric * (new_renewable - current_renewable_percentage)
         return emissions_saved
-
-user_zip_code = 94002 #94518
-user_sector = 'Small and Medium Business'    #'Large Commercial and Industrial'
-user_bundled = 'Yes'
-user_current_plan = 'B-1'#'B19TVB'
-kwh_used = 10000
-user_cur_cost = 100000
-difficulty = 2
-user_cur_renewable = 0.1
-ranking_zscore = 10
-
-user_current_company = 'PG&E'
-user_cost_weight = 0.6
-user_renewable_weight = 0.4 
-
-UseCCA = 'Yes'
-HasCCA = 'Yes'
-
-lcb_usage_data = LCBSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
-                            161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
-                            110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
-                            50, 38, 199, 80, 155,1)
-smb_usage_data = SMBSector(21, 96, 50, 170, 38, 180, 190, 176, 139, 9, 47, 149, 
-                            64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
-                            131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
-                            96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
-lcu_usage_data = LCUSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
-                            161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
-                            110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
-                            50, 38, 199, 80, 155, 1, 99, 14, 118, 141, 121, 
-                            31, 198, 108, 44, 54, 22, 31)
-smu_usage_data = SMUSector(21, 96, 50, 170, 38, 180, 190, 176, 139, 9, 47, 149, 
-                            64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
-                            131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
-                            96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
-
-test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
-                        user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
-                        smu_usage_data, ranking_zscore)  
-      
-test.compute_electricbill_savings()
-
-
-
 

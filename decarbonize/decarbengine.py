@@ -162,7 +162,7 @@ class DecarbEngine:
         test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
                                 user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
                                 smu_usage_data, ranking_zscore)
-        CES = test.compute_electricbill_savings() 
+        CES = test.saving
         Carbon_Saving = test.get_new_carbon_from_electric()   
         return CES, Carbon_Saving
         
