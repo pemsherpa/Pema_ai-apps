@@ -177,18 +177,28 @@ class SMUElectricityRatePlan:
         objective = lambda x: self.objective(x)
         constraints = [
             {'type': 'eq', 'fun': lambda x: x[0] + x[1] + x[2] + x[3] + x[4] + x[5] + x[6] + x[7] - 1},
-            {'type': 'eq', 'fun': lambda x: x[5] + x[6] + x[7] - x[4]},
-            {'type': 'eq', 'fun': lambda x: x[8] + x[9] - 1},  # A1NTU poly + single
-            {'type': 'eq', 'fun': lambda x: x[10] + x[11] - 1},  # A1U poly + single
-            {'type': 'eq', 'fun': lambda x: x[12] + x[13] - 1},  # B1U poly + single
-            {'type': 'eq', 'fun': lambda x: x[14] + x[15] - 1},  # B1STU poly + single
-            {'type': 'eq', 'fun': lambda x: x[16] + x[17] - 1},  # B6U poly + single
+            {'type': 'eq', 'fun': lambda x: x[8] + x[9] - x[0]},  # A1NTB poly + single
+            {'type': 'eq', 'fun': lambda x: x[10] + x[11] - x[1]},  # A1B poly + single
+            {'type': 'eq', 'fun': lambda x: x[12] + x[13] - x[2]},  # B1B poly + single
+            {'type': 'eq', 'fun': lambda x: x[14] + x[15] - x[3]},  # B1STB poly + single
+            {'type': 'eq', 'fun': lambda x: x[16] + x[17] - x[4]},  # B6B poly + single
         ]
         bounds = Bounds([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
-        x0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        x0_list = [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 
+        [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0], 
+        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-        result = minimize(objective, x0, method='SLSQP', constraints=constraints, bounds=bounds)
+        best_result = None
 
-        x_opt = [round(xi) for xi in result.x]
-        obj_val = self.objective(x_opt)
-        return {'x': x_opt, 'objective': obj_val}
+        for x0 in x0_list:
+            result = minimize(objective, x0, method='SLSQP', constraints=constraints, bounds=bounds)
+            x_opt = [round(xi) for xi in result.x]
+            obj_val = self.objective(x_opt)
+
+            if best_result is None or obj_val < best_result['objective']:
+                best_result = {'x': x_opt, 'objective': obj_val}
+        
+        return best_result

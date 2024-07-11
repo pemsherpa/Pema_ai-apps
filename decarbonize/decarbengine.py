@@ -127,7 +127,7 @@ class DecarbEngine:
         user_zip_code = 95948
         user_sector = 'Large Commercial and Industrial'
         user_bundled = 'Yes'
-        user_current_plan = 'B19SVB'
+        user_current_plan = 'B19TVB'
         kwh_used = 10000
         user_cur_cost = 100000
         difficulty = 2
@@ -161,9 +161,10 @@ class DecarbEngine:
 
         test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
                                 user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
-                                smu_usage_data, ranking_zscore)        
-
-        return test.compute_electricbill_savings()
+                                smu_usage_data, ranking_zscore)
+        CES = test.compute_electricbill_savings()    
+        return CES
+        
 
         
 
@@ -198,10 +199,10 @@ class DecarbEngine:
             print(f"Savings: ${step.compute_savings()}")
             print(f"Emissions Savings: {step.compute_emissions_savings()} kg CO2\n")
 
-    def main():
-        DecarbEngine.run_commute_and_flight()
-        DecarbEngine.run_electric_main()
+def main():
+    #DecarbEngine.run_commute_and_flight()
+    print(DecarbEngine.run_electric()) 
         
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
         

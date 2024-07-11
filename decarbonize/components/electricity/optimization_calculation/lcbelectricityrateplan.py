@@ -138,12 +138,17 @@ class LCBElectricityRatePlan:
             {'type': 'eq', 'fun': lambda x: x[4] + x[5] + x[6] - x[7]},
          ]
          bounds = Bounds([0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1])
-         x0 = [0, 0, 0, 0, 1, 0, 0, 1]
+         x0_list = [1, 0, 0, 1, 0, 0, 0, 0],[0, 1, 0, 1, 0, 0, 0, 0],[0, 0, 1, 1, 0, 0, 0, 0],[0, 0, 0, 0, 1, 0, 0, 1],[0, 0, 0, 0, 0, 1, 0, 1],[0, 0, 0, 0, 0, 0, 1, 1]
+         
 
-         result = minimize(objective, x0, method='SLSQP', constraints=constraints, bounds=bounds)
+         best_result = None
 
-        # Round results to enforce binary constraints
-         x_opt = [round(xi) for xi in result.x]
-         obj_val = self.objective(x_opt)
+         for x0 in x0_list:
+             result = minimize(objective, x0, method='SLSQP', constraints=constraints, bounds=bounds)
+             x_opt = [round(xi) for xi in result.x]
+             obj_val = self.objective(x_opt)
 
-         return {'x': x_opt, 'objective': obj_val}
+             if best_result is None or obj_val < best_result['objective']:
+                 best_result = {'x': x_opt, 'objective': obj_val}
+
+         return best_result

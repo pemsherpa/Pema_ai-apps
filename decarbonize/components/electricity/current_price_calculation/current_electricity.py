@@ -64,7 +64,7 @@ class CurrentElectricity:
             return "No matching rows in joint rate plan", "No matching rows in joint rate comparison"
 
     def print_result(self, result, keys):
-        print("Current Price:", result['objective'])
+        return result['objective']
 
     def check_condition_and_run(self, user_current_plan):
         condition1_keys = ['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']
@@ -98,4 +98,4 @@ class CurrentElectricity:
             raise Exception(err_msg)
 
         result = rate_plan.currentprice(user_current_plan)
-        self.print_result(result, keys)
+        return result['objective']

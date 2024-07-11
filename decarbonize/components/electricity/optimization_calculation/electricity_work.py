@@ -185,12 +185,11 @@ class ElectricityWork:
         return lcu_sector
     
     def print_result(self, result, keys):
-        print("Optimal solution:", result['x'])
-        print("Optimal objective value:", result['objective'])
-        print("Optimal solution:", {name for i, name in enumerate(keys) if result['x'][i] == 1})
+        number_result = result['x']
+        optimal_solution_value = result['objective']
+        optimal_plan_name = {name for i, name in enumerate(keys) if result['x'][i] == 1}
+        return number_result, optimal_solution_value, optimal_plan_name
 
-    def print_cost(self,result):
-        print(result['objective'])
         
     def check_condition_and_run(self, user_sector, user_bundled):
         condition1 = (user_sector == 'Large Commercial and Industrial' and user_bundled == 'Yes')
@@ -221,11 +220,9 @@ class ElectricityWork:
             print(err_msg)
             raise Exception(err_msg)
         
-        result = rate_plan.optimize()     
-        self.print_result(result, keys)
+        result = rate_plan.optimize()
+        return result['objective']
 
-        cost= rate_plan.optimize()
-        self.print_cost(cost,keys)
 
 
 

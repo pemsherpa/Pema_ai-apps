@@ -78,11 +78,10 @@ class ElectricDecarbStep():
             self.steps.append(new_cost)
         elif HasCCA == 'No':
             new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
-            cost=ew.print_cost()
-            self.steps.append(cost)
+            self.steps.append(new_cost)
         else:
             pass
-        return cost
+        return new_cost
 
 
     def compute_electricbill_savings(self):
@@ -111,10 +110,10 @@ class ElectricDecarbStep():
         
         return emissions_saved
 
-user_zip_code = 93926 #95948
+user_zip_code = 95948
 user_sector = 'Large Commercial and Industrial'
 user_bundled = 'Yes'
-user_current_plan = 'B19SVB'
+user_current_plan = 'B19TVB'
 kwh_used = 10000
 user_cur_cost = 100000
 difficulty = 2
