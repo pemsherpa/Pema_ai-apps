@@ -197,7 +197,7 @@ class DecarbEngine:
         
         return smu_usage_data
     
-    def run_commute_and_flight():
+    def run_decarb_engine():
         origin = "LAX"
         destination = "JFK"
         departure_date = "2024-07-12"
@@ -227,8 +227,8 @@ class DecarbEngine:
             print(f"Emissions Savings: {step.compute_emissions_savings()} kg CO2\n")
 
 def main():
-    DecarbEngine.run_commute_and_flight()
-    print(DecarbEngine.run_electric()) 
+    DecarbEngine.run_decarb_engine()
+    #print(DecarbEngine.run_electric()) 
         
 if __name__ == "__main__":
     main()
