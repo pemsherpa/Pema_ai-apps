@@ -56,7 +56,7 @@ class ElectricDecarbStep():
 
     def get_new_plan(self, HasCCA):
         ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.lcb_usage_data,self.smb_usage_data,self.lcu_usage_data,self.smu_usage_data)
-        switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
+        switch_cca=electricity_cca('Electricity Rate Plan.xlsx', user_cost_weight,user_renewable_weight)
         
         if HasCCA == 'Yes':
             new_cost = switch_cca.get_optimized_plan(self.user_sector, self.user_current_company,self.user_zip_code,self.user_current_plan,self.user_cost_weight, self.user_renewable_weight)
@@ -121,8 +121,18 @@ class ElectricDecarbStep():
             return f"Error, please reanswer the UseCCA question."
    
     def get_new_renewable(self):
-        new_renewable = 56
-        return new_renewable
+        #new_renewable = 56
+        #return new_renewable
+        if HasCCA=='Yes':
+            new_renewable=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
+       
+        elif HasCCA == 'No':
+            joint_rate_plan_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name = 'Joint Rate Plan')
+            current_renewable_percentage = joint_rate_plan_df.loc[joint_rate_plan_df['Electrical Company Name'] == 'PG&E', 'Renewable Energy Percentage'].values[0]
+            return float(current_renewable_percentage)
+        else:
+            return f"Error, please reanswer the UseCCA question."
+   
    
     def get_carbon_from_electric(self, kwh_used):
         # Make API request for electric

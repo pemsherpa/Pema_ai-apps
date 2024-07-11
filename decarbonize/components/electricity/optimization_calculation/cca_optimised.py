@@ -3,10 +3,10 @@ import pandas as pd
 from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
 
 class electricity_cca:
-    def __init__(self, file_path, cost_weight, renewable_weight):
+    def __init__(self, file_path, user_cost_weight, user_renewable_weight):
         self.file_path = file_path
-        self.cost_weight = cost_weight
-        self.renewable_weight = renewable_weight
+        self.cost_weight = user_cost_weight
+        self.renewable_weight = user_renewable_weight
         self.df_pge_service = pd.read_excel(file_path, sheet_name='PG&E Service Area')
         self.cca_df = pd.read_excel(file_path, sheet_name='CCA')
         self.jrp_plans_df = pd.read_excel(file_path, sheet_name='Joint Rate Plan')
@@ -66,21 +66,31 @@ class electricity_cca:
         df['Renewable Score'] = df['Renewable Energy percentage']
         df['Combined Score'] = self.cost_weight * df['Cost Score'] + self.renewable_weight * df['Renewable Score']  
 
-        best_plan = df.loc[df['Combined Score'].idxmax(), ['Plan', 'Total Cost', 'Renewable Energy percentage', 'Electrical Company Name']]
+        best_plan = df.loc[df['Combined Score'].idxmax(), ['Plan', 'Total Cost', 'Electrical Company Name']]
 
         new_plan_name = best_plan['Plan']
         new_cost = best_plan['Total Cost']
+        new_company=best_plan['Electrical Company Name']
 
-        return {
-            "New Plan Name": new_plan_name,
-            "New Cost": new_cost,
-            "New Percentage of Renewable Energy": best_plan['Renewable Energy percentage'],
-        }
+        return new_plan_name,new_cost, new_company
+            
 
-def get_optimized_plan(file_path, zip_code, sector, company, current_plan_name, current_total_cost, current_renewable_percentage, cost_weight, renewable_weight):
-    erp = Currentelectricity_cca(file_path, cost_weight, renewable_weight)
-    area = erp.check_pge_cca_service_area(zip_code)
-    if area is not None:
+    def optimize_renewable(self,price):
+        df = pd.DataFrame(price)
+        df['Cost Score'] = 1 / df['Total Cost']
+        df['Renewable Score'] = df['Renewable Energy percentage']
+        df['Combined Score'] = self.cost_weight * df['Cost Score'] + self.renewable_weight * df['Renewable Score']
+
+        best_renewable = df.loc[df['Combined Score'].idxmax(), ['Renewable Energy Percentage']]
+
+        new_renewable=best_renewable['Renewable Energy Percentage']
+
+        return new_renewable
+
+    def get_optimized_plan(file_path, zip_code, sector, company, current_plan_name, current_total_cost, current_renewable_percentage,cost_weight,renewable_weight):
+       erp = Currentelectricity_cca(file_path, self.cost_weight,  self.renewable_weight)
+       area = erp.check_pge_cca_service_area(zip_code)
+       if area is not None:
 
         plans = erp.get_plans(area, sector)
         final_plans = list(set(plans))
@@ -91,9 +101,11 @@ def get_optimized_plan(file_path, zip_code, sector, company, current_plan_name, 
 
         final_result = erp.optimize_plans(price)
         return final_result
-    else:
+       else:
         
         return None
+       
+    
 
 
 #final_result = get_optimized_plan(file_path, user_zip_code, user_sector, user_company, user_current_plan, user_current_total_cost, user_current_renewable_percentage, user_cost_weight, user_renewable_weight)
