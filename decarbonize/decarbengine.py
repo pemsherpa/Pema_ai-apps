@@ -124,22 +124,22 @@ class DecarbEngine:
 
     
     def run_electric():
-        user_zip_code = 95948
+        user_zip_code = 94526 #95948
         user_sector = 'Large Commercial and Industrial'
         user_bundled = 'Yes'
-        user_current_plan = 'B19TVB'
+        user_current_plan = 'B-19_SV'#'B19TVB'
         kwh_used = 10000
         user_cur_cost = 100000
         difficulty = 2
         user_cur_renewable = 0.1
         ranking_zscore = 10
 
-        user_current_company = "test pge"
+        user_current_company = "PG&E"
         user_cost_weight = 0.6
         user_renewable_weight = 0.4 
 
-        UseCCA = 'No'
-        HasCCA = 'No'
+        UseCCA = 'Yes'
+        HasCCA = 'Yes'
 
         lcb_usage_data = LCBSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
                                     161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,

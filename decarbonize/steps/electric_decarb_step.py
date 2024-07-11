@@ -47,26 +47,29 @@ class ElectricDecarbStep():
         if UseCCA == 'Yes':
             cur_cost = ce_cca.fetch_total_cost(self.user_zip_code,self.user_sector,self.user_current_plan,self.user_current_company)
             self.steps.append(cur_cost)
+            
         elif UseCCA == 'No':
             cur_cost = ce.check_condition_and_run(self.user_current_plan)
             self.steps.append(cur_cost)
         else:
-            pass
-        return cur_cost
+            cur_cost = "0"
+        return float(cur_cost)
 
     def get_new_plan(self, HasCCA):
         ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.lcb_usage_data,self.smb_usage_data,self.lcu_usage_data,self.smu_usage_data)
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx', user_cost_weight,user_renewable_weight)
         
         if HasCCA == 'Yes':
-            new_cost = switch_cca.get_optimized_plan(self.user_sector, self.user_current_company,self.user_zip_code,self.user_current_plan,self.user_cost_weight, self.user_renewable_weight)
-            self.steps.append(new_cost)
+            plan= switch_cca.get_optimized_plan(self.user_zip_code, self.user_sector)
+            
+            
+            self.steps.append(plan)
         elif HasCCA == 'No':
-            new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
+            plan= ew.check_condition_and_run(self.user_sector, self.user_bundled)
             plan=ew.print_plan()
             self.steps.append(plan)
         else:
-            pass
+            plan=None
         return plan
     
     def get_new_cost(self, HasCCA):
@@ -74,20 +77,26 @@ class ElectricDecarbStep():
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
         
         if HasCCA == 'Yes':
-            new_cost = switch_cca.get_optimized_plan(self.user_sector, self.user_current_company,self.user_zip_code,self.user_current_plan,self.user_cost_weight, self.user_renewable_weight)
+            new_cost = switch_cca.get_optimized_plan_cost(self.user_zip_code, self.user_sector)
             self.steps.append(new_cost)
         elif HasCCA == 'No':
             new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
             self.steps.append(new_cost)
         else:
-            pass
-        return new_cost
+             new_cost = "0"
+        return float(new_cost)
 
-
+   
     def compute_electricbill_savings(self):
+        new_plan=self.get_new_plan(self.HasCCA)
         current_cost=self.get_cur_cost(self.UseCCA)
         new_cost=self.get_new_cost(self.HasCCA)
-        saving = (current_cost - new_cost)/current_cost * self.user_cur_cost
+        
+        print(new_cost)
+        print(current_cost)
+        print(new_plan)
+        
+        saving = (current_cost - new_cost)/100* self.user_cur_cost
         return saving
     
     def get_current_renewable_percentage(self, UseCCA, user_zip_code):
@@ -124,7 +133,9 @@ class ElectricDecarbStep():
         #new_renewable = 56
         #return new_renewable
         if HasCCA=='Yes':
-            new_renewable=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
+            renew_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
+            new_renewable = renew_cca.get_optimized_renewable(self.user_zip_code, self.user_sector)
+            return (new_renewable)
        
         elif HasCCA == 'No':
             joint_rate_plan_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name = 'Joint Rate Plan')
@@ -152,10 +163,10 @@ class ElectricDecarbStep():
         emissions_saved = carbon_from_electric * (new_renewable - current_renewable_percentage)
         return emissions_saved
 
-user_zip_code = 95948
-user_sector = 'Large Commercial and Industrial'
+user_zip_code = 94002 #94518
+user_sector = 'Small and Medium Business'    #'Large Commercial and Industrial'
 user_bundled = 'Yes'
-user_current_plan = 'B19TVB'
+user_current_plan = 'B-1'#'B19TVB'
 kwh_used = 10000
 user_cur_cost = 100000
 difficulty = 2
@@ -166,8 +177,8 @@ user_current_company = 'PG&E'
 user_cost_weight = 0.6
 user_renewable_weight = 0.4 
 
-UseCCA = 'No'
-HasCCA = 'No'
+UseCCA = 'Yes'
+HasCCA = 'Yes'
 
 lcb_usage_data = LCBSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
                             161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
@@ -189,7 +200,8 @@ smu_usage_data = SMUSector(21, 96, 50, 170, 38, 180, 190, 176, 139, 9, 47, 149,
 
 test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
                         user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
-                        smu_usage_data, ranking_zscore)        
+                        smu_usage_data, ranking_zscore)  
+      
 test.compute_electricbill_savings()
 
 

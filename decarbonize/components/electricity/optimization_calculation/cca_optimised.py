@@ -1,8 +1,7 @@
 import pandas as pd
-
 from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
 
-class electricity_cca:
+class  electricity_cca:
     def __init__(self, file_path, user_cost_weight, user_renewable_weight):
         self.file_path = file_path
         self.cost_weight = user_cost_weight
@@ -70,43 +69,66 @@ class electricity_cca:
 
         new_plan_name = best_plan['Plan']
         new_cost = best_plan['Total Cost']
-        new_company=best_plan['Electrical Company Name']
+        new_company = best_plan['Electrical Company Name']
 
-        return new_plan_name,new_cost, new_company
-            
+        return new_plan_name, new_cost, new_company
 
-    def optimize_renewable(self,price):
+    def optimize_renewable(self, price):
         df = pd.DataFrame(price)
         df['Cost Score'] = 1 / df['Total Cost']
         df['Renewable Score'] = df['Renewable Energy percentage']
         df['Combined Score'] = self.cost_weight * df['Cost Score'] + self.renewable_weight * df['Renewable Score']
 
-        best_renewable = df.loc[df['Combined Score'].idxmax(), ['Renewable Energy Percentage']]
+        best_renewable = df.loc[df['Combined Score'].idxmax(), ['Renewable Energy percentage']]
 
-        new_renewable=best_renewable['Renewable Energy Percentage']
+        new_renewable = best_renewable['Renewable Energy percentage']
 
         return new_renewable
 
-    def get_optimized_plan(file_path, zip_code, sector, company, current_plan_name, current_total_cost, current_renewable_percentage,cost_weight,renewable_weight):
-       erp = Currentelectricity_cca(file_path, self.cost_weight,  self.renewable_weight)
-       area = erp.check_pge_cca_service_area(zip_code)
-       if area is not None:
+    def get_optimized_plan(self, zip_code, sector):
+        area = self.check_pge_cca_service_area(zip_code)
+        if area is not None:
+            plans = self.get_plans(area, sector)
+            final_plans = list(set(plans))
+            fetched_plans = ",".join(final_plans)
 
-        plans = erp.get_plans(area, sector)
-        final_plans = list(set(plans))
-        fetched_plans = ",".join(final_plans)
+            price = self.fetch_caa_plan_price(sector, fetched_plans, area)
 
-        price = erp.fetch_caa_plan_price(sector, fetched_plans, area)
+            final_result = self.optimize_plans(price)
+            
+            return final_result
+        else:
+            return None
         
+    def get_optimized_plan_cost(self, zip_code, sector):
+        area = self.check_pge_cca_service_area(zip_code)
+        if area is not None:
+            plans = self.get_plans(area, sector)
+            final_plans = list(set(plans))
+            fetched_plans = ",".join(final_plans)
 
-        final_result = erp.optimize_plans(price)
-        return final_result
-       else:
-        
-        return None
-       
+            price = self.fetch_caa_plan_price(sector, fetched_plans, area)
+
+            final_result = self.optimize_plans(price)
+            
+            return final_result[1]  #Only the cost
+        else:
+            return None
+
+
+    def get_optimized_renewable(self, zip_code, sector):
+        area = self.check_pge_cca_service_area(zip_code)
+        if area is not None:
+            plans = self.get_plans(area, sector)
+            final_plans = list(set(plans))
+            fetched_plans = ",".join(final_plans)
+
+            price = self.fetch_caa_plan_price(sector, fetched_plans, area)
+
+            final_result = self.optimize_renewable(price)
+            print(final_result)
+            return final_result
+        else:
+            return None
     
-
-
-#final_result = get_optimized_plan(file_path, user_zip_code, user_sector, user_company, user_current_plan, user_current_total_cost, user_current_renewable_percentage, user_cost_weight, user_renewable_weight)
-#print("Optimization Result:", final_result)
+    

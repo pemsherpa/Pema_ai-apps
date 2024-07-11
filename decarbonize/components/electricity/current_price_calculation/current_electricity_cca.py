@@ -45,30 +45,28 @@ class Currentelectricity_cca:
         return sector_plans
 
     def fetch_total_cost(self, zip_code, user_sector, company, plan):
+      service_area = self.check_pge_cca_service_area(zip_code)
+      if service_area is None:
+        return 0
 
-        service_area = self.check_pge_cca_service_area(zip_code)
-        if service_area is None:
-            return "No matching service area found for the provided zip code."
+      possible_plans = self.get_plans(service_area, user_sector)
+      if not possible_plans:
+        return 0
 
+      matched_rows = self.jrp_plans_df[
+        (self.jrp_plans_df['Location'].isin(service_area)) &
+        (self.jrp_plans_df['Sector'] == user_sector) &
+        (self.jrp_plans_df['Electrical Company Name'] == company) &
+        (self.jrp_plans_df['Plan'] == plan)
+      ]
 
-        possible_plans = self.get_plans(service_area, user_sector)
-        if not possible_plans:
-            return "No matching plans found for the provided criteria."
+      if matched_rows.empty:
+        return 0
 
+      total_cost = matched_rows['Total Cost'].values[0]
 
-        matched_rows = self.jrp_plans_df[
-            (self.jrp_plans_df['Location'].isin(service_area)) &
-            (self.jrp_plans_df['Sector'] == user_sector) &
-            (self.jrp_plans_df['Electrical Company Name'] == company) &
-            (self.jrp_plans_df['Plan'] == plan)
-        ]
+      return float(total_cost)
 
-        if matched_rows.empty:
-            return "No matching rows found for the provided criteria."
-
-        total_cost = matched_rows['Total Cost']
-
-        return total_cost
 
 #electricity = Currentelectricity_cca(file_path, user_zip_code)
 #total_cost = electricity.fetch_total_cost(user_zip_code, sector,company,plan)
