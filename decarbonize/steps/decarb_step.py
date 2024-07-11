@@ -3,13 +3,14 @@ from components.electricity.optimization_calculation.electricity_work import Ele
 
 
 class DecarbStep:
-    def __init__(self, step_type, cur_cost, new_cost,cur_emissions,new_emissions,description,ranking_zscore):
+    def __init__(self, step_type, cur_cost, new_cost,cur_emissions,new_emissions,description,difficulty):
         self.step_type = step_type
         self.cur_cost = cur_cost
         self.new_cost = new_cost
-        self.cur_emissions = 1
-        self.new_emissions = 1
-        self.ranking_zscore = ranking_zscore
+        self.cur_emissions = cur_emissions
+        self.new_emissions = new_emissions
+        self.description = description
+        self.difficulty = difficulty
 
         
     def get_cur_cost(self):

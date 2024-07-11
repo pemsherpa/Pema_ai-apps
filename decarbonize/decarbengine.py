@@ -73,7 +73,7 @@ class DecarbEngine:
             cur_emissions=commuting_emissions,
             new_emissions=commuting_emissions * 0.9,  # fake num
             description="Analyze commuting costs and emissions for individual",
-            ranking_zscore=1.0
+            difficulty=1
         )
         self.steps.append(commuting_step)
         savings += commuting_step.compute_savings()
@@ -111,8 +111,12 @@ class DecarbEngine:
         electric_step = self.run_electric()
         ces = electric_step.saving
         savings += ces
-        print(ces)
+        #print(ces)
         self.steps.append(electric_step)
+
+        return self.steps
+
+
 
         
     def create_flight_step(self, return_flight, difficulty):
@@ -197,7 +201,7 @@ class DecarbEngine:
         
         return smu_usage_data
     
-    def run_decarb_engine():
+    def create_decarb_engine():
         origin = "LAX"
         destination = "JFK"
         departure_date = "2024-07-12"
@@ -227,7 +231,7 @@ class DecarbEngine:
             print(f"Emissions Savings: {step.compute_emissions_savings()} kg CO2\n")
 
 def main():
-    DecarbEngine.run_decarb_engine()
+    DecarbEngine.create_decarb_engine()
     #print(DecarbEngine.run_electric()) 
         
 if __name__ == "__main__":

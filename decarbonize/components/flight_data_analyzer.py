@@ -67,17 +67,19 @@ class FlightDataAnalyzer:
 
     def create_dataframes_serpapi(self, flights):
         columns = ['Carrier', 'Flight Number', 'Departure Airport', 'Departure Time', 'Arrival Airport', 'Arrival Time', 'Duration',
-                   'Aircraft', 'Carbon Emissions', 'Typical Carbon Emissions', 'Difference in Percent', 'Travel Class',
+                    'Carbon Emissions', 'Typical Carbon Emissions', 'Difference in Percent', 'Travel Class',
                    'Price', 'Stops', 'Layovers', 'Total Duration','token']
         flight_data = []
         seen_flights = set()
 
         def extract_flight_data(flight_list):
+            
             for flight in flight_list:
                 price = flight['price']
                 stops = len(flight['flights']) - 1
                 layovers = flight.get('layovers', 'N/A')
                 total_duration = flight['total_duration']
+                #aircraft = flight['airplane']
                 if 'departure_token' in flight:
                     token = flight['departure_token']
                 else:
@@ -91,9 +93,6 @@ class FlightDataAnalyzer:
                     arrival = segment['arrival_airport']['id']
                     arrival_time = segment['arrival_airport']['time']
                     duration = segment['duration']
-                    print (segment)
-                    aircraft = segment['airplane']
-
                     carbon_emissions = flight['carbon_emissions']['this_flight']
                     if flight['carbon_emissions']['typical_for_this_route']:
                         typical_carbon_emissions = flight['carbon_emissions']['typical_for_this_route']
@@ -109,14 +108,16 @@ class FlightDataAnalyzer:
                         seen_flights.add(flight_key)
                         flight_data.append([
                             carrier_code, flight_number, departure, departure_time,
-                            arrival, arrival_time, duration, aircraft, carbon_emissions, typical_carbon_emissions, difference_in_percent, travel_class_name,
+                            arrival, arrival_time, duration, carbon_emissions, typical_carbon_emissions, difference_in_percent, travel_class_name,
                             price, stops, layovers, total_duration,token
                         ])
 
         if 'best_flights' in flights:
+            
             extract_flight_data(flights['best_flights'])
 
         if 'other_flights' in flights:
+            
             extract_flight_data(flights['other_flights'])
 
         df_flights = pd.DataFrame(flight_data, columns=columns)
