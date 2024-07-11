@@ -1,4 +1,4 @@
-
+import pandas as pd
 from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
 from components.electricity.optimization_calculation.electricity_work import ElectricityWork
 from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
@@ -32,8 +32,8 @@ class ElectricDecarbStep():
         self.cur_cost = self.get_cur_cost(UseCCA)
         self.new_cost = self.get_new_cost(HasCCA)
         self.saving = self.compute_electricbill_savings()
-        self.cur_renewable = self.get_cur_renewable(UseCCA, user_zip_code)
-        self.new_renewable = self.get_new_renewable()
+        get_current_renewable_percentage = self.get_current_renewable_percentage(UseCCA, user_zip_code)
+        new_renewable = self.get_new_renewable()
         self.cur_emission = self.get_carbon_from_electric(kwh_used)
         self.emissions_saved = self.get_new_carbon_from_electric()
         
@@ -90,24 +90,56 @@ class ElectricDecarbStep():
         saving = (current_cost - new_cost)/current_cost * self.user_cur_cost
         return saving
     
-    def get_cur_renewable(self, UseCCA, user_zip_code):
-        cur_renewable = 48
-        return cur_renewable
-    
+    def get_current_renewable_percentage(self, UseCCA, user_zip_code):
+        if UseCCA == 'Yes':
+            cca_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='CCA')
+            joint_rate_plan_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name = 'Joint Rate Plan')
+
+
+            plan_column = None
+
+
+            for column in cca_df.columns:
+                if user_zip_code in cca_df[column].values:
+                    plan_column = column
+                    break
+       
+            if plan_column is None:
+                return "No matching CCA zipcode found."
+       
+            if plan_column in joint_rate_plan_df['Location'].values:
+                current_renewable_percentage = joint_rate_plan_df.loc[joint_rate_plan_df['Location'] == plan_column, 'Renewable Energy Percentage'].values[0]
+                return float(current_renewable_percentage)
+            else:
+                return f"No matching location found for {plan_column}."
+       
+        elif UseCCA == 'No':
+            joint_rate_plan_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name = 'Joint Rate Plan')
+            current_renewable_percentage = joint_rate_plan_df.loc[joint_rate_plan_df['Electrical Company Name'] == 'PG&E', 'Renewable Energy Percentage'].values[0]
+            return float(current_renewable_percentage)
+        else:
+            return f"Error, please reanswer the UseCCA question."
+   
     def get_new_renewable(self):
         new_renewable = 56
         return new_renewable
-    
+   
     def get_carbon_from_electric(self, kwh_used):
         # Make API request for electric
         # TODO fix with API call
         cur_emission = self.kwh_used * 1.5
         return cur_emission
 
+
     def get_new_carbon_from_electric(self):
-       
-        emissions_saved =  self.get_carbon_from_electric(self.kwh_used) * (self.get_new_renewable() - self.get_cur_renewable(self.UseCCA, self.user_zip_code))
-        
+
+
+        current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code))
+        new_renewable = self.get_new_renewable()
+        carbon_from_electric = self.get_carbon_from_electric(self.kwh_used)
+
+
+        emissions_saved = carbon_from_electric * (new_renewable - current_renewable_percentage)
         return emissions_saved
 
 user_zip_code = 95948
@@ -150,7 +182,6 @@ test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, u
                         smu_usage_data, ranking_zscore)        
 test.compute_electricbill_savings()
 
-# User Input, now is fake
 
 
 
