@@ -145,8 +145,8 @@ class ElectricDecarbStep():
 
 
         current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code))
-        new_renewable = self.get_new_renewable()
-        carbon_from_electric = self.get_carbon_from_electric(self.kwh_used)
+        new_renewable = float(self.get_new_renewable())
+        carbon_from_electric = float(self.get_carbon_from_electric(self.kwh_used))
 
 
         emissions_saved = carbon_from_electric * (new_renewable - current_renewable_percentage)
