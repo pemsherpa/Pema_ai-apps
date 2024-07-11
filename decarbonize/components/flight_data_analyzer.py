@@ -91,6 +91,7 @@ class FlightDataAnalyzer:
                     arrival = segment['arrival_airport']['id']
                     arrival_time = segment['arrival_airport']['time']
                     duration = segment['duration']
+                    print (segment)
                     aircraft = segment['airplane']
 
                     carbon_emissions = flight['carbon_emissions']['this_flight']

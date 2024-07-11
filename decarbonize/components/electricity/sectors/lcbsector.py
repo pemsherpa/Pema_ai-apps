@@ -1,4 +1,4 @@
-class LCBSector:
+class LCBSector:        
     def __init__(self, B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage,
                  B19SVBWpeak_usage,B19SVBWsuperoffpeak_usage,B19SVBWoffpeak_usage,
                  B19PVBSpeak_usage,B19PVBSpartpeak_usage,B19PVBSoffpeak_usage,

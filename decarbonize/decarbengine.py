@@ -31,7 +31,7 @@ from steps.flight_decarb_step import FlightDecarbStep
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data, origin, destination, departure_date,firm,weights,return_date=None):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
-        self.FLIGHT_API_KEY = '7b97097f97bcea06b3c9c8b81e864da1f686069cdfba1dfd89834eec702b8f16'
+        self.FLIGHT_API_KEY = '7afef474c061eff1d01477d4a67693a2fdb2821437d63642750002ee4350e901'
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.firm = firm
         self.dynamic = dynamic_data
@@ -107,6 +107,13 @@ class DecarbEngine:
         self.steps.append(return_flight_step)
         savings += return_flight_step.compute_savings()
 
+        # Electricity Step
+        electric_step = self.run_electric()
+        ces = electric_step.saving
+        savings += ces
+        print(ces)
+        self.steps.append(electric_step)
+
         
     def create_flight_step(self, return_flight, difficulty):
         return_flight_savings = return_flight['Price'].iloc[0]
@@ -122,8 +129,8 @@ class DecarbEngine:
         )
         return return_flight_step
 
-    
-    def run_electric():
+        
+    def run_electric(self):
         user_zip_code = 94002 #95948
         user_sector = 'Small and Medium Business'#'Large Commercial and Industrial'
         user_bundled = 'Yes'
@@ -131,7 +138,6 @@ class DecarbEngine:
         kwh_used = 10000
         user_cur_cost = 100000
         difficulty = 2
-        user_cur_renewable = 0.1
         ranking_zscore = 10
 
         user_current_company = "PG&E"
@@ -141,38 +147,61 @@ class DecarbEngine:
         UseCCA = 'Yes'
         HasCCA = 'Yes'
 
+        peak_usage=449
+        offpeak_usage=2564 
+        super_offpeak_usage=5332 
+        peak_cost= .39746
+        offpeak_cost= .25523
+        super_offpeak_cost=.17651
+
+        lcb_usage_data = self.create_lcb(peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost)
+        smb_usage_data = self.create_smb(peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost)
+        lcu_usage_data = self.create_lcu(peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost)
+        smu_usage_data = self.create_smu(peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost)
+        
+        electric_step = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
+                                user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
+                                smu_usage_data, ranking_zscore, difficulty) 
+        return electric_step
+        
+    def create_lcb(self, peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost):
         lcb_usage_data = LCBSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
                                     161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
                                     110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
                                     50, 38, 199, 80, 155, 1)
+        
+        return lcb_usage_data
+    
+    def create_smb(self, peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost):
         smb_usage_data = SMBSector(21, 96, 50, 170, 38, 180, 190, 176, 139, 9, 47, 149, 
                                     64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
                                     131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
                                     96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
+        
+        return smb_usage_data
+    
+    def create_lcu(self, peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost):
         lcu_usage_data = LCUSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
                                     161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
                                     110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
                                     50, 38, 199, 80, 155, 1, 99, 14, 118, 141, 121, 
                                     31, 198, 108, 44, 54, 22, 31)
+        
+        return lcu_usage_data
+    
+    def create_smu(self, peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost):
         smu_usage_data = SMUSector(21, 96, 50, 170, 38, 180, 190, 176, 139, 9, 47, 149, 
                                     64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
                                     131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
                                     96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
         
-        test = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
-                                user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
-                                smu_usage_data, ranking_zscore, difficulty)
-        ces = test.saving
-        carbon_saving = test.get_electric_carbon_savings()   
-        return ces, carbon_saving
-        
-# Defining main function 
-   
+        return smu_usage_data
+    
     def run_commute_and_flight():
         origin = "LAX"
         destination = "JFK"
-        departure_date = "2024-07-01"
-        return_date = "2024-07-10"
+        departure_date = "2024-07-12"
+        return_date = "2024-07-14"
         firm = '2107 Addison St, Berkeley, CA'
         commuting_data = pd.DataFrame({
             'ID': [1, 2, 3],
@@ -198,7 +227,7 @@ class DecarbEngine:
             print(f"Emissions Savings: {step.compute_emissions_savings()} kg CO2\n")
 
 def main():
-    #DecarbEngine.run_commute_and_flight()
+    DecarbEngine.run_commute_and_flight()
     print(DecarbEngine.run_electric()) 
         
 if __name__ == "__main__":

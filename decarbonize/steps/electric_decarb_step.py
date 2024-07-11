@@ -35,8 +35,6 @@ class ElectricDecarbStep(DecarbStep):
         self.cur_cost = self.get_cur_cost(UseCCA)
         self.new_cost = self.get_new_cost(HasCCA)
         self.saving = self.compute_electricbill_savings()
-        get_current_renewable_percentage = self.get_current_renewable_percentage(UseCCA, user_zip_code)
-        new_renewable = self.get_new_renewable()
         self.cur_emission = self.get_carbon_from_electric(kwh_used)
         self.emissions_saved = self.get_electric_carbon_savings()
         self.difficulty = difficulty
@@ -143,13 +141,11 @@ class ElectricDecarbStep(DecarbStep):
             print("Error, please reanswer the UseCCA question.")
             return -1
    
-   
     def get_carbon_from_electric(self, kwh_used):
         # Make API request for electric
         # TODO fix with API call
         cur_emission = self.kwh_used * 1.5
         return cur_emission
-
 
     def get_electric_carbon_savings(self):
         current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code))
