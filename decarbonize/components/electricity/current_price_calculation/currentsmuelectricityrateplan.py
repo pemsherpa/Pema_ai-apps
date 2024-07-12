@@ -168,7 +168,7 @@ class currentSMUElectricityRatePlan:
           x0 = [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
         elif user_current_plan == 'B-1':
           x0 = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-        elif user_current_plan == 'B-1_ST':
+        elif user_current_plan == 'B-1-ST':
           x0 = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
         elif user_current_plan == 'B-6':
           x0 = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]

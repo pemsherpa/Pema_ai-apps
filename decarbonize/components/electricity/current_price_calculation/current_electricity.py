@@ -68,9 +68,9 @@ class CurrentElectricity:
 
     def check_condition_and_run(self, user_current_plan, user_bundled):
         condition1_keys = ['B-19_SV', 'B-19_PV', 'B-19_TV', 'B-19', 'B-20_SV', 'B-20_PV', 'B-20_TV', 'B-20']
-        condition2_keys = ['A-1NT', 'A-1', 'B-1', 'B-1_ST', 'B-6', 'B-10_SV', 'B-10_PV', 'B-10_TV']
+        condition2_keys = ['A-1NT', 'A-1', 'B-1', 'B-1-ST', 'B-6', 'B-10_SV', 'B-10_PV', 'B-10_TV']
         condition3_keys=  ['B-19_SV', 'B-19_PV', 'B-19_TV', 'B-19', 'B-20_SV', 'B-20_PV', 'B-20_TV', 'B-20']
-        condition4_keys=  ['A-1NT', 'A-1', 'B-1', 'B-1_ST', 'B-6', 'B-10_SV', 'B-10_PV', 'B-10_TV']
+        condition4_keys=  ['A-1NT', 'A-1', 'B-1', 'B-1-ST', 'B-6', 'B-10_SV', 'B-10_PV', 'B-10_TV']
 
         condition1 = user_current_plan in condition1_keys and user_bundled == 'Yes'
         condition2 = user_current_plan in condition2_keys and user_bundled == 'Yes'
