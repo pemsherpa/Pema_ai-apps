@@ -16,8 +16,9 @@ class DecarbStep:
     def get_cur_cost(self):
         user_zip_code = 95347
         ce = CurrentElectricity('Electricity Rate Plan.xlsx', user_zip_code)
-        user_current_plan = 'B19SVB'
-        new_cost = ce.check_condition_and_run(user_current_plan)
+        user_current_plan = 'B-19_SV'
+        user_bundled = 'Yes'
+        new_cost = ce.check_condition_and_run(user_current_plan, user_bundled)
         self.steps.append(new_cost)
         return self.cur_cost
     

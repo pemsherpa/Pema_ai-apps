@@ -1,3 +1,4 @@
+from unittest import result
 import pandas as pd
 from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
 from components.electricity.optimization_calculation.electricity_work import ElectricityWork
@@ -50,7 +51,7 @@ class ElectricDecarbStep(DecarbStep):
             cur_cost = ce_cca.fetch_total_cost(self.user_zip_code,self.user_sector,self.user_current_company,self.user_current_plan)
             self.steps.append(cur_cost)
         elif UseCCA == 'No':
-            cur_cost = ce.check_condition_and_run(self.user_current_plan)
+            cur_cost = ce.check_condition_and_run(self.user_current_plan, self.user_bundled)
             self.steps.append(cur_cost)
         else:
             cur_cost = "0"
@@ -65,7 +66,6 @@ class ElectricDecarbStep(DecarbStep):
             self.steps.append(plan)
         elif HasCCA == 'No':
             plan= ew.check_condition_and_run(self.user_sector, self.user_bundled)
-            plan=ew.print_plan()
             self.steps.append(plan)
         else:
             plan=None
@@ -151,7 +151,6 @@ class ElectricDecarbStep(DecarbStep):
         current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code))
         new_renewable = float(self.get_new_renewable())
         carbon_from_electric = float(self.get_carbon_from_electric(self.kwh_used))
-        # TODO: fix later how to get the carbon from renewable percentage
         emissions_saved = carbon_from_electric * (1 - (new_renewable - current_renewable_percentage) / current_renewable_percentage)
         return emissions_saved
     

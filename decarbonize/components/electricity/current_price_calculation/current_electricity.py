@@ -66,16 +66,16 @@ class CurrentElectricity:
     def print_result(self, result, keys):
         return result['objective']
 
-    def check_condition_and_run(self, user_current_plan):
-        condition1_keys = ['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']
-        condition2_keys = ['A1NTB', 'A1B', 'B1B', 'B1STB', 'B6B', 'B10SVB', 'B10PVB', 'B10TVB', 'A1NTB_poly', 'A1NTB_single', 'A1B_poly', 'A1B_single', 'B1B_poly', 'B1B_single', 'B1STB_poly', 'B1STB_single', 'B6B_poly', 'B6B_single']
-        condition3_keys=  ['B19SVU', 'B19PVU', 'B19TVU', 'B19U', 'B20SVU', 'B20PVU', 'B20TVU', 'B20U']
-        condition4_keys=  ['A1NTU', 'A1U', 'B1U', 'B1STU', 'B6U', 'B10SVU', 'B10PVU', 'B10TVU', 'A1NTU_poly', 'A1NTU_single', 'A1U_poly', 'A1U_single', 'B1U_poly', 'B1U_single', 'B1STU_poly', 'B1STU_single', 'B6U_poly', 'B6U_single']
+    def check_condition_and_run(self, user_current_plan, user_bundled):
+        condition1_keys = ['B-19_SV', 'B-19_PV', 'B-19_TV', 'B-19', 'B-20_SV', 'B-20_PV', 'B-20_TV', 'B-20']
+        condition2_keys = ['A-1NT', 'A-1', 'B-1', 'B-1_ST', 'B-6', 'B-10_SV', 'B-10_PV', 'B-10_TV']
+        condition3_keys=  ['B-19_SV', 'B-19_PV', 'B-19_TV', 'B-19', 'B-20_SV', 'B-20_PV', 'B-20_TV', 'B-20']
+        condition4_keys=  ['A-1NT', 'A-1', 'B-1', 'B-1_ST', 'B-6', 'B-10_SV', 'B-10_PV', 'B-10_TV']
 
-        condition1 = user_current_plan in condition1_keys
-        condition2 = user_current_plan in condition2_keys
-        condition3 = user_current_plan in condition3_keys
-        condition4 = user_current_plan in condition4_keys
+        condition1 = user_current_plan in condition1_keys and user_bundled == 'Yes'
+        condition2 = user_current_plan in condition2_keys and user_bundled == 'Yes'
+        condition3 = user_current_plan in condition3_keys and user_bundled == 'No'
+        condition4 = user_current_plan in condition4_keys and user_bundled == 'No'
 
         rate_plan = None
         keys = []

@@ -152,21 +152,21 @@ class currentSMBElectricityRatePlan:
                 B6Bprice * B6B + B10SVBprice * B10SVB + B10PVBprice * B10PVB + B10TVBprice * B10TVB)
 
     def currentprice(self, user_current_plan):
-        if user_current_plan == 'A1NTB':
+        if user_current_plan == 'A-1NT':
           x0 = [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        elif user_current_plan == 'A1B':
+        elif user_current_plan == 'A-1':
           x0 = [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
-        elif user_current_plan == 'B1B':
+        elif user_current_plan == 'B-1':
           x0 = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-        elif user_current_plan == 'B1ST':
+        elif user_current_plan == 'B-1_ST':
           x0 = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
-        elif user_current_plan == 'B6B':
+        elif user_current_plan == 'B_6':
           x0 = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
-        elif user_current_plan == 'B10SVB':
+        elif user_current_plan == 'B-10_SV':
           x0 = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]
-        elif user_current_plan == 'B10PVB':
+        elif user_current_plan == 'B-10_PV':
           x0 = [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
-        elif user_current_plan == 'B10TVB':
+        elif user_current_plan == 'B-10_TV':
           x0 = [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
         else:
           raise ValueError(f"Plan {user_current_plan} is not recognized.")

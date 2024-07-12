@@ -222,5 +222,5 @@ class ElectricityWork:
         
         result = rate_plan.optimize()
         optimal_solution_name=self.get_result(result, keys)[2]
-        print("check_condition_and_run: Optimal Solution is " + optimal_solution_name)
+        print(optimal_solution_name)
         return result['objective']
