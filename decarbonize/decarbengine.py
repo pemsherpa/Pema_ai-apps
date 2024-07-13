@@ -17,7 +17,8 @@ from components.electricity.current_price_calculation.current_electricity import
 from components.electricity.current_price_calculation.currentlcbelectricityrateplan import currentLCBElectricityRatePlan
 from components.electricity.current_price_calculation.currentsmbelectricityrateplan import currentSMBElectricityRatePlan
 from steps.electric_decarb_step import ElectricDecarbStep
-from components.electricity.sectors.lcbsector import LCBSector
+from components.electricity.sectors.lcbsector import LCBSector 
+from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smusector import SMUSector
@@ -168,11 +169,8 @@ class DecarbEngine:
                                 smu_usage_data, ranking_zscore, difficulty) 
         return electric_step
         
-    def create_lcb(self, peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost):
-        lcb_usage_data = LCBSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
-                                    161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
-                                    110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
-                                    50, 38, 199, 80, 155, 1)
+    def create_lcb(self, peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost,):
+        lcb_usage_data = LCBSector_simplified(12,13,14,15,'Summer',7,8,9,'Large Commercial and Industrial','B-19_TV')
         
         return lcb_usage_data
     
@@ -232,7 +230,7 @@ class DecarbEngine:
 
 def main():
     DecarbEngine.create_decarb_engine()
-    #print(DecarbEngine.run_electric()) 
+    #(DecarbEngine.run_electric()) 
         
 if __name__ == "__main__":
     main()

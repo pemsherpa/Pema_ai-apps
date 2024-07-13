@@ -5,6 +5,7 @@ from components.electricity.optimization_calculation.electricity_work import Ele
 from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
 from components.electricity.optimization_calculation.cca_optimised import electricity_cca
 from components.electricity.sectors.lcbsector import LCBSector
+from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smusector import SMUSector
@@ -35,7 +36,7 @@ class ElectricDecarbStep(DecarbStep):
         self.steps = []
         self.cur_cost = self.get_cur_cost(UseCCA)
         self.new_cost = self.get_new_cost(HasCCA)
-        self.saving = self.compute_electricbill_savings()
+        self.saving = self.compute_savings()
         self.cur_emission = self.get_carbon_from_electric(kwh_used)
         self.emissions_saved = self.get_electric_carbon_savings()
         self.difficulty = difficulty
@@ -86,7 +87,7 @@ class ElectricDecarbStep(DecarbStep):
         return float(new_cost)
 
    
-    def compute_electricbill_savings(self):
+    def compute_savings(self):
         new_plan=self.get_new_plan(self.HasCCA)
         current_cost=self.get_cur_cost(self.UseCCA)
         new_cost=self.get_new_cost(self.HasCCA)
@@ -96,7 +97,9 @@ class ElectricDecarbStep(DecarbStep):
         print(new_plan)
         
         saving = (current_cost - new_cost)/current_cost* self.user_cur_cost
+        #print(saving)
         return saving
+    
     
     def get_current_renewable_percentage(self, UseCCA, user_zip_code):
         if UseCCA == 'Yes':
@@ -123,7 +126,7 @@ class ElectricDecarbStep(DecarbStep):
             current_renewable_percentage = joint_rate_plan_df.loc[joint_rate_plan_df['Electrical Company Name'] == 'PG&E', 'Renewable Energy Percentage'].values[0]
             return float(current_renewable_percentage)
         else:
-            return f"Error, please reanswer the UseCCA question."
+            return "Error, please reanswer the UseCCA question."
    
     def get_new_renewable(self):
         #new_renewable = 56

@@ -14,6 +14,7 @@ from components.electricity.optimization_calculation.lcuelectricityrateplan impo
 from components.electricity.optimization_calculation.smuelectricityrateplan import SMUElectricityRatePlan
 from components.electricity.optimization_calculation.smbelectricityrateplan import SMBElectricityRatePlan
 from components.electricity.sectors.lcbsector import LCBSector
+from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smusector import SMUSector
@@ -96,32 +97,10 @@ class ElectricityWork:
                  meter_input,time_in_use, max_15min_usage,B1STB_highest_demand_15mins)
         return smb_sector
 
-    def create_lcb_sector(self, B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage,
-                 B19SVBWpeak_usage,B19SVBWsuperoffpeak_usage,B19SVBWoffpeak_usage,
-                 B19PVBSpeak_usage,B19PVBSpartpeak_usage,B19PVBSoffpeak_usage,
-                 B19PVBWpeak_usage,B19PVBWsuperoffpeak_usage,B19PVBWoffpeak_usage,
-                 B19TVBSpeak_usage,B19TVBSpartpeak_usage,B19TVBSoffpeak_usage,
-                 B19TVBWpeak_usage,B19TVBWsuperoffpeak_usage,B19TVBWoffpeak_usage,
-                 B20SVBSpeak_usage, B20SVBSpartpeak_usage, B20SVBSoffpeak_usage,
-                 B20SVBWpeak_usage,B20SVBWsuperoffpeak_usage,B20SVBWoffpeak_usage,
-                 B20PVBSpeak_usage,B20PVBSpartpeak_usage,B20PVBWpeak_usage,
-                 B20PVBWsuperoffpeak_usage,B20PVBWoffpeak_usage,
-                 B20TVBSpeak_usage,B20TVBSpartpeak_usage,B20TVBSoffpeak_usage,
-                 B20TVBWpeak_usage,B20TVBWsuperoffpeak_usage,B20TVBWoffpeak_usage,
-                 meter_input,time_in_use,max_15min_usage):
-        lcb_sector = LCBSector(B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage,
-                 B19SVBWpeak_usage,B19SVBWsuperoffpeak_usage,B19SVBWoffpeak_usage,
-                 B19PVBSpeak_usage,B19PVBSpartpeak_usage,B19PVBSoffpeak_usage,
-                 B19PVBWpeak_usage,B19PVBWsuperoffpeak_usage,B19PVBWoffpeak_usage,
-                 B19TVBSpeak_usage,B19TVBSpartpeak_usage,B19TVBSoffpeak_usage,
-                 B19TVBWpeak_usage,B19TVBWsuperoffpeak_usage,B19TVBWoffpeak_usage,
-                 B20SVBSpeak_usage, B20SVBSpartpeak_usage, B20SVBSoffpeak_usage,
-                 B20SVBWpeak_usage,B20SVBWsuperoffpeak_usage,B20SVBWoffpeak_usage,
-                 B20PVBSpeak_usage,B20PVBSpartpeak_usage,B20PVBWpeak_usage,
-                 B20PVBWsuperoffpeak_usage,B20PVBWoffpeak_usage,
-                 B20TVBSpeak_usage,B20TVBSpartpeak_usage,B20TVBSoffpeak_usage,
-                 B20TVBWpeak_usage,B20TVBWsuperoffpeak_usage,B20TVBWoffpeak_usage,
-                 meter_input,time_in_use,max_15min_usage)
+    def create_lcb_sector(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season,
+                 meter_input,time_in_use,max_15min_usage, user_sector, user_current_plan):
+        lcb_sector = LCBSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_super_off_peak_usage, user_off_peak_usage, user_electricity_bill_season,
+                 meter_input,time_in_use,max_15min_usage, user_sector, user_current_plan)
         return lcb_sector
 
     def create_smu_sector(self, A1NTUStotal_usage, A1NTUWtotal_usage, A1USpeak_usage,
