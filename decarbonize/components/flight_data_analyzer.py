@@ -16,21 +16,47 @@ class FlightDataAnalyzer:
         self.weights = weights
         self.flight_url = "https://serpapi.com/search"
 
-        self.flights_economy = self.search_flights_serpapi(origin, destination, departure_date, '1', return_date)
-        self.flights_premium_economy = self.search_flights_serpapi(origin, destination, departure_date, '2', return_date)
-        self.flights_business = self.search_flights_serpapi(origin, destination, departure_date, '3', return_date)
-        self.flights_first_class = self.search_flights_serpapi(origin, destination, departure_date, '4', return_date)
+        self.flights_economy = None
+        self.flights_premium_economy = None
+        self.flights_business = None
+        self.flights_first_class = None
 
-        self.df_economy = self.create_dataframes_serpapi(self.flights_economy)
-        self.df_premium_economy = self.create_dataframes_serpapi(self.flights_premium_economy)
-        self.df_business = self.create_dataframes_serpapi(self.flights_business)
-        self.df_first_class = self.create_dataframes_serpapi(self.flights_first_class)
+    def get_all_flights(self):
+        if self.df_all_flights is None:
+            self.get_flights_economy()
+            self.get_flights_premimum_economy()
+            self.get_flights_business()
+            self.get_flights_first_class()
 
-        self.df_all_flights = pd.concat([self.df_economy, self.df_business, self.df_first_class, self.df_premium_economy], ignore_index=True)
+            self.df_all_flights = pd.concat([self.df_economy, self.df_business, self.df_first_class, self.df_premium_economy], ignore_index=True)
+            self.df_all_flights['Departure Time'] = pd.to_datetime(self.df_all_flights['Departure Time'])
+            self.df_all_flights['Arrival Time'] = pd.to_datetime(self.df_all_flights['Arrival Time'])
+        return self.df_all_flights
 
-        self.df_all_flights['Departure Time'] = pd.to_datetime(self.df_all_flights['Departure Time'])
-        self.df_all_flights['Arrival Time'] = pd.to_datetime(self.df_all_flights['Arrival Time'])
-
+    def get_flights_economy(self):
+        if self.flights_economy is None:
+            self.flights_economy = self.search_flights_serpapi(self.origin, self.destination, self.departure_date, '1', self.return_date)
+            self.df_economy = self.create_dataframes_serpapi(self.flights_economy)
+        return self.flights_economy
+    
+    def get_flights_premimum_economy(self):
+        if self.flights_premium_economy is None:
+            self.flights_premium_economy = self.search_flights_serpapi(self.origin, self.destination, self.departure_date, '2', self.return_date)
+            self.df_premium_economy = self.create_dataframes_serpapi(self.flights_premium_economy)
+        return self.flights_premium_economy
+    
+    def get_flights_business(self):
+        if self.flights_business is None:
+            self.flights_business = self.search_flights_serpapi(self.origin, self.destination, self.departure_date, '3', self.return_date)
+            self.df_business = self.create_dataframes_serpapi(self.flights_business)
+        return self.flights_business
+    
+    def get_flights_first_class(self):
+        if self.flights_first_class is None:
+            self.flights_first_class = self.search_flights_serpapi(self.origin, self.destination, self.departure_date, '4', self.return_date)
+            self.df_first_class = self.create_dataframes_serpapi(self.flights_first_class)
+        return self.flights_first_class
+    
     def get_optimal_flight(self, df_all_flights):
         df_all_flights['Price Z-Score'] = (df_all_flights['Price'] - df_all_flights['Price'].mean()) / df_all_flights['Price'].std()
         df_all_flights['Duration Z-Score'] = (df_all_flights['Duration'] - df_all_flights['Duration'].mean()) / df_all_flights['Duration'].std()
@@ -49,7 +75,7 @@ class FlightDataAnalyzer:
         return df_best_trade_off_flights
 
     def get_return_tickets(self):
-        temp  = self.get_optimal_flight(self.df_all_flights)
+        temp  = self.get_optimal_flight(self.get_all_flights())
         self.dep_token = temp['token'].iloc[0]
 
         return_flights_economy = self.search_flights_serpapi(self.origin, self.destination, self.departure_date, '1', self.return_date, token=self.dep_token)
@@ -124,9 +150,8 @@ class FlightDataAnalyzer:
         return df_flights
     
     def price_insights(self):
-        lst_economy = self.flights_economy['price_insights']['price_history']
-
-        lst_business = self.flights_business['price_insights']['price_history']
+        lst_economy = self.get_flights_economy()['price_insights']['price_history']
+        lst_business = self.get_flights_business()['price_insights']['price_history']
 
         temp_df_economy = pd.DataFrame(lst_economy, columns=['time', 'price'])
         temp_df_economy['time'] = temp_df_economy['time'].apply(datetime.fromtimestamp)
@@ -137,8 +162,8 @@ class FlightDataAnalyzer:
         graph_economy = temp_df_economy.plot.line(x='time', y='price')
         graph_business = temp_df_business.plot.line(x='time', y='price')
 
-        info_economy = self.flights_economy['price_insights']['price_history'][:-1]
-        info_business = self.flights_business['price_insights']['price_history'][:-1]
+        info_economy = self.get_flights_economy()['price_insights']['price_history'][:-1]
+        info_business = self.get_flights_business()['price_insights']['price_history'][:-1]
  
         return info_economy, info_business, graph_economy,  graph_business
 
@@ -169,10 +194,11 @@ class FlightDataAnalyzer:
 
     def compare_stops(self):
         # Calculate median price by number of stops and travel class
-        out = self.df_all_flights.groupby(['Stops', 'Travel Class'])['Price'].median().unstack()
+        out = self.get_all_flights().groupby(['Stops', 'Travel Class'])['Price'].median().unstack()
         return out
 
     def non_economy_cheaper_than_economy(self):
-        median_price_economy = self.df_all_flights[self.df_all_flights['Travel Class'] == 'Economy']['Price'].median()
-        non_economy_cheaper_than_economy = self.df_all_flights[(self.df_all_flights['Travel Class'] != 'Economy') & (self.df_all_flights['Price'] <= median_price_economy)]
+        all_flights = self.get_all_flights()
+        median_price_economy = all_flights[all_flights['Travel Class'] == 'Economy']['Price'].median()
+        non_economy_cheaper_than_economy = all_flights[(all_flights['Travel Class'] != 'Economy') & (all_flights['Price'] <= median_price_economy)]
         return non_economy_cheaper_than_economy

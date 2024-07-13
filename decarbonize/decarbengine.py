@@ -41,7 +41,7 @@ class DecarbEngine:
         self.commuting_analyzer = BusinessCommutingAnalyzer(commuting_data, self.GOOGLE_MAPS_API_KEY, self.OIL_PRICE_API_KEY,self.firm,self.dynamic)
         self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
         self.steps = []
-
+        
     def analyze_commuting_costs(self):
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
 
@@ -59,10 +59,8 @@ class DecarbEngine:
 
     def get_price_insights(self):
        return self.flight_analyzer.price_insights()
-
-    def run_decarb_engine(self):
-        savings = 0
-
+    
+    def run_commuting_step(self):
         # commuting costs and emissions for individual
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
         commuting_step = DecarbStep(
@@ -77,8 +75,8 @@ class DecarbEngine:
             difficulty=1
         )
         self.steps.append(commuting_step)
-        savings += commuting_step.compute_savings()
-
+    
+    def run_carpool_step(self):
         # commuting cost for carpool
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
         commuting_step = DecarbStep(
@@ -93,31 +91,39 @@ class DecarbEngine:
             difficulty= 3
         )
         self.steps.append(commuting_step)
-        savings += commuting_step.compute_savings()
-        
+
+    def run_flight_step(self):
         #flight costs
         optimal_flight = self.analyze_flight_costs()
-        print(optimal_flight)
         flight_step = self.create_flight_step(optimal_flight, 3)
         self.steps.append(flight_step)
-        savings += flight_step.compute_savings()
 
+    def run_return_flight_step(self):
         # return flight
         return_flight = self.get_return_flight_options()
         return_flight_step = self.create_flight_step(return_flight, 3.5)
         self.steps.append(return_flight_step)
-        savings += return_flight_step.compute_savings()
-
+        
+    def run_electric_step(self):
         # Electricity Step
         electric_step = self.run_electric()
-        ces = electric_step.saving
-        savings += ces
-        #print(ces)
         self.steps.append(electric_step)
 
+    def get_step_savings(self):
+        savings = 0
+        for step in self.steps:
+            savings += step.compute_emissions_savings()
+            print(savings)
+        return savings
+
+    def run_decarb_engine(self):
+        #self.run_commuting_step()
+        #self.run_carpool_step()
+        #self.run_flight_step()
+        #self.run_return_flight_step()
+        self.run_electric_step()
+
         return self.steps
-
-
 
         
     def create_flight_step(self, return_flight, difficulty):
@@ -223,9 +229,12 @@ class DecarbEngine:
         decarb_engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,return_date)
         decarb_steps = decarb_engine.run_decarb_engine()
 
+        total_savings = 0
         for step in decarb_steps:
+            this_savings = step.compute_savings()
+            total_savings += this_savings
             print(step.generate_step_description())
-            print(f"Savings: ${step.compute_savings()}")
+            print(f"Savings: ${this_savings}")
             print(f"Emissions Savings: {step.compute_emissions_savings()} kg CO2\n")
 
 def main():

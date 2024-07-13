@@ -52,6 +52,15 @@ class LCBSector:
         self.time_in_use = time_in_use
         self.max_15min_usage = max_15min_usage
 class LCBSector_simplified:        
+    def calculate_hours(self, start_time, stop_time):
+        if start_time == 'Other' or stop_time == 'Other':
+            return 0
+        else:
+            start_hour = start_time.hour
+            stop_hour = stop_time.hour
+            hours= stop_hour - start_hour
+            return hours
+                
     def __init__(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season,
                  meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
         import pandas as pd
@@ -77,28 +86,18 @@ class LCBSector_simplified:
             part_peak_df = Bundled_peak_time_df[(Bundled_peak_time_df['Sector'] == user_sector) & (Bundled_peak_time_df['Plan'] == user_current_plan) &(Bundled_peak_time_df['Type']=='Part-Peak')& (Bundled_peak_time_df['Season']=='Summer')]
             off_peak_df = Bundled_peak_time_df[(Bundled_peak_time_df['Sector'] == user_sector) & (Bundled_peak_time_df['Plan'] == user_current_plan) &(Bundled_peak_time_df['Type']=='Off-Peak')&(Bundled_peak_time_df['Season']=='Summer')]
 
-            def calculate_hours(start_time, stop_time):
-
-                if start_time == 'Other' or stop_time == 'Other':
-                    return 0
-                else:
-                    start_hour = start_time.hour
-                    stop_hour = stop_time.hour
-                    hours= stop_hour - start_hour
-                    return hours
-
             start_time_peak = peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
             stop_time_peak = peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-            summer_peak_time_hours=calculate_hours(start_time_peak,stop_time_peak)
+            summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
 
 
             start_time_part_peak=part_peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
             stop_time_part_peak=part_peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-            summer_part_peak_time_hours=calculate_hours(start_time_part_peak,stop_time_part_peak)
+            summer_part_peak_time_hours=self.calculate_hours(start_time_part_peak,stop_time_part_peak)
 
             start_time_off_peak=off_peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
             stop_time_off_peak=off_peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-            summer_off_peak_time_hours=calculate_hours(start_time_off_peak,stop_time_off_peak)
+            summer_off_peak_time_hours=self.calculate_hours(start_time_off_peak,stop_time_off_peak)
 
             B19SVBS_peak_usage = summer_peak_usage
             B19PVBS_peak_usage = summer_peak_usage
@@ -157,28 +156,19 @@ class LCBSector_simplified:
             peak_df = Bundled_peak_time_df[(Bundled_peak_time_df['Sector'] == user_sector) & (Bundled_peak_time_df['Plan'] == user_current_plan) &(Bundled_peak_time_df['Type']=='Peak')&(Bundled_peak_time_df['Season']=='Winter')]
             super_off_peak_df = Bundled_peak_time_df[(Bundled_peak_time_df['Sector'] == user_sector) & (Bundled_peak_time_df['Plan'] == user_current_plan) &(Bundled_peak_time_df['Type']=='Super-Off-Peak')& (Bundled_peak_time_df['Season']=='Winter')]
             off_peak_df = Bundled_peak_time_df[(Bundled_peak_time_df['Sector'] == user_sector) & (Bundled_peak_time_df['Plan'] == user_current_plan) &(Bundled_peak_time_df['Type']=='Off-Peak')&(Bundled_peak_time_df['Season']=='Winter')]
-
-            def calculate_hours(start_time, stop_time):
-                if start_time == 'Other' or stop_time == 'Other':
-                    return 0
-                else:
-                    start_hour = start_time.hour
-                    stop_hour = stop_time.hour
-                    hours= stop_hour - start_hour
-                    return hours
-
+                
             start_time_peak = peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
             stop_time_peak = peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-            summer_peak_time_hours=calculate_hours(start_time_peak,stop_time_peak)
+            summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
 
 
             start_time_super_off_peak=part_peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
             stop_time_super_off_peak=part_peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-            summer_super_off_peak_time_hours=calculate_hours(start_time_part_peak,stop_time_part_peak)
+            summer_super_off_peak_time_hours=self.calculate_hours(start_time_part_peak,stop_time_part_peak)
 
             start_time_off_peak=off_peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
             stop_time_off_peak=off_peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-            summer_off_peak_time_hours=calculate_hours(start_time_off_peak,stop_time_off_peak)
+            summer_off_peak_time_hours=self.calculate_hours(start_time_off_peak,stop_time_off_peak)
 
             B19SVBW_peak_usage = winter_peak_usage
             B19PVBW_peak_usage = winter_peak_usage
