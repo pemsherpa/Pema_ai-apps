@@ -97,27 +97,27 @@ class LCBSector_simplified:
 
             start_time_off_peak=off_peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
             stop_time_off_peak=off_peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-            summer_off_peak_time_hours=self.calculate_hours(start_time_off_peak,stop_time_off_peak)
+            summer_off_peak_time_hours= 24 - summer_peak_time_hours - summer_part_peak_time_hours
 
-            B19SVBS_peak_usage = summer_peak_usage
-            B19PVBS_peak_usage = summer_peak_usage
-            B19TVBS_peak_usage = summer_peak_usage
-            B19SVBS_part_peak_usage = summer_part_peak_usage
-            B19PVBS_part_peak_usage = summer_part_peak_usage
-            B19TVBS_part_peak_usage = summer_part_peak_usage
-            B19SVBS_off_peak_usage = summer_off_peak_usage
-            B19PVBS_off_peak_usage = summer_off_peak_usage
-            B19TVBS_off_peak_usage = summer_off_peak_usage
+            self.B19SVBSpeak_usage = summer_peak_usage
+            self.B19PVBSpeak_usage = summer_peak_usage
+            self.B19TVBSpeak_usage = summer_peak_usage
+            self.B19SVBSpartpeak_usage = summer_part_peak_usage
+            self.B19PVBSpartpeak_usage = summer_part_peak_usage
+            self.B19TVBSpartpeak_usage = summer_part_peak_usage
+            self.B19SVBSoffpeak_usage = summer_off_peak_usage
+            self.B19PVBSoffpeak_usage = summer_off_peak_usage
+            self.B19TVBSoffpeak_usage = summer_off_peak_usage
 
-            B20SVBS_peak_usage = summer_peak_usage
-            B20PVBS_peak_usage = summer_peak_usage
-            B20TVBS_peak_usage = summer_peak_usage
-            B20SVBS_part_peak_usage = summer_part_peak_usage
-            B20PVBS_part_peak_usage = summer_part_peak_usage
-            B20TVBS_part_peak_usage = summer_part_peak_usage
-            B20SVBS_off_peak_usage = summer_off_peak_usage
-            B20PVBS_off_peak_usage = summer_off_peak_usage
-            B20TVBS_off_peak_usage = summer_off_peak_usage
+            self.B20SVBSpeak_usage = summer_peak_usage
+            self.B20PVBSpeak_usage = summer_peak_usage
+            self.B20TVBSpeak_usage = summer_peak_usage
+            self.B20SVBSpartpeak_usage = summer_part_peak_usage
+            self.B20PVBSpartpeak_usage = summer_part_peak_usage
+            self.B20TVBSpartpeak_usage = summer_part_peak_usage
+            self.B20SVBSoffpeak_usage = summer_off_peak_usage
+            self.B20PVBSoffpeak_usage = summer_off_peak_usage
+            self.B20TVBSoffpeak_usage = summer_off_peak_usage
 
             usage_dict = {}
             for hour in range(24):
@@ -128,25 +128,25 @@ class LCBSector_simplified:
                 else:
                     usage_dict[f'{hour}_oclock_usage'] = summer_off_peak_usage / summer_off_peak_time_hours
 
-            B19SVBW_peak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(16, 21)])
-            B19SVBW_super_off_peak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(9, 14)])
-            B19SVBW_off_peak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(0, 9)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(14, 16)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(21, 24)])
+            self.B19SVBWpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(16, 21)])
+            self.B19SVBWsuperoffpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(9, 14)])
+            self.B19SVBWoffpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(0, 9)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(14, 16)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(21, 24)])
 
-            B19PVBW_peak_usage = B19SVBW_peak_usage
-            B19PVBW_super_off_peak_usage = B19SVBW_super_off_peak_usage
-            B19PVBW_off_peak_usage = B19SVBW_off_peak_usage
-            B19TVBW_peak_usage = B19SVBW_peak_usage
-            B19TVBW_super_off_peak_usage = B19SVBW_super_off_peak_usage
-            B19TVBW_off_peak_usage = B19SVBW_off_peak_usage
-            B20SVBW_peak_usage = B19SVBW_peak_usage
-            B20SVBW_super_off_peak_usage = B19SVBW_super_off_peak_usage
-            B20SVBW_off_peak_usage = B19SVBW_off_peak_usage
-            B20PVBW_peak_usage = B19SVBW_peak_usage
-            B20PVBW_super_off_peak_usage = B19SVBW_super_off_peak_usage
-            B20PVBW_off_peak_usage = B19SVBW_off_peak_usage
-            B20TVBW_peak_usage = B19SVBW_peak_usage
-            B20TVBW_super_off_peak_usage = B19SVBW_super_off_peak_usage
-            B20TVBW_off_peak_usage = B19SVBW_off_peak_usage
+            self.B19PVBWpeak_usage = self.B19SVBWpeak_usage
+            self.B19PVBWsuperoffpeak_usage = self.B19SVBWsuperoffpeak_usage
+            self.B19PVBWoffpeak_usage = self.B19SVBWoffpeak_usage
+            self.B19TVBWpeak_usage = self.B19SVBWpeak_usage
+            self.B19TVBWsuperoffpeak_usage = self.B19SVBWsuperoffpeak_usage
+            self.B19TVBWoffpeak_usage = self.B19SVBWoffpeak_usage
+            self.B20SVBWpeak_usage = self.B19SVBWpeak_usage
+            self.B20SVBWsuperoffpeak_usage = self.B19SVBWsuperoffpeak_usage
+            self.B20SVBWoffpeak_usage = self.B19SVBWoffpeak_usage
+            self.B20PVBWpeak_usage = self.B19SVBWpeak_usage
+            self.B20PVBWsuperoffpeak_usage = self.B19SVBWsuperoffpeak_usage
+            self.B20PVBWoffpeak_usage = self.B19SVBWoffpeak_usage
+            self.B20TVBWpeak_usage = self.B19SVBWpeak_usage
+            self.B20TVBWsuperoffpeak_usage = self.B19SVBWsuperoffpeak_usage
+            self.B20TVBWoffpeak_usage = self.B19SVBWoffpeak_usage
 
         elif user_electricity_bill_season == 'Winter':
             winter_peak_usage = user_input_peak_usage
@@ -159,36 +159,36 @@ class LCBSector_simplified:
                 
             start_time_peak = peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
             stop_time_peak = peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-            summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
+            winter_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
 
 
-            start_time_super_off_peak=part_peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
-            stop_time_super_off_peak=part_peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-            summer_super_off_peak_time_hours=self.calculate_hours(start_time_part_peak,stop_time_part_peak)
+            start_time_super_off_peak=super_off_peak_df['Peak Start Time'].iloc[0] if not super_off_peak_df['Peak Start Time'].empty else 'Other'
+            stop_time_super_off_peak=super_off_peak_df['Peak End Time'].iloc[0] if not super_off_peak_df['Peak End Time'].empty else 'Other'
+            winter_super_off_peak_time_hours=self.calculate_hours(start_time_super_off_peak,stop_time_super_off_peak)
 
             start_time_off_peak=off_peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
             stop_time_off_peak=off_peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-            summer_off_peak_time_hours=self.calculate_hours(start_time_off_peak,stop_time_off_peak)
+            winter_off_peak_time_hours=self.calculate_hours(start_time_off_peak,stop_time_off_peak)
 
-            B19SVBW_peak_usage = winter_peak_usage
-            B19PVBW_peak_usage = winter_peak_usage
-            B19TVBW_peak_usage = winter_peak_usage
-            B19SVBW_super_off_usage = winter_super_off_usage
-            B19PVBW_super_off_usage = winter_super_off_usage
-            B19TVBW_super_off_usage = winter_super_off_usage
-            B19SVBW_off_peak_usage = winter_off_peak_usage
-            B19PVBW_off_peak_usage = winter_off_peak_usage
-            B19TVBW_off_peak_usage = winter_off_peak_usage
+            self.B19SVBWpeak_usage = winter_peak_usage
+            self.B19PVBWpeak_usage = winter_peak_usage
+            self.B19TVBWpeak_usage = winter_peak_usage
+            self.B19SVBWsuperoff_usage = winter_super_off_peak_usage
+            self.B19PVBWsuperoff_usage = winter_super_off_peak_usage
+            self.B19TVBWsuperoff_usage = winter_super_off_peak_usage
+            self.B19SVBWoffpeak_usage = winter_off_peak_usage
+            self.B19PVBWoffpeak_usage = winter_off_peak_usage
+            self.B19TVBWoffpeak_usage = winter_off_peak_usage
 
-            B20SVBW_peak_usage = winter_peak_usage
-            B20PVBW_peak_usage = winter_peak_usage
-            B20TVBW_peak_usage = winter_peak_usage
-            B20SVBW_super_off_peak_usage = winter_super_off_peak_usage
-            B20PVBW_super_off_peak_usage = winter_super_off_peak_usage
-            B20TVBW_super_off_peak_usage = winter_super_off_peak_usage
-            B20SVBW_off_peak_usage = winter_off_peak_usage
-            B20PVBW_off_peak_usage = winter_off_peak_usage
-            B20TVBW_off_peak_usage = winter_off_peak_usage
+            self.B20SVBWpeak_usage = winter_peak_usage
+            self.B20PVBWpeak_usage = winter_peak_usage
+            self.B20TVBWpeak_usage = winter_peak_usage
+            self.B20SVBWsuperoff_peak_usage = winter_super_off_peak_usage
+            self.B20PVBWsuperoff_peak_usage = winter_super_off_peak_usage
+            self.B20TVBWsuperoffpeak_usage = winter_super_off_peak_usage
+            self.B20SVBWoffpeak_usage = winter_off_peak_usage
+            self.B20PVBWoffpeak_usage = winter_off_peak_usage
+            self.B20TVBWoffpeak_usage = winter_off_peak_usage
 
             usage_dict = {}
             for hour in range(24):
@@ -199,25 +199,25 @@ class LCBSector_simplified:
                 else:
                     usage_dict[f'{hour}_oclock_usage'] = winter_off_peak_usage / winter_off_peak_time_hours
 
-            B19SVBS_peak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(16, 21)])
-            B19SVBS_part_peak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(14, 16)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(21, 23)])
-            B19SVBS_off_peak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(0, 9)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(14, 16)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(21, 24)])
+            self.B19SVBSpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(16, 21)])
+            self.B19SVBSpart_peak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(14, 16)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(21, 23)])
+            self.B19SVBSoffpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(0, 9)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(14, 16)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(21, 24)])
 
-            B19PVBS_peak_usage = B19SVBS_peak_usage
-            B19PVBS_part_peak_usage = B19SVBS_part_peak_usage
-            B19PVBS_off_peak_usage = B19SVBS_off_peak_usage
-            B19TVBS_peak_usage = B19SVBS_peak_usage
-            B19TVBS_part_peak_usage = B19SVBS_part_peak_usage
-            B19TVBS_off_peak_usage = B19SVBS_off_peak_usage
-            B20SVBS_peak_usage = B19SVBS_peak_usage
-            B20SVBS_part_peak_usage = B19SVBS_part_peak_usage
-            B20SVBS_off_peak_usage = B19SVBS_off_peak_usage
-            B20PVBS_peak_usage = B19SVBS_peak_usage
-            B20PVBS_part_peak_usage = B19SVBS_part_peak_usage
-            B20PVBS_off_peak_usage = B19SVBS_off_peak_usage
-            B20TVBS_peak_usage = B19SVBS_peak_usage
-            B20TVBS_part_peak_usage = B19SVBS_part_peak_usage
-            B20TVBS_off_peak_usage = B19SVBS_off_peak_usage
+            self.B19PVBSpeak_usage = self.B19SVBSpeak_usage
+            self.B19PVBSpartpeak_usage = self.B19SVBSpart_peak_usage
+            self.B19PVBSoffpeak_usage = self.B19SVBSoffpeak_usage
+            self.B19TVBSpeak_usage = self.B19SVBSpeak_usage
+            self.B19TVBSpartpeak_usage = self.B19SVBSpart_peak_usage
+            self.B19TVBSoffpeak_usage = self.B19SVBSoffpeak_usage
+            self.B20SVBSpeak_usage = self.B19SVBSpeak_usage
+            self.B20SVBSpartpeak_usage = self.B19SVBSpart_peak_usage
+            self.B20SVBSoffpeak_usage = self.B19SVBSoffpeak_usage
+            self.B20PVBSpeak_usage = self.B19SVBSpeak_usage
+            self.B20PVBSpartpeak_usage = self.B19SVBSpart_peak_usage
+            self.B20PVBSoffpeak_usage = self.B19SVBSoffpeak_usage
+            self.B20TVBSpeak_usage = self.B19SVBSpeak_usage
+            self.B20TVBSpartpeak_usage = self.B19SVBSpart_peak_usage
+            self.B20TVBSoffpeak_usage = self.B19SVBSoffpeak_usage
         else:
             result = 0
 
