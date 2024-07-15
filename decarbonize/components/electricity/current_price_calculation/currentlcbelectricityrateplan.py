@@ -21,6 +21,7 @@ class currentLCBElectricityRatePlan:
         if phase:
             query += f" and Phase == '{phase}'"
         return self.df.query(query)[column].values[0]
+        
 
     def load_parameters(self):
         # Load all required parameters

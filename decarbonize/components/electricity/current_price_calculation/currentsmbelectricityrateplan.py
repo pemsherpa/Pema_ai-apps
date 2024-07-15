@@ -20,29 +20,35 @@ class currentSMBElectricityRatePlan:
         query = f"Sector == '{sector}' and Plan == '{plan}' and Season == '{season}' and Type == '{ptype}'"
         if phase:
             query += f" and Phase == '{phase}'"
-        return self.df.query(query)[column].values[0]
+        result = self.df.query(query)
+        if len(result) > 0:
+            return result[column].values[0]
+        else:
+            raise ValueError(f"No matching parameters found for query: {query}")
+        
+        
 
     def load_parameters(self):
         # Load all required parameters
         self.parameters['A1NTBS'] = self.get_parameter('Small and Medium Business', 'A-1', 'Summer', 'Non-TOU')
         self.parameters['A1NTBW'] = self.get_parameter('Small and Medium Business', 'A-1', 'Winter', 'Non-TOU')
-        self.parameters['A1NTB_polyprice'] = self.get_parameter('Small and Medium Business', 'A-1', 'Non-TOU', phase='Poly', column='Customer Charge Rate')
-        self.parameters['A1NTB_singleprice'] = self.get_parameter('Small and Medium Business', 'A-1', 'Non-TOU', phase='Single', column='Customer Charge Rate')
+        self.parameters['A1NTB_polyprice'] = self.get_parameter('Small and Medium Business', 'A-1','Summer' ,'Non-TOU', phase='Poly', column='Customer Charge Rate')
+        self.parameters['A1NTB_singleprice'] = self.get_parameter('Small and Medium Business', 'A-1', 'Winter','Non-TOU', phase='Single', column='Customer Charge Rate')
         self.parameters['A1BSpeakprice'] = self.get_parameter('Small and Medium Business', 'A-1', 'Summer', 'Peak')
         self.parameters['A1BSpartpeakprice'] = self.get_parameter('Small and Medium Business', 'A-1', 'Summer', 'Part-Peak')
         self.parameters['A1BSoffpeakprice'] = self.get_parameter('Small and Medium Business', 'A-1', 'Summer', 'Off-Peak')
         self.parameters['A1BWpartpeakprice'] = self.get_parameter('Small and Medium Business', 'A-1', 'Winter', 'Part-Peak')
         self.parameters['A1BWoffpeakprice'] = self.get_parameter('Small and Medium Business', 'A-1', 'Winter', 'Off-Peak')
-        self.parameters['A1B_polyprice'] = self.get_parameter('Small and Medium Business', 'A-1', 'Peak', phase='Poly', column='Customer Charge Rate')
-        self.parameters['A1B_singleprice'] = self.get_parameter('Small and Medium Business', 'A-1', 'Peak', phase='Single', column='Customer Charge Rate')
+        self.parameters['A1B_polyprice'] = self.get_parameter('Small and Medium Business', 'A-1', 'Summer','Peak', phase='Poly', column='Customer Charge Rate')
+        self.parameters['A1B_singleprice'] = self.get_parameter('Small and Medium Business', 'A-1','Summer', 'Peak', phase='Single', column='Customer Charge Rate')
         self.parameters['B1BSpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1', 'Summer', 'Peak')
         self.parameters['B1BSpartpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1', 'Summer', 'Part-Peak')
         self.parameters['B1BSoffpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1', 'Summer', 'Off-Peak')
         self.parameters['B1BWpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1', 'Winter', 'Peak')
         self.parameters['B1BWsuperoffpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1', 'Winter', 'Super-Off-Peak')
         self.parameters['B1BWoffpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1', 'Winter', 'Off-Peak')
-        self.parameters['B1B_polyprice'] = self.get_parameter('Small and Medium Business', 'B-1', 'Peak', phase='Poly', column='Customer Charge Rate')
-        self.parameters['B1B_singleprice'] = self.get_parameter('Small and Medium Business', 'B-1', 'Peak', phase='Single', column='Customer Charge Rate')
+        self.parameters['B1B_polyprice'] = self.get_parameter('Small and Medium Business', 'B-1', 'Summer','Peak', phase='Poly', column='Customer Charge Rate')
+        self.parameters['B1B_singleprice'] = self.get_parameter('Small and Medium Business', 'B-1', 'Winter','Peak', phase='Single', column='Customer Charge Rate')
         self.parameters['B1STBSpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1-ST', 'Summer', 'Peak')
         self.parameters['B1STBSpartpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1-ST', 'Summer', 'Part-Peak')
         self.parameters['B1STBSoffpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1-ST', 'Summer', 'Off-Peak')
@@ -50,16 +56,16 @@ class currentSMBElectricityRatePlan:
         self.parameters['B1STBWpartpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1-ST', 'Winter', 'Part-Peak')
         self.parameters['B1STBWsuperoffpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1-ST', 'Winter', 'Super-Off-Peak')
         self.parameters['B1STBWoffpeakprice'] = self.get_parameter('Small and Medium Business', 'B-1-ST', 'Winter', 'Off-Peak')
-        self.parameters['B1STB_polyprice'] = self.get_parameter('Small and Medium Business', 'B-1-ST', 'Peak', phase='Poly', column='Customer Charge Rate')
-        self.parameters['B1STB_singleprice'] = self.get_parameter('Small and Medium Business', 'B-1-ST', 'Peak', phase='Single', column='Customer Charge Rate')
+        self.parameters['B1STB_polyprice'] = self.get_parameter('Small and Medium Business', 'B-1-ST', 'Summer','Peak', phase='Poly', column='Customer Charge Rate')
+        self.parameters['B1STB_singleprice'] = self.get_parameter('Small and Medium Business', 'B-1-ST','Winter','Peak', phase='Single', column='Customer Charge Rate')
         self.parameters['B1STB_demand_rate'] = 8.25
         self.parameters['B6BSpeakprice'] = self.get_parameter('Small and Medium Business', 'B-6', 'Summer', 'Peak')
         self.parameters['B6BSoffpeakprice'] = self.get_parameter('Small and Medium Business', 'B-6', 'Summer', 'Off-Peak')
         self.parameters['B6BWpeakprice'] = self.get_parameter('Small and Medium Business', 'B-6', 'Winter', 'Peak')
         self.parameters['B6BWsuperoffpeakprice'] = self.get_parameter('Small and Medium Business', 'B-6', 'Winter', 'Super-Off-Peak')
         self.parameters['B6BWoffpeakprice'] = self.get_parameter('Small and Medium Business', 'B-6', 'Winter', 'Off-Peak')
-        self.parameters['B6B_polyprice'] = self.get_parameter('Small and Medium Business', 'B-6', 'Peak', phase='Poly', column='Customer Charge Rate')
-        self.parameters['B6B_singleprice'] = self.get_parameter('Small and Medium Business', 'B-6', 'Peak', phase='Single', column='Customer Charge Rate')
+        self.parameters['B6B_polyprice'] = self.get_parameter('Small and Medium Business', 'B-6', 'Summer','Peak', phase='Poly', column='Customer Charge Rate')
+        self.parameters['B6B_singleprice'] = self.get_parameter('Small and Medium Business', 'B-6','Winter', 'Peak', phase='Single', column='Customer Charge Rate')
         self.parameters['B10SVBSpeakprice'] = self.get_parameter('Small and Medium Business', 'B-10_SV', 'Summer', 'Peak')
         self.parameters['B10SVBSpartpeakprice'] = self.get_parameter('Small and Medium Business', 'B-10_SV', 'Summer', 'Part-Peak')
         self.parameters['B10SVBSoffpeakprice'] = self.get_parameter('Small and Medium Business', 'B-10_SV', 'Summer', 'Off-Peak')
@@ -88,7 +94,12 @@ class currentSMBElectricityRatePlan:
     def objective(self, x):
         A1NTB, A1B, B1B, B1STB, B6B, B10SVB, B10PVB, B10TVB, A1NTB_poly, A1NTB_single, A1B_poly, A1B_single, B1B_poly, B1B_single, B1STB_poly, B1STB_single, B6B_poly, B6B_single = x
         smb_usage_data = self.smb_usage_data
-        meter_input, time_in_use, max_15min_usage, B1STB_highest_demand_15mins = smb_usage_data['meter_input'], smb_usage_data['time_in_use'], smb_usage_data['max_15min_usage'], smb_usage_data['B1STB_highest_demand_15mins']
+
+        meter_input = smb_usage_data.meter_input
+        time_in_use = smb_usage_data.time_in_use
+        max_15min_usage = smb_usage_data.max_15min_usage
+        B1STB_highest_demand_15mins = smb_usage_data.B1STB_highest_demand_15mins
+        #meter_input, time_in_use, max_15min_usage, B1STB_highest_demand_15mins = smb_usage_data['meter_input'], smb_usage_data['time_in_use'], smb_usage_data['max_15min_usage'], smb_usage_data['B1STB_highest_demand_15mins']
 
         A1NTBprice = (self.parameters['A1NTBS'] * smb_usage_data.A1NTBStotal_usage +
                       self.parameters['A1NTBW'] * smb_usage_data.A1NTBWtotal_usage +
@@ -160,7 +171,7 @@ class currentSMBElectricityRatePlan:
           x0 = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
         elif user_current_plan == 'B-1-ST':
           x0 = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
-        elif user_current_plan == 'B_6':
+        elif user_current_plan == 'B-6':
           x0 = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
         elif user_current_plan == 'B-10_SV':
           x0 = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]

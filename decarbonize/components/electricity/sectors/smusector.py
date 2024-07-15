@@ -70,3 +70,4 @@ class SMUSector:
         self.time_in_use = time_in_use
         self.max_15min_usage = max_15min_usage
         self.B1STU_highest_demand_15mins = B1STU_highest_demand_15mins
+

@@ -20,7 +20,7 @@ from steps.electric_decarb_step import ElectricDecarbStep
 from components.electricity.sectors.lcbsector import LCBSector 
 from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
-from components.electricity.sectors.smbsector import SMBSector
+from components.electricity.sectors.smbsector import SMBSector_simplified
 from components.electricity.sectors.smusector import SMUSector
 from components.flight_data_analyzer import FlightDataAnalyzer
 from steps.decarb_step import DecarbStep
@@ -143,9 +143,9 @@ class DecarbEngine:
         
     def run_electric(self):
         user_zip_code = 95948 #94002
-        user_sector = 'Large Commercial and Industrial' #'Small and Medium Business''Large Commercial and Industrial'
+        user_sector =  'Small and Medium Business'#'Large Commercial and Industrial'
         user_bundled = 'Yes'
-        user_current_plan = 'B-19_TV'#'B19TVB'
+        user_current_plan ='B-6'#'B-19_TV'
         kwh_used = 10000
         user_cur_cost = 100000
         difficulty = 2
@@ -181,10 +181,7 @@ class DecarbEngine:
         return lcb_usage_data
     
     def create_smb(self, peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost):
-        smb_usage_data = SMBSector(21, 96, 50, 170, 38, 180, 190, 176, 139, 9, 47, 149, 
-                                    64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
-                                    131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
-                                    96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
+        smb_usage_data = SMBSector_simplified(5,10,15,20,'Summer',1,2,3,'Small and Medium Business','A-1',0,0,0)
         
         return smb_usage_data
     
