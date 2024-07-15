@@ -13,6 +13,9 @@ class HaasEvent:
         self.name = name
         self.location=location
         self.time = time
+
+        self.student_attendance = self.student_percentage * self.mean_attendance
+        self.non_student_attendance = self.non_student_percentage * self.mean_attendance
     
     def save_emissions(self, emissions_student_obj, emissions_nonstudent_obj):
         self.emissions_student_obj = emissions_student_obj

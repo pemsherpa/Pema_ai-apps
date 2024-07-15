@@ -57,12 +57,14 @@ class AttendeeDistribution:
     round_emissions = round(emissions, 3)
     return round_emissions
   
-  def get_emission_dict(self, num_attendees):
-    train_emissions = self.calculate_train_emissions(num_attendees)
-    car_emissions = self.calculate_car_emissions(num_attendees)
-    plane_emissions = self.calculate_plane_emissions(num_attendees)
-    bus_emissions = self.calculate_bus_emissions(num_attendees)
-    bike_emissions = self.calculate_bike_emissions(num_attendees)
+  def get_emission_dict(self, num_attendees, distrib_percentage):
+    distrib_attendees = distrib_percentage * num_attendees
+
+    train_emissions = self.calculate_train_emissions(distrib_attendees)
+    car_emissions = self.calculate_car_emissions(distrib_attendees)
+    plane_emissions = self.calculate_plane_emissions(distrib_attendees)
+    bus_emissions = self.calculate_bus_emissions(distrib_attendees)
+    bike_emissions = self.calculate_bike_emissions(distrib_attendees)
 
     return {"train": train_emissions, "car": car_emissions, "plane": plane_emissions, "bus": bus_emissions, "bike": bike_emissions}
   

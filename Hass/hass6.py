@@ -23,8 +23,8 @@ class CalculateEmission:
 
   def set_student_distrib(self):
     train_percent_student = 0.03
-    bike_percent_student = 0.3
-    car_percent_student = 0.6
+    bike_percent_student = 0.6
+    car_percent_student = 0.3
     flight_percent_student = 0.05
     bus_percent_student = 0.02
     self.student_distribution = AttendeeDistribution(train_percent_student,bike_percent_student, car_percent_student, flight_percent_student, bus_percent_student )
@@ -46,8 +46,8 @@ class CalculateEmission:
   def get_haas_event_tuples(self):
    emission_obj = {}
    for event in self.haas_events:
-      student_emissions = self.student_distribution.get_emission_dict(event.mean_attendance)  
-      nonstudent_emissions = self.nonstudent_distribution.get_emission_dict(event.mean_attendance)   
+      student_emissions = self.student_distribution.get_emission_dict(event.mean_attendance, event.student_percentage)  
+      nonstudent_emissions = self.nonstudent_distribution.get_emission_dict(event.mean_attendance, event.non_student_percentage)   
       emission_obj[event.name] = {
          "student": student_emissions,
          "nonstudent": nonstudent_emissions
@@ -61,9 +61,15 @@ class CalculateEmission:
       emissions_nonstudent_obj = self.get_emission_range(self.nonstudent_distribution, event, event.non_student_percentage)
 
       event.save_emissions(emissions_student_obj, emissions_nonstudent_obj)
+      student_intensity = emissions_student_obj[1] / event.student_attendance
+      non_student_intensity = emissions_nonstudent_obj[1] / event.non_student_attendance
+
       emission_obj[event.name] = {
          "student": event.emissions_student_obj,
-         "nonstudent": event.emissions_nonstudent_obj
+         "nonstudent": event.emissions_nonstudent_obj,
+         "mean_attendance": event.mean_attendance,
+         "mean_student_intensity": student_intensity,
+         "non_student_intensity": non_student_intensity,
          }
    return emission_obj
   
@@ -85,6 +91,9 @@ def main():
     calculate_emissions.set_haas_events(haas_events)
     emissions = calculate_emissions.calculate_haas_events_emissions()
     tuples = calculate_emissions.get_haas_event_tuples()
+
+    print ("emissions are")
+    print(emissions)
 
     print ("tuples are")
     print(tuples)
