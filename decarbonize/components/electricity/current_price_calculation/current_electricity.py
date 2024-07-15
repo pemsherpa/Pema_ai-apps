@@ -97,6 +97,6 @@ class CurrentElectricity:
             err_msg = "Current Electricity: Condition not met, not running the script."
             print(err_msg)
             raise Exception(err_msg)
-
+        
         result = rate_plan.currentprice(user_current_plan)
         return result['objective']

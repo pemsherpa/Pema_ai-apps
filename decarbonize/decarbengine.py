@@ -144,8 +144,10 @@ class DecarbEngine:
     def run_electric(self):
         user_zip_code = 95948 #94002
         user_sector =  'Small and Medium Business'#'Large Commercial and Industrial'
+        #user_sector =  'Large Commercial and Industrial'
         user_bundled = 'Yes'
         user_current_plan ='B-6'#'B-19_TV'
+        #user_current_plan = 'B-19_TV'
         kwh_used = 10000
         user_cur_cost = 100000
         difficulty = 2

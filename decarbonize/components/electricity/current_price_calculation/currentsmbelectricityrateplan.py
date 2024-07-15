@@ -25,8 +25,6 @@ class currentSMBElectricityRatePlan:
             return result[column].values[0]
         else:
             raise ValueError(f"No matching parameters found for query: {query}")
-        
-        
 
     def load_parameters(self):
         # Load all required parameters
@@ -94,7 +92,6 @@ class currentSMBElectricityRatePlan:
     def objective(self, x):
         A1NTB, A1B, B1B, B1STB, B6B, B10SVB, B10PVB, B10TVB, A1NTB_poly, A1NTB_single, A1B_poly, A1B_single, B1B_poly, B1B_single, B1STB_poly, B1STB_single, B6B_poly, B6B_single = x
         smb_usage_data = self.smb_usage_data
-
         meter_input = smb_usage_data.meter_input
         time_in_use = smb_usage_data.time_in_use
         max_15min_usage = smb_usage_data.max_15min_usage
@@ -183,6 +180,7 @@ class currentSMBElectricityRatePlan:
           raise ValueError(f"Plan {user_current_plan} is not recognized.")
 
         x_opt = x0
+
         obj_val = self.objective(x_opt)
 
         return {'x': x_opt, 'objective': obj_val}
