@@ -20,6 +20,7 @@ from steps.electric_decarb_step import ElectricDecarbStep
 from components.electricity.sectors.lcbsector import LCBSector 
 from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
+from components.electricity.sectors.lcusector import LCUSector_simplified
 from components.electricity.sectors.smbsector import SMBSector_simplified
 from components.electricity.sectors.smusector import SMUSector
 from components.flight_data_analyzer import FlightDataAnalyzer
@@ -188,11 +189,7 @@ class DecarbEngine:
         return smb_usage_data
     
     def create_lcu(self, peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost):
-        lcu_usage_data = LCUSector(162, 76, 181, 101, 61, 37, 9, 78, 65, 13, 29,
-                                    161, 25, 34, 112, 143, 15, 78, 134, 92, 67, 67,
-                                    110, 6, 35, 154, 28, 153, 132, 127, 12, 30, 191,
-                                    50, 38, 199, 80, 155, 1, 99, 14, 118, 141, 121, 
-                                    31, 198, 108, 44, 54, 22, 31)
+        lcu_usage_data = LCUSector_simplified(12,13,14,15,'Summer',7,8,9,'Large Commercial and Industrial','B-19_TV')
         
         return lcu_usage_data
     

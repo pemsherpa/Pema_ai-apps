@@ -16,6 +16,7 @@ from components.electricity.optimization_calculation.smbelectricityrateplan impo
 from components.electricity.sectors.lcbsector import LCBSector
 from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
+from components.electricity.sectors.lcusector import LCUSector_simplified
 from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smusector import SMUSector
 
@@ -99,7 +100,7 @@ class ElectricityWork:
 
     def create_lcb_sector(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season,
                  meter_input,time_in_use,max_15min_usage, user_sector, user_current_plan):
-        lcb_sector = LCBSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_super_off_peak_usage, user_off_peak_usage, user_electricity_bill_season,
+        lcb_sector = LCBSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season,
                  meter_input,time_in_use,max_15min_usage, user_sector, user_current_plan)
         return lcb_sector
 
@@ -135,32 +136,10 @@ class ElectricityWork:
                  meter_input,time_in_use, max_15min_usage,B1STU_highest_demand_15mins)
         return smu_sector
 
-    def create_lcu_sector(self, B19SVUSpeak_usage, B19SVUSpartpeak_usage, B19SVUSoffpeak_usage,
-                 B19SVUWpeak_usage,B19SVUWsuperoffpeak_usage,B19SVUWoffpeak_usage,Summer_highest_usage_B19SV,Winter_highest_usage_B19SV,
-                 B19PVUSpeak_usage,B19PVUSpartpeak_usage,B19PVUSoffpeak_usage,
-                 B19PVUWpeak_usage,B19PVUWsuperoffpeak_usage,B19PVUWoffpeak_usage,Summer_highest_usage_B19PV,Winter_highest_usage_B19PV,
-                 B19TVUSpeak_usage,B19TVUSpartpeak_usage,B19TVUSoffpeak_usage,
-                 B19TVUWpeak_usage,B19TVUWsuperoffpeak_usage,B19TVUWoffpeak_usage,Summer_highest_usage_B19TV,Winter_highest_usage_B19TV,
-                 B20SVUSpeak_usage, B20SVUSpartpeak_usage, B20SVUSoffpeak_usage,
-                 B20SVUWpeak_usage,B20SVUWsuperoffpeak_usage,B20SVUWoffpeak_usage,Summer_highest_usage_B20SV,Winter_highest_usage_B20SV,
-                 B20PVUSpeak_usage,B20PVUSpartpeak_usage,B20PVUSoffpeak_usage,
-                 B20PVUWpeak_usage,B20PVUWsuperoffpeak_usage,B20PVUWoffpeak_usage,Summer_highest_usage_B20PV,Winter_highest_usage_B20PV,
-                 B20TVUSpeak_usage,B20TVUSpartpeak_usage,B20TVUSoffpeak_usage,
-                 B20TVUWpeak_usage,B20TVUWsuperoffpeak_usage,B20TVUWoffpeak_usage,Summer_highest_usage_B20TV,Winter_highest_usage_B20TV,
-                 meter_input,time_in_use,max_15min_usage):
-        lcu_sector = LCUSector(B19SVUSpeak_usage, B19SVUSpartpeak_usage, B19SVUSoffpeak_usage,
-                 B19SVUWpeak_usage,B19SVUWsuperoffpeak_usage,B19SVUWoffpeak_usage,Summer_highest_usage_B19SV,Winter_highest_usage_B19SV,
-                 B19PVUSpeak_usage,B19PVUSpartpeak_usage,B19PVUSoffpeak_usage,
-                 B19PVUWpeak_usage,B19PVUWsuperoffpeak_usage,B19PVUWoffpeak_usage,Summer_highest_usage_B19PV,Winter_highest_usage_B19PV,
-                 B19TVUSpeak_usage,B19TVUSpartpeak_usage,B19TVUSoffpeak_usage,
-                 B19TVUWpeak_usage,B19TVUWsuperoffpeak_usage,B19TVUWoffpeak_usage,Summer_highest_usage_B19TV,Winter_highest_usage_B19TV,
-                 B20SVUSpeak_usage, B20SVUSpartpeak_usage, B20SVUSoffpeak_usage,
-                 B20SVUWpeak_usage,B20SVUWsuperoffpeak_usage,B20SVUWoffpeak_usage,Summer_highest_usage_B20SV,Winter_highest_usage_B20SV,
-                 B20PVUSpeak_usage,B20PVUSpartpeak_usage,B20PVUSoffpeak_usage,
-                 B20PVUWpeak_usage,B20PVUWsuperoffpeak_usage,B20PVUWoffpeak_usage,Summer_highest_usage_B20PV,Winter_highest_usage_B20PV,
-                 B20TVUSpeak_usage,B20TVUSpartpeak_usage,B20TVUSoffpeak_usage,
-                 B20TVUWpeak_usage,B20TVUWsuperoffpeak_usage,B20TVUWoffpeak_usage,Summer_highest_usage_B20TV,Winter_highest_usage_B20TV,
-                 meter_input,time_in_use,max_15min_usage)
+    def create_lcu_sector(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season,
+                 meter_input,time_in_use,max_15min_usage, user_sector, user_current_plan):
+        lcu_sector = LCUSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season,
+                 meter_input,time_in_use,max_15min_usage, user_sector, user_current_plan)
         return lcu_sector
     
     def get_result(self, result, keys):

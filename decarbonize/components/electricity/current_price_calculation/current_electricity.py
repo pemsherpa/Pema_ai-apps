@@ -15,6 +15,7 @@ from components.electricity.current_price_calculation.currentsmuelectricityratep
 from components.electricity.sectors.lcbsector import LCBSector
 from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
+from components.electricity.sectors.lcusector import LCUSector_simplified
 from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smusector import SMUSector
 

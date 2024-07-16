@@ -7,6 +7,7 @@ from components.electricity.optimization_calculation.cca_optimised import electr
 from components.electricity.sectors.lcbsector import LCBSector
 from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
+from components.electricity.sectors.lcusector import LCUSector_simplified
 from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smusector import SMUSector
 from components.electricity.optimization_calculation import *
