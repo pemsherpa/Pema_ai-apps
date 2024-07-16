@@ -110,64 +110,68 @@ class SMUElectricityRatePlan:
     def objective(self, x):
         A1NTU, A1U, B1U, B1STU, B6U, B10SVU, B10PVU, B10TVU, A1NTU_poly, A1NTU_single, A1U_poly, A1U_single, B1U_poly, B1U_single, B1STU_poly, B1STU_single, B6U_poly, B6U_single = x
         smu_usage_data = self.smu_usage_data
-        meter_input, time_in_use, max_15min_usage, B1STU_highest_demand_15mins = smu_usage_data['meter_input'], smu_usage_data['time_in_use'], smu_usage_data['max_15min_usage'], smu_usage_data['B1STU_highest_demand_15mins']
+        meter_input = smu_usage_data.meter_input
+        time_in_use = smu_usage_data.time_in_use
+        max_15min_usage = smu_usage_data.max_15min_usage
+        B1STU_highest_demand_15mins = smu_usage_data.B1STU_highest_demand_15mins
+        #meter_input, time_in_use, max_15min_usage, B1STU_highest_demand_15mins = smu_usage_data['meter_input'], smu_usage_data['time_in_use'], smu_usage_data['max_15min_usage'], smu_usage_data.B1STU_highest_demand_15mins
 
-        A1NTUprice = (self.parameters['A1NTUS'] * smu_usage_data['A1NTUStotal_usage'] +
-                      self.parameters['A1NTUW'] * smu_usage_data['A1NTUWtotal_usage'] +
+        A1NTUprice = (self.parameters['A1NTUS'] * smu_usage_data.A1NTUStotal_usage+
+                      self.parameters['A1NTUW'] * smu_usage_data.A1NTUWtotal_usage +
                       (self.parameters['A1NTU_polyprice'] * A1NTU_poly + self.parameters['A1NTU_singleprice'] * A1NTU_single) * meter_input * time_in_use)
-        A1USprice = (self.parameters['A1USpeakprice'] * smu_usage_data['A1USpeak_usage'] +
-                     self.parameters['A1USpartpeakprice'] * smu_usage_data['A1USpartpeak_usage'] +
-                     self.parameters['A1USoffpeakprice'] * smu_usage_data['A1USoffpeak_usage'])
-        A1UWprice = (self.parameters['A1UWpartpeakprice'] * smu_usage_data['A1UWpartpeak_usage'] +
-                     self.parameters['A1UWoffpeakprice'] * smu_usage_data['A1UWoffpeak_usage'])
+        A1USprice = (self.parameters['A1USpeakprice'] * smu_usage_data.A1USpeak_usage +
+                     self.parameters['A1USpartpeakprice'] * smu_usage_data.A1USpartpeak_usage +
+                     self.parameters['A1USoffpeakprice'] * smu_usage_data.A1USoffpeak_usage)
+        A1UWprice = (self.parameters['A1UWpartpeakprice'] * smu_usage_data.A1UWpartpeak_usage +
+                     self.parameters['A1UWoffpeakprice'] * smu_usage_data.A1UWoffpeak_usage)
         A1Uprice = A1USprice + A1UWprice + (self.parameters['A1U_polyprice'] * A1U_poly + self.parameters['A1U_singleprice'] * A1U_single) * meter_input * time_in_use
 
-        B1USprice = (self.parameters['B1USpeakprice'] * smu_usage_data['B1USpeak_usage'] +
-                     self.parameters['B1USpartpeakprice'] * smu_usage_data['B1USpartpeak_usage'] +
-                     self.parameters['B1USoffpeakprice'] * smu_usage_data['B1USoffpeak_usage'])
-        B1UWprice = (self.parameters['B1UWpeakprice'] * smu_usage_data['B1UWpeak_usage'] +
-                     self.parameters['B1UWsuperoffpeakprice'] * smu_usage_data['B1UWsuperoffpeak_usage'] +
-                     self.parameters['B1UWoffpeakprice'] * smu_usage_data['B1UWoffpeak_usage'])
+        B1USprice = (self.parameters['B1USpeakprice'] * smu_usage_data.B1USpeak_usage +
+                     self.parameters['B1USpartpeakprice'] * smu_usage_data.B1USpartpeak_usage +
+                     self.parameters['B1USoffpeakprice'] * smu_usage_data.B1USoffpeak_usage)
+        B1UWprice = (self.parameters['B1UWpeakprice'] * smu_usage_data.B1UWpeak_usage +
+                     self.parameters['B1UWsuperoffpeakprice'] * smu_usage_data.B1UWsuperoffpeak_usage +
+                     self.parameters['B1UWoffpeakprice'] * smu_usage_data.B1UWoffpeak_usage)
         B1Uprice = B1USprice + B1UWprice + (self.parameters['B1U_polyprice'] * B1U_poly + self.parameters['B1U_singleprice'] * B1U_single) * meter_input * time_in_use
 
-        B1STUSprice = (self.parameters['B1STUSpeakprice'] * smu_usage_data['B1STUSpeak_usage'] +
-                       self.parameters['B1STUSpartpeakprice'] * smu_usage_data['B1STUSpartpeak_usage'] +
-                       self.parameters['B1STUSoffpeakprice'] * smu_usage_data['B1STUSoffpeak_usage'])
-        B1STUWprice = (self.parameters['B1STUWpeakprice'] * smu_usage_data['B1STUWpeak_usage'] +
-                       self.parameters['B1STUWpartpeakprice'] * smu_usage_data['B1STUWpartpeak_usage'] +
-                       self.parameters['B1STUWsuperoffpeakprice'] * smu_usage_data['B1STUWsuperoffpeak_usage'] +
-                       self.parameters['B1STUWoffpeakprice'] * smu_usage_data['B1STUWoffpeak_usage'])
+        B1STUSprice = (self.parameters['B1STUSpeakprice'] * smu_usage_data.B1STUSpeak_usage +
+                       self.parameters['B1STUSpartpeakprice'] * smu_usage_data.B1STUSpartpeak_usage +
+                       self.parameters['B1STUSoffpeakprice'] * smu_usage_data.B1STUSoffpeak_usage)
+        B1STUWprice = (self.parameters['B1STUWpeakprice'] * smu_usage_data.B1STUWpeak_usage +
+                       self.parameters['B1STUWpartpeakprice'] * smu_usage_data.B1STUWpartpeak_usage +
+                       self.parameters['B1STUWsuperoffpeakprice'] * smu_usage_data.B1STUWsuperoffpeak_usage +
+                       self.parameters['B1STUWoffpeakprice'] * smu_usage_data.B1STUWoffpeak_usage)
         B1STUprice = B1STUSprice + B1STUWprice + (self.parameters['B1STU_polyprice'] * B1STU_poly + self.parameters['B1STU_singleprice'] * B1STU_single) * meter_input * time_in_use + self.parameters['B1STU_demand_rate'] * B1STU_highest_demand_15mins
 
-        B6USprice = (self.parameters['B6USpeakprice'] * smu_usage_data['B6USpeak_usage'] +
-                     self.parameters['B6USoffpeakprice'] * smu_usage_data['B6USoffpeak_usage'])
-        B6UWprice = (self.parameters['B6UWpeakprice'] * smu_usage_data['B6UWpeak_usage'] +
-                     self.parameters['B6UWsuperoffpeakprice'] * smu_usage_data['B6UWsuperoffpeak_usage'] +
-                     self.parameters['B6UWoffpeakprice'] * smu_usage_data['B6UWoffpeak_usage'])
+        B6USprice = (self.parameters['B6USpeakprice'] * smu_usage_data.B6USpeak_usage +
+                     self.parameters['B6USoffpeakprice'] * smu_usage_data.B6USoffpeak_usage)
+        B6UWprice = (self.parameters['B6UWpeakprice'] * smu_usage_data.B6UWpeak_usage+
+                     self.parameters['B6UWsuperoffpeakprice'] * smu_usage_data.B6UWsuperoffpeak_usage +
+                     self.parameters['B6UWoffpeakprice'] * smu_usage_data.B6UWoffpeak_usage)
         B6Uprice = B6USprice + B6UWprice + (self.parameters['B6U_polyprice'] * B6U_poly + self.parameters['B6U_singleprice'] * B6U_single) * meter_input * time_in_use
 
-        B10SVUSprice = (self.parameters['B10SVUSpeakprice'] * smu_usage_data['B10SVUSpeak_usage'] +
-                        self.parameters['B10SVUSpartpeakprice'] * smu_usage_data['B10SVUSpartpeak_usage'] +
-                        self.parameters['B10SVUSoffpeakprice'] * smu_usage_data['B10SVUSoffpeak_usage'])
-        B10SVUWprice = (self.parameters['B10SVUWpeakprice'] * smu_usage_data['B10SVUWpeak_usage'] +
-                        self.parameters['B10SVUWsuperoffpeakprice'] * smu_usage_data['B10SVUWsuperoffpeak_usage'] +
-                        self.parameters['B10SVUWoffpeakprice'] * smu_usage_data['B10SVUWoffpeak_usage'])
+        B10SVUSprice = (self.parameters['B10SVUSpeakprice'] * smu_usage_data.B10SVUSpeak_usage +
+                        self.parameters['B10SVUSpartpeakprice'] * smu_usage_data.B10SVUSpartpeak_usage +
+                        self.parameters['B10SVUSoffpeakprice'] * smu_usage_data.B10SVUSoffpeak_usage)
+        B10SVUWprice = (self.parameters['B10SVUWpeakprice'] * smu_usage_data.B10SVUWpeak_usage +
+                        self.parameters['B10SVUWsuperoffpeakprice'] * smu_usage_data.B10SVUWsuperoffpeak_usage +
+                        self.parameters['B10SVUWoffpeakprice'] * smu_usage_data.B10SVUWoffpeak_usage)
         B10SVUprice = B10SVUSprice + B10SVUWprice + self.parameters['B10SVU_Customer_Charge'] * meter_input * time_in_use + self.parameters['B10SVU_demand_rate'] * max_15min_usage
 
-        B10PVUSprice = (self.parameters['B10PVUSpeakprice'] * smu_usage_data['B10PVUSpeak_usage'] +
-                        self.parameters['B10PVUSpartpeakprice'] * smu_usage_data['B10PVUSpartpeak_usage'] +
-                        self.parameters['B10PVUSoffpeakprice'] * smu_usage_data['B10PVUSoffpeak_usage'])
-        B10PVUWprice = (self.parameters['B10PVUWpeakprice'] * smu_usage_data['B10PVUWpeak_usage'] +
-                        self.parameters['B10PVUWsuperoffpeakprice'] * smu_usage_data['B10PVUWsuperoffpeak_usage'] +
-                        self.parameters['B10PVUWoffpeakprice'] * smu_usage_data['B10PVUWoffpeak_usage'])
+        B10PVUSprice = (self.parameters['B10PVUSpeakprice'] * smu_usage_data.B10PVUSpeak_usage +
+                        self.parameters['B10PVUSpartpeakprice'] * smu_usage_data.B10PVUSpartpeak_usage +
+                        self.parameters['B10PVUSoffpeakprice'] * smu_usage_data.B10PVUSoffpeak_usage)
+        B10PVUWprice = (self.parameters['B10PVUWpeakprice'] * smu_usage_data.B10PVUWpeak_usage +
+                        self.parameters['B10PVUWsuperoffpeakprice'] * smu_usage_data.B10PVUWsuperoffpeak_usage +
+                        self.parameters['B10PVUWoffpeakprice'] * smu_usage_data.B10PVUWoffpeak_usage)
         B10PVUprice = B10PVUSprice + B10PVUWprice + self.parameters['B10PVU_Customer_Charge'] * meter_input * time_in_use + self.parameters['B10PVU_demand_rate'] * max_15min_usage
 
-        B10TVUSprice = (self.parameters['B10TVUSpeakprice'] * smu_usage_data['B10TVUSpeak_usage'] +
-                        self.parameters['B10TVUSpartpeakprice'] * smu_usage_data['B10TVUSpartpeak_usage'] +
-                        self.parameters['B10TVUSoffpeakprice'] * smu_usage_data['B10TVUSoffpeak_usage'])
-        B10TVUWprice = (self.parameters['B10TVUWpeakprice'] * smu_usage_data['B10TVUWpeak_usage'] +
-                        self.parameters['B10TVUWsuperoffpeakprice'] * smu_usage_data['B10TVUWsuperoffpeak_usage'] +
-                        self.parameters['B10TVUWoffpeakprice'] * smu_usage_data['B10TVUWoffpeak_usage'])
+        B10TVUSprice = (self.parameters['B10TVUSpeakprice'] * smu_usage_data.B10TVUSpeak_usage +
+                        self.parameters['B10TVUSpartpeakprice'] * smu_usage_data.B10TVUSpartpeak_usage +
+                        self.parameters['B10TVUSoffpeakprice'] * smu_usage_data.B10TVUSoffpeak_usage)
+        B10TVUWprice = (self.parameters['B10TVUWpeakprice'] * smu_usage_data.B10TVUWpeak_usage +
+                        self.parameters['B10TVUWsuperoffpeakprice'] * smu_usage_data.B10TVUWsuperoffpeak_usage +
+                        self.parameters['B10TVUWoffpeakprice'] * smu_usage_data.B10TVUWoffpeak_usage)
         B10TVUprice = B10TVUSprice + B10TVUWprice + self.parameters['B10TVU_Customer_Charge'] * meter_input * time_in_use + self.parameters['B10TVU_demand_rate'] * max_15min_usage
 
         return (A1NTUprice * A1NTU + A1Uprice * A1U + B1Uprice * B1U + B1STUprice * B1STU +

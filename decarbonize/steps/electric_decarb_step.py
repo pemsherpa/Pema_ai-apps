@@ -82,7 +82,9 @@ class ElectricDecarbStep(DecarbStep):
             self.steps.append(new_cost)
         elif HasCCA == 'No':
             new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
+            print(new_cost)
             self.steps.append(new_cost)
+            
         else:
              new_cost = "0"
         return float(new_cost)

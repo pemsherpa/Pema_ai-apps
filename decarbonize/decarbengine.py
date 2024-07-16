@@ -22,7 +22,7 @@ from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.lcusector import LCUSector_simplified
 from components.electricity.sectors.smbsector import SMBSector_simplified
-from components.electricity.sectors.smusector import SMUSector
+from components.electricity.sectors.smusector import SMUSector_simplified
 from components.flight_data_analyzer import FlightDataAnalyzer
 from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
@@ -114,7 +114,6 @@ class DecarbEngine:
         savings = 0
         for step in self.steps:
             savings += step.compute_emissions_savings()
-            print(savings)
         return savings
 
     def run_decarb_engine(self):
@@ -146,8 +145,8 @@ class DecarbEngine:
         user_zip_code = 95948 #94002
         user_sector =  'Small and Medium Business'#'Large Commercial and Industrial'
         #user_sector =  'Large Commercial and Industrial'
-        user_bundled = 'Yes'
-        user_current_plan ='B-6'#'B-19_TV'
+        user_bundled = 'No'
+        user_current_plan ='B-10_TV'#'B-19_TV'
         #user_current_plan = 'B-19_TV'
         kwh_used = 10000
         user_cur_cost = 100000
@@ -184,7 +183,8 @@ class DecarbEngine:
         return lcb_usage_data
     
     def create_smb(self, peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost):
-        smb_usage_data = SMBSector_simplified(5,10,15,20,'Summer',1,2,3,'Small and Medium Business','A-1',0,0,0)
+        smb_usage_data = SMBSector_simplified(5, 10, 15, 20, 2, 4, 6, 'Small and Medium Business',2)
+        smb_usage_data.update()
         
         return smb_usage_data
     
@@ -194,10 +194,8 @@ class DecarbEngine:
         return lcu_usage_data
     
     def create_smu(self, peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost):
-        smu_usage_data = SMUSector(21, 96, 50, 170, 38, 180, 190, 176, 139, 9, 47, 149, 
-                                    64, 113, 169, 159, 64, 162, 158, 166, 57, 45, 38, 168, 
-                                    131, 194, 24, 79, 35, 115, 12, 195, 180, 173, 143, 129, 
-                                    96, 89, 46, 180, 91, 62, 45, 12, 19, 174, 79)
+        smu_usage_data = SMUSector_simplified(12, 13, 14, 15, 7, 8, 9, 'Small and Medium Business',2)
+        smu_usage_data.update()
         
         return smu_usage_data
     

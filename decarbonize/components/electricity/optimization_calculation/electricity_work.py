@@ -179,6 +179,10 @@ class ElectricityWork:
             raise Exception(err_msg)
         
         result = rate_plan.optimize()
-        optimal_solution_name=self.get_result(result, keys)[2]
+        #optimal_solution_name=self.get_result(result, keys)[2]
+        optimal_solution_result=self.get_result(result, keys)
+        print(optimal_solution_result)
+        optimal_solution_name=optimal_solution_result[2]
+
         print(optimal_solution_name)
         return result['objective']
