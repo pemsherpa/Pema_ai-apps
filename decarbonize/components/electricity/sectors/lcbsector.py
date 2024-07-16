@@ -168,7 +168,7 @@ class LCBSector_simplified:
 
             start_time_off_peak=off_peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
             stop_time_off_peak=off_peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-            winter_off_peak_time_hours=self.calculate_hours(start_time_off_peak,stop_time_off_peak)
+            winter_off_peak_time_hours= 24 - winter_peak_time_hours - winter_super_off_peak_time_hours
 
             self.B19SVBWpeak_usage = winter_peak_usage
             self.B19PVBWpeak_usage = winter_peak_usage
