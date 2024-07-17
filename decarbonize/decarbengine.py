@@ -140,31 +140,27 @@ class DecarbEngine:
         return return_flight_step
         
     def run_electric(self):
-        #user_zip_code = 95948
         user_zip_code = 94706
+        #user_zip_code = 95948
         user_sector =   'Small and Medium Business'
         #user_sector =  'Large Commercial and Industrial'
         user_bundled = 'No'
-        #user_current_plan ='B-19_TV'
-        user_current_plan = 'B-10_S'
+        user_current_plan ='B-10_S'
+        #user_current_plan = 'B-19_SV'
         
         user_cur_cost = 100000
         difficulty = 2
-        ranking_zscore = 10
-
-        user_current_company = "PG&E"
+        ranking_zscore = 10      
         user_cost_weight = 0.9
         user_renewable_weight = 0.1 
-
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-
         user_input_peak_usage=20
         user_input_part_peak_usage = 20
         user_input_super_off_peak_usage=20
         user_input_off_peak_usage=20
         kwh_used = user_input_peak_usage + user_input_part_peak_usage + user_input_super_off_peak_usage + user_input_off_peak_usage
-
+        user_current_company = "PG&E"
         meter_input = 7
         time_in_use = 8
         max_15min_usage = 9
