@@ -10,7 +10,7 @@ Original file is located at
 import pandas as pd
 
 class Currentelectricity_cca:
-    def __init__(self, file_path,user_zip_code):
+    def __init__(self, file_path,user_zip_code,kwh_used):
         self.file_path = file_path
         self.sheets = pd.read_excel(self.file_path, sheet_name=None)
         self.df_pge_service = pd.read_excel(file_path, sheet_name='PG&E Service Area')
@@ -63,6 +63,6 @@ class Currentelectricity_cca:
       if matched_rows.empty:
         return 0
 
-      total_cost = matched_rows['Total Cost'].values[0]
+      total_cost = matched_rows['Total Cost'].values[0]*self.kwh_used
 
       return float(total_cost)

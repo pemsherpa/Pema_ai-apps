@@ -95,12 +95,14 @@ class  electricity_cca:
             price = self.fetch_caa_plan_price(sector, fetched_plans, area)
 
             final_result = self.optimize_plans(price)
+
+            
             
             return final_result
         else:
             return None
         
-    def get_optimized_plan_cost(self, zip_code, sector):
+    def get_optimized_plan_cost(self, zip_code, sector,kwh_used):
         area = self.check_pge_cca_service_area(zip_code)
         if area is not None:
             plans = self.get_plans(area, sector)
@@ -111,7 +113,7 @@ class  electricity_cca:
 
             final_result = self.optimize_plans(price)
             
-            return final_result[1]  #Only the cost
+            return final_result[1]*kwh_used
         else:
             return None
 

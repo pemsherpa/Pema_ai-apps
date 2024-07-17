@@ -48,7 +48,7 @@ class ElectricDecarbStep(DecarbStep):
         
     def get_cur_cost(self, UseCCA):
         ce = CurrentElectricity('Electricity Rate Plan.xlsx', self.user_zip_code, self.lcb_usage_data, self.smb_usage_data, self.lcu_usage_data, self.smu_usage_data)
-        ce_cca= Currentelectricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code)
+        ce_cca= Currentelectricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code,self.kwh_used)
         if UseCCA == 'Yes':
             cur_cost = ce_cca.fetch_total_cost(self.user_zip_code,self.user_sector,self.user_current_company,self.user_current_plan)
             self.steps.append(cur_cost)
@@ -79,7 +79,7 @@ class ElectricDecarbStep(DecarbStep):
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
         
         if HasCCA == 'Yes':
-            new_cost = switch_cca.get_optimized_plan_cost(self.user_zip_code, self.user_sector)
+            new_cost = switch_cca.get_optimized_plan_cost(self.user_zip_code, self.user_sector,self.kwh_used)
             self.steps.append(new_cost)
         elif HasCCA == 'No':
             new_plan= ew.check_condition_and_run(self.user_sector, self.user_bundled)
