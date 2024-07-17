@@ -140,7 +140,7 @@ class DecarbEngine:
         )
         return return_flight_step
 
-        
+
     def run_electric(self):
         #user_zip_code = 95948
         user_zip_code = 94706
