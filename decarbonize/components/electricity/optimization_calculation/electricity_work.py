@@ -94,11 +94,9 @@ class ElectricityWork:
         optimal_plan_name = {name for i, name in enumerate(keys) if result['x'][i] == 1}
         return (number_result, optimal_solution_value, optimal_plan_name)
     
-    def get_plan(self,optimal_result):
+    def print_plan(self,optimal_result):
         optimal_solution_name=optimal_result[2]
         print(optimal_solution_name)
-
-
         
     def check_condition_and_run(self, user_sector, user_bundled):
         condition1 = (user_sector == 'Large Commercial and Industrial' and user_bundled == 'Yes')
@@ -109,19 +107,15 @@ class ElectricityWork:
         rate_plan = None 
         keys = []
         if condition1:
-            
             rate_plan = LCBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.lcb_sector)
             keys = ['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']            
         elif condition2:
-            
             rate_plan = LCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.lcu_sector)
             keys = ['B19SVU', 'B19PVU', 'B19TVU', 'B19U', 'B20SVU', 'B20PVU', 'B20TVU', 'B20U']
         elif condition3:
-            
             rate_plan = SMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.smb_sector)
             keys = ['A1NTB', 'A1B', 'B1B', 'B1STB', 'B6B', 'B10SVB', 'B10PVB', 'B10TVB', 'A1NTB_poly', 'A1NTB_single', 'A1B_poly', 'A1B_single', 'B1B_poly', 'B1B_single', 'B1STB_poly', 'B1STB_single', 'B6B_poly', 'B6B_single']
         elif condition4:
-            
             rate_plan = SMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.smu_sector)
             keys = ['A1NTU', 'A1U', 'B1U', 'B1STU', 'B6U', 'B10SVU', 'B10PVU', 'B10TVU', 'A1NTU_poly', 'A1NTU_single', 'A1U_poly', 'A1U_single', 'B1U_poly', 'B1U_single', 'B1STU_poly', 'B1STU_single', 'B6U_poly', 'B6U_single']
         else:
@@ -130,11 +124,5 @@ class ElectricityWork:
             raise Exception(err_msg)
         
         result = rate_plan.optimize()
-        #optimal_solution_name=self.get_result(result, keys)[2]
         optimal_solution_result=self.get_result(result, keys)
-        
-        #optimal_solution_name=optimal_solution_result[2]
-        #get_plan=self.get_plan(optimal_solution_result)
-        #print(optimal_solution_name)
-        #return result['objective']
         return optimal_solution_result

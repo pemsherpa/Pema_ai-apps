@@ -107,7 +107,7 @@ class DecarbEngine:
         
     def run_electric_step(self):
         # Electricity Step
-        electric_step = self.run_electric()
+        electric_step = self.test_electric_smu()
         self.steps.append(electric_step)
 
     def get_step_savings(self):
@@ -117,10 +117,10 @@ class DecarbEngine:
         return savings
 
     def run_decarb_engine(self):
-        #self.run_commuting_step()
-        #self.run_carpool_step()
-        #self.run_flight_step()
-        #self.run_return_flight_step()
+        self.run_commuting_step()
+        self.run_carpool_step()
+        self.run_flight_step()
+        self.run_return_flight_step()
         self.run_electric_step()
 
         return self.steps
@@ -138,68 +138,6 @@ class DecarbEngine:
             difficulty=difficulty
         )
         return return_flight_step
-        
-    def run_electric(self):
-        user_zip_code = 94706
-        #user_zip_code = 95948
-        user_sector =   'Small and Medium Business'
-        #user_sector =  'Large Commercial and Industrial'
-        user_bundled = 'No'
-        user_current_plan ='B-10_S'
-        #user_current_plan = 'B-19_SV'
-        
-        user_cur_cost = 100000
-        difficulty = 2
-        ranking_zscore = 10      
-        user_cost_weight = 0.9
-        user_renewable_weight = 0.1 
-        UseCCA = 'Yes'
-        HasCCA = 'Yes'
-        user_input_peak_usage=20
-        user_input_part_peak_usage = 20
-        user_input_super_off_peak_usage=20
-        user_input_off_peak_usage=20
-        kwh_used = user_input_peak_usage + user_input_part_peak_usage + user_input_super_off_peak_usage + user_input_off_peak_usage
-        user_current_company = "PG&E"
-        meter_input = 7
-        time_in_use = 8
-        max_15min_usage = 9
-        
-        peak_cost= .39746
-        offpeak_cost= .25523
-        super_offpeak_cost=.17651
-
-        lcb_usage_data = self.create_lcb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan )
-        smb_usage_data = self.create_smb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan)
-        lcu_usage_data = self.create_lcu(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan)
-        smu_usage_data = self.create_smu(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan)
-        
-        electric_step = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
-                                user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
-                                smu_usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage) 
-        return electric_step
-        
-    def create_lcb(self, user_input_peak_usage, user_input_off_peak_usage, superuser_input_super_off_peak_usage_offpeak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
-        lcb_usage_data = LCBSector_simplified(20,20,20,20,'Summer',7,8,9,'Large Commercial and Industrial','B-19_TV')
-        
-        return lcb_usage_data
-    
-    def create_smb(self, user_input_peak_usage, user_input_off_peak_usage, superuser_input_super_off_peak_usage_offpeak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
-        smb_usage_data = SMBSector_simplified(20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2)
-        smb_usage_data.update()
-        
-        return smb_usage_data
-    
-    def create_lcu(self, user_input_peak_usage, user_input_off_peak_usage, superuser_input_super_off_peak_usage_offpeak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
-        lcu_usage_data = LCUSector_simplified(20,20,20,20,'Summer',7,8,9,'Large Commercial and Industrial','B-19_TV')
-        
-        return lcu_usage_data
-    
-    def create_smu(self, user_input_peak_usage, user_input_off_peak_usage, superuser_input_super_off_peak_usage_offpeak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
-        smu_usage_data = SMUSector_simplified(20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2)
-        smu_usage_data.update()
-        
-        return smu_usage_data
     
     def test_decarb_engine():
         origin = "LAX"
@@ -302,7 +240,7 @@ class DecarbEngine:
         user_zip_code = 94706
         user_bundled = 'Yes'
         user_sector =  'Large Commercial and Industrial'
-        user_current_plan ='B-20_S'
+        user_current_plan ='B-20_SV'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
@@ -329,7 +267,7 @@ class DecarbEngine:
         user_zip_code = 95948
         user_bundled = 'Yes'
         user_sector =  'Small and Medium Business'
-        user_current_plan ='B-10_SV'
+        user_current_plan ='B-6'
         UseCCA = 'No'
         HasCCA = 'No'
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
@@ -358,39 +296,45 @@ class DecarbEngine:
         user_current_company = "PG&E"
         user_cost_weight = 0.9
         user_renewable_weight = 0.1 
+        user_electricity_bill_season = "Summer"
+        user_B1STB_highest_demand_15mins = 9
+        user_B1STU_highest_demand_15mins = 9
 
-        lcb_usage_data = self.create_lcb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan )
-        smb_usage_data = self.create_smb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan)
-        lcu_usage_data = self.create_lcu(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan)
-        smu_usage_data = self.create_smu(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan)
-        
+        lcb_usage_data = self.create_lcb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan )
+        smb_usage_data = self.create_smb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_B1STB_highest_demand_15mins)
+        lcu_usage_data = self.create_lcu(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan)
+        smu_usage_data = self.create_smu(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_B1STU_highest_demand_15mins)
         electric_step = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
                                 user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
                                 smu_usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage) 
+
         return electric_step
     
-    def create_lcb(self, user_input_peak_usage, user_input_off_peak_usage, superuser_input_super_off_peak_usage_offpeak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
-        lcb_usage_data = LCBSector_simplified(20,20,20,20,'Summer',7,8,9,'Large Commercial and Industrial','B-19_TV')
+    #(20,20,20,20,'Summer',7,8,9,'Large Commercial and Industrial','B-19_TV')
+    def create_lcb(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
+        lcb_usage_data = LCBSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan)
         return lcb_usage_data
     
-    def create_smb(self, user_input_peak_usage, user_input_off_peak_usage, superuser_input_super_off_peak_usage_offpeak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
-        smb_usage_data = SMBSector_simplified(20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2)
+    #20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2
+    def create_smb(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_B1STB_highest_demand_15mins):
+        smb_usage_data = SMBSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STB_highest_demand_15mins)
         smb_usage_data.update()
         return smb_usage_data
     
-    def create_lcu(self, user_input_peak_usage, user_input_off_peak_usage, superuser_input_super_off_peak_usage_offpeak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
-        lcu_usage_data = LCUSector_simplified(20,20,20,20,'Summer',7,8,9,'Large Commercial and Industrial','B-19_TV')
+    #20,20,20,20,'Summer',7,8,9,'Large Commercial and Industrial','B-19_TV'
+    def create_lcu(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
+        lcu_usage_data = LCUSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan)
         return lcu_usage_data
     
-    def create_smu(self, user_input_peak_usage, user_input_off_peak_usage, superuser_input_super_off_peak_usage_offpeak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
-        smu_usage_data = SMUSector_simplified(20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2)
+    #20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2
+    def create_smu(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_B1STU_highest_demand_15mins):
+        smu_usage_data = SMUSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STU_highest_demand_15mins)
         smu_usage_data.update()
         return smu_usage_data
     
 def main():
-    #DecarbEngine.test_decarb_engine()
-    DecarbEngine.create_decarb_engine()
-    #(DecarbEngine.run_electric()) 
+    #DecarbEngine.create_decarb_engine()
+    DecarbEngine.test_decarb_engine()
         
 if __name__ == "__main__":
     main()

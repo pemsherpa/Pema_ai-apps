@@ -1,7 +1,6 @@
 from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
 from components.electricity.optimization_calculation.electricity_work import ElectricityWork
 
-
 class DecarbStep:
     def __init__(self, step_type, cur_cost, new_cost,cur_emissions,new_emissions,description,difficulty):
         self.step_type = step_type
@@ -12,26 +11,11 @@ class DecarbStep:
         self.description = description
         self.difficulty = difficulty
 
-        
     def get_cur_cost(self):
-        user_zip_code = 95347
-        ce = CurrentElectricity('Electricity Rate Plan.xlsx', user_zip_code)
-        user_current_plan = 'B-19_SV'
-        user_bundled = 'Yes'
-        new_cost = ce.check_condition_and_run(user_current_plan, user_bundled)
-        self.steps.append(new_cost)
         return self.cur_cost
     
     def get_new_cost(self):
-        user_zip_code = 95347
-        ew = ElectricityWork('Electricity Rate Plan.xlsx', user_zip_code)
-        
-        user_sector = 'Large Commercial and Industrial'
-        user_bundled = 'Yes'
-        user_current_plan = 'B19SVB'
-        new_cost = ew.check_condition_and_run(user_sector, user_bundled)
-        self.steps.append(new_cost)
-        return new_cost
+        return self.new_cost
 
     def compute_zscore(self):
         # (cost savings, carbon savings, difficulty)

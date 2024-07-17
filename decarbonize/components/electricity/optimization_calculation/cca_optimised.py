@@ -91,13 +91,9 @@ class  electricity_cca:
             plans = self.get_plans(area, sector)
             final_plans = list(set(plans))
             fetched_plans = ",".join(final_plans)
-
             price = self.fetch_caa_plan_price(sector, fetched_plans, area)
-
             final_result = self.optimize_plans(price)
 
-            
-            
             return final_result
         else:
             return None
@@ -108,9 +104,7 @@ class  electricity_cca:
             plans = self.get_plans(area, sector)
             final_plans = list(set(plans))
             fetched_plans = ",".join(final_plans)
-
             price = self.fetch_caa_plan_price(sector, fetched_plans, area)
-
             final_result = self.optimize_plans(price)
             final_result = final_result[1] * kwh_used
             return final_result

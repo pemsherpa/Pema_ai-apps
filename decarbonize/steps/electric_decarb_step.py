@@ -18,6 +18,8 @@ from steps.decarb_step_type import DecarbStepType
 class ElectricDecarbStep(DecarbStep):
 
     def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan,user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, smu_usage_data, ranking_zscore, difficulty, meter_input, time_in_use, max_15min_usage):
+        print("self.user_current_plan")
+
         self.user_cur_cost = user_cur_cost
         self.kwh_used = kwh_used
         self.user_zip_code = user_zip_code
@@ -45,7 +47,6 @@ class ElectricDecarbStep(DecarbStep):
         self.time_in_use = time_in_use
         self.max_15min_usage = max_15min_usage
         new_emissions = self.get_new_electric_emissions()
-        
         description = "zipcode: " + str(self.user_zip_code) + " cur_cost: " + str(self.cur_cost) + " self.new_cost: " + str(self.new_cost)
         super().__init__(DecarbStepType.ELECTRICITY, user_cur_cost, self.new_cost, self.cur_emission, new_emissions, description, self.difficulty)
 
@@ -67,11 +68,12 @@ class ElectricDecarbStep(DecarbStep):
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight,self.user_renewable_weight)
         
         if HasCCA == 'Yes':
-            plan= switch_cca.get_optimized_plan(self.user_zip_code, self.user_sector)
+            plan = switch_cca.get_optimized_plan(self.user_zip_code, self.user_sector)
+            ew.print_plan(plan)
             self.steps.append(plan)
         elif HasCCA == 'No':
             plan= ew.check_condition_and_run(self.user_sector, self.user_bundled)
-            ew.get_plan(plan)
+            ew.print_plan(plan)
             self.steps.append(plan)
         else:
             plan=None
