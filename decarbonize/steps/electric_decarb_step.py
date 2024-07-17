@@ -9,7 +9,7 @@ from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.lcusector import LCUSector_simplified
 from components.electricity.sectors.smbsector import SMBSector
-from components.electricity.sectors.smusector import SMUSector
+from components.electricity.sectors.smusector import SMUSector_simplified
 from components.electricity.optimization_calculation import *
 from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
@@ -82,7 +82,7 @@ class ElectricDecarbStep(DecarbStep):
             self.steps.append(new_cost)
         elif HasCCA == 'No':
             new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
-            print(new_cost)
+            #print(new_cost)
             self.steps.append(new_cost)
             
         else:
@@ -95,9 +95,9 @@ class ElectricDecarbStep(DecarbStep):
         current_cost=self.get_cur_cost(self.UseCCA)
         new_cost=self.get_new_cost(self.HasCCA)
         
-        print(new_cost)
-        print(current_cost)
-        print(new_plan)
+        #print(new_cost)
+        #print(current_cost)
+        #print(new_plan)
         
         saving = (current_cost - new_cost)/current_cost* self.user_cur_cost
         #print(saving)

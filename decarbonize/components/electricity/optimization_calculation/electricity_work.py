@@ -18,7 +18,9 @@ from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.lcusector import LCUSector_simplified
 from components.electricity.sectors.smbsector import SMBSector
+from components.electricity.sectors.smbsector import SMBSector_simplified
 from components.electricity.sectors.smusector import SMUSector
+from components.electricity.sectors.smusector import SMUSector_simplified
 
 class ElectricityWork:
     def __init__(self, file_path, user_zip_code,lcb_sector, smb_sector, lcu_sector, smu_sector):
@@ -66,36 +68,8 @@ class ElectricityWork:
         else:
             return "No matching rows in joint rate plan", "No matching rows in joint rate comparison"
 
-    def create_smb_sector(self, A1NTBStotal_usage, A1NTBWtotal_usage, A1BSpeak_usage,
-                 A1BSpartpeak_usage, A1BSoffpeak_usage, A1BWpartpeak_usage,
-                 A1BWoffpeak_usage, B1BSpeak_usage, B1BSpartpeak_usage, B1BSoffpeak_usage,
-                 B1BWpeak_usage, B1BWsuperoffpeak_usage, B1BWoffpeak_usage,
-                 B1STBSpeak_usage, B1STBSpartpeak_usage, B1STBSoffpeak_usage,
-                 B1STBWpeak_usage, B1STBWpartpeak_usage, B1STBWsuperoffpeak_usage,
-                 B1STBWoffpeak_usage, B6BSpeak_usage, B6BSoffpeak_usage,
-                 B6BWpeak_usage, B6BWsuperoffpeak_usage,B6BWoffpeak_usage,
-                 B10SVBSpeak_usage,B10SVBSpartpeak_usage,B10SVBSoffpeak_usage,
-                 B10SVBWpeak_usage, B10SVBWsuperoffpeak_usage, B10SVBWoffpeak_usage,
-                 B10PVBSpeak_usage,B10PVBSpartpeak_usage,B10PVBSoffpeak_usage,
-                 B10PVBWpeak_usage,B10PVBWsuperoffpeak_usage,B10PVBWoffpeak_usage,
-                 B10TVBSpeak_usage, B10TVBSpartpeak_usage,B10TVBSoffpeak_usage,
-                 B10TVBWpeak_usage,B10TVBWsuperoffpeak_usage, B10TVBWoffpeak_usage,
-                 meter_input,time_in_use, max_15min_usage,B1STB_highest_demand_15mins):
-        smb_sector = SMBSector(A1NTBStotal_usage, A1NTBWtotal_usage, A1BSpeak_usage,
-                 A1BSpartpeak_usage, A1BSoffpeak_usage, A1BWpartpeak_usage,
-                 A1BWoffpeak_usage, B1BSpeak_usage, B1BSpartpeak_usage, B1BSoffpeak_usage,
-                 B1BWpeak_usage, B1BWsuperoffpeak_usage, B1BWoffpeak_usage,
-                 B1STBSpeak_usage, B1STBSpartpeak_usage, B1STBSoffpeak_usage,
-                 B1STBWpeak_usage, B1STBWpartpeak_usage, B1STBWsuperoffpeak_usage,
-                 B1STBWoffpeak_usage, B6BSpeak_usage, B6BSoffpeak_usage,
-                 B6BWpeak_usage, B6BWsuperoffpeak_usage,B6BWoffpeak_usage,
-                 B10SVBSpeak_usage,B10SVBSpartpeak_usage,B10SVBSoffpeak_usage,
-                 B10SVBWpeak_usage, B10SVBWsuperoffpeak_usage, B10SVBWoffpeak_usage,
-                 B10PVBSpeak_usage,B10PVBSpartpeak_usage,B10PVBSoffpeak_usage,
-                 B10PVBWpeak_usage,B10PVBWsuperoffpeak_usage,B10PVBWoffpeak_usage,
-                 B10TVBSpeak_usage, B10TVBSpartpeak_usage,B10TVBSoffpeak_usage,
-                 B10TVBWpeak_usage,B10TVBWsuperoffpeak_usage, B10TVBWoffpeak_usage,
-                 meter_input,time_in_use, max_15min_usage,B1STB_highest_demand_15mins)
+    def create_smb_sector(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STB_highest_demand_15mins):
+        smb_sector = SMBSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STB_highest_demand_15mins)
         return smb_sector
 
     def create_lcb_sector(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season,
@@ -104,36 +78,8 @@ class ElectricityWork:
                  meter_input,time_in_use,max_15min_usage, user_sector, user_current_plan)
         return lcb_sector
 
-    def create_smu_sector(self, A1NTUStotal_usage, A1NTUWtotal_usage, A1USpeak_usage,
-                 A1USpartpeak_usage, A1USoffpeak_usage, A1UWpartpeak_usage,
-                 A1UWoffpeak_usage, B1USpeak_usage, B1USpartpeak_usage, B1USoffpeak_usage,
-                 B1UWpeak_usage, B1UWsuperoffpeak_usage, B1UWoffpeak_usage,
-                 B1STUSpeak_usage, B1STUSpartpeak_usage, B1STUSoffpeak_usage,
-                 B1STUWpeak_usage, B1STUWpartpeak_usage, B1STUWsuperoffpeak_usage,
-                 B1STUWoffpeak_usage, B6USpeak_usage, B6USoffpeak_usage,
-                 B6UWpeak_usage, B6UWsuperoffpeak_usage,B6UWoffpeak_usage,
-                 B10SVUSpeak_usage,B10SVUSpartpeak_usage,B10SVUSoffpeak_usage,
-                 B10SVUWpeak_usage, B10SVUWsuperoffpeak_usage, B10SVUWoffpeak_usage,
-                 B10PVUSpeak_usage,B10PVUSpartpeak_usage,B10PVUSoffpeak_usage,
-                 B10PVUWpeak_usage,B10PVUWsuperoffpeak_usage,B10PVUWoffpeak_usage,
-                 B10TVUSpeak_usage, B10TVUSpartpeak_usage,B10TVUSoffpeak_usage,
-                 B10TVUWpeak_usage,B10TVUWsuperoffpeak_usage, B10TVUWoffpeak_usage,
-                 meter_input,time_in_use, max_15min_usage,B1STU_highest_demand_15mins):
-        smu_sector= SMUSector(A1NTUStotal_usage, A1NTUWtotal_usage, A1USpeak_usage,
-                 A1USpartpeak_usage, A1USoffpeak_usage, A1UWpartpeak_usage,
-                 A1UWoffpeak_usage, B1USpeak_usage, B1USpartpeak_usage, B1USoffpeak_usage,
-                 B1UWpeak_usage, B1UWsuperoffpeak_usage, B1UWoffpeak_usage,
-                 B1STUSpeak_usage, B1STUSpartpeak_usage, B1STUSoffpeak_usage,
-                 B1STUWpeak_usage, B1STUWpartpeak_usage, B1STUWsuperoffpeak_usage,
-                 B1STUWoffpeak_usage, B6USpeak_usage, B6USoffpeak_usage,
-                 B6UWpeak_usage, B6UWsuperoffpeak_usage,B6UWoffpeak_usage,
-                 B10SVUSpeak_usage,B10SVUSpartpeak_usage,B10SVUSoffpeak_usage,
-                 B10SVUWpeak_usage, B10SVUWsuperoffpeak_usage, B10SVUWoffpeak_usage,
-                 B10PVUSpeak_usage,B10PVUSpartpeak_usage,B10PVUSoffpeak_usage,
-                 B10PVUWpeak_usage,B10PVUWsuperoffpeak_usage,B10PVUWoffpeak_usage,
-                 B10TVUSpeak_usage, B10TVUSpartpeak_usage,B10TVUSoffpeak_usage,
-                 B10TVUWpeak_usage,B10TVUWsuperoffpeak_usage, B10TVUWoffpeak_usage,
-                 meter_input,time_in_use, max_15min_usage,B1STU_highest_demand_15mins)
+    def create_smu_sector(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STU_highest_demand_15mins):
+        smu_sector= SMUSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STU_highest_demand_15mins)
         return smu_sector
 
     def create_lcu_sector(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season,
@@ -181,7 +127,7 @@ class ElectricityWork:
         result = rate_plan.optimize()
         #optimal_solution_name=self.get_result(result, keys)[2]
         optimal_solution_result=self.get_result(result, keys)
-        print(optimal_solution_result)
+        #print(optimal_solution_result)
         optimal_solution_name=optimal_solution_result[2]
 
         print(optimal_solution_name)

@@ -91,71 +91,71 @@ class currentLCUElectricityRatePlan:
     def objective(self, x):
         B19SVU, B19PVU, B19TVU, B19U, B20SVU, B20PVU, B20TVU,B20U=x
         lcu_usage_data = self.lcu_usage_data
-        meter_input, time_in_use, max_15min_usage = lcu_usage_data['meter_input'], lcu_usage_data['time_in_use'], lcu_usage_data['max_15min_usage']
+        #meter_input, time_in_use, max_15min_usage = lcu_usage_data['meter_input'], lcu_usage_data['time_in_use'], lcu_usage_data['max_15min_usage']
 
-        B19SVUSprice = (self.parameters['B19SVUSpeakprice'] * lcu_usage_data['B19SVUSpeak_usage'] +
-                     self.parameters['B19SVUSpartpeakprice'] * lcu_usage_data['B19SVUSpartpeak_usage'] +
-                     self.parameters['B19SVUSoffpeakprice'] * lcu_usage_data['B19SVUSoffpeak_usage'])
-        B19SVUWprice = (self.parameters['B19SVUWpeakprice'] * lcu_usage_data['B19SVUWpeak_usage'] +
-                      self.parameters['B19SVUWsuperoffpeakprice'] * lcu_usage_data['B19SVUWsuperoffpeak_usage'] +
-                       self.parameters['B19SVUWoffpeakprice'] * lcu_usage_data['B19SVUWoffpeak_usage'])
+        B19SVUSprice = (self.parameters['B19SVUSpeakprice'] * lcu_usage_data.B19SVUSpeak_usage +
+                     self.parameters['B19SVUSpartpeakprice'] * lcu_usage_data.B19SVUSpartpeak_usage +
+                     self.parameters['B19SVUSoffpeakprice'] * lcu_usage_data.B19SVUSoffpeak_usage)
+        B19SVUWprice = (self.parameters['B19SVUWpeakprice'] * lcu_usage_data.B19SVUWpeak_usage +
+                      self.parameters['B19SVUWsuperoffpeakprice'] * lcu_usage_data.B19SVUWsuperoffpeak_usage +
+                       self.parameters['B19SVUWoffpeakprice'] * lcu_usage_data.B19SVUWoffpeak_usage)
 
-        B19SVU_demand_charge= (self.parameters['B19SVUS_demand_rate'] * lcu_usage_data['Summer_highest_usage_B19SV']+self.parameters['B19SVUW_demand_rate'] * lcu_usage_data['Winter_highest_usage_B19SV'])
+        B19SVU_demand_charge= (self.parameters['B19SVUS_demand_rate'] * lcu_usage_data.max_15min_usage +self.parameters['B19SVUW_demand_rate'] * lcu_usage_data.max_15min_usage)
 
-        B19SVUprice = B19SVUSprice + B19SVUWprice + (self.parameters['B19SVU_CCR'] * meter_input * time_in_use)+B19SVU_demand_charge
+        B19SVUprice = B19SVUSprice + B19SVUWprice + (self.parameters['B19SVU_CCR'] * lcu_usage_data.meter_input * lcu_usage_data.time_in_use)+B19SVU_demand_charge
 
-        B19PVUSprice = (self.parameters['B19PVUSpeakprice'] * lcu_usage_data['B19PVUSpeak_usage'] +
-                     self.parameters['B19PVUSpartpeakprice'] * lcu_usage_data['B19PVUSpartpeak_usage'] +
-                     self.parameters['B19PVUSoffpeakprice'] * lcu_usage_data['B19PVUSoffpeak_usage'])
-        B19PVUWprice = (self.parameters['B19PVUWpeakprice'] * lcu_usage_data['B19PVUWpeak_usage'] +
-                      self.parameters['B19PVUWsuperoffpeakprice'] * lcu_usage_data['B19PVUWsuperoffpeak_usage'] +
-                       self.parameters['B19PVUWoffpeakprice'] * lcu_usage_data['B19PVUWoffpeak_usage'])
+        B19PVUSprice = (self.parameters['B19PVUSpeakprice'] * lcu_usage_data.B19PVUSpeak_usage +
+                     self.parameters['B19PVUSpartpeakprice'] * lcu_usage_data.B19PVUSpartpeak_usage +
+                     self.parameters['B19PVUSoffpeakprice'] * lcu_usage_data.B19PVUSoffpeak_usage)
+        B19PVUWprice = (self.parameters['B19PVUWpeakprice'] * lcu_usage_data.B19PVUWpeak_usage +
+                      self.parameters['B19PVUWsuperoffpeakprice'] * lcu_usage_data.B19PVUWsuperoffpeak_usage +
+                       self.parameters['B19PVUWoffpeakprice'] * lcu_usage_data.B19PVUWoffpeak_usage)
 
-        B19PVU_demand_charge= (self.parameters['B19PVUS_demand_rate'] * lcu_usage_data['Summer_highest_usage_B20PV']+self.parameters['B19PVUW_demand_rate'] * lcu_usage_data['Winter_highest_usage_B20PV'])
+        B19PVU_demand_charge= (self.parameters['B19PVUS_demand_rate'] * lcu_usage_data.max_15min_usage +self.parameters['B19PVUW_demand_rate'] * lcu_usage_data.max_15min_usage)
 
-        B19PVUprice = B19PVUSprice + B19PVUWprice + (self.parameters['B19PVU_CCR'] * meter_input * time_in_use)+B19PVU_demand_charge
+        B19PVUprice = B19PVUSprice + B19PVUWprice + (self.parameters['B19PVU_CCR'] * lcu_usage_data.meter_input * lcu_usage_data.time_in_use)+B19PVU_demand_charge
 
-        B19TVUSprice = (self.parameters['B19TVUSpeakprice'] * lcu_usage_data['B19TVUSpeak_usage'] +
-                     self.parameters['B19TVUSpartpeakprice'] * lcu_usage_data['B19TVUSpartpeak_usage'] +
-                     self.parameters['B19TVUSoffpeakprice'] * lcu_usage_data['B19TVUSoffpeak_usage'])
-        B19TVUWprice = (self.parameters['B19TVUWpeakprice'] * lcu_usage_data['B19TVUWpeak_usage'] +
-                      self.parameters['B19TVUWsuperoffpeakprice'] * lcu_usage_data['B19TVUWsuperoffpeak_usage'] +
-                       self.parameters['B19TVUWoffpeakprice'] * lcu_usage_data['B19TVUWoffpeak_usage'])
+        B19TVUSprice = (self.parameters['B19TVUSpeakprice'] * lcu_usage_data.B19TVUSpeak_usage +
+                     self.parameters['B19TVUSpartpeakprice'] * lcu_usage_data.B19TVUSpartpeak_usage +
+                     self.parameters['B19TVUSoffpeakprice'] * lcu_usage_data.B19TVUSoffpeak_usage)
+        B19TVUWprice = (self.parameters['B19TVUWpeakprice'] * lcu_usage_data.B19TVUWpeak_usage +
+                      self.parameters['B19TVUWsuperoffpeakprice'] * lcu_usage_data.B19TVUWsuperoffpeak_usage +
+                       self.parameters['B19TVUWoffpeakprice'] * lcu_usage_data.B19TVUWoffpeak_usage)
 
-        B19TVU_demand_charge= (self.parameters['B19TVUS_demand_rate'] * lcu_usage_data['Summer_highest_usage_B19TV']+self.parameters['B19TVUW_demand_rate'] * lcu_usage_data['Winter_highest_usage_B19TV'])
+        B19TVU_demand_charge= (self.parameters['B19TVUS_demand_rate'] * lcu_usage_data.max_15min_usage +self.parameters['B19TVUW_demand_rate'] * lcu_usage_data.max_15min_usage)
 
-        B19TVUprice = B19TVUSprice + B19TVUWprice + (self.parameters['B19TVU_CCR'] * meter_input * time_in_use)+B19TVU_demand_charge
+        B19TVUprice = B19TVUSprice + B19TVUWprice + (self.parameters['B19TVU_CCR'] * lcu_usage_data.meter_input * lcu_usage_data.time_in_use)+B19TVU_demand_charge
 
-        B20SVUSprice = (self.parameters['B20SVUSpeakprice'] * lcu_usage_data['B20SVUSpeak_usage'] +
-                     self.parameters['B20SVUSpartpeakprice'] * lcu_usage_data['B20SVUSpartpeak_usage'] +
-                     self.parameters['B20SVUSoffpeakprice'] * lcu_usage_data['B20SVUSoffpeak_usage'])
-        B20SVUWprice = (self.parameters['B20SVUWpeakprice'] * lcu_usage_data['B20SVUWpeak_usage'] +
-                      self.parameters['B20SVUWsuperoffpeakprice'] * lcu_usage_data['B20SVUWsuperoffpeak_usage'] +
-                       self.parameters['B20SVUWoffpeakprice'] * lcu_usage_data['B20SVUWoffpeak_usage'])
+        B20SVUSprice = (self.parameters['B20SVUSpeakprice'] * lcu_usage_data.B20SVUSpeak_usage +
+                     self.parameters['B20SVUSpartpeakprice'] * lcu_usage_data.B20SVUSpartpeak_usage +
+                     self.parameters['B20SVUSoffpeakprice'] * lcu_usage_data.B20SVUSoffpeak_usage)
+        B20SVUWprice = (self.parameters['B20SVUWpeakprice'] * lcu_usage_data.B20SVUWpeak_usage +
+                      self.parameters['B20SVUWsuperoffpeakprice'] * lcu_usage_data.B20SVUWsuperoffpeak_usage +
+                       self.parameters['B20SVUWoffpeakprice'] * lcu_usage_data.B20SVUWoffpeak_usage)
 
-        B20SVU_demand_charge= (self.parameters['B20SVUS_demand_rate'] * lcu_usage_data['Summer_highest_usage_B20SV']+self.parameters['B20SVUW_demand_rate'] * lcu_usage_data['Winter_highest_usage_B20SV'])
+        B20SVU_demand_charge= (self.parameters['B20SVUS_demand_rate'] * lcu_usage_data.max_15min_usage +self.parameters['B20SVUW_demand_rate'] * lcu_usage_data.max_15min_usage)
 
-        B20SVUprice = B20SVUSprice + B20SVUWprice + (self.parameters['B20SVU_CCR'] * meter_input * time_in_use)+B20SVU_demand_charge
+        B20SVUprice = B20SVUSprice + B20SVUWprice + (self.parameters['B20SVU_CCR'] * lcu_usage_data.meter_input * lcu_usage_data.time_in_use)+B20SVU_demand_charge
 
-        B20PVUSprice = (self.parameters['B20PVUSpeakprice'] * lcu_usage_data['B20PVUSpeak_usage'] +
-                     self.parameters['B20PVUSpartpeakprice'] * lcu_usage_data['B20PVUSpartpeak_usage'] +
-                     self.parameters['B20PVUSoffpeakprice'] * lcu_usage_data['B20PVUSoffpeak_usage'])
-        B20PVUWprice = (self.parameters['B20PVUWpeakprice'] * lcu_usage_data['B20PVUWpeak_usage'] +
-                      self.parameters['B20PVUWsuperoffpeakprice'] * lcu_usage_data['B20PVUWsuperoffpeak_usage'] +
-                       self.parameters['B20PVUWoffpeakprice'] * lcu_usage_data['B20PVUWoffpeak_usage'])
+        B20PVUSprice = (self.parameters['B20PVUSpeakprice'] * lcu_usage_data.B20PVUSpeak_usage +
+                     self.parameters['B20PVUSpartpeakprice'] * lcu_usage_data.B20PVUSpartpeak_usage +
+                     self.parameters['B20PVUSoffpeakprice'] * lcu_usage_data.B20PVUSoffpeak_usage)
+        B20PVUWprice = (self.parameters['B20PVUWpeakprice'] * lcu_usage_data.B20PVUWpeak_usage +
+                      self.parameters['B20PVUWsuperoffpeakprice'] * lcu_usage_data.B20PVUWsuperoffpeak_usage +
+                       self.parameters['B20PVUWoffpeakprice'] * lcu_usage_data.B20PVUWoffpeak_usage)
 
-        B20PVU_demand_charge= (self.parameters['B20PVUS_demand_rate'] * lcu_usage_data['Summer_highest_usage_B20PV']+self.parameters['B20PVUW_demand_rate'] * lcu_usage_data['Winter_highest_usage_B20PV'])
-        B20PVUprice = B20PVUSprice + B20PVUWprice + (self.parameters['B20PVU_CCR'] * meter_input * time_in_use)+B20PVU_demand_charge
+        B20PVU_demand_charge= (self.parameters['B20PVUS_demand_rate'] * lcu_usage_data.max_15min_usage +self.parameters['B20PVUW_demand_rate'] * lcu_usage_data.max_15min_usage)
+        B20PVUprice = B20PVUSprice + B20PVUWprice + (self.parameters['B20PVU_CCR'] * lcu_usage_data.meter_input * lcu_usage_data.time_in_use)+B20PVU_demand_charge
 
-        B20TVUSprice = (self.parameters['B20TVUSpeakprice'] * lcu_usage_data['B20TVUSpeak_usage'] +
-                     self.parameters['B20TVUSpartpeakprice'] * lcu_usage_data['B20TVUSpartpeak_usage'] +
-                     self.parameters['B20TVUSoffpeakprice'] * lcu_usage_data['B20TVUSoffpeak_usage'])
-        B20TVUWprice = (self.parameters['B20TVUWpeakprice'] * lcu_usage_data['B20TVUWpeak_usage'] +
-                      self.parameters['B20TVUWsuperoffpeakprice'] * lcu_usage_data['B20TVUWsuperoffpeak_usage'] +
-                       self.parameters['B20TVUWoffpeakprice'] * lcu_usage_data['B20TVUWoffpeak_usage'])
+        B20TVUSprice = (self.parameters['B20TVUSpeakprice'] * lcu_usage_data.B20TVUSpeak_usage +
+                     self.parameters['B20TVUSpartpeakprice'] * lcu_usage_data.B20TVUSpartpeak_usage +
+                     self.parameters['B20TVUSoffpeakprice'] * lcu_usage_data.B20TVUSoffpeak_usage)
+        B20TVUWprice = (self.parameters['B20TVUWpeakprice'] * lcu_usage_data.B20TVUWpeak_usage +
+                      self.parameters['B20TVUWsuperoffpeakprice'] * lcu_usage_data.B20TVUWsuperoffpeak_usage +
+                       self.parameters['B20TVUWoffpeakprice'] * lcu_usage_data.B20TVUWoffpeak_usage)
 
-        B20TVU_demand_charge= (self.parameters['B20TVUS_demand_rate'] * lcu_usage_data['Summer_highest_usage_B20TV']+self.parameters['B20TVUW_demand_rate'] * lcu_usage_data['Winter_highest_usage_B20TV'])
-        B20TVUprice = B20TVUSprice + B20TVUWprice + (self.parameters['B20TVU_CCR'] * meter_input * time_in_use)+B20TVU_demand_charge
+        B20TVU_demand_charge= (self.parameters['B20TVUS_demand_rate'] * lcu_usage_data.max_15min_usage+self.parameters['B20TVUW_demand_rate'] * lcu_usage_data.max_15min_usage)
+        B20TVUprice = B20TVUSprice + B20TVUWprice + (self.parameters['B20TVU_CCR'] * lcu_usage_data.meter_input * lcu_usage_data.time_in_use)+B20TVU_demand_charge
 
         B19Uprice = B19SVUprice * B19SVU + B19PVUprice * B19PVU + B19TVUprice* B19TVU
         B20Uprice = B20SVUprice * B20SVU + B20PVUprice *B20PVU + B20TVUprice * B20TVU

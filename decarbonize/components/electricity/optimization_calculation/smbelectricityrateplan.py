@@ -181,6 +181,6 @@ class SMBElectricityRatePlan:
 
             if best_result is None or obj_val < best_result['objective']:
                 best_result = {'x': x_opt, 'objective': obj_val}
-
+        
         return best_result
 
