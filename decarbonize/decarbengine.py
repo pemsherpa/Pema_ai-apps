@@ -142,23 +142,24 @@ class DecarbEngine:
 
         
     def run_electric(self):
-        user_zip_code = 95948 #94002
-        user_sector =   'Large Commercial and Industrial' #'Small and Medium Business'#'Large Commercial and Industrial'
+        #user_zip_code = 95948
+        user_zip_code = 94706
+        user_sector =   'Small and Medium Business'
         #user_sector =  'Large Commercial and Industrial'
         user_bundled = 'No'
-        user_current_plan ='B-19_TV'#'B-19_TV'
-        #user_current_plan = 'B-19_TV'
+        #user_current_plan ='B-19_TV'
+        user_current_plan = 'B-10_S'
         kwh_used = 10000
         user_cur_cost = 100000
         difficulty = 2
         ranking_zscore = 10
 
         user_current_company = "PG&E"
-        user_cost_weight = 0.6
-        user_renewable_weight = 0.4 
+        user_cost_weight = 0.9
+        user_renewable_weight = 0.1 
 
         UseCCA = 'No'
-        HasCCA = 'No'
+        HasCCA = 'Yes'
 
         peak_usage=449
         offpeak_usage=2564 
@@ -194,7 +195,7 @@ class DecarbEngine:
         return lcu_usage_data
     
     def create_smu(self, peak_usage, offpeak_usage, super_offpeak_usage, peak_cost, offpeak_cost, super_offpeak_cost):
-        smu_usage_data = SMUSector_simplified(100, 100, 100, 100, 7, 8, 9, 'Small and Medium Business',2)
+        smu_usage_data = SMUSector_simplified(20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2)
         smu_usage_data.update()
         
         return smu_usage_data
