@@ -68,6 +68,7 @@ class ElectricDecarbStep(DecarbStep):
             self.steps.append(plan)
         elif HasCCA == 'No':
             plan= ew.check_condition_and_run(self.user_sector, self.user_bundled)
+            ew.get_plan(plan)
             self.steps.append(plan)
         else:
             plan=None
@@ -81,8 +82,9 @@ class ElectricDecarbStep(DecarbStep):
             new_cost = switch_cca.get_optimized_plan_cost(self.user_zip_code, self.user_sector)
             self.steps.append(new_cost)
         elif HasCCA == 'No':
-            new_cost = ew.check_condition_and_run(self.user_sector, self.user_bundled)
-            #print(new_cost)
+            new_plan= ew.check_condition_and_run(self.user_sector, self.user_bundled)
+            new_cost=new_plan[1]
+            
             self.steps.append(new_cost)
             
         else:
@@ -95,12 +97,8 @@ class ElectricDecarbStep(DecarbStep):
         current_cost=self.get_cur_cost(self.UseCCA)
         new_cost=self.get_new_cost(self.HasCCA)
         
-        #print(new_cost)
-        #print(current_cost)
-        #print(new_plan)
-        
         saving = (current_cost - new_cost)/current_cost* self.user_cur_cost
-        #print(saving)
+        
         return saving
     
     
