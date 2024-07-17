@@ -16,6 +16,8 @@ class Currentelectricity_cca:
         self.df_pge_service = pd.read_excel(file_path, sheet_name='PG&E Service Area')
         self.cca_df = pd.read_excel(file_path, sheet_name='CCA')
         self.jrp_plans_df = pd.read_excel(file_path, sheet_name='Joint Rate Plan')
+        self.user_zip_code = user_zip_code
+        self.kwh_used = kwh_used
 
 
     def check_pge_cca_service_area(self, user_zip_code):
@@ -63,6 +65,6 @@ class Currentelectricity_cca:
       if matched_rows.empty:
         return 0
 
-      total_cost = matched_rows['Total Cost'].values[0]*self.kwh_used
+      total_cost = matched_rows['Total Cost'].values[0] * self.kwh_used
 
       return float(total_cost)

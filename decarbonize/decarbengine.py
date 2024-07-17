@@ -148,7 +148,7 @@ class DecarbEngine:
         #user_sector =  'Large Commercial and Industrial'
         user_bundled = 'No'
         #user_current_plan ='B-19_TV'
-        user_current_plan = 'B-10_SV'
+        user_current_plan = 'B-10_S'
         
         user_cur_cost = 100000
         difficulty = 2
@@ -158,7 +158,7 @@ class DecarbEngine:
         user_cost_weight = 0.9
         user_renewable_weight = 0.1 
 
-        UseCCA = 'No'
+        UseCCA = 'Yes'
         HasCCA = 'Yes'
 
         user_input_peak_usage=20
@@ -182,7 +182,7 @@ class DecarbEngine:
         
         electric_step = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
                                 user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
-                                smu_usage_data, ranking_zscore, difficulty) 
+                                smu_usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage) 
         return electric_step
         
     def create_lcb(self, user_input_peak_usage, user_input_off_peak_usage, superuser_input_super_off_peak_usage_offpeak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):

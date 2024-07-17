@@ -17,7 +17,7 @@ from steps.decarb_step_type import DecarbStepType
 
 class ElectricDecarbStep(DecarbStep):
 
-    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan,user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, smu_usage_data, ranking_zscore, difficulty):
+    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan,user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, smu_usage_data, ranking_zscore, difficulty, meter_input, time_in_use, max_15min_usage):
         self.user_cur_cost = user_cur_cost
         self.kwh_used = kwh_used
         self.user_zip_code = user_zip_code
@@ -41,11 +41,14 @@ class ElectricDecarbStep(DecarbStep):
         self.cur_emission = self.get_carbon_from_electric(kwh_used)
         self.emissions_saved = self.get_electric_carbon_savings()
         self.difficulty = difficulty
+        self.meter_input = meter_input
+        self.time_in_use = time_in_use
+        self.max_15min_usage = max_15min_usage
         new_emissions = self.get_new_electric_emissions()
         
         description = "zipcode: " + str(self.user_zip_code) + " cur_cost: " + str(self.cur_cost) + " self.new_cost: " + str(self.new_cost)
         super().__init__(DecarbStepType.ELECTRICITY, user_cur_cost, self.new_cost, self.cur_emission, new_emissions, description, self.difficulty)
-        
+
     def get_cur_cost(self, UseCCA):
         ce = CurrentElectricity('Electricity Rate Plan.xlsx', self.user_zip_code, self.lcb_usage_data, self.smb_usage_data, self.lcu_usage_data, self.smu_usage_data)
         ce_cca= Currentelectricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code,self.kwh_used)
@@ -97,7 +100,7 @@ class ElectricDecarbStep(DecarbStep):
         current_cost=self.get_cur_cost(self.UseCCA)
         new_cost=self.get_new_cost(self.HasCCA)
         
-        saving = (current_cost - new_cost)/current_cost* self.user_cur_cost
+        saving = (current_cost - new_cost)/current_cost * self.user_cur_cost
         
         return saving
     

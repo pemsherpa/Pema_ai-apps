@@ -112,8 +112,8 @@ class  electricity_cca:
             price = self.fetch_caa_plan_price(sector, fetched_plans, area)
 
             final_result = self.optimize_plans(price)
-            
-            return final_result[1]*kwh_used
+            final_result = final_result[1] * kwh_used
+            return final_result
         else:
             return None
 
