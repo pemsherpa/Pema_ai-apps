@@ -267,14 +267,41 @@ class DecarbEngine:
     
     def run_tests(self):
         self.test_electric_lcb_cca()
+        self.test_electric_lcu_cca()
+        self.test_electric_smb_cca()
+        self.test_electric_smu_cca()
         self.test_electric_lcb()
         self.test_electric_lcu()
-
         self.test_electric_smb()
         self.test_electric_smu()
 
-        #TODO: Add a few more tests
-
+    def test_electric_lcu_cca(self):
+        user_zip_code = 94706
+        user_bundled = 'No'
+        user_sector =  'Large Commercial and Industrial'
+        user_current_plan ='B-20_S'
+        UseCCA = 'Yes'
+        HasCCA = 'Yes'
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
+    
+    def test_electric_smb_cca(self):
+        user_zip_code = 94706
+        user_bundled = 'Yes'
+        user_sector =  'Small and Medium Business'
+        user_current_plan ='B-10_S'
+        UseCCA = 'Yes'
+        HasCCA = 'Yes'
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
+    
+    def test_electric_smu_cca(self):
+        user_zip_code = 94706
+        user_bundled = 'No'
+        user_sector =  'Small and Medium Business'
+        user_current_plan ='B-10_S'
+        UseCCA = 'Yes'
+        HasCCA = 'Yes'
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
+    
     def test_electric_lcb_cca(self):
         user_zip_code = 94706
         user_bundled = 'Yes'
@@ -365,8 +392,8 @@ class DecarbEngine:
         return smu_usage_data
     
 def main():
-    DecarbEngine.test_decarb_engine()
-    #DecarbEngine.create_decarb_engine()
+    #DecarbEngine.test_decarb_engine()
+    DecarbEngine.create_decarb_engine()
     #(DecarbEngine.run_electric()) 
         
 if __name__ == "__main__":
