@@ -140,7 +140,22 @@ class DecarbEngine:
         )
         return return_flight_step
 
-
+    def test_electric_lc(self):
+        user_zip_code = 95948
+        user_bundled = 'No'
+        user_sector =  'Large Commercial and Industrial'
+        user_current_plan ='B-19_TV'
+        UseCCA = 'No'
+        HasCCA = 'No'
+        user_input_peak_usage=20
+        user_input_part_peak_usage = 20
+        user_input_super_off_peak_usage=20
+        user_input_off_peak_usage=20
+        kwh_used = user_input_peak_usage + user_input_part_peak_usage + user_input_super_off_peak_usage + user_input_off_peak_usage
+        meter_input = 7
+        time_in_use = 8
+        max_15min_usage = 9
+        
     def run_electric(self):
         #user_zip_code = 95948
         user_zip_code = 94706
