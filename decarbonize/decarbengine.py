@@ -47,7 +47,7 @@ class DecarbEngine:
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
 
     def analyze_flight_costs(self):
-        return self.flight_analyzer.get_optimal_flight(self.flight_analyzer.df_all_flights)
+        return self.flight_analyzer.get_optimal_flight(self.flight_analyzer.get_all_flights())
 
     def get_return_flight_options(self):
         return self.flight_analyzer.get_return_tickets()
@@ -68,8 +68,7 @@ class DecarbEngine:
             step_type=DecarbStepType.COMMUTING,
             cur_cost=commuting_costs,
 
-            new_cost=self.commuting_analyzer.stipent_individual(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, 1,
-                                                                 50, 2,30)[2],
+            new_cost=self.commuting_analyzer.stipent_individual(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, 1, 50, 2,30)[2],
             cur_emissions=commuting_emissions,
             new_emissions=commuting_emissions * 0.9,  # fake num
             description="Analyze commuting costs and emissions for individual",
@@ -83,10 +82,8 @@ class DecarbEngine:
         commuting_step = DecarbStep(
             step_type=DecarbStepType.COMMUTING,
             cur_cost=commuting_costs,
-            new_cost = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,
-                                                                       [1,2,3], 50,2,30)[0],
-            new_emissions = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,
-                                                                       [1,2,3], 50,2,30)[2],
+            new_cost = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, [1,2,3], 50,2,30)[0],
+            new_emissions = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,[1,2,3], 50,2,30)[2],
             cur_emissions=commuting_emissions,
             description="Analyze commuting costs and emissions for carpool", 
             difficulty= 3
@@ -142,8 +139,8 @@ class DecarbEngine:
     def test_decarb_engine():
         origin = "LAX"
         destination = "JFK"
-        departure_date = "2024-07-12"
-        return_date = "2024-07-14"
+        departure_date = "2024-07-20"
+        return_date = "2024-07-24"
         firm = '2107 Addison St, Berkeley, CA'
         commuting_data = pd.DataFrame({
             'ID': [1, 2, 3],
@@ -166,8 +163,8 @@ class DecarbEngine:
     def create_decarb_engine():
         origin = "LAX"
         destination = "JFK"
-        departure_date = "2024-07-12"
-        return_date = "2024-07-14"
+        departure_date = "2024-07-20"
+        return_date = "2024-07-24"
         firm = '2107 Addison St, Berkeley, CA'
         commuting_data = pd.DataFrame({
             'ID': [1, 2, 3],
@@ -346,8 +343,8 @@ class DecarbEngine:
         return smu_usage_data
     
 def main():
-    #DecarbEngine.create_decarb_engine()
-    DecarbEngine.test_decarb_engine()
+    DecarbEngine.create_decarb_engine()
+    #DecarbEngine.test_decarb_engine()
         
 if __name__ == "__main__":
     main()

@@ -99,10 +99,10 @@ class ElectricDecarbStep(DecarbStep):
         new_cost=self.get_new_cost(self.HasCCA)
         saving = (current_cost - new_cost)/current_cost * self.user_cur_cost
         
-        print (new_plan)
-        print (current_cost)
-        print (new_cost)
-        print (saving)
+        #print (new_plan)
+        #print (current_cost)
+        #print (new_cost)
+        #print (saving)
         return saving
     
     

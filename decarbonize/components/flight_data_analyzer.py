@@ -20,6 +20,7 @@ class FlightDataAnalyzer:
         self.flights_premium_economy = None
         self.flights_business = None
         self.flights_first_class = None
+        self.df_all_flights = None
 
     def get_all_flights(self):
         if self.df_all_flights is None:
@@ -58,10 +59,27 @@ class FlightDataAnalyzer:
         return self.flights_first_class
     
     def get_optimal_flight(self, df_all_flights):
-        df_all_flights['Price Z-Score'] = (df_all_flights['Price'] - df_all_flights['Price'].mean()) / df_all_flights['Price'].std()
-        df_all_flights['Duration Z-Score'] = (df_all_flights['Duration'] - df_all_flights['Duration'].mean()) / df_all_flights['Duration'].std()
-        df_all_flights['Stops Z-Score'] = (df_all_flights['Stops'] - df_all_flights['Stops'].mean()) / df_all_flights['Stops'].std()
-        df_all_flights['Carbon Emissions Z-Score'] = (df_all_flights['Carbon Emissions'] - df_all_flights['Carbon Emissions'].mean() )/ df_all_flights['Carbon Emissions'].std()
+        stops_std = df_all_flights['Stops'].std()
+        price_std = df_all_flights['Price'].std()
+        duration_std =  df_all_flights['Duration'].std()
+        emission_std = df_all_flights['Carbon Emissions'].std()
+
+        if stops_std == 0:
+            df_all_flights['Stops Z-Score'] = 0.0
+        else:
+            df_all_flights['Stops Z-Score'] = (df_all_flights['Stops'] - df_all_flights['Stops'].mean()) / stops_std
+        if price_std == 0:
+            df_all_flights['Price Z-Score'] = 0.0
+        else:
+            df_all_flights['Price Z-Score'] = (df_all_flights['Price'] - df_all_flights['Price'].mean()) / price_std
+        if duration_std == 0:
+            df_all_flights['Duration Z-Score'] = 0.0
+        else:
+            df_all_flights['Duration Z-Score'] = (df_all_flights['Duration'] - df_all_flights['Duration'].mean()) / duration_std
+        if emission_std == 0:
+            df_all_flights['Carbon Emissions Z-Score'] = 0.0
+        else:
+            df_all_flights['Carbon Emissions Z-Score'] = (df_all_flights['Carbon Emissions'] - df_all_flights['Carbon Emissions'].mean() )/ emission_std
 
         df_all_flights['Weighted Score'] = (
             self.weights.price_weight * df_all_flights['Price Z-Score'] +
