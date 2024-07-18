@@ -3,7 +3,7 @@ import pandas as pd
 from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
 from components.electricity.optimization_calculation.electricity_work import ElectricityWork
 from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
-from components.electricity.optimization_calculation.cca_optimised import electricity_cca
+from components.electricity.optimization_calculation.cca_optimized import electricity_cca
 from components.electricity.sectors.lcbsector import LCBSector
 from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector
