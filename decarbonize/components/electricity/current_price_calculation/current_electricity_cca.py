@@ -24,7 +24,7 @@ class Currentelectricity_cca:
         result = self.df_pge_service[self.df_pge_service['PG&E Service area Zip Code'] == user_zip_code]
         if result.empty:
             return None
-
+        
         cca_column = []
         for column in self.cca_df.columns:
             if user_zip_code in self.cca_df[column].values:

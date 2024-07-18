@@ -20,7 +20,7 @@ from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smusector import SMUSector
 
 class CurrentElectricity:
-    def __init__(self, file_path, user_zip_code, lcb_sector, smb_sector, lcu_sector, smu_sector):
+    def __init__(self, file_path, user_zip_code, usage_data):
         self.file_path = file_path
         self.sheets = pd.read_excel(self.file_path, sheet_name=None)
         self.pge_service_df = self.sheets['PG&E Service Area']
@@ -30,10 +30,7 @@ class CurrentElectricity:
         self.unbundled_peak_time_price_df = self.sheets['Unbundled Peak Time Price']
         self.user_zip_code = user_zip_code
 
-        self.lcb_sector = lcb_sector
-        self.smb_sector = smb_sector
-        self.lcu_sector = lcu_sector
-        self.smu_sector = smu_sector
+        self.usage_data = usage_data
 
     def check_zip_code(self, user_zip_code):
         if user_zip_code in self.pge_service_df['PG&E Service area Zip Code'].values:
@@ -83,16 +80,16 @@ class CurrentElectricity:
         keys = []
 
         if condition1:
-            rate_plan = currentLCBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.lcb_sector)
+            rate_plan = currentLCBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.usage_data)
             keys = condition1_keys
         elif condition2:
-            rate_plan = currentSMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.smb_sector)
+            rate_plan = currentSMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.usage_data)
             keys = condition2_keys
         elif condition3:
-            rate_plan = currentLCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.lcu_sector)
+            rate_plan = currentLCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.usage_data)
             keys = condition3_keys
         elif condition4:
-            rate_plan = currentSMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.smu_sector)
+            rate_plan = currentSMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.usage_data)
             keys = condition4_keys
         else:
             err_msg = "Current Electricity: Condition not met, not running the script."

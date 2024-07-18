@@ -90,7 +90,6 @@ class LCBSector_simplified:
             stop_time_peak = peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
             summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
 
-
             start_time_part_peak=part_peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
             stop_time_part_peak=part_peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
             summer_part_peak_time_hours=self.calculate_hours(start_time_part_peak,stop_time_part_peak)

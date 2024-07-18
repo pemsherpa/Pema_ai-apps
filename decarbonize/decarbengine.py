@@ -210,78 +210,86 @@ class DecarbEngine:
         self.test_electric_smu()
 
     def test_electric_lcu_cca(self):
+        print("test_electric_lcu_cca")
         user_zip_code = 94706
         user_bundled = 'No'
         user_sector =  'Large Commercial and Industrial'
-        user_current_plan ='B-20_S'
+        user_current_plan ='B-19_SV'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcu")
     
     def test_electric_smb_cca(self):
+        print("test_electric_smb_cca")
         user_zip_code = 94706
         user_bundled = 'Yes'
         user_sector =  'Small and Medium Business'
         user_current_plan ='B-10_S'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smb")
     
     def test_electric_smu_cca(self):
+        print("test_electric_smu_cca")
         user_zip_code = 94706
         user_bundled = 'No'
         user_sector =  'Small and Medium Business'
         user_current_plan ='B-10_S'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smu")
     
     def test_electric_lcb_cca(self):
+        print("test_electric_lcb_cca")
         user_zip_code = 94706
         user_bundled = 'Yes'
         user_sector =  'Large Commercial and Industrial'
-        user_current_plan ='B-20_SV'
+        user_current_plan ='B-19_SV'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcb")
     
     def test_electric_lcb(self):
+        print("test_electric_lcb")
         user_zip_code = 95948
         user_bundled = 'Yes'
         user_sector =  'Large Commercial and Industrial'
         user_current_plan ='B-20_TV'
         UseCCA = 'No'
         HasCCA = 'No'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcb")
     
     def test_electric_lcu(self):
+        print("test_electric_lcu")
         user_zip_code = 95948
         user_bundled = 'No'
         user_sector =  'Large Commercial and Industrial'
         user_current_plan ='B-19_TV'
         UseCCA = 'No'
         HasCCA = 'No'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcu")
     
     def test_electric_smb(self):
+        print("test_electric_smb")
         user_zip_code = 95948
         user_bundled = 'Yes'
         user_sector =  'Small and Medium Business'
         user_current_plan ='B-6'
         UseCCA = 'No'
         HasCCA = 'No'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smb")
     
     def test_electric_smu(self):
+        print("test_electric_smu")
         user_zip_code = 95948
         user_bundled = 'No'
         user_sector =  'Small and Medium Business'
         user_current_plan ='B-10_SV'
         UseCCA = 'No'
         HasCCA = 'No'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA)
-        
-    def test_electric_step(self, user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA):
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smu")
+
+    def test_electric_step(self, user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, usage_type):
         user_input_peak_usage=20
         user_input_part_peak_usage = 20
         user_input_super_off_peak_usage=20
@@ -299,14 +307,19 @@ class DecarbEngine:
         user_electricity_bill_season = "Summer"
         user_B1STB_highest_demand_15mins = 9
         user_B1STU_highest_demand_15mins = 9
-
-        lcb_usage_data = self.create_lcb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan )
-        smb_usage_data = self.create_smb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_B1STB_highest_demand_15mins)
-        lcu_usage_data = self.create_lcu(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan)
-        smu_usage_data = self.create_smu(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_B1STU_highest_demand_15mins)
+        
+        usage_data = None
+        if usage_type == "lcb":
+            usage_data = self.create_lcb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan )
+        elif usage_type == "lcu":
+            usage_data = self.create_lcu(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage,user_sector,user_current_plan)
+        elif usage_type == "smu":
+            usage_data = self.create_smu(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_B1STU_highest_demand_15mins)
+        elif usage_type == "smb":
+            usage_data = self.create_smb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_B1STB_highest_demand_15mins)
+        
         electric_step = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
-                                user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, 
-                                smu_usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage) 
+                                user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage) 
 
         return electric_step
     

@@ -111,7 +111,6 @@ class ElectricityBillAnalyzer:
         }
 
     def notify_user(self, email, message):
-
         print(f"Sending email to {email} with message: {message}")
 
     def integrate_with_ui(self, user_input):

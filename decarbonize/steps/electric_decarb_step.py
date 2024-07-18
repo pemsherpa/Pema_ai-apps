@@ -17,8 +17,8 @@ from steps.decarb_step_type import DecarbStepType
 
 class ElectricDecarbStep(DecarbStep):
 
-    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan,user_cost_weight,user_renewable_weight, UseCCA, HasCCA, lcb_usage_data, smb_usage_data, lcu_usage_data, smu_usage_data, ranking_zscore, difficulty, meter_input, time_in_use, max_15min_usage):
-        print("self.user_current_plan")
+    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan,user_cost_weight,user_renewable_weight, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty, meter_input, time_in_use, max_15min_usage):
+        self.usage_data = usage_data
 
         self.user_cur_cost = user_cur_cost
         self.kwh_used = kwh_used
@@ -31,10 +31,7 @@ class ElectricDecarbStep(DecarbStep):
         self.user_renewable_weight=user_renewable_weight
         self.UseCCA = UseCCA
         self.HasCCA = HasCCA
-        self.lcb_usage_data = lcb_usage_data
-        self.smb_usage_data = smb_usage_data
-        self.lcu_usage_data = lcu_usage_data
-        self.smu_usage_data = smu_usage_data
+        
         self.ranking_zscore = ranking_zscore
         self.steps = []
         self.cur_cost = self.get_cur_cost(UseCCA)
@@ -51,7 +48,7 @@ class ElectricDecarbStep(DecarbStep):
         super().__init__(DecarbStepType.ELECTRICITY, user_cur_cost, self.new_cost, self.cur_emission, new_emissions, description, self.difficulty)
 
     def get_cur_cost(self, UseCCA):
-        ce = CurrentElectricity('Electricity Rate Plan.xlsx', self.user_zip_code, self.lcb_usage_data, self.smb_usage_data, self.lcu_usage_data, self.smu_usage_data)
+        ce = CurrentElectricity('Electricity Rate Plan.xlsx', self.user_zip_code, self.usage_data)
         ce_cca= Currentelectricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code,self.kwh_used)
         if UseCCA == 'Yes':
             cur_cost = ce_cca.fetch_total_cost(self.user_zip_code,self.user_sector,self.user_current_company,self.user_current_plan)
@@ -64,7 +61,7 @@ class ElectricDecarbStep(DecarbStep):
         return float(cur_cost)
 
     def get_new_plan(self, HasCCA):
-        ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.lcb_usage_data,self.smb_usage_data,self.lcu_usage_data,self.smu_usage_data)
+        ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.usage_data)
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight,self.user_renewable_weight)
         
         if HasCCA == 'Yes':
@@ -80,7 +77,7 @@ class ElectricDecarbStep(DecarbStep):
         return plan
     
     def get_new_cost(self, HasCCA):
-        ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.lcb_usage_data,self.smb_usage_data,self.lcu_usage_data,self.smu_usage_data)
+        ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.usage_data)
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
         
         if HasCCA == 'Yes':
@@ -100,9 +97,12 @@ class ElectricDecarbStep(DecarbStep):
         new_plan=self.get_new_plan(self.HasCCA)
         current_cost=self.get_cur_cost(self.UseCCA)
         new_cost=self.get_new_cost(self.HasCCA)
-        
         saving = (current_cost - new_cost)/current_cost * self.user_cur_cost
         
+        print (new_plan)
+        print (current_cost)
+        print (new_cost)
+        print (saving)
         return saving
     
     

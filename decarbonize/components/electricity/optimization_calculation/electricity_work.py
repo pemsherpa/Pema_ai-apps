@@ -23,7 +23,7 @@ from components.electricity.sectors.smusector import SMUSector
 from components.electricity.sectors.smusector import SMUSector_simplified
 
 class ElectricityWork:
-    def __init__(self, file_path, user_zip_code,lcb_sector, smb_sector, lcu_sector, smu_sector):
+    def __init__(self, file_path, user_zip_code,usage_data):
         self.file_path = file_path
         self.sheets = pd.read_excel(self.file_path, sheet_name=None)
         self.pge_service_df = self.sheets['PG&E Service Area']
@@ -33,10 +33,7 @@ class ElectricityWork:
         self.unbundled_peak_time_price_df = self.sheets['Unbundled Peak Time Price']
         self.user_zip_code = user_zip_code
 
-        self.lcb_sector = lcb_sector
-        self.smb_sector = smb_sector
-        self.lcu_sector = lcu_sector
-        self.smu_sector = smu_sector
+        self.usage_data = usage_data
 
     def check_zip_code(self, user_zip_code):
         if user_zip_code in self.pge_service_df['PG&E Service area Zip Code'].values:
@@ -107,16 +104,16 @@ class ElectricityWork:
         rate_plan = None 
         keys = []
         if condition1:
-            rate_plan = LCBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.lcb_sector)
+            rate_plan = LCBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.usage_data)
             keys = ['B19SVB', 'B19PVB', 'B19TVB', 'B19B', 'B20SVB', 'B20PVB', 'B20TVB', 'B20B']            
         elif condition2:
-            rate_plan = LCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.lcu_sector)
+            rate_plan = LCUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.usage_data)
             keys = ['B19SVU', 'B19PVU', 'B19TVU', 'B19U', 'B20SVU', 'B20PVU', 'B20TVU', 'B20U']
         elif condition3:
-            rate_plan = SMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.smb_sector)
+            rate_plan = SMBElectricityRatePlan(self.file_path, 'Bundled Peak Time Price', self.usage_data)
             keys = ['A1NTB', 'A1B', 'B1B', 'B1STB', 'B6B', 'B10SVB', 'B10PVB', 'B10TVB', 'A1NTB_poly', 'A1NTB_single', 'A1B_poly', 'A1B_single', 'B1B_poly', 'B1B_single', 'B1STB_poly', 'B1STB_single', 'B6B_poly', 'B6B_single']
         elif condition4:
-            rate_plan = SMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.smu_sector)
+            rate_plan = SMUElectricityRatePlan(self.file_path, 'Unbundled Peak Time Price', self.usage_data)
             keys = ['A1NTU', 'A1U', 'B1U', 'B1STU', 'B6U', 'B10SVU', 'B10PVU', 'B10TVU', 'A1NTU_poly', 'A1NTU_single', 'A1U_poly', 'A1U_single', 'B1U_poly', 'B1U_single', 'B1STU_poly', 'B1STU_single', 'B6U_poly', 'B6U_single']
         else:
             err_msg = "check_condition_and_run: Condition not met, not running the script."

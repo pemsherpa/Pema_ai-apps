@@ -84,7 +84,7 @@ class SMBSector_simplified:
         self.user_input_part_peak_usage = user_input_part_peak_usage
         self.user_input_super_off_peak_usage = user_input_super_off_peak_usage
         self.user_input_off_peak_usage = user_input_off_peak_usage
-        
+
         self.user_sector = user_sector
         self.seasons=['Winter','Summer']
         self.B1STB_highest_demand_15mins=user_B1STB_highest_demand_15mins
