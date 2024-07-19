@@ -62,7 +62,7 @@ class LCBSector_simplified:
             return hours
                 
     def __init__(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season,
-                 meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
+                 meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan,kwh_used):
         import pandas as pd
         Bundled_peak_time_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Bundled Peak Time Price')
         
@@ -76,8 +76,13 @@ class LCBSector_simplified:
         self.user_electricity_bill_season = user_electricity_bill_season
         self.user_sector = user_sector
         self.user_current_plan = user_current_plan
+        self.kwh_used=kwh_used
 
-        if user_electricity_bill_season == 'Summer':
+        if user_current_plan in ('B-19_S','B-20_S','B-20_P'):
+            return kwh_used
+        else:
+
+         if user_electricity_bill_season == 'Summer':
             summer_peak_usage = user_input_peak_usage
             summer_part_peak_usage = user_input_part_peak_usage
             summer_off_peak_usage = user_input_off_peak_usage
@@ -147,7 +152,7 @@ class LCBSector_simplified:
             self.B20TVBWsuperoffpeak_usage = self.B19SVBWsuperoffpeak_usage
             self.B20TVBWoffpeak_usage = self.B19SVBWoffpeak_usage
 
-        elif user_electricity_bill_season == 'Winter':
+         elif user_electricity_bill_season == 'Winter':
             winter_peak_usage = user_input_peak_usage
             winter_off_peak_usage = user_input_off_peak_usage
             winter_super_off_peak_usage = user_input_super_off_peak_usage
@@ -217,6 +222,6 @@ class LCBSector_simplified:
             self.B20TVBSpeak_usage = self.B19SVBSpeak_usage
             self.B20TVBSpartpeak_usage = self.B19SVBSpart_peak_usage
             self.B20TVBSoffpeak_usage = self.B19SVBSoffpeak_usage
-        else:
+         else:
             result = 0
 
