@@ -1,8 +1,10 @@
 from enum import Enum
 
 class DecarbStepType(Enum):
-    FLIGHTS = 1
-    COMMUTING = 2
-    ELECTRICITY = 3
+    FLIGHTS = 3
+    FLIGHTS_RETURN = 4
+    COMMUTING_INDIVIDUAL = 1
+    COMMUTING_CARPOOL  =2
+    ELECTRICITY = 5
 
-DecarbStepType = Enum('DecarbStepType', ['FLIGHTS', 'COMMUTING', 'ELECTRICITY'])
+DecarbStepType = Enum('DecarbStepType', ['COMMUTING_INDIVIDUAL', 'COMMUTING_CARPOOL','FLIGHTS','FLIGHTS_RETURN', 'ELECTRICITY'])

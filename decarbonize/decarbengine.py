@@ -31,13 +31,14 @@ import pandas as pd
 from steps.flight_decarb_step import FlightDecarbStep
 
 class DecarbEngine:
-    def __init__(self, commuting_data,dynamic_data, origin, destination, departure_date,firm,weights,return_date=None):
+    def __init__(self, commuting_data,dynamic_data, origin, destination, departure_date,firm,weights,pre_flight_cost,return_date=None):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
         self.FLIGHT_API_KEY = '7afef474c061eff1d01477d4a67693a2fdb2821437d63642750002ee4350e901'
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.firm = firm
         self.dynamic = dynamic_data
         self.weights = weights
+        self.pre_flight_cost = pre_flight_cost
 
         self.commuting_analyzer = BusinessCommutingAnalyzer(commuting_data, self.GOOGLE_MAPS_API_KEY, self.OIL_PRICE_API_KEY,self.firm,self.dynamic)
         self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
@@ -47,7 +48,7 @@ class DecarbEngine:
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
 
     def analyze_flight_costs(self):
-        return self.flight_analyzer.get_optimal_flight(self.flight_analyzer.get_all_flights())
+        return self.flight_analyzer.get_optimal_flight(self.flight_analyzer.df_all_flights)
 
     def get_return_flight_options(self):
         return self.flight_analyzer.get_return_tickets()
@@ -65,7 +66,7 @@ class DecarbEngine:
         # commuting costs and emissions for individual
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
         commuting_step = DecarbStep(
-            step_type=DecarbStepType.COMMUTING,
+            step_type=DecarbStepType.COMMUTING_INDIVIDUAL,
             cur_cost=commuting_costs,
 
             new_cost=self.commuting_analyzer.stipent_individual(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, 1, 50, 2,30)[2],
@@ -80,7 +81,7 @@ class DecarbEngine:
         # commuting cost for carpool
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
         commuting_step = DecarbStep(
-            step_type=DecarbStepType.COMMUTING,
+            step_type=DecarbStepType.COMMUTING_CARPOOL,
             cur_cost=commuting_costs,
             new_cost = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, [1,2,3], 50,2,30)[0],
             new_emissions = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,[1,2,3], 50,2,30)[2],
@@ -93,13 +94,14 @@ class DecarbEngine:
     def run_flight_step(self):
         #flight costs
         optimal_flight = self.analyze_flight_costs()
+        print(optimal_flight)
         flight_step = self.create_flight_step(optimal_flight, 3)
         self.steps.append(flight_step)
 
     def run_return_flight_step(self):
         # return flight
         return_flight = self.get_return_flight_options()
-        return_flight_step = self.create_flight_step(return_flight, 3.5)
+        return_flight_step = self.create_flight_step(return_flight, 3)
         self.steps.append(return_flight_step)
         
     def run_electric_step(self):
@@ -126,11 +128,11 @@ class DecarbEngine:
         return_flight_savings = return_flight['Price'].iloc[0]
         return_flight_emissions = return_flight['Carbon Emissions'].iloc[0]
         return_flight_step = FlightDecarbStep(
-            cur_cost=return_flight_savings * 1.1, # fake
+            cur_cost=self.pre_flight_cost, 
             new_cost=return_flight_savings,
             cur_emissions=return_flight_emissions * 1.1, # fake
             new_emissions=return_flight_emissions,
-            description="Analyze return flight costs and emissions",
+            description="Analyze flight costs and emissions",
             num_stops=return_flight['Stops'].iloc[0],
             difficulty=difficulty
         )
@@ -157,7 +159,8 @@ class DecarbEngine:
         })
 
         weights =  DecarbWeight(0.4, 0.3, 0.2, 0.1) 
-        decarb_engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,return_date)
+        prev_cost = 800
+        decarb_engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,prev_cost,return_date)
         decarb_engine.run_tests()
 
     def create_decarb_engine():
@@ -181,7 +184,8 @@ class DecarbEngine:
         })
 
         weights =  DecarbWeight(0.4, 0.3, 0.2, 0.1) 
-        decarb_engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,return_date)
+        pre_cost = 800
+        decarb_engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,pre_cost,return_date)
         decarb_steps = decarb_engine.run_decarb_engine()
 
         total_savings = 0
