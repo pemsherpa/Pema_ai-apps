@@ -4,12 +4,6 @@ from components.electricity.current_price_calculation.current_electricity import
 from components.electricity.optimization_calculation.electricity_work import ElectricityWork
 from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
 from components.electricity.optimization_calculation.cca_optimized import electricity_cca
-from components.electricity.sectors.lcbsector import LCBSector
-from components.electricity.sectors.lcbsector import LCBSector_simplified
-from components.electricity.sectors.lcusector import LCUSector
-from components.electricity.sectors.lcusector import LCUSector_simplified
-from components.electricity.sectors.smbsector import SMBSector
-from components.electricity.sectors.smusector import SMUSector_simplified
 from components.electricity.optimization_calculation import *
 from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType

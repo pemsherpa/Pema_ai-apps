@@ -1,3 +1,7 @@
+import pandas as pd
+
+from components.electricity.sectors.sector_simplified import ElectricUsage, Sector_simplified
+
 class LCBSector:        
     def __init__(self, B19SVBSpeak_usage, B19SVBSpartpeak_usage, B19SVBSoffpeak_usage,
                  B19SVBWpeak_usage,B19SVBWsuperoffpeak_usage,B19SVBWoffpeak_usage,
@@ -51,21 +55,14 @@ class LCBSector:
         self.meter_input = meter_input
         self.time_in_use = time_in_use
         self.max_15min_usage = max_15min_usage
-class LCBSector_simplified:        
-    def calculate_hours(self, start_time, stop_time):
-        if start_time == 'Other' or stop_time == 'Other':
-            return 0
-        else:
-            start_hour = start_time.hour
-            stop_hour = stop_time.hour
-            hours= stop_hour - start_hour
-            return hours
-                
+
+class LCBSector_simplified(Sector_simplified):        
+                    
     def __init__(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season,
                  meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan,kwh_used):
-        import pandas as pd
-        Bundled_peak_time_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Bundled Peak Time Price')
         
+        super().__init__()
+        Bundled_peak_time_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Bundled Peak Time Price')
         self.meter_input = meter_input
         self.time_in_use = time_in_use
         self.max_15min_usage = max_15min_usage
@@ -80,9 +77,8 @@ class LCBSector_simplified:
 
         if user_current_plan in ('B-19_S','B-20_S','B-20_P'):
             return kwh_used
-        else:
 
-         if user_electricity_bill_season == 'Summer':
+        if user_electricity_bill_season == 'Summer':
             summer_peak_usage = user_input_peak_usage
             summer_part_peak_usage = user_input_part_peak_usage
             summer_off_peak_usage = user_input_off_peak_usage
@@ -123,14 +119,12 @@ class LCBSector_simplified:
             self.B20PVBSoffpeak_usage = summer_off_peak_usage
             self.B20TVBSoffpeak_usage = summer_off_peak_usage
 
-            usage_dict = {}
-            for hour in range(24):
-                if hour in range(16, 21):
-                    usage_dict[f'{hour}_oclock_usage'] = summer_peak_usage / summer_peak_time_hours
-                elif hour in range(14, 16) or hour in range(21, 23):
-                    usage_dict[f'{hour}_oclock_usage'] = summer_part_peak_usage / summer_part_peak_time_hours
-                else:
-                    usage_dict[f'{hour}_oclock_usage'] = summer_off_peak_usage / summer_off_peak_time_hours
+            peak_range = list(range(16, 21))
+            part_peak_range = list(range(14, 16)) + list(range(21, 23))
+            peak_usage = ElectricUsage(summer_peak_usage, summer_peak_time_hours)
+            part_peak_usage = ElectricUsage(summer_part_peak_usage, summer_part_peak_time_hours)
+            off_peak_usage = ElectricUsage(summer_off_peak_usage, summer_off_peak_time_hours)
+            usage_dict = self.get_usage_dict(peak_range,part_peak_range, peak_usage, part_peak_usage, off_peak_usage)
 
             self.B19SVBWpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(16, 21)])
             self.B19SVBWsuperoffpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(9, 14)])
@@ -151,8 +145,7 @@ class LCBSector_simplified:
             self.B20TVBWpeak_usage = self.B19SVBWpeak_usage
             self.B20TVBWsuperoffpeak_usage = self.B19SVBWsuperoffpeak_usage
             self.B20TVBWoffpeak_usage = self.B19SVBWoffpeak_usage
-
-         elif user_electricity_bill_season == 'Winter':
+        elif user_electricity_bill_season == 'Winter':
             winter_peak_usage = user_input_peak_usage
             winter_off_peak_usage = user_input_off_peak_usage
             winter_super_off_peak_usage = user_input_super_off_peak_usage
@@ -194,19 +187,16 @@ class LCBSector_simplified:
             self.B20PVBWoffpeak_usage = winter_off_peak_usage
             self.B20TVBWoffpeak_usage = winter_off_peak_usage
 
-            usage_dict = {}
-            for hour in range(24):
-                if hour in range(16, 21):
-                    usage_dict[f'{hour}_oclock_usage'] = winter_peak_usage / winter_peak_time_hours
-                elif hour in range(9, 14):
-                    usage_dict[f'{hour}_oclock_usage'] = winter_super_off_peak_usage / winter_super_off_peak_time_hours
-                else:
-                    usage_dict[f'{hour}_oclock_usage'] = winter_off_peak_usage / winter_off_peak_time_hours
+            peak_range = list(range(16, 21))
+            part_peak_range = list(range(9, 14))
+            peak_usage = ElectricUsage(winter_peak_usage, winter_peak_time_hours)
+            part_peak_usage = ElectricUsage(winter_super_off_peak_usage, winter_super_off_peak_time_hours)
+            off_peak_usage = ElectricUsage(winter_off_peak_usage, winter_off_peak_time_hours)
+            usage_dict = self.get_usage_dict(peak_range,part_peak_range, peak_usage, part_peak_usage, off_peak_usage)
 
             self.B19SVBSpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(16, 21)])
             self.B19SVBSpart_peak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(14, 16)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(21, 23)])
             self.B19SVBSoffpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(0, 9)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(14, 16)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(21, 24)])
-
             self.B19PVBSpeak_usage = self.B19SVBSpeak_usage
             self.B19PVBSpartpeak_usage = self.B19SVBSpart_peak_usage
             self.B19PVBSoffpeak_usage = self.B19SVBSoffpeak_usage
@@ -222,6 +212,13 @@ class LCBSector_simplified:
             self.B20TVBSpeak_usage = self.B19SVBSpeak_usage
             self.B20TVBSpartpeak_usage = self.B19SVBSpart_peak_usage
             self.B20TVBSoffpeak_usage = self.B19SVBSoffpeak_usage
-         else:
-            result = 0
+    
+    def calculate_hours(self, start_time, stop_time):
+        if start_time == 'Other' or stop_time == 'Other':
+            return 0
+        else:
+            start_hour = start_time.hour
+            stop_hour = stop_time.hour
+            hours= stop_hour - start_hour
+            return hours
 
