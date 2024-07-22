@@ -118,10 +118,10 @@ class DecarbEngine:
         return savings
 
     def run_decarb_engine(self):
-        self.run_commuting_step()
-        self.run_carpool_step()
-        self.run_flight_step()
-        self.run_return_flight_step()
+        #self.run_commuting_step()
+        #self.run_carpool_step()
+        #self.run_flight_step()
+        #self.run_return_flight_step()
         self.run_electric_step()
 
         return self.steps
@@ -168,8 +168,8 @@ class DecarbEngine:
     def create_decarb_engine():
         origin = "LAX"
         destination = "JFK"
-        departure_date = "2024-07-20"
-        return_date = "2024-07-24"
+        departure_date = "2024-08-11"
+        return_date = "2024-08-13"
         firm = '2107 Addison St, Berkeley, CA'
         commuting_data = pd.DataFrame({
             'ID': [1, 2, 3],
@@ -344,24 +344,24 @@ class DecarbEngine:
         return electric_step
     
     #(20,20,20,20,'Summer',7,8,9,'Large Commercial and Industrial','B-19_TV')
-    def create_lcb(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
-        lcb_usage_data = LCBSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan)
+    def create_lcb(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan,kwh_used):
+        lcb_usage_data = LCBSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan,kwh_used)
         return lcb_usage_data
     
     #20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2
-    def create_smb(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_B1STB_highest_demand_15mins):
-        smb_usage_data = SMBSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STB_highest_demand_15mins)
+    def create_smb(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_B1STB_highest_demand_15mins,kwh_used):
+        smb_usage_data = SMBSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STB_highest_demand_15mins,kwh_used)
         smb_usage_data.update()
         return smb_usage_data
     
     #20,20,20,20,'Summer',7,8,9,'Large Commercial and Industrial','B-19_TV'
-    def create_lcu(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan):
-        lcu_usage_data = LCUSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan)
+    def create_lcu(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan,kwh_used):
+        lcu_usage_data = LCUSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan,kwh_used)
         return lcu_usage_data
     
-    # #20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2
-    def create_smu(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_B1STU_highest_demand_15mins):
-        smu_usage_data = SMUSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STU_highest_demand_15mins)
+    #20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2
+    def create_smu(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_B1STU_highest_demand_15mins,kwh_used):
+        smu_usage_data = SMUSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STU_highest_demand_15mins,kwh_used)
         smu_usage_data.update()
         return smu_usage_data
     
