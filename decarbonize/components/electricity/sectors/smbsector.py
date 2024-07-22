@@ -242,11 +242,6 @@ class SMBSector_simplified:
              start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
              summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
              summer_off_peak_time_hours=24-summer_peak_time_hours
-<<<<<<< Updated upstream
-
-=======
-             
->>>>>>> Stashed changes
              usage_dict = {}
              for hour in range(24):
                  if  hour in range(16, 21):
@@ -274,17 +269,6 @@ class SMBSector_simplified:
                winter_super_off_peak_time_hours=self.calculate_hours(start_time_super_off_peak,stop_time__super_off_peak)
                winter_off_peak_time_hours=24-winter_peak_time_hours-winter_super_off_peak_time_hours
 
-<<<<<<< Updated upstream
-=======
-               start_time_part_peak=super_off_peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
-               stop_time_part_peak=super_off_peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-               winter_super_off_peak_time_hours=self.calculate_hours(start_time_part_peak,stop_time_part_peak)
-
-               start_time_off_peak=off_peak_df['Peak Start Time'].iloc[0] if not peak_df['Peak Start Time'].empty else 'Other'
-               stop_time_off_peak=off_peak_df['Peak End Time'].iloc[0] if not peak_df['Peak End Time'].empty else 'Other'
-               winter_off_peak_time_hours=24-winter_peak_time_hours-winter_off_peak_time_hours
-
->>>>>>> Stashed changes
                usage_dict = {}
                for hour in range(24):
                  if  hour in range(16, 21):
@@ -297,11 +281,7 @@ class SMBSector_simplified:
                self.B6BSpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(16, 21)])
                self.B6BSoffpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(0,16)])+ sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(21, 24)])
 
-<<<<<<< Updated upstream
          if plan=='B-1-ST':
-=======
-        if plan=='B-1-ST':
->>>>>>> Stashed changes
           for season in self.seasons:
             if season == 'Summer':
                   summer_peak_usage,summer_part_peak_usage,summer_off_peak_usage=self.set_summer_usage()
@@ -319,11 +299,6 @@ class SMBSector_simplified:
                   start_time_part_peak, stop_time_part_peak = self.get_peak_times(part_peak_df)
                   summer_part_peak_time_hours=self.calculate_hours(start_time_part_peak,stop_time_part_peak)
                   summer_off_peak_time_hours=24-summer_peak_time_hours-summer_part_peak_time_hours
-<<<<<<< Updated upstream
-
-=======
-                  
->>>>>>> Stashed changes
                   usage_dict = {}
                   for hour in range(24):
                      if  hour in range(16, 21):
