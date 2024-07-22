@@ -89,6 +89,8 @@ class SMBSector_simplified:
         self.seasons=['Winter','Summer']
         self.B1STB_highest_demand_15mins=user_B1STB_highest_demand_15mins
         self.plans=['B-10_SV', 'B-10_PV','B-10_TV','B-1','B-6','B-1-ST','A-1','B-10_S']
+
+        
         
 
    def get_usage_hours(self,plan,peak_type,season):
@@ -142,9 +144,9 @@ class SMBSector_simplified:
              self.B1BSpartpeak_usage=summer_part_peak_usage
              self.B1BSoffpeak_usage=summer_off_peak_usage
 
-             peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Summer')
-             part_peak_df = self.get_usage_hours(self.user_sector,plan,'Part-Peak','Summer')
-             off_peak_df = self.get_usage_hours(self.user_sector,plan,'Off-Peak','Summer')
+             peak_df = self.get_usage_hours(plan,'Peak','Summer')
+             part_peak_df = self.get_usage_hours(plan,'Part-Peak','Summer')
+             off_peak_df = self.get_usage_hours(plan,'Off-Peak','Summer')
 
              start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
              summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -195,8 +197,8 @@ class SMBSector_simplified:
               self.B1BWoffpeak_usage = winter_off_peak_usage
               self.B1BWsuperoffpeak_usage = winter_super_off_peak_usage
 
-              peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Winter')
-              super_off_df = self.get_usage_hours(self.user_sector,plan,'Super-Off-Peak','Winter')
+              peak_df = self.get_usage_hours(plan,'Peak','Winter')
+              super_off_df = self.get_usage_hours(plan,'Super-Off-Peak','Winter')
 
               start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
               winter_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -237,7 +239,7 @@ class SMBSector_simplified:
              self.B6SBpeak_usage =summer_peak_usage
              self.B6SBoff_peak_usage = summer_off_peak_usage
 
-             peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Summer')
+             peak_df = self.get_usage_hours(plan,'Peak','Summer')
 
              start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
              summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -261,8 +263,8 @@ class SMBSector_simplified:
                self.B6BWoffpeak_usage = winter_off_peak_usage
                self.B6BWsuperoffpeak_usage = winter_super_off_peak_usage
 
-               peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Winter')
-               super_off_peak_df = self.get_usage_hours(self.user_sector,plan,'Super-Off-Peak','Winter')
+               peak_df = self.get_usage_hours(plan,'Peak','Winter')
+               super_off_peak_df = self.get_usage_hours(plan,'Super-Off-Peak','Winter')
 
                start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
                winter_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -291,9 +293,9 @@ class SMBSector_simplified:
                   self.B1STBSpartpeak_usage = summer_part_peak_usage
                   self.B1STBSoffpeak_usage = summer_off_peak_usage
 
-                  peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Summer')
-                  part_peak_df = self.get_usage_hours(self.user_sector,plan,'Part-Peak','Summer')
-                  off_peak_df = self.get_usage_hours(self.user_sector,plan,'Off-Peak','Summer')
+                  peak_df = self.get_usage_hours(plan,'Peak','Summer')
+                  part_peak_df = self.get_usage_hours(plan,'Part-Peak','Summer')
+                  off_peak_df = self.get_usage_hours(plan,'Off-Peak','Summer')
 
                   start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
                   summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -323,9 +325,9 @@ class SMBSector_simplified:
                  self.B1STBWsuperoffpeak_usage = winter_super_off_peak_usage
                  self.B1STBWpartpeak_usage= winter_part_peak_usage
 
-                 peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Winter')
-                 super_off_peak_df = self.get_usage_hours(self.user_sector,plan,'Super-Off-Peak','Winter')
-                 part_peak_df =  self.get_usage_hours(self.user_sector,plan,'Part-Peak','Winter')
+                 peak_df = self.get_usage_hours(plan,'Peak','Winter')
+                 super_off_peak_df = self.get_usage_hours(plan,'Super-Off-Peak','Winter')
+                 part_peak_df =  self.get_usage_hours(plan,'Part-Peak','Winter')
 
                  start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
                  winter_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -360,8 +362,8 @@ class SMBSector_simplified:
               self.A1BSpartpeak_usage = summer_part_peak_usage
               self.A1BSoffpeak_usage = summer_off_peak_usage
 
-              peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Summer')
-              part_peak_df = self.get_usage_hours(self.user_sector,plan,'Part-Peak','Summer')
+              peak_df = self.get_usage_hours(plan,'Peak','Summer')
+              part_peak_df = self.get_usage_hours(plan,'Part-Peak','Summer')
 
               start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
               summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -396,7 +398,7 @@ class SMBSector_simplified:
                 self.A1BSpartpeak_usage = winter_part_peak_usage
                 self.A1BSoffpeak_usage = winter_off_peak_usage
 
-                part_peak_df = self.get_usage_hours(self.user_sector,plan,'Part-Peak','Winter')
+                part_peak_df = self.get_usage_hours(plan,'Part-Peak','Winter')
                 
                 start_time_part_peak, stop_time_part_peak = self.get_peak_times(part_peak_df)
                 winter_part_peak_time_hours=self.calculate_hours(start_time_part_peak,stop_time_part_peak)
@@ -422,3 +424,4 @@ class SMBSector_simplified:
 
    def update(self):
         self.calculate()
+        

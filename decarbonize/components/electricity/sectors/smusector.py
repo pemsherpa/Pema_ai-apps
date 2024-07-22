@@ -128,6 +128,7 @@ class SMUSector_simplified:
      for plan in self.plans:
        if plan == 'B-10_S':
          usage=self.kwh_used
+         return usage
        else:
          if plan in ( 'B-10_SV', 'B-10_PV','B-10_TV','B-1'):
           for season in self.seasons:

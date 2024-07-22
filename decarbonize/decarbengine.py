@@ -310,10 +310,10 @@ class DecarbEngine:
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smu")
 
     def test_electric_step(self, user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, usage_type):
-        user_input_peak_usage=20
-        user_input_part_peak_usage = 20
-        user_input_super_off_peak_usage=20
-        user_input_off_peak_usage=20
+        user_input_peak_usage=25
+        user_input_part_peak_usage = 25
+        user_input_super_off_peak_usage=25
+        user_input_off_peak_usage=25
         kwh_used = user_input_peak_usage + user_input_part_peak_usage + user_input_super_off_peak_usage + user_input_off_peak_usage
         meter_input = 7
         time_in_use = 8
