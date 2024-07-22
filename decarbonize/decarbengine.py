@@ -33,7 +33,7 @@ from steps.flight_decarb_step import FlightDecarbStep
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data, origin, destination, departure_date,firm,weights,pre_flight_cost,return_date=None):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
-        self.FLIGHT_API_KEY = '7afef474c061eff1d01477d4a67693a2fdb2821437d63642750002ee4350e901'
+        self.FLIGHT_API_KEY = 'c539880578adba5b128d0dcab0211b20375f9e54d872eafcf989a8cee98942cb'
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.firm = firm
         self.dynamic = dynamic_data
@@ -43,6 +43,8 @@ class DecarbEngine:
         self.commuting_analyzer = BusinessCommutingAnalyzer(commuting_data, self.GOOGLE_MAPS_API_KEY, self.OIL_PRICE_API_KEY,self.firm,self.dynamic)
         self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
         self.steps = []
+
+
         
     def analyze_commuting_costs(self):
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
@@ -94,7 +96,7 @@ class DecarbEngine:
     def run_flight_step(self):
         #flight costs
         optimal_flight = self.analyze_flight_costs()
-        print(optimal_flight)
+        #print(optimal_flight)
         flight_step = self.create_flight_step(optimal_flight, 3)
         self.steps.append(flight_step)
 
@@ -187,14 +189,31 @@ class DecarbEngine:
         pre_cost = 800
         decarb_engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,pre_cost,return_date)
         decarb_steps = decarb_engine.run_decarb_engine()
+        
+     
 
         total_savings = 0
+        total_emission_savings = 0
+        dict_zscore = {}
         for step in decarb_steps:
             this_savings = step.compute_savings()
+            this_emission_savings = step.compute_emissions_savings()
             total_savings += this_savings
+            total_emission_savings += this_emission_savings
+
+            dict_zscore[step.step_type] = step.compute_mean()
             print(step.generate_step_description())
+            print(f"Difficulty: ${step.diffifulty}")  
             print(f"Savings: ${this_savings}")
-            print(f"Emissions Savings: {step.compute_emissions_savings()} kg CO2\n")
+            print(f"Emissions Savings: {this_emission_savings} kg CO2\n")
+        print(f"Total Savings: ${total_savings}")
+        print(f"Total Emissions Savings: {total_emission_savings} kg CO2\n")
+        # zscore
+        return dict_zscore
+    
+
+
+
 
     ######
     # Test Code
@@ -340,7 +359,7 @@ class DecarbEngine:
         lcu_usage_data = LCUSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage, user_electricity_bill_season, meter_input,time_in_use,max_15min_usage, user_sector,user_current_plan)
         return lcu_usage_data
     
-    #20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2
+    # #20, 20, 20, 20, 7, 8, 9, 'Small and Medium Business',2
     def create_smu(self, user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage,user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage, user_sector,user_B1STU_highest_demand_15mins):
         smu_usage_data = SMUSector_simplified(user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STU_highest_demand_15mins)
         smu_usage_data.update()

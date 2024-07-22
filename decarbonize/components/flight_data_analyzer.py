@@ -109,7 +109,7 @@ class FlightDataAnalyzer:
                 #aircraft = flight['airplane']
                 #print(flight)
                 if 'departure_token' in flight:
-                    print(1)
+                    #print(1)
 
                     token = flight['departure_token']
                 else:
