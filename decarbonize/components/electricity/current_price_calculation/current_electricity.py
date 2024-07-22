@@ -12,12 +12,6 @@ from components.electricity.current_price_calculation.currentlcbelectricityratep
 from components.electricity.current_price_calculation.currentsmbelectricityrateplan import currentSMBElectricityRatePlan
 from components.electricity.current_price_calculation.currentlcuelectricityrateplan import currentLCUElectricityRatePlan
 from components.electricity.current_price_calculation.currentsmuelectricityrateplan import currentSMUElectricityRatePlan
-from components.electricity.sectors.lcbsector import LCBSector
-from components.electricity.sectors.lcbsector import LCBSector_simplified
-from components.electricity.sectors.lcusector import LCUSector
-from components.electricity.sectors.lcusector import LCUSector_simplified
-from components.electricity.sectors.smbsector import SMBSector
-from components.electricity.sectors.smusector import SMUSector
 
 class CurrentElectricity:
     def __init__(self, file_path, user_zip_code, usage_data):

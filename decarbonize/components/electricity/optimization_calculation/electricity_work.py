@@ -13,13 +13,9 @@ from components.electricity.optimization_calculation.lcbelectricityrateplan impo
 from components.electricity.optimization_calculation.lcuelectricityrateplan import LCUElectricityRatePlan
 from components.electricity.optimization_calculation.smuelectricityrateplan import SMUElectricityRatePlan
 from components.electricity.optimization_calculation.smbelectricityrateplan import SMBElectricityRatePlan
-from components.electricity.sectors.lcbsector import LCBSector
 from components.electricity.sectors.lcbsector import LCBSector_simplified
-from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.lcusector import LCUSector_simplified
-from components.electricity.sectors.smbsector import SMBSector
 from components.electricity.sectors.smbsector import SMBSector_simplified
-from components.electricity.sectors.smusector import SMUSector
 from components.electricity.sectors.smusector import SMUSector_simplified
 
 class ElectricityWork:

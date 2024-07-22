@@ -8,18 +8,8 @@ Original file is located at
 """
 
 from components.biz_commute_analyzer import BusinessCommutingAnalyzer
-from components.electricity.optimization_calculation.electricity_work import ElectricityWork
-from components.electricity.optimization_calculation.lcbelectricityrateplan import LCBElectricityRatePlan
-from components.electricity.optimization_calculation.lcuelectricityrateplan import LCUElectricityRatePlan
-from components.electricity.optimization_calculation.smuelectricityrateplan import SMUElectricityRatePlan
-from components.electricity.optimization_calculation.smbelectricityrateplan import SMBElectricityRatePlan
-from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
-from components.electricity.current_price_calculation.currentlcbelectricityrateplan import currentLCBElectricityRatePlan
-from components.electricity.current_price_calculation.currentsmbelectricityrateplan import currentSMBElectricityRatePlan
 from steps.electric_decarb_step import ElectricDecarbStep
-from components.electricity.sectors.lcbsector import LCBSector 
 from components.electricity.sectors.lcbsector import LCBSector_simplified
-from components.electricity.sectors.lcusector import LCUSector
 from components.electricity.sectors.lcusector import LCUSector_simplified
 from components.electricity.sectors.smbsector import SMBSector_simplified
 from components.electricity.sectors.smusector import SMUSector_simplified
@@ -44,8 +34,6 @@ class DecarbEngine:
         self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
         self.steps = []
 
-
-        
     def analyze_commuting_costs(self):
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
 
@@ -120,11 +108,11 @@ class DecarbEngine:
         return savings
 
     def run_decarb_engine(self):
-        #self.run_commuting_step()
+        self.run_commuting_step()
         #self.run_carpool_step()
         #self.run_flight_step()
         #self.run_return_flight_step()
-        self.run_electric_step()
+        #self.run_electric_step()
 
         return self.steps
         
@@ -145,15 +133,15 @@ class DecarbEngine:
     def test_decarb_engine():
         origin = "LAX"
         destination = "JFK"
-        departure_date = "2024-07-20"
-        return_date = "2024-07-24"
+        departure_date = "2024-08-20"
+        return_date = "2024-08-24"
         firm = '2107 Addison St, Berkeley, CA'
         commuting_data = pd.DataFrame({
-            'ID': [1, 2, 3],
-            'method':['car','uber','car'],
+            'ID': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            'method':['car','uber','car', 'car','uber','car', 'car','uber','car', 'car'],
             'locations':['1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ', '1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ', '1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ','3006 San Pablo Ave, Berkeley, CA ' ],
-            'frequency': [22, 20, 18],
-            'cost_per_km':[0.1,0.2,0.3]
+            'frequency': [22, 20, 18, 22, 20, 18, 22, 20, 18, 20],
+            'cost_per_km':[0.1,0.2,0.3, 0.1,0.2,0.3, 0.1,0.2,0.3, .4]
         })
 
         df_dynamic = pd.DataFrame({
@@ -174,11 +162,11 @@ class DecarbEngine:
         return_date = "2024-08-13"
         firm = '2107 Addison St, Berkeley, CA'
         commuting_data = pd.DataFrame({
-            'ID': [1, 2, 3],
-            'method':['car','uber','car'],
-            'locations':['1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA '],
-            'frequency': [22, 20, 18],
-            'cost_per_km':[0.1,0.2,0.3]
+            'ID': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            'method':['car','uber','car', 'car','uber','car', 'car','uber','car', 'car'],
+            'locations':['1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ', '1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ', '1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ','3006 San Pablo Ave, Berkeley, CA ' ],
+            'frequency': [22, 20, 18, 22, 20, 18, 22, 20, 18, 20],
+            'cost_per_km':[0.1,0.2,0.3, 0.1,0.2,0.3, 0.1,0.2,0.3, .4]
         })
 
         df_dynamic = pd.DataFrame({

@@ -25,12 +25,10 @@ class BusinessCommutingAnalyzer:
         distances_from_firm = [geodesic(firm_coords, coord).kilometers for coord in employee_coords]
         cur_people['distance'] = distances_from_firm
         self.commuting_data = cur_people
-        print(self.commuting_data)
 
     def calculate_current_costs_and_emissions(self):
         total_cost = 0
         total_carbon = 0
-        print(self.commuting_data)
         for index, row in self.commuting_data.iterrows():
             distance = row['distance']
             frequency = row['frequency']
