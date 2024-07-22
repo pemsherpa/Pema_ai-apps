@@ -1,4 +1,4 @@
-
+import pandas as pd
 class SMBSector:
     def __init__(self, A1NTBStotal_usage, A1NTBWtotal_usage, A1BSpeak_usage,
                  A1BSpartpeak_usage, A1BSoffpeak_usage, A1BWpartpeak_usage,
@@ -74,9 +74,10 @@ class SMBSector_simplified:
             return hours
 
    def __init__(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STB_highest_demand_15mins,kwh_used):
-        import pandas as pd
+        if(user_input_peak_usage<=23 or user_input_part_peak_usage<=23 or user_input_super_off_peak_usage<=23 or user_input_off_peak_usage<=23):
+            raise ValueError('Minimum Peak usage not met,should be greater than 23')  
         self.Bundled_peak_time_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Bundled Peak Time Price')
-
+        
         self.meter_input = meter_input
         self.time_in_use = time_in_use
         self.max_15min_usage = max_15min_usage
@@ -89,6 +90,7 @@ class SMBSector_simplified:
         self.seasons=['Winter','Summer']
         self.B1STB_highest_demand_15mins=user_B1STB_highest_demand_15mins
         self.plans=['B-10_SV', 'B-10_PV','B-10_TV','B-1','B-6','B-1-ST','A-1','B-10_S']
+
 
         
         
