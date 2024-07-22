@@ -331,16 +331,16 @@ class SMBSector_simplified(Sector_simplified):
                  winter_part_peak_time_hours=self.calculate_hours(start_time_part_peak,stop_time_part_peak)
                  winter_off_peak_time_hours=24-winter_peak_time_hours-winter_super_off_peak_time_hours- winter_part_peak_time_hours
                  
-                 usage_dict = {}
-                 for hour in range(24):
-                     if  hour in range(16, 21):
-                         usage_dict[f'{hour}_oclock_usage'] = winter_peak_usage / winter_peak_time_hours
-                     elif hour in range(9, 14):
-                         usage_dict[f'{hour}_oclock_usage'] = winter_super_off_peak_usage / winter_super_off_peak_time_hours
-                     elif hour in range(14, 16) or hour in range(21,23):
-                         usage_dict[f'{hour}_oclock_usage'] = winter_part_peak_usage / winter_part_peak_time_hours
-                     else:
-                         usage_dict[f'{hour}_oclock_usage'] = winter_off_peak_usage / winter_off_peak_time_hours
+                 peak_range = list(range(16, 21))
+                 part_peak_range = list(range(14, 16)) + list(range(21, 23))
+                 super_off_peak_range = list(range(9, 14))
+
+                 peak_usage = ElectricUsage(winter_peak_usage, winter_peak_time_hours)
+                 part_peak_usage = ElectricUsage(summer_part_peak_usage, summer_part_peak_time_hours)
+                 off_peak_usage = ElectricUsage(summer_off_peak_usage, summer_off_peak_time_hours)
+                 superoff_peak_usage = ElectricUsage(winter_super_off_peak_usage, winter_super_off_peak_time_hours)
+
+                 usage_dict = self.get_usage_dict(peak_range,part_peak_range, peak_usage, part_peak_usage, off_peak_usage, super_off_peak_range, superoff_peak_usage)
 
                  self.B1STBSpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(16, 21)])
                  self.B1STBSoffpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(0,14)])+ sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(23, 24)])
@@ -365,12 +365,11 @@ class SMBSector_simplified(Sector_simplified):
               summer_part_peak_time_hours=self.calculate_hours(start_time_part_peak,stop_time_part_peak)
               summer_off_peak_time_hours=24-summer_peak_time_hours-summer_part_peak_time_hours
 
-              usage_dict = {}
-
               summer_peak_time_half_hours = summer_peak_time_hours * 2
               summer_part_peak_time_half_hours = summer_part_peak_time_hours * 2
               summer_off_peak_time_half_hours = summer_off_peak_time_hours * 2
 
+              usage_dict = {}
               for half_hour in range(48):
                    hour = half_hour // 2
                    minute = (half_hour % 2) * 30
@@ -398,10 +397,10 @@ class SMBSector_simplified(Sector_simplified):
                 winter_part_peak_time_hours=self.calculate_hours(start_time_part_peak,stop_time_part_peak)
                 winter_off_peak_time_hours=24-winter_part_peak_time_hours
 
-                usage_dict = {}
                 winter_part_peak_time_half_hours = winter_part_peak_time_hours * 2
                 winter_off_peak_time_half_hours = winter_off_peak_time_hours * 2
 
+                usage_dict = {}
                 for half_hour in range(48):
                     hour = half_hour // 2
                     minute = (half_hour % 2) * 30
