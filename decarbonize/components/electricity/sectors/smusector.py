@@ -81,7 +81,7 @@ class SMUSector_simplified:
             hours= stop_hour - start_hour
             return hours
 
-   def __init__(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STB_highest_demand_15mins,kwh_used):
+   def __init__(self, user_input_peak_usage, user_input_part_peak_usage, user_input_super_off_peak_usage, user_input_off_peak_usage,meter_input,time_in_use,max_15min_usage, user_sector,user_B1STU_highest_demand_15mins,kwh_used):
         import pandas as pd
         self.Bundled_peak_time_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Unbundled Peak Time Price')
 
@@ -95,7 +95,7 @@ class SMUSector_simplified:
         self.user_input_off_peak_usage = user_input_off_peak_usage
         self.user_sector = user_sector
         self.seasons=['Winter','Summer']
-        self.B1STB_highest_demand_15mins=user_B1STB_highest_demand_15mins
+        self.B1STU_highest_demand_15mins=user_B1STU_highest_demand_15mins
         self.plans=['B-10_SV', 'B-10_PV','B-10_TV','B-1','B-6','B-1-ST','A-1','B-10_S']
         
 
@@ -150,9 +150,9 @@ class SMUSector_simplified:
              self.B1USpartpeak_usage=summer_part_peak_usage
              self.B1USoffpeak_usage=summer_off_peak_usage
 
-             peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Summer')
-             part_peak_df = self.get_usage_hours(self.user_sector,plan,'Part-Peak','Summer')
-             off_peak_df = self.get_usage_hours(self.user_sector,plan,'Off-Peak','Summer')
+             peak_df = self.get_usage_hours(plan,'Peak','Summer')
+             part_peak_df = self.get_usage_hours(plan,'Part-Peak','Summer')
+             off_peak_df = self.get_usage_hours(plan,'Off-Peak','Summer')
 
              start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
              summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -203,8 +203,8 @@ class SMUSector_simplified:
               self.B1UWoffpeak_usage = winter_off_peak_usage
               self.B1UWsuperoffpeak_usage = winter_super_off_peak_usage
 
-              peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Winter')
-              super_off_df = self.get_usage_hours(self.user_sector,plan,'Super-Off-Peak','Winter')
+              peak_df = self.get_usage_hours(plan,'Peak','Winter')
+              super_off_df = self.get_usage_hours(plan,'Super-Off-Peak','Winter')
 
               start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
               winter_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -225,17 +225,17 @@ class SMUSector_simplified:
               self.B10SVUSoffpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(0, 14)]) + sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(23, 24)])
               self.B19SVUSpartpeak_usage = sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(14, 16)])+ sum([usage_dict[f'{hour}_oclock_usage'] for hour in range(21, 23)])
 
-              self.B10PVUSpeak_usage= self.B10SVBSpeak_usage
-              self.B10PVUSoffpeak_usage= self.B10SVBSoffpeak_usage
-              self.B10PVUSpartpeak_usage= self.B19SVBSpartpeak_usage
+              self.B10PVUSpeak_usage= self.B10SVUSpeak_usage
+              self.B10PVUSoffpeak_usage= self.B10SVUSoffpeak_usage
+              self.B10PVUSpartpeak_usage= self.B19SVUSpartpeak_usage
 
-              self.B10TVUStotalpeak_usage= self.B10SVBSpeak_usage
-              self.B10TVUSoffpeak_usage= self.B10SVBSoffpeak_usage
-              self.B10TVUSpartpeak_usage= self.B19SVBSpartpeak_usage
+              self.B10TVUStotalpeak_usage= self.B10SVUSpeak_usage
+              self.B10TVUSoffpeak_usage= self.B10SVUSoffpeak_usage
+              self.B10TVUSpartpeak_usage= self.B19SVUSpartpeak_usage
 
-              self.B1USpeak_usage= self.B10SVBSpeak_usage
-              self.B1USoffpeak_usage= self.B10SVBSoffpeak_usage
-              self.B1USpartpeak_usage= self.B19SVBSpartpeak_usage
+              self.B1USpeak_usage= self.B10SVUSpeak_usage
+              self.B1USoffpeak_usage= self.B10SVUSoffpeak_usage
+              self.B1USpartpeak_usage= self.B19SVUSpartpeak_usage
 
          if plan =='B-6':
           for season in self.seasons:
@@ -245,7 +245,7 @@ class SMUSector_simplified:
              self.B6SUpeak_usage =summer_peak_usage
              self.B6SUoff_peak_usage = summer_off_peak_usage
 
-             peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Summer')
+             peak_df = self.get_usage_hours(plan,'Peak','Summer')
 
              start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
              summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -269,8 +269,8 @@ class SMUSector_simplified:
                self.B6UWoffpeak_usage = winter_off_peak_usage
                self.B6UWsuperoffpeak_usage = winter_super_off_peak_usage
 
-               peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Winter')
-               super_off_peak_df = self.get_usage_hours(self.user_sector,plan,'Super-Off-Peak','Winter')
+               peak_df = self.get_usage_hours(plan,'Peak','Winter')
+               super_off_peak_df = self.get_usage_hours(plan,'Super-Off-Peak','Winter')
 
                start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
                winter_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -299,9 +299,9 @@ class SMUSector_simplified:
                   self.B1STUSpartpeak_usage = summer_part_peak_usage
                   self.B1STUSoffpeak_usage = summer_off_peak_usage
 
-                  peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Summer')
-                  part_peak_df = self.get_usage_hours(self.user_sector,plan,'Part-Peak','Summer')
-                  off_peak_df = self.get_usage_hours(self.user_sector,plan,'Off-Peak','Summer')
+                  peak_df = self.get_usage_hours(plan,'Peak','Summer')
+                  part_peak_df = self.get_usage_hours(plan,'Part-Peak','Summer')
+                  off_peak_df = self.get_usage_hours(plan,'Off-Peak','Summer')
 
                   start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
                   summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -331,9 +331,9 @@ class SMUSector_simplified:
                  self.B1STUWsuperoffpeak_usage = winter_super_off_peak_usage
                  self.B1STUWpartpeak_usage= winter_part_peak_usage
 
-                 peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Winter')
-                 super_off_peak_df = self.get_usage_hours(self.user_sector,plan,'Super-Off-Peak','Winter')
-                 part_peak_df =  self.get_usage_hours(self.user_sector,plan,'Part-Peak','Winter')
+                 peak_df = self.get_usage_hours(plan,'Peak','Winter')
+                 super_off_peak_df = self.get_usage_hours(plan,'Super-Off-Peak','Winter')
+                 part_peak_df =  self.get_usage_hours(plan,'Part-Peak','Winter')
 
                  start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
                  winter_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -368,8 +368,8 @@ class SMUSector_simplified:
               self.A1USpartpeak_usage = summer_part_peak_usage
               self.A1USoffpeak_usage = summer_off_peak_usage
 
-              peak_df = self.get_usage_hours(self.user_sector,plan,'Peak','Summer')
-              part_peak_df = self.get_usage_hours(self.user_sector,plan,'Part-Peak','Summer')
+              peak_df = self.get_usage_hours(plan,'Peak','Summer')
+              part_peak_df = self.get_usage_hours(plan,'Part-Peak','Summer')
 
               start_time_peak, stop_time_peak = self.get_peak_times(peak_df)
               summer_peak_time_hours=self.calculate_hours(start_time_peak,stop_time_peak)
@@ -404,7 +404,7 @@ class SMUSector_simplified:
                 self.A1USpartpeak_usage = winter_part_peak_usage
                 self.A1USoffpeak_usage = winter_off_peak_usage
 
-                part_peak_df = self.get_usage_hours(self.user_sector,plan,'Part-Peak','Winter')
+                part_peak_df = self.get_usage_hours(plan,'Part-Peak','Winter')
                 
                 start_time_part_peak, stop_time_part_peak = self.get_peak_times(part_peak_df)
                 winter_part_peak_time_hours=self.calculate_hours(start_time_part_peak,stop_time_part_peak)
