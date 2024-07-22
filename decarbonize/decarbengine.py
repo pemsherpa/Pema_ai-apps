@@ -82,11 +82,13 @@ class DecarbEngine:
     def run_carpool_step(self):
         # commuting cost for carpool
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
+        carpool_savings = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, [1,2,3, 4, 5, 6, 7, 8 , 9 , 10],2,30)
+
         commuting_step = DecarbStep(
             step_type=DecarbStepType.COMMUTING_CARPOOL,
             cur_cost=commuting_costs,
-            new_cost = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, [1,2,3], 50,2,30)[0],
-            new_emissions = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,[1,2,3], 50,2,30)[2],
+            new_cost = carpool_savings[0],
+            new_emissions = carpool_savings[2],
             cur_emissions=commuting_emissions,
             description="Analyze commuting costs and emissions for carpool", 
             difficulty= 3
@@ -149,7 +151,7 @@ class DecarbEngine:
         commuting_data = pd.DataFrame({
             'ID': [1, 2, 3],
             'method':['car','uber','car'],
-            'locations':['1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA '],
+            'locations':['1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ', '1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ', '1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ','3006 San Pablo Ave, Berkeley, CA ' ],
             'frequency': [22, 20, 18],
             'cost_per_km':[0.1,0.2,0.3]
         })

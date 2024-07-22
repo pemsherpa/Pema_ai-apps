@@ -169,7 +169,7 @@ class BusinessCommutingAnalyzer:
             }
         return None
 
-    def carpool_savings(self, df_survey, firm_location, employee_ids, cur_stipend, num_carpool_days, mpg):
+    def carpool_savings(self, df_survey, firm_location, employee_ids, num_carpool_days, mpg):
 
       # Get the current details of each person
       firm_coords = self.geocode_location(firm_location)
