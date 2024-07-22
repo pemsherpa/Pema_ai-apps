@@ -201,9 +201,9 @@ class DecarbEngine:
             total_savings += this_savings
             total_emission_savings += this_emission_savings
 
-            dict_zscore[step.step_type] = step.compute_mean()
+            dict_zscore[step.step_type] = step.compute_zscore()
             print(step.generate_step_description())
-            print(f"Difficulty: ${step.diffifulty}")  
+            print(f"Difficulty: ${step.difficulty}")  
             print(f"Savings: ${this_savings}")
             print(f"Emissions Savings: {this_emission_savings} kg CO2\n")
         print(f"Total Savings: ${total_savings}")
