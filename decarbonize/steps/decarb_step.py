@@ -17,11 +17,13 @@ class DecarbStep:
     def get_new_cost(self):
         return self.new_cost
 
-    def compute_zscore(self):
+    def compute_zscore(self,mean_diff, std_diff, mean_savings, std_savings, mean_emissions, std_emissions):
         # (cost savings, carbon savings, difficulty)
-        self.cost_savings = self.compute_savings()
-        self.emission_savings = self.compute_emissions_savings()
-        self.ranking_zscore = (self.difficulty + self.cost_savings + self.emission_savings)/3
+        z_difficulty = (self.difficulty - mean_diff) / std_diff
+        z_savings = (self.compute_savings() - mean_savings) / std_savings
+        z_emissions = (self.compute_emissions_savings() - mean_emissions) / std_emissions
+        self.ranking_zscore = (z_difficulty + z_savings + z_emissions) / 3
+        return self.ranking_zscore
 
     def compute_savings(self):
         return self.cur_cost - self.new_cost
