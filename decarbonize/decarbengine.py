@@ -70,17 +70,18 @@ class DecarbEngine:
     def run_carpool_step(self):
         # commuting cost for carpool
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
-        carpool_savings = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, [1,2,3, 4, 5, 6, 7, 8 , 9 , 10],2,30)
+        carpool_savings,carpool_saving_emission = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,2,30)
 
         commuting_step = DecarbStep(
             step_type=DecarbStepType.COMMUTING_CARPOOL,
             cur_cost=commuting_costs,
-            new_cost = carpool_savings[0],
-            new_emissions = carpool_savings[2],
+            new_cost = commuting_costs-carpool_savings,
+            new_emissions = carpool_saving_emission,
             cur_emissions=commuting_emissions,
             description="Analyze commuting costs and emissions for carpool", 
             difficulty= 3
         )
+        
         self.steps.append(commuting_step)
 
     def run_flight_step(self):
@@ -105,11 +106,13 @@ class DecarbEngine:
         savings = 0
         for step in self.steps:
             savings += step.compute_emissions_savings()
+            print(11111111)
+            print(savings)
         return savings
 
     def run_decarb_engine(self):
         self.run_commuting_step()
-        #self.run_carpool_step()
+        self.run_carpool_step()
         self.run_flight_step()
         self.run_return_flight_step()
         self.run_electric_step()
@@ -138,7 +141,7 @@ class DecarbEngine:
         firm = '2107 Addison St, Berkeley, CA'
         commuting_data = pd.DataFrame({
             'ID': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            'method':['car','uber','car', 'car','uber','car', 'car','uber','car', 'car'],
+            'method':['car','car','car', 'car','car','car', 'car','uber','car', 'car'],
             'locations':['1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ', '1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ', '1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ','3006 San Pablo Ave, Berkeley, CA ' ],
             'frequency': [22, 20, 18, 22, 20, 18, 22, 20, 18, 20],
             'cost_per_km':[0.1,0.2,0.3, 0.1,0.2,0.3, 0.1,0.2,0.3, .4]
@@ -182,11 +185,12 @@ class DecarbEngine:
         
         difficulties = [step.difficulty for step in decarb_steps]
         savings = [step.compute_savings() for step in decarb_steps]
-        print(f"I am printing savings{savings}")
+        #print(f"I am printing savings{savings}")
         emissions = [step.compute_emissions_savings() for step in decarb_steps]
 
         mean_diff = np.mean(difficulties)
         std_diff = np.std(difficulties)
+        print(type(savings))
         mean_savings = np.mean(savings)
         std_savings = np.std(savings)
         mean_emissions = np.mean(emissions)
