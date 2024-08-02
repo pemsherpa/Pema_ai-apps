@@ -110,18 +110,16 @@ class DecarbEngine:
         savings = 0
         for step in self.steps:
             savings += step.compute_emissions_savings()
-            print(11111111)
-            print(savings)
         return savings
 
     def run_decarb_engine(self):
         self.run_commuting_step()
         self.run_carpool_step()
         self.run_flight_step()
-        #self.run_return_flight_step()
-        self.run_electric_step()
-        flights_user=self.create_user_flight_step()
-        self.calculate_and_print_flight_emissions(self.emissions_df, flights_user)
+        self.run_return_flight_step()
+        #self.run_electric_step()
+        #flights_user=self.create_user_flight_step()
+        #self.calculate_and_print_flight_emissions(self.emissions_df, flights_user)
 
         return self.steps
         
@@ -191,14 +189,24 @@ class DecarbEngine:
         
         difficulties = [step.difficulty for step in decarb_steps]
         savings = [step.compute_savings() for step in decarb_steps]
-        #print(f"I am printing savings{savings}")
+        combined_series = pd.concat(savings[:2])
+
+# Append the integers to the combined Series
+        combined_list = combined_series.tolist() + savings[2:]
+
+# Compute the mean
+        mean_value = sum(combined_list) / len(combined_list)
+
+        #print("Mean value:", mean_value)
+
+        #print("I am printing savings")
         emissions = [step.compute_emissions_savings() for step in decarb_steps]
 
         mean_diff = np.mean(difficulties)
         std_diff = np.std(difficulties)
-        print(type(savings))
-        mean_savings = np.mean(savings)
-        std_savings = np.std(savings)
+
+        mean_savings = mean_value
+        std_savings = np.std(combined_list)
         mean_emissions = np.mean(emissions)
         std_emissions = np.std(emissions)
 
@@ -206,23 +214,26 @@ class DecarbEngine:
         total_emission_savings = 0
         dict_zscore = {}
         for step in decarb_steps:
-            this_savings = step.compute_savings()
+            this_savings = np.mean(step.compute_savings())
             this_emission_savings = step.compute_emissions_savings()
             total_savings += this_savings
             total_emission_savings += this_emission_savings
 
-            dict_zscore[step.step_type] = step.compute_zscore(mean_diff, std_diff, mean_savings, std_savings, mean_emissions, std_emissions)
+            dict_zscore[step.step_type] = np.mean(step.compute_zscore(mean_diff, std_diff, mean_savings, std_savings, mean_emissions, std_emissions))
+            
             print(step.generate_step_description())
-            print(f"Difficulty: ${step.difficulty}")  
-            print(f"Savings: ${this_savings}")
+            print(f"z-score is: {dict_zscore[step.step_type]}")
+            print(f"Difficulty: {step.difficulty}")  
+            print(f"Savings: ${np.mean(this_savings)}")
             print(f"Emissions Savings: {this_emission_savings} kg CO2\n")
+        print(dict_zscore)
         print(f"Total Savings: ${total_savings}")
         print(f"Total Emissions Savings: {total_emission_savings} kg CO2\n")
+        #print(dict_zscore)
         
-        sorted_zscores = sorted(dict_zscore.items(), key=lambda item: item[1], reverse=True)
-        for rank, (step_type, zscore) in enumerate(sorted_zscores, start=1):
-          print(f" {rank}: {step_type} with Z-Score: {zscore}")
-        return dict_zscore
+
+
+        #sorted_zscores = sorted(dict_zscore.items(), key=lambda item: item[1], reverse=True)
     def create_user_flight_step(self):
      flights_user = [
         Flight(

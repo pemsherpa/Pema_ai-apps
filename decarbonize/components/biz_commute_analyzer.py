@@ -29,7 +29,7 @@ class BusinessCommutingAnalyzer:
 
 
     
-        print(self.commuting_data)
+        #print(self.commuting_data)
     
     def calculate_current_costs_and_emissions(self):
         #self.commuting_data['distance'] = self.commuting_data['coords'].apply(lambda coord: geodesic(self.firm_location, coord).kilometers)   
@@ -251,6 +251,8 @@ class BusinessCommutingAnalyzer:
         
         for group, members in carpool_groups:
             locations = members['locations'].tolist()
+            
+            
             optimal_route_evening = self.find_optimal_route(firm_location, locations)
             optimal_route_morning = self.find_optimal_route_morning(locations)
             optimal_distance_evening = optimal_route_evening['total_distance_km']
@@ -273,8 +275,12 @@ class BusinessCommutingAnalyzer:
             savings = total_cur_costs - new_cost_total
             savings_emission = total_cur_emission - new_emission_total
             saving_distance = (total_cur_distance - optimal_distance)/len(members)
+            print(111)
             
-            print(f"For the group {group}, the members are {members}. Money saving is {savings}, emission saving is {savings_emission}, distance saving is {saving_distance}.")
+            if (len(members))==1:
+                print(f"For the group {group}, the members are {members}. Money saving is 0, emission saving is 0, distance saving is 0(solo rider)")
+            else:
+                print(f"For the group {group}, the members are {members}. Money saving is {savings}, emission saving is {savings_emission}, distance saving is {saving_distance}.")
             
             total_savings += savings
             total_savings_emission += savings_emission

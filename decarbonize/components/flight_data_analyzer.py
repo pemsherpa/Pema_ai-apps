@@ -95,7 +95,7 @@ class FlightDataAnalyzer:
 
     def create_dataframes_serpapi(self, flights):
         columns = ['Carrier', 'Flight Number', 'Departure Airport', 'Departure Time', 'Arrival Airport', 'Arrival Time', 'Duration',
-                    'Carbon Emissions', 'Typical Carbon Emissions', 'Difference in Percent', 'Travel Class',
+                    'Carbon Emissions', 'Travel Class',
                    'Price', 'Stops', 'Layovers', 'Total Duration','token']
         flight_data = []
         seen_flights = set()
@@ -115,7 +115,7 @@ class FlightDataAnalyzer:
                 else:
                     token = 'N/A'
 
-                for i, segment in enumerate(flight['flights']):
+                for i,segment in enumerate(flight['flights']):
                     carrier_code = segment['airline']
                     flight_number = segment['flight_number']
                     departure = segment['departure_airport']['id']
@@ -124,13 +124,6 @@ class FlightDataAnalyzer:
                     arrival_time = segment['arrival_airport']['time']
                     duration = segment['duration']
                     carbon_emissions = flight['carbon_emissions']['this_flight']
-                    if flight['carbon_emissions']['typical_for_this_route']:
-                        typical_carbon_emissions = flight['carbon_emissions']['typical_for_this_route']
-                        difference_in_percent = flight['carbon_emissions']['difference_percent']
-                    else:
-                         typical_carbon_emissions = 'N/A'
-                         difference_in_percent = 'N/A'
-
                     travel_class_name = segment['travel_class']
 
                     flight_key = (carrier_code, flight_number, departure_time, arrival_time)
@@ -138,7 +131,7 @@ class FlightDataAnalyzer:
                         seen_flights.add(flight_key)
                         flight_data.append([
                             carrier_code, flight_number, departure, departure_time,
-                            arrival, arrival_time, duration, carbon_emissions, typical_carbon_emissions, difference_in_percent, travel_class_name,
+                            arrival, arrival_time, duration, carbon_emissions, travel_class_name,
                             price, stops, layovers, total_duration,token
                         ])
 
