@@ -25,7 +25,7 @@ from components.FlightEmissionsCalculator import Flight
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data, origin, destination, departure_date,firm,weights,pre_flight_cost,return_date=None):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
-        self.FLIGHT_API_KEY = 'c539880578adba5b128d0dcab0211b20375f9e54d872eafcf989a8cee98942cb'
+        self.FLIGHT_API_KEY = '3d9d866dbc47001e268d6b82890721368c0a0d1a9fd4d9ca8eaf4f5e4a8c5d23'
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.COORDINATES_API_KEY = "0c608aea6eb74a9da052e7a83df8c693"
         self.firm = firm
