@@ -21,6 +21,7 @@ import pandas as pd
 from steps.flight_decarb_step import FlightDecarbStep
 from components.FlightEmissionsCalculator import FlightEmissionsCalculator
 from components.FlightEmissionsCalculator import Flight
+from steps.decarb_emissions_step import EmissionsDecarbStep
 
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data, origin, destination, departure_date,firm,weights,pre_flight_cost,return_date=None):
@@ -111,15 +112,16 @@ class DecarbEngine:
         for step in self.steps:
             savings += step.compute_emissions_savings()
         return savings
+    
+
 
     def run_decarb_engine(self):
         self.run_commuting_step()
         self.run_carpool_step()
         self.run_flight_step()
         self.run_return_flight_step()
-        #self.run_electric_step()
-        #flights_user=self.create_user_flight_step()
-        #self.calculate_and_print_flight_emissions(self.emissions_df, flights_user)
+        self.run_electric_step()
+        self.create_user_flight_step()
 
         return self.steps
         
@@ -199,7 +201,6 @@ class DecarbEngine:
 
         #print("Mean value:", mean_value)
 
-        #print("I am printing savings")
         emissions = [step.compute_emissions_savings() for step in decarb_steps]
 
         mean_diff = np.mean(difficulties)
@@ -226,7 +227,7 @@ class DecarbEngine:
             print(f"Difficulty: {step.difficulty}")  
             print(f"Savings: ${np.mean(this_savings)}")
             print(f"Emissions Savings: {this_emission_savings} kg CO2\n")
-        print(dict_zscore)
+        #print(dict_zscore)
         print(f"Total Savings: ${total_savings}")
         print(f"Total Emissions Savings: {total_emission_savings} kg CO2\n")
         #print(dict_zscore)
@@ -241,7 +242,8 @@ class DecarbEngine:
             flight_class="Economy",
             airplane_model="Boeing 737-400",
             departure_airport="JFK",
-            arrival_airport="LAX"
+            arrival_airport="LAX",
+            cost=200
         ),
         Flight(
             non_stop=False,
@@ -249,6 +251,7 @@ class DecarbEngine:
             airplane_model=None,
             departure_airport="SFO",
             arrival_airport="JFK",
+            cost=500,
             stops=[
                 {
                     "departure_airport": "SFO",
@@ -270,6 +273,7 @@ class DecarbEngine:
             airplane_model=None,
             departure_airport="OKC",
             arrival_airport="DCA",
+            cost=1000,
             stops=[
                 {
                     "departure_airport": "OKC",
@@ -286,27 +290,31 @@ class DecarbEngine:
             ]
         )
     ]
-     return flights_user
-        
-    def calculate_and_print_flight_emissions(self,emissions_df, flights_user):
-         for flight in flights_user:
-           original_distance, original_emissions, optimized_flight = emissions_df.find_optimized_flight(flight)
-         if original_distance is not None and original_emissions is not None:
-            print(flight)
-            carbon_saved = emissions_df.carbon_saved(original_emissions, optimized_flight['emissions'])
-            print("Optimized flight configuration:")
-            print(f"Airplane model: {optimized_flight['airplane_model']}")
-            print(f"Class: {optimized_flight['class']}")
-            print(f"Optimized distance: {optimized_flight['distance']:.2f} miles")
-            print(f"Optimized carbon emissions: {optimized_flight['emissions']:.2f} kg")
-            print(f"Carbon saved: {carbon_saved:.2f} kg")
-         else:
-            print("Could not calculate the distance and emissions for the flight.")
-        
+     cur_total_emissions=0
+     new_total_emissions=0
+     cur_total_cost=0
+     new_total_cost=0
+     for flight in flights_user:
+         cur_total_cost += flight.cost
+         new_total_cost += flight.cost
+         original_distance,cur_emissions,optimized_flight=self.emissions_df.find_optimized_flight(flight)
+         cur_total_emissions+=cur_emissions
+         new_total_emissions+=optimized_flight['emissions']
+         if original_distance is None:
+             raise ValueError (f"Wrong airport code{flight.departure_airport},{flight.arrival_airport}")
+         print("Optimized flight configuration:")
+         print(f"Airplane model: {optimized_flight['airplane_model']}")
+         print(f"Class: {optimized_flight['class']}")
+         print(f"Optimized distance: {optimized_flight['distance']:.2f} miles")
+         print(f"Optimized carbon emissions: {optimized_flight['emissions']:.2f} kg")
+
+     description="Reduction in emissions of flights"
+     difficulty=5
+     decarb_step=EmissionsDecarbStep(cur_total_cost,new_total_cost, cur_total_emissions, new_total_emissions, description, difficulty)
      
+     self.steps.append(decarb_step)
     
-
-
+    
     ######
     # Test Code
     ######

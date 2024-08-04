@@ -3,13 +3,14 @@ import requests
 import pandas as pd
 
 class Flight:
-    def __init__(self, non_stop, flight_class, airplane_model, departure_airport, arrival_airport, stops=[]):
+    def __init__(self, non_stop, flight_class, airplane_model, departure_airport, arrival_airport,cost, stops=[]):
         self.non_stop = non_stop
         self.flight_class = flight_class
         self.airplane_model = airplane_model
         self.departure_airport = departure_airport
         self.arrival_airport = arrival_airport
         self.stops = stops
+        self.cost=cost
 
 class FlightEmissionsCalculator:
     KG_CONVERSION = 0.453592
@@ -129,7 +130,8 @@ class FlightEmissionsCalculator:
                     flight_class=flight_class,
                     airplane_model=model,
                     departure_airport=flight.departure_airport,
-                    arrival_airport=flight.arrival_airport
+                    arrival_airport=flight.arrival_airport,
+                    cost=flight.cost
                 )
 
                 if has_stops:
