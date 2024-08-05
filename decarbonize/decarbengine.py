@@ -116,11 +116,11 @@ class DecarbEngine:
 
 
     def run_decarb_engine(self):
-        self.run_commuting_step()
-        self.run_carpool_step()
-        self.run_flight_step()
-        self.run_return_flight_step()
-        self.run_electric_step()
+        #self.run_commuting_step()
+        #self.run_carpool_step()
+        #self.run_flight_step()
+        #self.run_return_flight_step()
+        #self.run_electric_step()
         self.create_user_flight_step()
 
         return self.steps
@@ -252,20 +252,22 @@ class DecarbEngine:
             departure_airport="SFO",
             arrival_airport="JFK",
             cost=500,
-            stops=[
-                {
-                    "departure_airport": "SFO",
-                    "arrival_airport": "LAX",
-                    "airplane_model": "Airbus A320",
-                    "class": "Economy"
-                },
-                {
-                    "departure_airport": "LAX",
-                    "arrival_airport": "JFK",
-                    "airplane_model": "Boeing 737-400",
-                    "class": "Economy"
-                }
-            ]
+            stops=[Flight(
+                non_stop=True,
+                flight_class="Economy",
+                airplane_model="Airbus A320",
+                departure_airport="SFO",
+                arrival_airport="LAX",
+                cost=250
+            ),Flight(
+                non_stop=True,
+                flight_class="Economy",
+                airplane_model="Boeing 737-400",
+                departure_airport="LAX",
+                arrival_airport="JFK",
+                cost=250
+            )
+                ]
         ),
         Flight(
             non_stop=False,
@@ -274,20 +276,22 @@ class DecarbEngine:
             departure_airport="OKC",
             arrival_airport="DCA",
             cost=1000,
-            stops=[
-                {
-                    "departure_airport": "OKC",
-                    "arrival_airport": "DFW",
-                    "airplane_model": "Airbus A320",
-                    "class": "Business"
-                },
-                {
-                    "departure_airport": "DFW",
-                    "arrival_airport": "DCA",
-                    "airplane_model": "Boeing 737-400",
-                    "class": "Premium Economy"
-                }
-            ]
+            stops=[Flight(
+                non_stop=True,
+                flight_class="Business",
+                airplane_model="Airbus A320",
+                departure_airport="OKC",
+                arrival_airport="DFW",
+                cost=500
+            ),Flight(
+                non_stop=True,
+                flight_class="Premium Economy",
+                airplane_model="Boeing 737-400",
+                departure_airport="DFW",
+                arrival_airport="DCA",
+                cost=500
+            )
+                ]
         )
     ]
      cur_total_emissions=0
@@ -302,11 +306,6 @@ class DecarbEngine:
          new_total_emissions+=optimized_flight['emissions']
          if original_distance is None:
              raise ValueError (f"Wrong airport code{flight.departure_airport},{flight.arrival_airport}")
-         print("Optimized flight configuration:")
-         print(f"Airplane model: {optimized_flight['airplane_model']}")
-         print(f"Class: {optimized_flight['class']}")
-         print(f"Optimized distance: {optimized_flight['distance']:.2f} miles")
-         print(f"Optimized carbon emissions: {optimized_flight['emissions']:.2f} kg")
 
      description="Reduction in emissions of flights"
      difficulty=5
