@@ -128,8 +128,8 @@ class DecarbEngine:
         self.steps.append(flight_step)
 
     def run_return_flight_step(self):
-        # return flight
-        return_flight = self.get_return_flight_options()
+        # Assumes that run_flight_step has been called first.
+        return_flight = self.flight_analyzer.get_return_flight_options()
         return_flight_step = self.create_flight_step(return_flight, 3)
         self.steps.append(return_flight_step)
         
@@ -147,7 +147,6 @@ class DecarbEngine:
     def run_decarb_engine(self):
         #self.run_commuting_step()
         #self.run_carpool_step()
-        #self.run_return_flight_step()
         self.run_electric_step()
         #self.create_user_flight_step()
 
@@ -201,6 +200,7 @@ class DecarbEngine:
         departure_date = "2024-08-20"
         return_date = "2024-08-24"
         decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
+        decarb_engine.run_return_flight_step()
 
     def create_customer_decarb_goals():
         customer_id = 10 

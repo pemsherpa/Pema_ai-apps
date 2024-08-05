@@ -10,7 +10,6 @@ class DecarbStepType(str,Enum):
     ELECTRICITY = "ELECTRICITY"
     CRU = "CRU"
 
-
     def __str__(self) -> str:
         return str.__str__(self)
 
