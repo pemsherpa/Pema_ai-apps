@@ -156,15 +156,13 @@ class DecarbEngine:
             savings += step.compute_emissions_savings()
         return savings
     
-
-
     def run_decarb_engine(self):
-        self.run_commuting_step()
-        self.run_carpool_step()
-        self.run_flight_step()
-        self.run_return_flight_step()
+        #self.run_commuting_step()
+        #self.run_carpool_step()
+        #self.run_flight_step()
+        #self.run_return_flight_step()
         #self.run_electric_step()
-        #self.create_user_flight_step()
+        self.create_user_flight_step()
 
         return self.steps
         
@@ -234,49 +232,48 @@ class DecarbEngine:
         
         difficulties = [step.difficulty for step in decarb_steps]
         savings = [step.compute_savings() for step in decarb_steps]
-        combined_series = pd.concat(savings[:2])
-
-# Append the integers to the combined Series
-        combined_list = combined_series.tolist() + savings[2:]
-
-# Compute the mean
-        mean_value = sum(combined_list) / len(combined_list)
-
-        #print("Mean value:", mean_value)
-
         emissions = [step.compute_emissions_savings() for step in decarb_steps]
 
         mean_diff = np.mean(difficulties)
-        std_diff = np.std(difficulties)
-
-        mean_savings = mean_value
-        std_savings = np.std(combined_list)
+        mean_savings = np.mean(savings)
         mean_emissions = np.mean(emissions)
+
+        std_diff = np.std(difficulties)
+        std_savings = np.std(savings)
         std_emissions = np.std(emissions)
 
         total_savings = 0
         total_emission_savings = 0
+        total_zscore = 0
+
         dict_zscore = {}
         for step in decarb_steps:
-            this_savings = np.mean(step.compute_savings())
+            this_savings = step.compute_savings()
             this_emission_savings = step.compute_emissions_savings()
             total_savings += this_savings
             total_emission_savings += this_emission_savings
 
-            dict_zscore[step.step_type] = np.mean(step.compute_zscore(mean_diff, std_diff, mean_savings, std_savings, mean_emissions, std_emissions))
-            
+            this_z_score = step.compute_zscore(mean_diff, std_diff, mean_savings, std_savings, mean_emissions, std_emissions)
+            total_zscore += this_z_score
+            dict_zscore[step.step_type] = this_z_score
+
             print(step.generate_step_description())
             print(f"z-score is: {dict_zscore[step.step_type]}")
             print(f"Difficulty: {step.difficulty}")  
-            print(f"Savings: ${np.mean(this_savings)}")
+            print(f"Savings: ${this_savings}")
             print(f"Emissions Savings: {this_emission_savings} kg CO2\n")
+        
+        num_steps = len(decarb_steps)
+        if num_steps > 0:
+            dict_zscore["avg-zscore"] = total_zscore / num_steps
+        else:
+            dict_zscore["avg-zscore"] = 0
+
         #print(dict_zscore)
         print(f"Total Savings: ${total_savings}")
         print(f"Total Emissions Savings: {total_emission_savings} kg CO2\n")
-        
         #print(dict_zscore)
         #global_emission = 
-        
         
     def CRU():
         initial_per = 0.1
