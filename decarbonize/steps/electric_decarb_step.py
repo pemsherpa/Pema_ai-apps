@@ -99,7 +99,6 @@ class ElectricDecarbStep(DecarbStep):
         #print (saving)
         return saving
     
-    
     def get_current_renewable_percentage(self, UseCCA, user_zip_code):
         if UseCCA == 'Yes':
             cca_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='CCA')
@@ -162,4 +161,3 @@ class ElectricDecarbStep(DecarbStep):
         carbon_from_electric = float(self.get_carbon_from_electric(self.kwh_used))
         emissions_saved = carbon_from_electric * (1 - (new_renewable - current_renewable_percentage))
         return emissions_saved
-

@@ -1,5 +1,3 @@
-from components.electricity.current_price_calculation.current_electricity import CurrentElectricity
-from components.electricity.optimization_calculation.electricity_work import ElectricityWork
 
 class DecarbStep:
     def __init__(self, step_type, cur_cost, new_cost,cur_emissions,new_emissions,description,difficulty):
@@ -16,13 +14,20 @@ class DecarbStep:
     
     def get_new_cost(self):
         return self.new_cost
-
-    def compute_zscore(self,mean_diff, std_diff, mean_savings, std_savings, mean_emissions, std_emissions):
-        # (cost savings, carbon savings, difficulty)
-        z_difficulty = (self.difficulty - mean_diff) / std_diff
-        z_savings = (self.compute_savings() - mean_savings) / std_savings
-        z_emissions = (self.compute_emissions_savings() - mean_emissions) / std_emissions
+    
+    def compute_zscore(self,x,mean,std):
+        if std == 0:
+            return 0
+        z_score = (x - mean) / std
+        return z_score
+    
+    def compute_ranking_zscore(self,mean_diff, std_diff, mean_savings, std_savings, mean_emissions, std_emissions):
+        z_difficulty = self.compute_zscore(self.difficulty, mean_diff, std_diff)
+        z_savings = self.compute_zscore(self.compute_savings(), mean_savings, std_savings)
+        z_emissions = self.compute_zscore(self.compute_emissions_savings(), mean_emissions, std_emissions)
+        
         self.ranking_zscore = (z_difficulty + z_savings + z_emissions) / 3
+
         return self.ranking_zscore
 
     def compute_savings(self):
