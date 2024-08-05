@@ -38,6 +38,47 @@ class DecarbEngine:
         self.commuting_analyzer = BusinessCommutingAnalyzer(commuting_data, self.GOOGLE_MAPS_API_KEY, self.OIL_PRICE_API_KEY,self.firm,self.dynamic)
         self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
         self.steps = []
+    
+    def plan_emissions_reduction(self, current_emissions, reduction_target, timeframe, actions):
+      
+        target_emissions = current_emissions * (1 - reduction_target / 100)
+        annual_reduction = (current_emissions - target_emissions) / timeframe
+
+        plan = []
+        for year in range(1, timeframe + 1):
+            year_plan = {
+                'year': year,
+                'target_emissions': current_emissions - (annual_reduction * year),
+                'actions': {
+                    'Scope 1': [],
+                    'Scope 2': [],
+                    'Scope 3': []
+                }
+            }
+            for action in actions:
+                action_impact = annual_reduction / len(actions)  
+                scope = action.get('scope', 'Scope 3')  # Default to Scope 3 if not specified
+                year_plan['actions'][scope].append({
+                    'action': action['name'],
+                    'impact': action_impact
+                })
+            plan.append(year_plan)
+
+        return plan
+
+    def display_emissions_reduction_plan(self, plan):
+        """
+        Display the emissions reduction plan.
+
+        :param plan: The emissions reduction plan to display.
+        """
+        for step in plan:
+            print(f"Year {step['year']}: Target Emissions = {step['target_emissions']} metric tons")
+            for scope in ['Scope 1', 'Scope 2', 'Scope 3']:
+                print(f"  {scope}:")
+                for action in step['actions'][scope]:
+                    print(f"    Action: {action['action']} - Impact: {action['impact']} metric tons")
+
 
     def analyze_commuting_costs(self):
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
@@ -71,6 +112,8 @@ class DecarbEngine:
             difficulty=1
         )
         self.steps.append(commuting_step)
+    #def CRU(self):
+
     
     def run_carpool_step(self):
         # commuting cost for carpool
@@ -120,8 +163,8 @@ class DecarbEngine:
         self.run_carpool_step()
         self.run_flight_step()
         self.run_return_flight_step()
-        self.run_electric_step()
-        self.create_user_flight_step()
+        #self.run_electric_step()
+        #self.create_user_flight_step()
 
         return self.steps
         
@@ -230,8 +273,43 @@ class DecarbEngine:
         #print(dict_zscore)
         print(f"Total Savings: ${total_savings}")
         print(f"Total Emissions Savings: {total_emission_savings} kg CO2\n")
-        #print(dict_zscore)
         
+        #print(dict_zscore)
+        #global_emission = 
+        
+        
+    def CRU():
+        initial_per = 0.1
+        initial_cost = 22.5
+        emission = DecarbEngine.create_decarb_engine()
+        CRU_amt = initial_per*emission
+        cost = initial_cost*CRU_amt
+        leftover = emission-CRU_amt
+        return cost,leftover
+
+
+    def plan_reduction(self,current_emissions, reduction_target, timeframe):
+  
+        # Calculate the target emissions
+        target_emissions = current_emissions * (1 - reduction_target / 100)
+        annual_reduction = (current_emissions - target_emissions) / timeframe
+
+        # Generate a reduction plan
+        plan = []
+        for year in range(1, timeframe + 1):
+            year_emissions = current_emissions - (annual_reduction * year)
+            plan.append({
+                'year': year,
+                'target_emissions': year_emissions
+            })
+
+        return plan
+
+    def display_reduction_plan(self, plan):
+
+        for step in plan:
+            print(f"Year {step['year']}: Target Emissions = {step['target_emissions']} metric tons")
+
 
 
         #sorted_zscores = sorted(dict_zscore.items(), key=lambda item: item[1], reverse=True)
@@ -467,7 +545,40 @@ class DecarbEngine:
     
 def main():
     DecarbEngine.create_decarb_engine()
-    #DecarbEngine.test_decarb_engine()
+    origin = "LAX"
+    destination = "JFK"
+    departure_date = "2024-08-11"
+    return_date = "2024-08-13"
+    firm = '2107 Addison St, Berkeley, CA'
+    commuting_data = pd.DataFrame({
+        'ID': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        'method':['car','uber','car', 'car','uber','car', 'car','uber','car', 'car'],
+        'locations':['1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ', '1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ', '1122 University Ave, Berkeley, CA','2010 Fifth St, Berkeley, CA','3006 San Pablo Ave, Berkeley, CA ','3006 San Pablo Ave, Berkeley, CA ' ],
+        'frequency': [22, 20, 18, 22, 20, 18, 22, 20, 18, 20],
+        'cost_per_km':[0.1,0.2,0.3, 0.1,0.2,0.3, 0.1,0.2,0.3, .4]
+    })
+
+    df_dynamic = pd.DataFrame({
+        'method': ['bus', 'train', 'uber'],
+        'distance': [10, 10, 10],
+        'cost_per_km': [0.1, 0.2, 0.7]
+    })
+
+    weights =  DecarbWeight(0.4, 0.3, 0.2, 0.1) 
+    pre_cost = 800
+    engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,pre_cost,return_date)
+    current_emissions = 1000 
+    reduction_target = 30 
+    timeframe = 10  
+    actions = [
+        {"name": "Increase Energy Efficiency(n/a for now)", "scope": "Scope 1"},
+        {"name": "Adopt Renewable Energy(electricity)", "scope": "Scope 2"},
+        {"name": "Promote Public Transport+ Carpool", "scope": "Scope 3"}
+    ]  
+
+    plan = engine.plan_emissions_reduction(current_emissions, reduction_target, timeframe, actions)
+    engine.display_emissions_reduction_plan(plan)
+
         
 if __name__ == "__main__":
     main()
