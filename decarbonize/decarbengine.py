@@ -39,16 +39,26 @@ class DecarbEngine:
         self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
         self.steps = []
     
-    def plan_emissions_reduction(self, current_emissions, reduction_target, timeframe, actions):
+    def plan_emissions_reduction(self, current_emissions, reduction_targets, timeframe, actions):
       
-        target_emissions = current_emissions * (1 - reduction_target / 100)
-        annual_reduction = (current_emissions - target_emissions) / timeframe
+       
+        target_emissions = {
+            scope: current_emissions[scope] * (1 - reduction_targets[scope] / 100)
+            for scope in current_emissions
+        }
+        annual_reduction = {
+            scope: (current_emissions[scope] - target_emissions[scope]) / timeframe
+            for scope in current_emissions
+        }
 
         plan = []
         for year in range(1, timeframe + 1):
             year_plan = {
                 'year': year,
-                'target_emissions': current_emissions - (annual_reduction * year),
+                'target_emissions': {
+                    scope: current_emissions[scope] - (annual_reduction[scope] * year)
+                    for scope in current_emissions
+                },
                 'actions': {
                     'Scope 1': [],
                     'Scope 2': [],
@@ -56,8 +66,8 @@ class DecarbEngine:
                 }
             }
             for action in actions:
-                action_impact = annual_reduction / len(actions)  
-                scope = action.get('scope', 'Scope 3')  # Default to Scope 3 if not specified
+                scope = action.get('scope', 'Scope 3')  
+                action_impact = annual_reduction[scope] / len([a for a in actions if a['scope'] == scope])  
                 year_plan['actions'][scope].append({
                     'action': action['name'],
                     'impact': action_impact
@@ -65,7 +75,6 @@ class DecarbEngine:
             plan.append(year_plan)
 
         return plan
-
     def display_emissions_reduction_plan(self, plan):
         """
         Display the emissions reduction plan.
@@ -73,11 +82,13 @@ class DecarbEngine:
         :param plan: The emissions reduction plan to display.
         """
         for step in plan:
-            print(f"Year {step['year']}: Target Emissions = {step['target_emissions']} metric tons")
+            print(f"Year {step['year']}:")
             for scope in ['Scope 1', 'Scope 2', 'Scope 3']:
-                print(f"  {scope}:")
+                target_emissions = step['target_emissions'][scope]
+                print(f"  {scope}: Target Emissions = {target_emissions} metric tons")
                 for action in step['actions'][scope]:
                     print(f"    Action: {action['action']} - Impact: {action['impact']} metric tons")
+
 
 
     def analyze_commuting_costs(self):
@@ -119,6 +130,19 @@ class DecarbEngine:
         # commuting cost for carpool
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
         carpool_savings,carpool_saving_emission = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,2,30)
+        print(f'init commuting_costs is {commuting_costs}')
+        print(f'init commuting_emi is {commuting_emissions}')
+        print(f'init carpool commuting savings is {carpool_savings}')
+
+        print(f'new carpool commuting savings is {carpool_saving_emission}')
+
+     
+
+        
+
+
+
+        
 
         commuting_step = DecarbStep(
             step_type=DecarbStepType.COMMUTING_CARPOOL,
@@ -159,8 +183,8 @@ class DecarbEngine:
 
 
     def run_decarb_engine(self):
-        self.run_commuting_step()
-        self.run_carpool_step()
+        #self.run_commuting_step()
+        #self.run_carpool_step()
         self.run_flight_step()
         self.run_return_flight_step()
         #self.run_electric_step()
@@ -567,8 +591,16 @@ def main():
     weights =  DecarbWeight(0.4, 0.3, 0.2, 0.1) 
     pre_cost = 800
     engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,pre_cost,return_date)
-    current_emissions = 1000 
-    reduction_target = 30 
+    current_emissions = {
+        'Scope 1': 400, 
+        'Scope 2': 300,
+        'Scope 3': 300
+    }
+    reduction_targets = {
+        'Scope 1': 20,  
+        'Scope 2': 30,
+        'Scope 3': 25
+    }
     timeframe = 10  
     actions = [
         {"name": "Increase Energy Efficiency(n/a for now)", "scope": "Scope 1"},
@@ -576,10 +608,11 @@ def main():
         {"name": "Promote Public Transport+ Carpool", "scope": "Scope 3"}
     ]  
 
-    plan = engine.plan_emissions_reduction(current_emissions, reduction_target, timeframe, actions)
+    plan = engine.plan_emissions_reduction(current_emissions, reduction_targets, timeframe, actions)
     engine.display_emissions_reduction_plan(plan)
 
         
 if __name__ == "__main__":
+
     main()
         
