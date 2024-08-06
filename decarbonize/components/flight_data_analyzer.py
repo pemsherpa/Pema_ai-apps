@@ -2,8 +2,8 @@ import requests
 import pandas as pd
 from datetime import datetime
 
-ONE_WAY_CODE = "2"
 ROUNDTRIP_CODE = "1"
+ONE_WAY_CODE = "2"
 
 class FlightDataAnalyzer:    
 
@@ -17,7 +17,6 @@ class FlightDataAnalyzer:
         self.flight_url = "https://serpapi.com/search"
 
         self.flights_economy = self.search_flights_serpapi(self.origin, self.destination, self.departure_date, '1', self.return_date)
-        #print(self.flights_economy)
         self.flights_premium_economy = self.search_flights_serpapi(self.origin, self.destination, self.departure_date, '2', self.return_date)
         self.flights_business = self.search_flights_serpapi(self.origin, self.destination, self.departure_date, '3', self.return_date)
         self.flights_first_class = self.flights_first_class = self.search_flights_serpapi(self.origin, self.destination, self.departure_date, '4', self.return_date)
@@ -30,8 +29,6 @@ class FlightDataAnalyzer:
         self.df_all_flights = pd.concat([self.df_economy, self.df_business, self.df_first_class, self.df_premium_economy], ignore_index=True)
         self.df_all_flights['Departure Time'] = pd.to_datetime(self.df_all_flights['Departure Time'])
         self.df_all_flights['Arrival Time'] = pd.to_datetime(self.df_all_flights['Arrival Time'])
-        #print(self.df_all_flights['Price'])
-
     
     def get_optimal_flight(self, df_all_flights):
         stops_std = df_all_flights['Stops'].std()
@@ -65,20 +62,23 @@ class FlightDataAnalyzer:
 
         df_all_flights['Rank'] = df_all_flights['Weighted Score'].rank()
         df_best_trade_off_flights = df_all_flights.sort_values(by='Rank').head(1)
-        #print(df_best_trade_off_flights)
         
         return df_best_trade_off_flights
+    
+    def analyze_flight_costs(self):
+        return self.get_optimal_flight(self.df_all_flights)
+    def get_return_flight_options(self):
+        return self.get_return_tickets()
+    def compare_flight_stops(self):
+        return self.compare_stops()
+    def non_economy_cheaper_than_economy(self):
+        return self.non_economy_cheaper_than_economy()
+    def get_price_insights(self):
+        return self.price_insights()
 
     def get_return_tickets(self):
-        #print(self.get_all_flights())
         temp  = self.get_optimal_flight(self.df_all_flights)
-        #print(temp)
-
-
-
         self.dep_token = temp['token'].iloc[0]
-        #print(temp)
-        #print(self.dep_token)
 
         return_flights_economy = self.search_flights_serpapi(self.origin, self.destination, self.departure_date, '1', self.return_date, token=self.dep_token)
         return_flights_premium_economy = self.search_flights_serpapi(self.origin, self.destination, self.departure_date, '2', self.return_date, token=self.dep_token)
@@ -95,8 +95,7 @@ class FlightDataAnalyzer:
 
     def create_dataframes_serpapi(self, flights):
         columns = ['Carrier', 'Flight Number', 'Departure Airport', 'Departure Time', 'Arrival Airport', 'Arrival Time', 'Duration',
-                    'Carbon Emissions', 'Travel Class',
-                   'Price', 'Stops', 'Layovers', 'Total Duration','token']
+                    'Carbon Emissions', 'Travel Class', 'Price', 'Stops', 'Layovers', 'Total Duration','token']
         flight_data = []
         seen_flights = set()
 
@@ -107,10 +106,7 @@ class FlightDataAnalyzer:
                 layovers = flight.get('layovers', 'N/A')
                 total_duration = flight['total_duration']
                 #aircraft = flight['airplane']
-                #print(flight)
                 if 'departure_token' in flight:
-                    #print(1)
-
                     token = flight['departure_token']
                 else:
                     token = 'N/A'
@@ -136,11 +132,8 @@ class FlightDataAnalyzer:
                         ])
 
         if 'best_flights' in flights:
-            
             extract_flight_data(flights['best_flights'])
-
         if 'other_flights' in flights:
-            
             extract_flight_data(flights['other_flights'])
 
         df_flights = pd.DataFrame(flight_data, columns=columns)

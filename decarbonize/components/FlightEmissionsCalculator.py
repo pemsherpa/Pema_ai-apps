@@ -66,8 +66,8 @@ class FlightEmissionsCalculator:
             total_distance = 0
             stops = flight.stops
             for leg in stops:
-                lat1, lon1 = self.get_coordinates(leg["departure_airport"])
-                lat2, lon2 = self.get_coordinates(leg["arrival_airport"])
+                lat1, lon1 = self.get_coordinates(leg.departure_airport)
+                lat2, lon2 = self.get_coordinates(leg.arrival_airport)
                 if lat1 and lon1 and lat2 and lon2:
                     leg_distance = self.get_distance_haversine_formula(lat1, lon1, lat2, lon2)
                     total_distance += leg_distance
@@ -89,8 +89,8 @@ class FlightEmissionsCalculator:
             airplane_model = flight.airplane_model
             flight_class = flight.flight_class
          else:
-            airplane_model = flight.stops[0]["airplane_model"]
-            flight_class = flight.stops[0]["class"]
+            airplane_model = flight.stops[0].airplane_model
+            flight_class = flight.stops[0].flight_class
 
          model_emission_rate = self.emissions_dict.get(airplane_model, 0)
 
