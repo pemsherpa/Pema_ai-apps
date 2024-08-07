@@ -1,4 +1,7 @@
 
+from steps.decarb_step_type import DecarbStepType
+
+
 class DecarbStep:
     def __init__(self, step_type, cur_cost, new_cost,cur_emissions,new_emissions,description,difficulty):
         self.step_type = step_type
@@ -38,3 +41,8 @@ class DecarbStep:
 
     def generate_step_description(self):
         return f"Step {self.step_type.value}: {self.description}"
+
+
+
+
+    
