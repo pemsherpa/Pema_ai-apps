@@ -171,13 +171,9 @@ class DecarbEngine:
     def run_decarb_engine(self):
         #self.run_commuting_step()
         #self.run_carpool_step()
-<<<<<<< HEAD
         self.run_flight_step()
         self.run_return_flight_step()
         #self.run_electric_step()
-=======
-        self.run_electric_step()
->>>>>>> ef480c78e6ec2dfd24640fcdb36f13b7c4ea1d4e
         #self.create_user_flight_step()
 
         return self.steps
@@ -562,24 +558,10 @@ def main():
     decarb_goals = DecarbEngine.create_customer_decarb_goals()
     weights = DecarbWeight(0.4, 0.3, 0.2, 0.1) 
     pre_cost = 800
-<<<<<<< HEAD
-    engine = DecarbEngine(commuting_data, df_dynamic,origin, destination, departure_date, firm, weights,pre_cost,return_date)
-    current_emissions = {
-        'Scope 1': 400, 
-        'Scope 2': 300,
-        'Scope 3': 300
-    }
-    reduction_targets = {
-        'Scope 1': 20,  
-        'Scope 2': 30,
-        'Scope 3': 25
-    }
-=======
     engine = DecarbEngine(commuting_data, df_dynamic, firm, weights,pre_cost, decarb_goals)
     engine.run_flight_analyzer()
     current_emissions = 1000 
     reduction_target = 30 
->>>>>>> ef480c78e6ec2dfd24640fcdb36f13b7c4ea1d4e
     timeframe = 10  
     actions = [
         {"name": "Increase Energy Efficiency(n/a for now)", "scope": "Scope 1"},
@@ -587,7 +569,7 @@ def main():
         {"name": "Promote Public Transport+ Carpool", "scope": "Scope 3"}
     ]  
 
-    plan = engine.plan_emissions_reduction(current_emissions, reduction_targets, timeframe, actions)
+    plan = engine.plan_emissions_reduction(current_emissions, decarb_goals, timeframe, actions)
     engine.display_emissions_reduction_plan(plan)
 
 if __name__ == "__main__":
