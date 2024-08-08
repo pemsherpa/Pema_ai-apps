@@ -28,7 +28,11 @@ from steps.decarb_emissions_step import EmissionsDecarbStep
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
+<<<<<<< HEAD
         self.FLIGHT_API_KEY = '4a5943954857866eb389c4790010ddd81a6083280e490d110057457f379c0e2b'
+=======
+        self.FLIGHT_API_KEY = '006946305a3f90e0e828df3343e8cb95dbf024a1c528aa880c32ac4dfbb7ecf4'
+>>>>>>> 371e224964c72f0825f8548fab52023f911b7a48
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.COORDINATES_API_KEY = "0c608aea6eb74a9da052e7a83df8c693"
         self.firm = firm
@@ -41,9 +45,7 @@ class DecarbEngine:
         self.commuting_analyzer = BusinessCommutingAnalyzer(commuting_data, self.GOOGLE_MAPS_API_KEY, self.OIL_PRICE_API_KEY,self.firm,self.dynamic)
         self.steps = []
     
-    def plan_emissions_reduction(self, current_emissions, reduction_targets, timeframe, actions):
-      
-       
+    def plan_emissions_reduction(self, current_emissions, reduction_targets, timeframe, actions):       
         target_emissions = {
             scope: current_emissions[scope] * (1 - reduction_targets[scope] / 100)
             for scope in current_emissions
@@ -80,7 +82,6 @@ class DecarbEngine:
     def display_emissions_reduction_plan(self, plan):
         """
         Display the emissions reduction plan.
-
         :param plan: The emissions reduction plan to display.
         """
         for step in plan:
@@ -90,8 +91,6 @@ class DecarbEngine:
                 print(f"  {scope}: Target Emissions = {target_emissions} metric tons")
                 for action in step['actions'][scope]:
                     print(f"    Action: {action['action']} - Impact: {action['impact']} metric tons")
-
-
 
     def analyze_commuting_costs(self):
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
@@ -118,16 +117,7 @@ class DecarbEngine:
         print(f'init commuting_costs is {commuting_costs}')
         print(f'init commuting_emi is {commuting_emissions}')
         print(f'init carpool commuting savings is {carpool_savings}')
-
         print(f'new carpool commuting savings is {carpool_saving_emission}')
-
-     
-
-        
-
-
-
-        
 
         commuting_step = DecarbStep(
             step_type=DecarbStepType.COMMUTING_CARPOOL,
@@ -181,9 +171,14 @@ class DecarbEngine:
         destination = "JFK"
         departure_date = "2024-08-20"
         return_date = "2024-08-24"
+<<<<<<< HEAD
 
         DecarbEngine.run_flight_step(self,origin, destination, departure_date, return_date)
         
+=======
+    
+        self.run_flight_step(origin, destination, departure_date, return_date)
+>>>>>>> 371e224964c72f0825f8548fab52023f911b7a48
         self.run_return_flight_step()
         #self.run_electric_step()
         #self.create_user_flight_step()
@@ -447,7 +442,6 @@ class DecarbEngine:
         carbon_optimise=0
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcu",cost_optimise,carbon_optimise)
         
-    
     def test_electric_smb_cca(self):
         print("test_electric_smb_cca")
         user_zip_code = 94706
@@ -545,8 +539,6 @@ class DecarbEngine:
         difficulty = 2
         ranking_zscore = 10
         user_current_company = "PG&E"
-        user_cost_weight = 1
-        user_renewable_weight = 0
         user_electricity_bill_season = "Summer"
         user_B1STB_highest_demand_15mins = 9
         user_B1STU_highest_demand_15mins = 9
@@ -562,7 +554,7 @@ class DecarbEngine:
             usage_data = self.create_smb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_B1STB_highest_demand_15mins,kwh_used)
         
         electric_step = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
-                                user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise) 
+                                user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise) 
 
         return electric_step
     

@@ -25,6 +25,7 @@ class DecarbCustomerGoals():
         self.scope2_target = scope2_target
         self.scope3_target = scope3_target
 
+<<<<<<< HEAD
     def create_yearly_goals(self):
         yearly_goals = []
         current_year = self.year
@@ -46,3 +47,7 @@ class DecarbCustomerGoals():
 
     
 
+=======
+    #def create_yearly_goals(self):
+        # every year has scope 1,2,3. 
+>>>>>>> 371e224964c72f0825f8548fab52023f911b7a48
