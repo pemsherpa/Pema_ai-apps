@@ -171,9 +171,9 @@ class DecarbEngine:
     def run_decarb_engine(self):
         #self.run_commuting_step()
         #self.run_carpool_step()
-        #self.run_flight_step()
-        #self.run_return_flight_step()
-        self.run_electric_step()
+        self.run_flight_step()
+        self.run_return_flight_step()
+        #self.run_electric_step()
         #self.create_user_flight_step()
 
         return self.steps
@@ -586,8 +586,8 @@ def main():
         {"name": "Promote Public Transport+ Carpool", "scope": "Scope 3"}
     ]  
 
-    #plan = engine.plan_emissions_reduction(current_emissions, reduction_targets, timeframe, actions)
-    #engine.display_emissions_reduction_plan(plan)
+    plan = engine.plan_emissions_reduction(current_emissions, decarb_goals, timeframe, actions)
+    engine.display_emissions_reduction_plan(plan)
 
 if __name__ == "__main__":
 

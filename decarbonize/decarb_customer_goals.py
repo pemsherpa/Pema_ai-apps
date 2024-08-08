@@ -4,7 +4,8 @@ from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
 
 class DecarbCustomerGoals():
-    def __init__(self, customer_id, year, scope1_emissions, scope2_emissions, scope3_emissions, scope1_target, scope2_target, scope3_target):
+    def __init__(self, timeframe,customer_id, year, scope1_emissions, scope2_emissions, scope3_emissions, scope1_target, scope2_target, scope3_target):
+        self.timeframe = timeframe
         self.customer_id = customer_id
         self.year = year
         self.scope1_emissions = scope1_emissions
@@ -21,4 +22,9 @@ class DecarbCustomerGoals():
         self.scope1_target = scope1_target
         self.scope2_target = scope2_target
         self.scope3_target = scope3_target
+
+    def create_yearly_goals(self):
+        # every year has scope 1,2,3. 
+
+    
 
