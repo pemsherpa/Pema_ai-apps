@@ -33,7 +33,7 @@ class BusinessCommutingAnalyzer:
     
     def calculate_current_costs_and_emissions(self):
         #self.commuting_data['distance'] = self.commuting_data['coords'].apply(lambda coord: geodesic(self.firm_location, coord).kilometers)   
-        total_cost = self.commuting_data.apply(lambda row: row['distance'] * row['frequency'] * row['cost_per_km'], axis=1)
+        total_cost = self.commuting_data.apply(lambda row: row['distance'] * row['frequency'] * row['cost_per_km'], axis=1).sum()
         self.commuting_data['emission'] = self.commuting_data['distance'] * 0.3 * self.commuting_data['frequency']
         total_emission = self.commuting_data['emission'].sum()
 

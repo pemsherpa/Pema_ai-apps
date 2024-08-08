@@ -9,6 +9,7 @@ Original file is located at
 from decarb_customer_goals import DecarbCustomerGoals
 import numpy as np
 from components.biz_commute_analyzer import BusinessCommutingAnalyzer
+from steps.decarb_step_cru import Decarb_CRU
 from steps.electric_decarb_step import ElectricDecarbStep
 from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector_simplified
@@ -27,7 +28,7 @@ from steps.decarb_emissions_step import EmissionsDecarbStep
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
-        self.FLIGHT_API_KEY = '3d9d866dbc47001e268d6b82890721368c0a0d1a9fd4d9ca8eaf4f5e4a8c5d23'
+        self.FLIGHT_API_KEY = '4a5943954857866eb389c4790010ddd81a6083280e490d110057457f379c0e2b'
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.COORDINATES_API_KEY = "0c608aea6eb74a9da052e7a83df8c693"
         self.firm = firm
@@ -156,6 +157,11 @@ class DecarbEngine:
         return_flight = self.flight_analyzer.get_return_flight_options()
         return_flight_step = self.create_flight_step(return_flight, 3)
         self.steps.append(return_flight_step)
+    def run_CRU_step(self):
+        # CRU Step
+    
+        cru_step = self.create_CRU_step()
+        self.steps.append(cru_step)
         
     def run_electric_step(self):
         # Electricity Step
@@ -171,7 +177,13 @@ class DecarbEngine:
     def run_decarb_engine(self):
         #self.run_commuting_step()
         #self.run_carpool_step()
-        self.run_flight_step()
+        origin = "LAX"
+        destination = "JFK"
+        departure_date = "2024-08-20"
+        return_date = "2024-08-24"
+
+        DecarbEngine.run_flight_step(self,origin, destination, departure_date, return_date)
+        
         self.run_return_flight_step()
         #self.run_electric_step()
         #self.create_user_flight_step()
@@ -237,7 +249,8 @@ class DecarbEngine:
         scope1_target = .55 
         scope2_target = .75 
         scope3_target = .25
-        decarb_goals = DecarbCustomerGoals(customer_id, year, scope1_emissions, scope2_emissions, scope3_emissions, scope1_target, scope2_target, scope3_target)
+        time_frame = 5
+        decarb_goals = DecarbCustomerGoals(time_frame,customer_id, year, scope1_emissions, scope2_emissions, scope3_emissions, scope1_target, scope2_target, scope3_target)
         return decarb_goals
     
     def create_decarb_engine():
@@ -294,14 +307,22 @@ class DecarbEngine:
         print(f"Total Savings: ${total_savings}")
         print(f"Total Emissions Savings: {total_emission_savings} kg CO2\n")
         
-    def create_CRU_step():
+    def create_CRU_step(self):
         initial_per = 0.1
         initial_cost = 22.5
-        emission = DecarbEngine.create_decarb_engine()
+        emission = 20000
         CRU_amt = initial_per*emission
         cost = initial_cost*CRU_amt
-        leftover = emission-CRU_amt
-        return cost,leftover
+        CRU_step = Decarb_CRU(
+            cur_cost=0, 
+            new_cost=cost,
+            cur_emissions=emission, # fake
+            new_emissions=emission-CRU_amt,
+            description="Analyze CRU costs and emissions",
+            difficulty=1,
+            timeframe=5
+        )
+        return CRU_step
 
     def plan_reduction(self,current_emissions, reduction_target, timeframe):
         # Calculate the target emissions
@@ -577,17 +598,8 @@ def main():
     pre_cost = 800
     engine = DecarbEngine(commuting_data, df_dynamic, firm, weights,pre_cost, decarb_goals)
     engine.run_flight_analyzer()
-    current_emissions = 1000 
-    reduction_target = 30 
-    timeframe = 10  
-    actions = [
-        {"name": "Increase Energy Efficiency(n/a for now)", "scope": "Scope 1"},
-        {"name": "Adopt Renewable Energy(electricity)", "scope": "Scope 2"},
-        {"name": "Promote Public Transport+ Carpool", "scope": "Scope 3"}
-    ]  
-
-    plan = engine.plan_emissions_reduction(current_emissions, decarb_goals, timeframe, actions)
-    engine.display_emissions_reduction_plan(plan)
+    
+ 
 
 if __name__ == "__main__":
 
