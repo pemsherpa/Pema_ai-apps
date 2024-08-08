@@ -41,53 +41,6 @@ class DecarbEngine:
         self.emissions_df = FlightEmissionsCalculator("Emissions_Flights.xlsx", self.COORDINATES_API_KEY)
         self.commuting_analyzer = BusinessCommutingAnalyzer(commuting_data, self.GOOGLE_MAPS_API_KEY, self.OIL_PRICE_API_KEY,self.firm,self.dynamic)
         self.steps = []
-    
-    def plan_emissions_reduction(self, current_emissions, reduction_targets, timeframe, actions):       
-        target_emissions = {
-            scope: current_emissions[scope] * (1 - reduction_targets[scope] / 100)
-            for scope in current_emissions
-        }
-        annual_reduction = {
-            scope: (current_emissions[scope] - target_emissions[scope]) / timeframe
-            for scope in current_emissions
-        }
-
-        plan = []
-        for year in range(1, timeframe + 1):
-            year_plan = {
-                'year': year,
-                'target_emissions': {
-                    scope: current_emissions[scope] - (annual_reduction[scope] * year)
-                    for scope in current_emissions
-                },
-                'actions': {
-                    'Scope 1': [],
-                    'Scope 2': [],
-                    'Scope 3': []
-                }
-            }
-            for action in actions:
-                scope = action.get('scope', 'Scope 3')  
-                action_impact = annual_reduction[scope] / len([a for a in actions if a['scope'] == scope])  
-                year_plan['actions'][scope].append({
-                    'action': action['name'],
-                    'impact': action_impact
-                })
-            plan.append(year_plan)
-
-        return plan
-    def display_emissions_reduction_plan(self, plan):
-        """
-        Display the emissions reduction plan.
-        :param plan: The emissions reduction plan to display.
-        """
-        for step in plan:
-            print(f"Year {step['year']}:")
-            for scope in ['Scope 1', 'Scope 2', 'Scope 3']:
-                target_emissions = step['target_emissions'][scope]
-                print(f"  {scope}: Target Emissions = {target_emissions} metric tons")
-                for action in step['actions'][scope]:
-                    print(f"    Action: {action['action']} - Impact: {action['impact']} metric tons")
 
     def analyze_commuting_costs(self):
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
@@ -168,7 +121,6 @@ class DecarbEngine:
         destination = "JFK"
         departure_date = "2024-08-20"
         return_date = "2024-08-24"
-        #DecarbEngine.run_flight_step(self,origin, destination, departure_date, return_date)
         self.run_flight_step(origin, destination, departure_date, return_date)
         self.run_return_flight_step()
         #self.run_electric_step()
