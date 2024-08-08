@@ -173,8 +173,6 @@ class DecarbEngine:
         decarb_engine.run_electric_tests()
         decarb_engine.run_flight_analyzer()
         
-
-
     def create_customer_decarb_goals():
         customer_id = 10 
         year = 2024 
@@ -514,14 +512,7 @@ class DecarbEngine:
     
 def main():
     DecarbEngine.create_decarb_engine()
-    firm = '2107 Addison St, Berkeley, CA'
-    commuting_data = DecarbEngine.create_commuting_test_df()
-    df_dynamic = DecarbEngine.create_dynamic_test_df()
-    decarb_goals = DecarbEngine.create_customer_decarb_goals()
-    weights = DecarbWeight(0.4, 0.3, 0.2, 0.1) 
-    pre_cost = 800
-    engine = DecarbEngine(commuting_data, df_dynamic, firm, weights,pre_cost, decarb_goals)
-    engine.run_flight_analyzer()
+    DecarbEngine.test_decarb_engine()
     
  
 if __name__ == "__main__":
