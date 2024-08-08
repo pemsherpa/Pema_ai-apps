@@ -28,11 +28,8 @@ from steps.decarb_emissions_step import EmissionsDecarbStep
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
-<<<<<<< HEAD
-        self.FLIGHT_API_KEY = '4a5943954857866eb389c4790010ddd81a6083280e490d110057457f379c0e2b'
-=======
+        #self.FLIGHT_API_KEY = '4a5943954857866eb389c4790010ddd81a6083280e490d110057457f379c0e2b'
         self.FLIGHT_API_KEY = '006946305a3f90e0e828df3343e8cb95dbf024a1c528aa880c32ac4dfbb7ecf4'
->>>>>>> 371e224964c72f0825f8548fab52023f911b7a48
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.COORDINATES_API_KEY = "0c608aea6eb74a9da052e7a83df8c693"
         self.firm = firm
@@ -171,14 +168,8 @@ class DecarbEngine:
         destination = "JFK"
         departure_date = "2024-08-20"
         return_date = "2024-08-24"
-<<<<<<< HEAD
-
-        DecarbEngine.run_flight_step(self,origin, destination, departure_date, return_date)
-        
-=======
-    
+        #DecarbEngine.run_flight_step(self,origin, destination, departure_date, return_date)
         self.run_flight_step(origin, destination, departure_date, return_date)
->>>>>>> 371e224964c72f0825f8548fab52023f911b7a48
         self.run_return_flight_step()
         #self.run_electric_step()
         #self.create_user_flight_step()
@@ -592,8 +583,5 @@ def main():
     engine.run_flight_analyzer()
     
  
-
 if __name__ == "__main__":
-
     main()
-        
