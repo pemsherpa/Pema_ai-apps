@@ -42,6 +42,3 @@ class DecarbCustomerGoals():
             current_year += 1
 
         return yearly_goals
-    
-    def create_quarterly_goals(self):
-        pass
