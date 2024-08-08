@@ -105,7 +105,7 @@ class DecarbEngine:
         
     def run_electric_step(self):
         # Electricity Step
-        electric_step = self.test_electric_lcu_cca()
+        electric_step = self.test_electric_lcu_cca(1,0)
         self.steps.append(electric_step)
 
     def get_step_savings(self):
@@ -121,10 +121,10 @@ class DecarbEngine:
         destination = "JFK"
         departure_date = "2024-08-20"
         return_date = "2024-08-24"
-        self.run_flight_step(origin, destination, departure_date, return_date)
-        self.run_return_flight_step()
-        #self.run_electric_step()
-        #self.create_user_flight_step()
+        #self.run_flight_step(origin, destination, departure_date, return_date)
+        #self.run_return_flight_step()
+        self.run_electric_step()
+        self.create_user_flight_step()
 
         return self.steps
         
@@ -364,16 +364,23 @@ class DecarbEngine:
     ######
     
     def run_electric_tests(self):
-        self.test_electric_lcb_cca()
-        self.test_electric_lcu_cca()
-        self.test_electric_smb_cca()
-        self.test_electric_smu_cca()
-        self.test_electric_lcb()
-        self.test_electric_lcu()
-        self.test_electric_smb()
-        self.test_electric_smu()
+        cost_optimise=1
+        carbon_optimise=0
+        #cost_optimise=0.5
+        #carbon_optimise=0.5
+        #cost_optimise=0
+        #carbon_optimise=1
+    
+        self.test_electric_lcb_cca(cost_optimise, carbon_optimise)
+        self.test_electric_lcu_cca(cost_optimise, carbon_optimise)
+        self.test_electric_smb_cca(cost_optimise, carbon_optimise)
+        self.test_electric_smu_cca(cost_optimise, carbon_optimise)
+        self.test_electric_lcb(cost_optimise, carbon_optimise)
+        self.test_electric_lcu(cost_optimise, carbon_optimise)
+        self.test_electric_smb(cost_optimise, carbon_optimise)
+        self.test_electric_smu(cost_optimise, carbon_optimise)
 
-    def test_electric_lcu_cca(self):
+    def test_electric_lcu_cca(self, cost_optimise, carbon_optimise):
         print("test_electric_lcu_cca")
         user_zip_code = 94706
         user_bundled = 'No'
@@ -381,11 +388,10 @@ class DecarbEngine:
         user_current_plan ='B-19_SV'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        cost_optimise=1
-        carbon_optimise=0
+
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcu",cost_optimise,carbon_optimise)
         
-    def test_electric_smb_cca(self):
+    def test_electric_smb_cca(self, cost_optimise, carbon_optimise):
         print("test_electric_smb_cca")
         user_zip_code = 94706
         user_bundled = 'Yes'
@@ -393,11 +399,9 @@ class DecarbEngine:
         user_current_plan ='B-10_S'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        cost_optimise=0.5
-        carbon_optimise=0.5
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smb",cost_optimise,carbon_optimise)
     
-    def test_electric_smu_cca(self):
+    def test_electric_smu_cca(self, cost_optimise, carbon_optimise):
         print("test_electric_smu_cca")
         user_zip_code = 94706
         user_bundled = 'No'
@@ -405,11 +409,9 @@ class DecarbEngine:
         user_current_plan ='B-10_S'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        cost_optimise=1
-        carbon_optimise=0
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smu",cost_optimise,carbon_optimise)
     
-    def test_electric_lcb_cca(self):
+    def test_electric_lcb_cca(self, cost_optimise, carbon_optimise):
         print("test_electric_lcb_cca")
         user_zip_code = 94706
         user_bundled = 'Yes'
@@ -417,11 +419,9 @@ class DecarbEngine:
         user_current_plan ='B-19_SV'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        cost_optimise=0
-        carbon_optimise=1
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcb",cost_optimise,carbon_optimise)
     
-    def test_electric_lcb(self):
+    def test_electric_lcb(self, cost_optimise, carbon_optimise):
         print("test_electric_lcb")
         user_zip_code = 95948
         user_bundled = 'Yes'
@@ -429,11 +429,9 @@ class DecarbEngine:
         user_current_plan ='B-20_TV'
         UseCCA = 'No'
         HasCCA = 'No'
-        cost_optimise=0.5
-        carbon_optimise=0.5
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcb",cost_optimise,carbon_optimise)
     
-    def test_electric_lcu(self):
+    def test_electric_lcu(self, cost_optimise, carbon_optimise):
         print("test_electric_lcu")
         user_zip_code = 95948
         user_bundled = 'No'
@@ -441,11 +439,9 @@ class DecarbEngine:
         user_current_plan ='B-19_TV'
         UseCCA = 'No'
         HasCCA = 'No'
-        cost_optimise=0
-        carbon_optimise=1
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcu",cost_optimise,carbon_optimise)
     
-    def test_electric_smb(self):
+    def test_electric_smb(self, cost_optimise, carbon_optimise):
         print("test_electric_smb")
         user_zip_code = 95948
         user_bundled = 'Yes'
@@ -453,11 +449,9 @@ class DecarbEngine:
         user_current_plan ='B-6'
         UseCCA = 'No'
         HasCCA = 'No'
-        cost_optimise=1
-        carbon_optimise=0
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smb",cost_optimise,carbon_optimise)
     
-    def test_electric_smu(self):
+    def test_electric_smu(self, cost_optimise, carbon_optimise):
         print("test_electric_smu")
         user_zip_code = 95948
         user_bundled = 'No'
@@ -465,8 +459,6 @@ class DecarbEngine:
         user_current_plan ='B-10_SV'
         UseCCA = 'No'
         HasCCA = 'No'
-        cost_optimise=1
-        carbon_optimise=0
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smu",cost_optimise,carbon_optimise)
 
     def test_electric_step(self, user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, usage_type,cost_optimise,carbon_optimise):
