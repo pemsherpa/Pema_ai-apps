@@ -23,7 +23,7 @@ import pandas as pd
 from steps.flight_decarb_step import FlightDecarbStep
 from components.FlightEmissionsCalculator import FlightEmissionsCalculator
 from components.FlightEmissionsCalculator import Flight
-from steps.decarb_emissions_step import EmissionsDecarbStep
+from steps.decarb_emissions_step import FlightOptimizerDecarbStep
 
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
@@ -115,19 +115,22 @@ class DecarbEngine:
         return savings
     
     def run_decarb_engine(self):
-        #self.run_commuting_step()
-        #self.run_carpool_step()
+        self.run_commuting_step()
+        self.run_carpool_step()
+        self.run_electric_step()
+        self.run_flight_optimizer_step()
+        self.run_CRU_step()
+
+        return self.steps
+    
+    def run_flight_analyzer(decarb_engine):
         origin = "LAX"
         destination = "JFK"
         departure_date = "2024-08-20"
         return_date = "2024-08-24"
-        #self.run_flight_step(origin, destination, departure_date, return_date)
-        #self.run_return_flight_step()
-        self.run_electric_step()
-        self.create_user_flight_step()
+        decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
+        decarb_engine.run_return_flight_step()
 
-        return self.steps
-        
     def create_flight_step(self, return_flight, difficulty):
         return_flight_savings = return_flight['Price'].iloc[0]
         return_flight_emissions = return_flight['Carbon Emissions'].iloc[0]
@@ -170,13 +173,7 @@ class DecarbEngine:
         decarb_engine.run_electric_tests()
         decarb_engine.run_flight_analyzer()
         
-    def run_flight_analyzer(decarb_engine):
-        origin = "LAX"
-        destination = "JFK"
-        departure_date = "2024-08-20"
-        return_date = "2024-08-24"
-        decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
-        decarb_engine.run_return_flight_step()
+
 
     def create_customer_decarb_goals():
         customer_id = 10 
@@ -283,7 +280,7 @@ class DecarbEngine:
             print(f"Year {step['year']}: Target Emissions = {step['target_emissions']} metric tons")
         #sorted_zscores = sorted(dict_zscore.items(), key=lambda item: item[1], reverse=True)
             
-    def create_user_flight_step(self):
+    def run_flight_optimizer_step(self):
      flights_user = [
         Flight(
             non_stop=True,
@@ -355,7 +352,7 @@ class DecarbEngine:
 
      description="Reduction in emissions of flights"
      difficulty=5
-     decarb_step=EmissionsDecarbStep(cur_total_cost,new_total_cost, cur_total_emissions, new_total_emissions, description, difficulty)
+     decarb_step=FlightOptimizerDecarbStep(cur_total_cost,new_total_cost, cur_total_emissions, new_total_emissions, description, difficulty)
      
      self.steps.append(decarb_step)
     
