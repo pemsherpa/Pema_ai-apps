@@ -27,7 +27,7 @@ from steps.decarb_emissions_step import EmissionsDecarbStep
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
-        self.FLIGHT_API_KEY = '3d9d866dbc47001e268d6b82890721368c0a0d1a9fd4d9ca8eaf4f5e4a8c5d23'
+        self.FLIGHT_API_KEY = '006946305a3f90e0e828df3343e8cb95dbf024a1c528aa880c32ac4dfbb7ecf4'
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.COORDINATES_API_KEY = "0c608aea6eb74a9da052e7a83df8c693"
         self.firm = firm
@@ -40,9 +40,7 @@ class DecarbEngine:
         self.commuting_analyzer = BusinessCommutingAnalyzer(commuting_data, self.GOOGLE_MAPS_API_KEY, self.OIL_PRICE_API_KEY,self.firm,self.dynamic)
         self.steps = []
     
-    def plan_emissions_reduction(self, current_emissions, reduction_targets, timeframe, actions):
-      
-       
+    def plan_emissions_reduction(self, current_emissions, reduction_targets, timeframe, actions):       
         target_emissions = {
             scope: current_emissions[scope] * (1 - reduction_targets[scope] / 100)
             for scope in current_emissions
@@ -79,7 +77,6 @@ class DecarbEngine:
     def display_emissions_reduction_plan(self, plan):
         """
         Display the emissions reduction plan.
-
         :param plan: The emissions reduction plan to display.
         """
         for step in plan:
@@ -89,8 +86,6 @@ class DecarbEngine:
                 print(f"  {scope}: Target Emissions = {target_emissions} metric tons")
                 for action in step['actions'][scope]:
                     print(f"    Action: {action['action']} - Impact: {action['impact']} metric tons")
-
-
 
     def analyze_commuting_costs(self):
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
@@ -117,16 +112,7 @@ class DecarbEngine:
         print(f'init commuting_costs is {commuting_costs}')
         print(f'init commuting_emi is {commuting_emissions}')
         print(f'init carpool commuting savings is {carpool_savings}')
-
         print(f'new carpool commuting savings is {carpool_saving_emission}')
-
-     
-
-        
-
-
-
-        
 
         commuting_step = DecarbStep(
             step_type=DecarbStepType.COMMUTING_CARPOOL,
@@ -242,8 +228,8 @@ class DecarbEngine:
         scope1_target = .55 
         scope2_target = .75 
         scope3_target = .25
-        #decarb_goals = DecarbCustomerGoals(customer_id, year, scope1_emissions, scope2_emissions, scope3_emissions, scope1_target, scope2_target, scope3_target)
-        #return decarb_goals
+        decarb_goals = DecarbCustomerGoals(customer_id, year, scope1_emissions, scope2_emissions, scope3_emissions, scope1_target, scope2_target, scope3_target)
+        return decarb_goals
     
     def create_decarb_engine():
         firm = '2107 Addison St, Berkeley, CA'
@@ -431,7 +417,6 @@ class DecarbEngine:
         carbon_optimise=0
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcu",cost_optimise,carbon_optimise)
         
-    
     def test_electric_smb_cca(self):
         print("test_electric_smb_cca")
         user_zip_code = 94706
