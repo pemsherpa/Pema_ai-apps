@@ -171,7 +171,12 @@ class DecarbEngine:
     def run_decarb_engine(self):
         #self.run_commuting_step()
         #self.run_carpool_step()
-        #self.run_flight_step()
+        origin = "LAX"
+        destination = "JFK"
+        departure_date = "2024-08-20"
+        return_date = "2024-08-24"
+    
+        self.run_flight_step(origin, destination, departure_date, return_date)
         self.run_return_flight_step()
         #self.run_electric_step()
         #self.create_user_flight_step()
