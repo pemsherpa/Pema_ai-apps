@@ -11,7 +11,7 @@ from steps.decarb_step_type import DecarbStepType
 
 class ElectricDecarbStep(DecarbStep):
 
-    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan,user_cost_weight,user_renewable_weight, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty, meter_input, time_in_use, max_15min_usage):
+    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan,user_cost_weight,user_renewable_weight, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty, meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise):
         self.usage_data = usage_data
 
         self.user_cur_cost = user_cur_cost
@@ -25,11 +25,13 @@ class ElectricDecarbStep(DecarbStep):
         self.user_renewable_weight=user_renewable_weight
         self.UseCCA = UseCCA
         self.HasCCA = HasCCA
+        self.cost_optimise=cost_optimise
+        self.carbon_optimise=carbon_optimise
         
         self.ranking_zscore = ranking_zscore
         self.steps = []
-        self.cur_cost = self.get_cur_cost(UseCCA)
-        self.new_cost = self.get_new_cost(HasCCA)
+        self.cur_cost = self.get_cur_cost(UseCCA,cost_optimise)
+        self.new_cost = self.get_new_cost(HasCCA,cost_optimise)
         self.saving = self.compute_savings()
         self.cur_emission = self.get_carbon_from_electric(kwh_used)
         self.emissions_saved = self.get_electric_carbon_savings()
@@ -41,18 +43,19 @@ class ElectricDecarbStep(DecarbStep):
         description = "zipcode: " + str(self.user_zip_code) + " cur_cost: " + str(self.cur_cost) + " self.new_cost: " + str(self.new_cost)
         super().__init__(DecarbStepType.ELECTRICITY, user_cur_cost, self.new_cost, self.cur_emission, new_emissions, description, self.difficulty)
 
-    def get_cur_cost(self, UseCCA):
+    def get_cur_cost(self, UseCCA,cost_optimise):
         ce = CurrentElectricity('Electricity Rate Plan.xlsx', self.user_zip_code, self.usage_data)
         ce_cca= Currentelectricity_cca('Electricity Rate Plan.xlsx',self.user_zip_code,self.kwh_used)
-        if UseCCA == 'Yes':
+        if (cost_optimise==1 or cost_optimise==0.5):
+         if UseCCA == 'Yes':
             cur_cost = ce_cca.fetch_total_cost(self.user_zip_code,self.user_sector,self.user_current_company,self.user_current_plan)
             self.steps.append(cur_cost)
-        elif UseCCA == 'No':
+         elif UseCCA == 'No':
             cur_cost = ce.check_condition_and_run(self.user_current_plan, self.user_bundled)
             self.steps.append(cur_cost)
-        else:
+         else:
             cur_cost = "0"
-        return float(cur_cost)
+         return float(cur_cost)
 
     def get_new_plan(self, HasCCA):
         ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.usage_data)
@@ -70,37 +73,38 @@ class ElectricDecarbStep(DecarbStep):
             plan=None
         return plan
     
-    def get_new_cost(self, HasCCA):
+    def get_new_cost(self, HasCCA,cost_optimise):
         ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.usage_data)
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
-        
-        if HasCCA == 'Yes':
+        if(cost_optimise==1 or cost_optimise==0.5):
+         if HasCCA == 'Yes':
             new_cost = switch_cca.get_optimized_plan_cost(self.user_zip_code, self.user_sector,self.kwh_used)
             self.steps.append(new_cost)
-        elif HasCCA == 'No':
+         elif HasCCA == 'No':
             new_plan= ew.check_condition_and_run(self.user_sector, self.user_bundled)
             new_cost=new_plan[1]
             self.steps.append(new_cost)
             
-        else:
-             new_cost = "0"
-        return float(new_cost)
+         else:
+             new_cost = 0
+         return new_cost
 
    
     def compute_savings(self):
         new_plan=self.get_new_plan(self.HasCCA)
-        current_cost=self.get_cur_cost(self.UseCCA)
-        new_cost=self.get_new_cost(self.HasCCA)
+        current_cost=self.get_cur_cost(self.UseCCA,self.cost_optimise)
+        new_cost=self.get_new_cost(self.HasCCA,self.cost_optimise)
         saving = (current_cost - new_cost)/current_cost * self.user_cur_cost
         
-        #print (new_plan)
-        #print (current_cost)
-        #print (new_cost)
-        #print (saving)
+        #print(new_plan)
+        #print(current_cost)
+        #print(new_cost)
+        #print(saving)
         return saving
     
-    def get_current_renewable_percentage(self, UseCCA, user_zip_code):
-        if UseCCA == 'Yes':
+    def get_current_renewable_percentage(self, UseCCA, user_zip_code,carbon_optimise):
+        if (carbon_optimise==1 or carbon_optimise==0.5):
+         if UseCCA == 'Yes':
             cca_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='CCA')
             joint_rate_plan_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name = 'Joint Rate Plan')
             plan_column = None
@@ -119,28 +123,30 @@ class ElectricDecarbStep(DecarbStep):
             else:
                 return f"No matching location found for {plan_column}."
        
-        elif UseCCA == 'No':
+         elif UseCCA == 'No':
             joint_rate_plan_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name = 'Joint Rate Plan')
             current_renewable_percentage = joint_rate_plan_df.loc[joint_rate_plan_df['Electrical Company Name'] == 'PG&E', 'Renewable Energy Percentage'].values[0]
             return float(current_renewable_percentage)
-        else:
+         else:
             return "Error, please reanswer the UseCCA question."
+        return -1
    
-    def get_new_renewable(self):
+    def get_new_renewable(self,carbon_optimise):
         #new_renewable = 56
         #return new_renewable
-        if self.HasCCA=='Yes':
+        if (carbon_optimise==1 or carbon_optimise==0.5):
+         if self.HasCCA=='Yes':
             renew_cca=electricity_cca('Electricity Rate Plan.xlsx', self.user_cost_weight, self.user_renewable_weight)
             new_renewable = renew_cca.get_optimized_renewable(self.user_zip_code, self.user_sector)
             return float(new_renewable)
        
-        elif self.HasCCA == 'No':
+         elif self.HasCCA == 'No':
             joint_rate_plan_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name = 'Joint Rate Plan')
             current_renewable_percentage = joint_rate_plan_df.loc[joint_rate_plan_df['Electrical Company Name'] == 'PG&E', 'Renewable Energy Percentage'].values[0]
             return float(current_renewable_percentage)
-        else:
+         else:
             print("Error, please reanswer the UseCCA question.")
-            return -1
+        return -1
    
     def get_carbon_from_electric(self, kwh_used):
         # Make API request for electric
@@ -149,15 +155,15 @@ class ElectricDecarbStep(DecarbStep):
         return cur_emission
 
     def get_electric_carbon_savings(self):
-        current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code))
-        new_renewable = float(self.get_new_renewable())
+        current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code,self.carbon_optimise))
+        new_renewable = float(self.get_new_renewable(self.carbon_optimise))
         carbon_from_electric = float(self.get_carbon_from_electric(self.kwh_used))
         emissions_saved = carbon_from_electric * (1 - (new_renewable - current_renewable_percentage) / current_renewable_percentage)
         return emissions_saved
     
     def get_new_electric_emissions(self):
-        current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code))
-        new_renewable = float(self.get_new_renewable())
+        current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code,self.carbon_optimiseb))
+        new_renewable = float(self.get_new_renewable(self.carbon_optimise))
         carbon_from_electric = float(self.get_carbon_from_electric(self.kwh_used))
         emissions_saved = carbon_from_electric * (1 - (new_renewable - current_renewable_percentage))
         return emissions_saved
