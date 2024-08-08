@@ -239,6 +239,26 @@ class DecarbEngine:
             dict_zscore["avg-zscore"] = 0
         print(f"Total Savings: ${total_savings}")
         print(f"Total Emissions Savings: {total_emission_savings} kg CO2\n")
+
+        #TODO Fix the code so that we return to the customer a dictionary based on the (0,1,2,3,4,5,6), (year-quartile)
+        # AIActionableStep
+        # -2024, Q1 (QuartileAction) -- return an array of all the quartileActions
+        # Difficulty = 3
+        # Scope 1: [Step1]
+        # Scope 2: [Step1,Step2]
+        # Scope 3: []
+        # -2024, Q2
+        # Difficulty = 4
+        # Scope 1: []
+        # Scope 2: [Step1]
+        # Scope 3: [Step1,Step2,Step3]
+        # Carbon and Cost Savings
+        # Electricity change: URL of the provider, phone number, information about Current to New provider -- Gowri update the Excelsheet 
+        # Flights: How much less carbon per first class, business, econ. I need to know how this was calculated, math so I can verify the data.
+        # Commutting: who commutes with who, what percentage 
+
+        # Return JSON Object with all recommendations
+        
         
     def create_CRU_step(self):
         initial_per = 0.1
