@@ -171,7 +171,7 @@ class DecarbEngine:
     def run_decarb_engine(self):
         #self.run_commuting_step()
         #self.run_carpool_step()
-        self.run_flight_step()
+        #self.run_flight_step()
         self.run_return_flight_step()
         #self.run_electric_step()
         #self.create_user_flight_step()
@@ -237,8 +237,8 @@ class DecarbEngine:
         scope1_target = .55 
         scope2_target = .75 
         scope3_target = .25
-        decarb_goals = DecarbCustomerGoals(customer_id, year, scope1_emissions, scope2_emissions, scope3_emissions, scope1_target, scope2_target, scope3_target)
-        return decarb_goals
+        #decarb_goals = DecarbCustomerGoals(customer_id, year, scope1_emissions, scope2_emissions, scope3_emissions, scope1_target, scope2_target, scope3_target)
+        #return decarb_goals
     
     def create_decarb_engine():
         firm = '2107 Addison St, Berkeley, CA'
@@ -524,8 +524,6 @@ class DecarbEngine:
         difficulty = 2
         ranking_zscore = 10
         user_current_company = "PG&E"
-        user_cost_weight = 1
-        user_renewable_weight = 0
         user_electricity_bill_season = "Summer"
         user_B1STB_highest_demand_15mins = 9
         user_B1STU_highest_demand_15mins = 9
@@ -541,7 +539,7 @@ class DecarbEngine:
             usage_data = self.create_smb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_B1STB_highest_demand_15mins,kwh_used)
         
         electric_step = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
-                                user_current_plan, user_cost_weight,user_renewable_weight, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise) 
+                                user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise) 
 
         return electric_step
     

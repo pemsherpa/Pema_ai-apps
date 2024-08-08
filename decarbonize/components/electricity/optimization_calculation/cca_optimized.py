@@ -2,13 +2,13 @@ import pandas as pd
 from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
 
 class  electricity_cca:
-    def __init__(self, file_path, user_cost_weight, user_renewable_weight):
+    def __init__(self, file_path,cost_optimise,carbon_optimise ):
         self.file_path = file_path
-        self.cost_weight = user_cost_weight
-        self.renewable_weight = user_renewable_weight
         self.df_pge_service = pd.read_excel(file_path, sheet_name='PG&E Service Area')
         self.cca_df = pd.read_excel(file_path, sheet_name='CCA')
         self.jrp_plans_df = pd.read_excel(file_path, sheet_name='Joint Rate Plan')
+        self.cost_optimise=cost_optimise
+        self.carbon_optimise=carbon_optimise
 
     def check_pge_cca_service_area(self, zip_code):
         result = self.df_pge_service[self.df_pge_service['PG&E Service area Zip Code'] == zip_code]
@@ -63,7 +63,7 @@ class  electricity_cca:
         df = pd.DataFrame(price)
         df['Cost Score'] = 1 / df['Total Cost']
         df['Renewable Score'] = df['Renewable Energy percentage']
-        df['Combined Score'] = self.cost_weight * df['Cost Score'] + self.renewable_weight * df['Renewable Score']  
+        df['Combined Score'] = self.cost_optimise * df['Cost Score'] + self.carbon_optimise* df['Renewable Score']  
 
         best_plan = df.loc[df['Combined Score'].idxmax(), ['Plan', 'Total Cost', 'Electrical Company Name']]
 
@@ -77,7 +77,7 @@ class  electricity_cca:
         df = pd.DataFrame(price)
         df['Cost Score'] = 1 / df['Total Cost']
         df['Renewable Score'] = df['Renewable Energy percentage']
-        df['Combined Score'] = self.cost_weight * df['Cost Score'] + self.renewable_weight * df['Renewable Score']
+        df['Combined Score'] = self.cost_optimise * df['Cost Score'] + self.carbon_optimise * df['Renewable Score']
 
         best_renewable = df.loc[df['Combined Score'].idxmax(), ['Renewable Energy percentage']]
 

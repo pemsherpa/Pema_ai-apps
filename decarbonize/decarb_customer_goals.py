@@ -23,8 +23,5 @@ class DecarbCustomerGoals():
         self.scope2_target = scope2_target
         self.scope3_target = scope3_target
 
-    def create_yearly_goals(self):
+    #def create_yearly_goals(self):
         # every year has scope 1,2,3. 
-
-    
-
