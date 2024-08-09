@@ -259,6 +259,8 @@ class DecarbEngine:
 
         # Return JSON Object with all recommendations
         
+
+        #Add user input 
         
     def create_CRU_step(self):
         initial_per = 0.1

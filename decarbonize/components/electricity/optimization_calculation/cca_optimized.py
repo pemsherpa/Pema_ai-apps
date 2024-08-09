@@ -1,5 +1,6 @@
 import pandas as pd
 from components.electricity.current_price_calculation.current_electricity_cca import Currentelectricity_cca
+from steps.provider_info import ProviderInfo
 
 class  electricity_cca:
     def __init__(self, file_path,cost_optimise,carbon_optimise ):
@@ -79,13 +80,7 @@ class  electricity_cca:
         provider_number = additional_info['Phone Number of provider']
         company_link = additional_info['URL of the provider']
 
-        new_info= {
-            "Plan Name": new_plan_name,
-            "Electrical Company Name": new_company,
-            "Provider_number": provider_number,
-            "URL_Company": company_link
-        }
-        print(new_info)
+        new_info=ProviderInfo(new_plan_name,new_company,provider_number,company_link)
         return new_plan_name, new_cost, new_company,new_info
 
     def optimize_renewable(self, price):
@@ -111,7 +106,7 @@ class  electricity_cca:
 
             return final_result,add_info
         else:
-            return None
+            return None,None
         
     def get_optimized_plan_cost(self, zip_code, sector,kwh_used):
         area = self.check_pge_cca_service_area(zip_code)

@@ -7,11 +7,12 @@ from components.electricity.optimization_calculation.cca_optimized import electr
 from components.electricity.optimization_calculation import *
 from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
+from steps.provider_info import ProviderInfo
 
 
 class ElectricDecarbStep(DecarbStep):
 
-    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty, meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise):
+    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty, meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise,provider_info,new_provider_info):
         self.usage_data = usage_data
 
         self.user_cur_cost = user_cur_cost
@@ -25,6 +26,8 @@ class ElectricDecarbStep(DecarbStep):
         self.HasCCA = HasCCA
         self.cost_optimise=cost_optimise
         self.carbon_optimise=carbon_optimise
+        self.provider_info=provider_info
+        self.new_provider_info=new_provider_info
         
         self.ranking_zscore = ranking_zscore
         self.steps = []
@@ -38,6 +41,7 @@ class ElectricDecarbStep(DecarbStep):
         self.time_in_use = time_in_use
         self.max_15min_usage = max_15min_usage
         new_emissions = self.get_new_electric_emissions()
+        self.pge_provider=self.pge_provider_info()
         description = "zipcode: " + str(self.user_zip_code) + " cur_cost: " + str(self.cur_cost) + " self.new_cost: " + str(self.new_cost)
         super().__init__(DecarbStepType.ELECTRICITY, user_cur_cost, self.new_cost, self.cur_emission, new_emissions, description, self.difficulty)
 
@@ -56,13 +60,21 @@ class ElectricDecarbStep(DecarbStep):
          return float(cur_cost)
         else:
            return 0
+        
+    def pge_provider_info(self):
+       company='PG&E'
+       phone_number='1-800-743-5000'
+       website_link='https://www.pge.com/'
+       get_info=ProviderInfo(self.user_current_plan,company,phone_number,website_link)
+       return get_info
+       
 
     def get_new_plan(self, HasCCA):
         ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.usage_data)
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.cost_optimise,self.carbon_optimise)
         
         if HasCCA == 'Yes':
-            plan= switch_cca.get_optimized_plan(self.user_zip_code, self.user_sector)
+            plan,self.new_provider_info= switch_cca.get_optimized_plan(self.user_zip_code, self.user_sector)
             self.steps.append(plan)
         elif HasCCA == 'No':
             plan= ew.check_condition_and_run(self.user_sector, self.user_bundled)
