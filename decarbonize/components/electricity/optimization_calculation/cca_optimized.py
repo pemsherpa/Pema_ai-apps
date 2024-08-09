@@ -71,7 +71,22 @@ class  electricity_cca:
         new_cost = best_plan['Total Cost']
         new_company = best_plan['Electrical Company Name']
 
-        return new_plan_name, new_cost, new_company
+        additional_info = self.jrp_plans_df[
+            (self.jrp_plans_df['Plan'] == new_plan_name) & 
+            (self.jrp_plans_df['Electrical Company Name'] == new_company)
+        ][['Phone Number of provider', 'URL of the provider']].iloc[0]
+
+        provider_number = additional_info['Phone Number of provider']
+        company_link = additional_info['URL of the provider']
+
+        new_info= {
+            "Plan Name": new_plan_name,
+            "Electrical Company Name": new_company,
+            "Provider_number": provider_number,
+            "URL_Company": company_link
+        }
+        print(new_info)
+        return new_plan_name, new_cost, new_company,new_info
 
     def optimize_renewable(self, price):
         df = pd.DataFrame(price)
@@ -92,9 +107,9 @@ class  electricity_cca:
             final_plans = list(set(plans))
             fetched_plans = ",".join(final_plans)
             price = self.fetch_caa_plan_price(sector, fetched_plans, area)
-            final_result = self.optimize_plans(price)
+            final_result,_,_,add_info = self.optimize_plans(price)
 
-            return final_result
+            return final_result,add_info
         else:
             return None
         
@@ -126,5 +141,6 @@ class  electricity_cca:
             return final_result
         else:
             return None
+        
     
     

@@ -62,8 +62,7 @@ class ElectricDecarbStep(DecarbStep):
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.cost_optimise,self.carbon_optimise)
         
         if HasCCA == 'Yes':
-            plan = switch_cca.get_optimized_plan(self.user_zip_code, self.user_sector)
-            ew.print_plan(plan)
+            plan= switch_cca.get_optimized_plan(self.user_zip_code, self.user_sector)
             self.steps.append(plan)
         elif HasCCA == 'No':
             plan= ew.check_condition_and_run(self.user_sector, self.user_bundled)
