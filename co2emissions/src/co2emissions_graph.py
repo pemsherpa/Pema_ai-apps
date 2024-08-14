@@ -5,13 +5,24 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 
+class ScopeTarget:
+    def __init__(self, year, timeframe, scope1, scope2, scope3):
+        self.year = year 
+        self.timeframe = timeframe
+        self.scope1 = scope1 
+        self.scope2 = scope2 
+        self.scope3 = scope3 
+
 class AnnualFinancials:
-    def __init__(self, year, revenue, grossProfitRatio, ebitda, netIncome):
+    def __init__(self, year, revenue, grossProfitRatio, ebitda, netIncome, scope_1, scope_2, scope_3):
         self.year = year 
         self.revenue = revenue 
         self.grossProfitRatio = grossProfitRatio 
         self.ebitda = ebitda 
         self.netIncome = netIncome 
+        self.scope_1 = scope_1
+        self.scope_2 = scope_2
+        self.scope_3 = scope_3
 
 class CO2EmissionsGraph:
     def __init__(self):
@@ -93,10 +104,12 @@ class CO2EmissionsGraph:
         return model
 
     def predict_emissions(self,models, revenue_forecast, gross_profit_ratio_forecast, input_data):
+        cur_year = input_data['financial_years'][0]
+
         emissions_forecast = {
-            'scope_1': [input_data['scope_1']],
-            'scope_2': [input_data['scope_2']],
-            'scope_3': [input_data['scope_3']]
+            'scope_1': [cur_year.scope_1],
+            'scope_2': [cur_year.scope_2],
+            'scope_3': [cur_year.scope_3]
         }
         
         for i in range(len(revenue_forecast)):
@@ -108,9 +121,10 @@ class CO2EmissionsGraph:
         
         return emissions_forecast
 
-    def plot_scope_forecast(self,emissions_forecast, model_name='Random Forest'):
+    def plot_scope_forecast(self,emissions_forecast, cur_year, time_frame, model_name='Random Forest'):
         df = pd.DataFrame(emissions_forecast)
-        x = np.arange(2023, 2029)  # Last year + next 5 years
+        end_year = cur_year + time_frame
+        x = np.arange(cur_year, end_year)  
 
         plt.style.use(['unhcrpyplotstyle', 'area'])
         fig, ax = plt.subplots()
@@ -180,29 +194,27 @@ class CO2EmissionsGraph:
         return models
 
 def main():
-    financials_2023 = AnnualFinancials(2023,128695000000,1.0,72263000000,37676000000)
-    financials_2022 = AnnualFinancials(2022,110695000000,0.8,60000000000,30000000000)
+    scope_targets = ScopeTarget(2023, 5, .5, .4, .3)
+    financials_2023 = AnnualFinancials(2023,128695000000,1.0,72263000000,37676000000, 88553, 783616, 156845)
+    financials_2022 = AnnualFinancials(2022,110695000000,0.8,60000000000,30000000000, 88553, 783616, 156845)
     financials = [financials_2023,financials_2022]
 
     input_data = {
         'financial_years': financials,
-        'scope_1': 88553,
-        'scope_2': 783616,
-        'scope_3': 156845,
         'growth_rates': [0.05, 0.04, 0.08, 0.04, 0.05],  # Set to None to estimate values
         'temperature': 1.0
     }
+    timeframe = scope_targets.timeframe + 1
+    cur_year = input_data['financial_years'][0].year
+
     emissions_graph = CO2EmissionsGraph()
     revenue_forecast = emissions_graph.calculate_revenue_forecast(input_data)
     gross_profit_ratio_forecast = emissions_graph.calculate_gross_profit_ratio_forecast(input_data)
     models = emissions_graph.create_models()
     emissions_forecast = emissions_graph.predict_emissions(models, revenue_forecast, gross_profit_ratio_forecast, input_data)
     print("GHG emissions forecast for the next 5 years:", emissions_forecast)
-    emissions_graph.plot_scope_forecast(emissions_forecast)
+    emissions_graph.plot_scope_forecast(emissions_forecast, cur_year, timeframe)
 
 if __name__ == "__main__":
     main()
-
-
-
 
