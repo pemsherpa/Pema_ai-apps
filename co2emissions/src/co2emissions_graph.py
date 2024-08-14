@@ -5,6 +5,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 
+class AnnualFinancials:
+    def __init__(self, year, revenue, grossProfitRatio, ebitda, netIncome):
+        self.year = year 
+        self.revenue = revenue 
+        self.grossProfitRatio = grossProfitRatio 
+        self.ebitda = ebitda 
+        self.netIncome = netIncome 
+
 class CO2EmissionsGraph:
     def __init__(self):
         self.train_data = pd.read_json('../external_datasets/merged_api_data.json')
@@ -43,18 +51,30 @@ class CO2EmissionsGraph:
             forecasted_values.append(next_value)
         
         return forecasted_values
-
+    
+    def vals_from_key(self, key, year1, year2):
+        if key == 'revenue':
+            return (year1.revenue, year2.revenue) 
+        elif key == 'grossProfitRatio':
+            return (year1.grossProfitRatio, year2.grossProfitRatio) 
+        else: 
+            print(f"calculate_forecast: Unexpected key{key}")
 
     def calculate_forecast(self,data, key):
-        if data['growth_rates'] is None:
-            data['growth_rates'] = self.forecaster(data[f'{key}_last_year'], data[f'{key}_year_before_last'], 5)
+        financial_years = data['financial_years']
+        year1 = financial_years[0]
+        year2 = financial_years[1]
+        start_value, end_value = self.vals_from_key(key, year1, year2)
+        
+        if data['growth_rates'] is None:    
+            data['growth_rates'] = self.forecaster(start_value,end_value, 5)
         
         temperature = data['temperature']
         
         # Adjust growth rates by the temperature
         adjusted_growth_rates = [rate * temperature for rate in data['growth_rates']]
         
-        forecast = [data[f'{key}_last_year']]
+        forecast = [start_value]
         for rate in adjusted_growth_rates:
             forecast.append(forecast[-1] * (1 + rate))
         
@@ -160,18 +180,15 @@ class CO2EmissionsGraph:
         return models
 
 def main():
+    financials_2023 = AnnualFinancials(2023,128695000000,1.0,72263000000,37676000000)
+    financials_2022 = AnnualFinancials(2022,110695000000,0.8,60000000000,30000000000)
+    financials = [financials_2023,financials_2022]
+
     input_data = {
-        'revenue_last_year': 128695000000,
-        'revenue_year_before_last': 110695000000,
+        'financial_years': financials,
         'scope_1': 88553,
         'scope_2': 783616,
         'scope_3': 156845,
-        "grossProfitRatio_last_year": 1.0, 
-        "grossProfitRatio_year_before_last": 0.8,
-        "ebitda_last_year": 72263000000, 
-        "ebitda_year_before_last": 60000000000,
-        "netIncome_last_year": 37676000000,
-        "netIncome_year_before_last": 30000000000,
         'growth_rates': [0.05, 0.04, 0.08, 0.04, 0.05],  # Set to None to estimate values
         'temperature': 1.0
     }
