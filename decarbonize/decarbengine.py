@@ -7,6 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1EWIicIg05wODK4aX-Dk-DY5WdoQz968r
 """
 import math
+import datetime
+import json
 from decarb_customer_goals import DecarbCustomerGoals
 import numpy as np
 from components.biz_commute_analyzer import BusinessCommutingAnalyzer
@@ -25,6 +27,7 @@ from steps.flight_decarb_step import FlightDecarbStep
 from components.FlightEmissionsCalculator import FlightEmissionsCalculator
 from components.FlightEmissionsCalculator import Flight
 from steps.decarb_emissions_step import FlightOptimizerDecarbStep
+from steps.quarterly_step import QuaterStep
 
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
@@ -52,7 +55,6 @@ class DecarbEngine:
         commuting_step = DecarbStep(
             step_type=DecarbStepType.COMMUTING_INDIVIDUAL,
             cur_cost=commuting_costs,
-
             new_cost=self.commuting_analyzer.stipent_individual(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, 1, 50, 2,30)[2],
             cur_emissions=commuting_emissions,
             new_emissions=commuting_emissions * 0.9,  # fake num
@@ -241,8 +243,29 @@ class DecarbEngine:
         print(f"Total Savings: ${total_savings}")
         print(f"Total Emissions Savings: {total_emission_savings} kg CO2\n")
 
+    def get_cur_quadrant(self):
+        x = datetime.datetime.now().month
+        return (x - 1) // 3 + 1
 
-    def create_decarb_engine_with_yearly_goals(goal_obj):
+
+
+    def create_decarb_engine_with_yearly_goals(goal_obj, output_file='yearly_quarterly_steps.json'):
+    
+        # Helper function to handle JSON serialization
+        def convert_to_json_serializable(data):
+            if isinstance(data, dict):
+                return {key: convert_to_json_serializable(value) for key, value in data.items()}
+            elif isinstance(data, list):
+                return [convert_to_json_serializable(item) for item in data]
+            elif isinstance(data, np.integer):
+                return int(data)
+            elif isinstance(data, np.floating):
+                return float(data)
+            elif isinstance(data, np.ndarray):
+                return data.tolist()
+            else:
+                return data
+
         # Step 1: Initialize the decarbonization engine
         firm = '2107 Addison St, Berkeley, CA'
         commuting_data = DecarbEngine.create_commuting_test_df()
@@ -255,17 +278,17 @@ class DecarbEngine:
         decarb_engine.run_flight_analyzer()
 
         # Step 2: Compute difficulties, savings, and emissions
-        difficulties = [step.difficulty for step in decarb_steps]
-        savings = [step.compute_savings() for step in decarb_steps]
-        emissions = [step.compute_emissions_savings() for step in decarb_steps]
+        difficulties = [float(step.difficulty) for step in decarb_steps]
+        savings = [float(step.compute_savings()) for step in decarb_steps]
+        emissions = [float(step.compute_emissions_savings()) for step in decarb_steps]
 
-        mean_diff = np.mean(difficulties)
-        mean_savings = np.mean(savings)
-        mean_emissions = np.mean(emissions)
+        mean_diff = float(np.mean(difficulties))
+        mean_savings = float(np.mean(savings))
+        mean_emissions = float(np.mean(emissions))
 
-        std_diff = np.std(difficulties)
-        std_savings = np.std(savings)
-        std_emissions = np.std(emissions)
+        std_diff = float(np.std(difficulties))
+        std_savings = float(np.std(savings))
+        std_emissions = float(np.std(emissions))
 
         total_savings = 0
         total_emission_savings = 0
@@ -284,92 +307,65 @@ class DecarbEngine:
             this_step_type = step.step_type.name
             dict_zscore[this_step_type] = this_z_score
 
-            print(step.generate_step_description())
-            print(f"z-score is: {dict_zscore[this_step_type]}")
-            print(f"Difficulty: {step.difficulty}")  
-            print(f"Savings: ${this_savings}")
-            print(f"Emissions Savings: {this_emission_savings} kg CO2\n")
-        
         num_steps = len(decarb_steps)
         if num_steps > 0:
             dict_zscore["avg-zscore"] = total_zscore / num_steps
         else:
             dict_zscore["avg-zscore"] = 0
-        print(f"Total Savings: ${total_savings}")
-        print(f"Total Emissions Savings: {total_emission_savings} kg CO2\n")
 
-        # Step 3: Create yearly goals
-        yearly_goals = []
-        
-        current_year = goal_obj.year
+        # Step 3: Create quarterly goals
+        current_quarter = decarb_engine.get_cur_quadrant() 
+        yearly_steps_array = []
+        current_year = int(goal_obj.year)
 
+        for year_index in range(goal_obj.timeframe):
+            for quarter in range(current_quarter, current_quarter + 4):  
+                actual_quarter = quarter if quarter <= 4 else quarter - 4  
 
-        for i in range(goal_obj.timeframe):
-            factor = math.exp(-i / goal_obj.timeframe)
-            yearly_goal = {
-                "year": current_year,
-                "scope1_goal": goal_obj.scope1_emissions * (1 - goal_obj.scope1_target * factor),
-                "scope2_goal": goal_obj.scope2_emissions * (1 - goal_obj.scope2_target * factor),
-                "scope3_goal": goal_obj.scope3_emissions * (1 - goal_obj.scope3_target * factor),
-            }
-            yearly_goals.append(yearly_goal)
+                # Initialize a QuaterStep instance
+                quarter_step = QuaterStep(
+                    year=current_year,
+                    quarter=f"Q{actual_quarter}"
+                )
+
+                yearly_steps_array.append(quarter_step)
+
             current_year += 1
+            current_quarter = 1  # Reset 
 
-        # Step 4: Organize steps by year and scope
-        yearly_steps = {}
-
-        for goal in yearly_goals:
-            year = goal["year"]
-            yearly_steps[year] = {"Scope 1": [], "Scope 2": [], "Scope 3": []}
-
+        # Step 4: Assign steps to the correct quarter and scope
+        for quarter_step in yearly_steps_array:
             for step in decarb_steps:
                 emissions_savings = step.compute_emissions_savings()
+                quarter_step.add_step(step)  # Add step based on its scope
 
-                # Check and assign steps to appropriate scope based on emissions savings goals
-                if emissions_savings >= goal["scope1_goal"]:
-                    yearly_steps[year]["Scope 1"].append(step)
-                if emissions_savings >= goal["scope2_goal"]:
-                    yearly_steps[year]["Scope 2"].append(step)
-                if emissions_savings >= goal["scope3_goal"]:
-                    yearly_steps[year]["Scope 3"].append(step)
+        # Step 5: Ensure CRU is only purchased once a year
+        cru_purchased = False
+        for quarter_step in yearly_steps_array:
+            if not cru_purchased:
+                if any("CRU" in step.description for step in quarter_step.scope1_steps + quarter_step.scope2_steps + quarter_step.scope3_steps):
+                    cru_purchased = True
+            else:
+                quarter_step.scope1_steps = [step for step in quarter_step.scope1_steps if "CRU" not in step.description]
+                quarter_step.scope2_steps = [step for step in quarter_step.scope2_steps if "CRU" not in step.description]
+                quarter_step.scope3_steps = [step for step in quarter_step.scope3_steps if "CRU" not in step.description]
 
-        # Step 5: Output results
-        for year, scopes in yearly_steps.items():
-            print(f"\nYear: {year}")
-            for scope, steps in scopes.items():
-                print(f"{scope}:")
-                for step in steps:
-                    print(step.generate_step_description())
-                    print(f"Difficulty: {step.difficulty}")
-                    print(f"Savings: ${step.compute_savings()}")
-                    print(f"Emissions Savings: {step.compute_emissions_savings()} kg CO2\n")
+        # Convert data to JSON-serializable format
+        json_data = [quarter_step.to_dict() for quarter_step in yearly_steps_array]
+        json_data_serializable = convert_to_json_serializable(json_data)  # Ensure all values are serializable
 
-        return yearly_steps
+        # Save the result as a JSON file
+        with open(output_file, 'w') as f:
+            json.dump(json_data_serializable, f, indent=4)
 
+        return json_data_serializable
+
+    
 
 
 
-        #TODO Fix the code so that we return to the customer a dictionary based on the (0,1,2,3,4,5,6), (year-quartile)
-        # AIActionableStep
-        # -2024, Q1 (QuartileAction) -- return an array of all the quartileActions
-        # Difficulty = 3
-        # Scope 1: [Step1]
-        # Scope 2: [Step1,Step2]
-        # Scope 3: []
-        # -2024, Q2
-        # Difficulty = 4
-        # Scope 1: []
-        # Scope 2: [Step1]
-        # Scope 3: [Step1,Step2,Step3]
-        # Carbon and Cost Savings
-        # Electricity change: URL of the provider, phone number, information about Current to New provider -- Gowri update the Excelsheet 
-        # Flights: How much less carbon per first class, business, econ. I need to know how this was calculated, math so I can verify the data.
-        # Commutting: who commutes with who, what percentage 
 
-        # Return JSON Object with all recommendations
-        
 
-        #Add user input 
         
     def create_CRU_step(self):
         initial_per = 0.1
@@ -650,3 +646,4 @@ def main():
  
 if __name__ == "__main__":
     main()
+    

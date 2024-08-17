@@ -1,0 +1,768 @@
+[
+    {
+        "year": 2024,
+        "quarter": "Q3",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze CRU costs and emissions",
+                "difficulty": 1,
+                "savings": -45000.0,
+                "emissions_savings": 2000.0
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2024,
+        "quarter": "Q4",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2024,
+        "quarter": "Q1",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2024,
+        "quarter": "Q2",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2025,
+        "quarter": "Q1",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2025,
+        "quarter": "Q2",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2025,
+        "quarter": "Q3",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2025,
+        "quarter": "Q4",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2026,
+        "quarter": "Q1",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2026,
+        "quarter": "Q2",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2026,
+        "quarter": "Q3",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2026,
+        "quarter": "Q4",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2027,
+        "quarter": "Q1",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2027,
+        "quarter": "Q2",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2027,
+        "quarter": "Q3",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2027,
+        "quarter": "Q4",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2028,
+        "quarter": "Q1",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2028,
+        "quarter": "Q2",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2028,
+        "quarter": "Q3",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    },
+    {
+        "year": 2028,
+        "quarter": "Q4",
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Step 1: Analyze commuting costs and emissions for individual",
+                "difficulty": 1,
+                "savings": 110.1539225807517,
+                "emissions_savings": 15.364238558528342
+            },
+            {
+                "description": "Step 2: Analyze commuting costs and emissions for carpool",
+                "difficulty": 3,
+                "savings": 50.004511435750956,
+                "emissions_savings": 1.5806295347868513
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Step 3: Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 402,
+                "emissions_savings": 27200.0,
+                "data": {
+                    "stops": 1
+                }
+            }
+        ]
+    }
+]

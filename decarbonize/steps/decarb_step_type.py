@@ -1,16 +1,15 @@
 from enum import Enum
 
-class DecarbStepType(str,Enum):
-    
-    COMMUTING_INDIVIDUAL = "COMMUTING_INDIVIDUAL"
-    COMMUTING_CARPOOL = "COMMUTING_CARPOOL"
-    FLIGHTS = "FLIGHTS"
-    FLIGHTS_RETURN = "FLIGHTS_RETURN"
-    FLIGHT_OPTIMIZER = "FLIGHT_OPTIMIZER"
-    ELECTRICITY = "ELECTRICITY"
-    CRU = "CRU"
+from enum import Enum, auto
+
+class DecarbStepType(Enum):
+    COMMUTING_INDIVIDUAL = auto()
+    COMMUTING_CARPOOL = auto()
+    FLIGHTS = auto()
+    FLIGHTS_RETURN = auto()
+    FLIGHT_OPTIMIZER = auto()
+    ELECTRICITY = auto()
+    CRU = auto()
 
     def __str__(self) -> str:
-        return str.__str__(self)
-
-DecarbStepType = Enum('DecarbStepType', ['COMMUTING_INDIVIDUAL', 'COMMUTING_CARPOOL','FLIGHTS','FLIGHTS_RETURN','EMISSIONS_FLIGHTS','ELECTRICITY', 'CRU'])
+        return self.name
