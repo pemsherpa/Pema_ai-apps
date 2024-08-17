@@ -118,9 +118,9 @@ class DecarbEngine:
         return savings
     
     def run_decarb_engine(self):
-        self.run_commuting_step()
-        self.run_carpool_step()
-       # self.run_electric_step()
+        #self.run_commuting_step()
+        #self.run_carpool_step()
+        self.run_electric_step()
         #self.run_flight_optimizer_step()
         self.run_CRU_step()
 
@@ -510,8 +510,10 @@ class DecarbEngine:
         user_current_plan ='B-19_SV'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
+        self.provider_info='Ava Bright Choice'
+        self.new_provider_info='None'
 
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcu",cost_optimise,carbon_optimise)
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcu",cost_optimise,carbon_optimise,self.provider_info,self.new_provider_info)
         
     def test_electric_smb_cca(self, cost_optimise, carbon_optimise):
         print("test_electric_smb_cca")
@@ -521,7 +523,9 @@ class DecarbEngine:
         user_current_plan ='B-10_S'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smb",cost_optimise,carbon_optimise)
+        self.provider_info='Ava Bright Choice'
+        self.new_provider_info='None'
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smb",cost_optimise,carbon_optimise,self.provider_info,self.new_provider_info)
     
     def test_electric_smu_cca(self, cost_optimise, carbon_optimise):
         print("test_electric_smu_cca")
@@ -531,7 +535,9 @@ class DecarbEngine:
         user_current_plan ='B-10_S'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smu",cost_optimise,carbon_optimise)
+        self.provider_info='Ava Bright Choice'
+        self.new_provider_info='None'
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smu",cost_optimise,carbon_optimise,self.provider_info,self.new_provider_info)
     
     def test_electric_lcb_cca(self, cost_optimise, carbon_optimise):
         print("test_electric_lcb_cca")
@@ -541,7 +547,9 @@ class DecarbEngine:
         user_current_plan ='B-19_SV'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcb",cost_optimise,carbon_optimise)
+        self.provider_info='Ava Bright Choice'
+        self.new_provider_info='None'
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcb",cost_optimise,carbon_optimise,self.provider_info,self.new_provider_info)
     
     def test_electric_lcb(self, cost_optimise, carbon_optimise):
         print("test_electric_lcb")
@@ -551,7 +559,9 @@ class DecarbEngine:
         user_current_plan ='B-20_TV'
         UseCCA = 'No'
         HasCCA = 'No'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcb",cost_optimise,carbon_optimise)
+        self.provider_info='PG&E'
+        self.new_provider_info='None'
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcb",cost_optimise,carbon_optimise,self.provider_info,self.new_provider_info)
     
     def test_electric_lcu(self, cost_optimise, carbon_optimise):
         print("test_electric_lcu")
@@ -561,7 +571,9 @@ class DecarbEngine:
         user_current_plan ='B-19_TV'
         UseCCA = 'No'
         HasCCA = 'No'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcu",cost_optimise,carbon_optimise)
+        self.provider_info='PG&E'
+        self.new_provider_info='None'
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcu",cost_optimise,carbon_optimise,self.provider_info,self.new_provider_info)
     
     def test_electric_smb(self, cost_optimise, carbon_optimise):
         print("test_electric_smb")
@@ -571,7 +583,9 @@ class DecarbEngine:
         user_current_plan ='B-6'
         UseCCA = 'No'
         HasCCA = 'No'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smb",cost_optimise,carbon_optimise)
+        self.provider_info='PG&E'
+        self.new_provider_info='None'
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smb",cost_optimise,carbon_optimise,self.provider_info,self.new_provider_info)
     
     def test_electric_smu(self, cost_optimise, carbon_optimise):
         print("test_electric_smu")
@@ -581,9 +595,11 @@ class DecarbEngine:
         user_current_plan ='B-10_SV'
         UseCCA = 'No'
         HasCCA = 'No'
-        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smu",cost_optimise,carbon_optimise)
+        self.provider_info='PG&E'
+        self.new_provider_info='None'
+        return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "smu",cost_optimise,carbon_optimise,self.provider_info,self.new_provider_info)
 
-    def test_electric_step(self, user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, usage_type,cost_optimise,carbon_optimise):
+    def test_electric_step(self, user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, usage_type,cost_optimise,carbon_optimise,provider_info,new_provider_info):
         user_input_peak_usage=25
         user_input_part_peak_usage = 25
         user_input_super_off_peak_usage=25
@@ -611,7 +627,7 @@ class DecarbEngine:
             usage_data = self.create_smb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_B1STB_highest_demand_15mins,kwh_used)
         
         electric_step = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
-                                user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise) 
+                                user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise,provider_info,new_provider_info) 
 
         return electric_step
     
