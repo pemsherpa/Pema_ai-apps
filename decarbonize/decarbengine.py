@@ -23,6 +23,7 @@ from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
 from steps.decarb_weight import DecarbWeight
 import pandas as pd
+from steps.electric_recommendations import Electric_Recommendations
 from steps.flight_decarb_step import FlightDecarbStep
 from components.FlightEmissionsCalculator import FlightEmissionsCalculator
 from components.FlightEmissionsCalculator import Flight
@@ -106,9 +107,12 @@ class DecarbEngine:
         cru_step = self.create_CRU_step()
         self.steps.append(cru_step)
         
-    def run_electric_step(self):
+    def run_electric_step(self): 
         # Electricity Step
         electric_step = self.test_electric_lcu_cca(1,0)
+
+        electric_recs = Electric_Recommendations(self.provider_info, electric_step)
+        print(f"electric_recs {electric_recs.recommend_plan(1)}")
         self.steps.append(electric_step)
 
     def get_step_savings(self):
@@ -247,8 +251,6 @@ class DecarbEngine:
         x = datetime.datetime.now().month
         return (x - 1) // 3 + 1
 
-
-
     def create_decarb_engine_with_yearly_goals(goal_obj, output_file='yearly_quarterly_steps.json'):
     
         # Helper function to handle JSON serialization
@@ -271,6 +273,7 @@ class DecarbEngine:
         commuting_data = DecarbEngine.create_commuting_test_df()
         df_dynamic = DecarbEngine.create_dynamic_test_df()
         decarb_goals = DecarbEngine.create_customer_decarb_goals()
+        
         weights = DecarbWeight(0.4, 0.3, 0.2, 0.1)
         pre_cost = 800
         decarb_engine = DecarbEngine(commuting_data, df_dynamic, firm, weights, pre_cost, decarb_goals)
@@ -359,13 +362,6 @@ class DecarbEngine:
             json.dump(json_data_serializable, f, indent=4)
 
         return json_data_serializable
-
-    
-
-
-
-
-
         
     def create_CRU_step(self):
         initial_per = 0.1
