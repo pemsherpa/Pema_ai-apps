@@ -103,24 +103,18 @@ class DecarbEngine:
         self.steps.append(return_flight_step)
     def run_CRU_step(self):
         # CRU Step
-    
         cru_step = self.create_CRU_step()
         self.steps.append(cru_step)
         
-    def provide_recommandations(self):
-       electric_plan=ElectricDecarbStep.get_new_plan(HasCCA='Yes')
-       electric_recs = Electric_Recommendations(self.provider_info, electric_plan,2024,2)
+    def provide_recommendations(self, electric_step):
+       electric_recs = Electric_Recommendations(self.provider_info, electric_step,2024,2)
        print(f"electric_recs {electric_recs.recommend_plan(1)}")    
-
 
     def run_electric_step(self): 
         # Electricity Step
         electric_step = self.test_electric_lcu_cca(1,0)
         self.steps.append(electric_step)
-        self.provide_recommandations()
-
-   
-
+        self.provide_recommendations(electric_step)
 
     def get_step_savings(self):
         savings = 0
@@ -259,7 +253,6 @@ class DecarbEngine:
         return (x - 1) // 3 + 1
 
     def create_decarb_engine_with_yearly_goals(goal_obj, output_file='yearly_quarterly_steps.json'):
-    
         # Helper function to handle JSON serialization
         def convert_to_json_serializable(data):
             if isinstance(data, dict):

@@ -5,13 +5,15 @@ from steps.electric_decarb_step import ElectricDecarbStep
 dataset_electric = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Joint Rate Plan')
 
 class Electric_Recommendations:
-    def __init__(self, current_provider, optimized_plan, cur_year, cur_quarter):
+    def __init__(self, current_provider, electric_step, cur_year, cur_quarter):
+        self.electric_step = electric_step
+        self.electric_plan = electric_step.get_new_plan(HasCCA='Yes')
+        self.optimized_plan = self.electric_plan
+
         self.current_provider = current_provider
-        self.optimized_plan = optimized_plan
         self.current_renew_percent = dataset_electric.loc[
             dataset_electric["Electrical Company Name"] == self.current_provider, "Renewable Percentages"].values[0]
-        self.new_provider = dataset_electric.loc[
-            dataset_electric["Plan"] == self.optimized_plan, "Electrical Company Name"].tolist()
+        self.new_provider = dataset_electric.loc[dataset_electric["Plan"] == self.optimized_plan, "Electrical Company Name"].tolist()
 
         self.cur_year = cur_year
         self.cur_quarter = cur_quarter
@@ -40,7 +42,7 @@ class Electric_Recommendations:
                 "message": f"Switch to a {self.optimized_plan}% renewable energy source.",
                 "New Provider": dataset_electric.loc[
                     dataset_electric["Plan"] == self.optimized_plan, "Electrical Company Name"].tolist(),
-                "carbon_emission_savings": ElectricDecarbStep.get_electric_carbon_savings()
+                "carbon_emission_savings": self.electric_step.get_electric_carbon_savings()
             }
 
         if year == 2:
@@ -56,7 +58,7 @@ class Electric_Recommendations:
                     "recommended_plan": 50,
                     "message": "Switch to a plan with at least 50% renewable energy.",
                     "New Provider": new_providers,
-                    "carbon_emission_savings": ElectricDecarbStep.get_electric_carbon_savings()
+                    "carbon_emission_savings": self.electric_step.get_electric_carbon_savings()
                 }
 
             elif 50 <= self.current_renew_percent < 100:
@@ -70,7 +72,7 @@ class Electric_Recommendations:
                     "recommended_plan": 100,
                     "message": "Switch to a plan with 100% renewable energy.",
                     "New Provider": new_providers,
-                    "carbon_emission_savings":ElectricDecarbStep.get_electric_carbon_savings()
+                    "carbon_emission_savings":self.electric_step.get_electric_carbon_savings()
                 }
 
         return {
