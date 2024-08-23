@@ -10,6 +10,7 @@ from steps.decarb_step_type import DecarbStepType
 from steps.provider_info import ProviderInfo
 
 
+
 class ElectricDecarbStep(DecarbStep):
 
     def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty, meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise,provider_info,new_provider_info):
@@ -167,7 +168,8 @@ class ElectricDecarbStep(DecarbStep):
         # TODO fix with API call
         cur_emission = self.kwh_used * 1.5
         return cur_emission
-
+    
+    
     def get_electric_carbon_savings(self):
         current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code,self.carbon_optimise))
         new_renewable = float(self.get_new_renewable(self.carbon_optimise))

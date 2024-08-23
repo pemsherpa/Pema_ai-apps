@@ -22,8 +22,8 @@ from components.flight_data_analyzer import FlightDataAnalyzer
 from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
 from steps.decarb_weight import DecarbWeight
-import pandas as pd
 from steps.electric_recommendations import Electric_Recommendations
+import pandas as pd
 from steps.flight_decarb_step import FlightDecarbStep
 from components.FlightEmissionsCalculator import FlightEmissionsCalculator
 from components.FlightEmissionsCalculator import Flight
@@ -107,13 +107,20 @@ class DecarbEngine:
         cru_step = self.create_CRU_step()
         self.steps.append(cru_step)
         
+    def provide_recommandations(self):
+       electric_plan=ElectricDecarbStep.get_new_plan(HasCCA='Yes')
+       electric_recs = Electric_Recommendations(self.provider_info, electric_plan,2024,2)
+       print(f"electric_recs {electric_recs.recommend_plan(1)}")    
+
+
     def run_electric_step(self): 
         # Electricity Step
         electric_step = self.test_electric_lcu_cca(1,0)
-
-        electric_recs = Electric_Recommendations(self.provider_info, electric_step)
-        print(f"electric_recs {electric_recs.recommend_plan(1)}")
         self.steps.append(electric_step)
+        self.provide_recommandations()
+
+   
+
 
     def get_step_savings(self):
         savings = 0
@@ -624,7 +631,7 @@ class DecarbEngine:
         
         electric_step = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
                                 user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise,provider_info,new_provider_info) 
-
+        
         return electric_step
     
     #(20,20,20,20,'Summer',7,8,9,'Large Commercial and Industrial','B-19_TV')
