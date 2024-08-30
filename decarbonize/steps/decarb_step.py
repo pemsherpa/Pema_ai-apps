@@ -15,7 +15,7 @@ class DecarbStep:
         
        
         scope_mapping = {
-            DecarbStepType.ELECTRICITY: 1,
+            DecarbStepType.ELECTRICITY: 2,
             DecarbStepType.COMMUTING_CARPOOL: 3,
             DecarbStepType.COMMUTING_INDIVIDUAL: 3,
             DecarbStepType.FLIGHTS: 3,
@@ -58,7 +58,7 @@ class DecarbStep:
         return self.ranking_zscore
 
     def generate_step_description(self):
-        return f"Step {self.step_type.value}: {self.description}"
+        return f"{self.description}"
 
 
 

@@ -5,4 +5,8 @@ class ProviderInfo():
         self.phone_number=phone_number
         self.website_link=website_link
 
+    def __repr__(self):
+        return (f"ProviderInfo(plan_name={self.plan_name}, company_name={self.company}, "
+                f"provider_number={self.phone_number}, company_link={self.website_link})")
+
     

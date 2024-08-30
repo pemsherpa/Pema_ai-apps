@@ -108,11 +108,11 @@ class DecarbEngine:
         
     def provide_recommendations(self, electric_step):
        electric_recs = Electric_Recommendations(self.provider_info, electric_step,2024,2)
-       print(f"electric_recs {electric_recs.recommend_plan(1)}")    
+       print(f"electric_recs {electric_recs.recommendations}")    
 
     def run_electric_step(self): 
         # Electricity Step
-        electric_step = self.test_electric_lcu_cca(1,0)
+        electric_step = self.test_electric_lcu_cca(0,1)
         self.steps.append(electric_step)
         self.provide_recommendations(electric_step)
 
@@ -134,8 +134,8 @@ class DecarbEngine:
     def run_flight_analyzer(decarb_engine):
         origin = "LAX"
         destination = "JFK"
-        departure_date = "2024-08-20"
-        return_date = "2024-08-24"
+        departure_date = "2024-08-30"
+        return_date = "2024-09-03"
         decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
         decarb_engine.run_return_flight_step()
 
@@ -252,7 +252,7 @@ class DecarbEngine:
         x = datetime.datetime.now().month
         return (x - 1) // 3 + 1
 
-    def create_decarb_engine_with_yearly_goals(goal_obj, output_file='yearly_quarterly_steps.json'):
+    def create_decarb_engine_with_yearly_goals(self,goal_obj, output_file='yearly_quarterly_steps.json'):
         # Helper function to handle JSON serialization
         def convert_to_json_serializable(data):
             if isinstance(data, dict):
@@ -315,7 +315,13 @@ class DecarbEngine:
             dict_zscore["avg-zscore"] = total_zscore / num_steps
         else:
             dict_zscore["avg-zscore"] = 0
+        
+        self.current_provider='Ava Bright Choice'
+        electric_step = self.test_electric_lcu_cca(0,1)
+        electric_recommendations = Electric_Recommendations(self.current_provider, electric_step, goal_obj.year, 1)
 
+    
+        electric_recommendations_data = electric_recommendations.recommendations
         # Step 3: Create quarterly goals
         current_quarter = decarb_engine.get_cur_quadrant() 
         yearly_steps_array = []
@@ -341,6 +347,13 @@ class DecarbEngine:
             for step in decarb_steps:
                 emissions_savings = step.compute_emissions_savings()
                 quarter_step.add_step(step)  # Add step based on its scope
+
+        for recommendation in electric_recommendations_data:
+            if recommendation['year'] == quarter_step.year:
+                # Assuming you want to add the electric steps to the quarterly steps
+                # Adjust logic here if needed
+                # Example: quarter_step.add_electric_step(recommendation)
+                pass
 
         # Step 5: Ensure CRU is only purchased once a year
         cru_purchased = False
@@ -652,7 +665,7 @@ class DecarbEngine:
 def main():
     #DecarbEngine.create_decarb_engine()
     this_client = DecarbCustomerGoals(5 ,1, 2024, 1000, 2000, 3000, 0.8, 0.9, 0.9)
-    DecarbEngine.create_decarb_engine_with_yearly_goals(this_client)
+    DecarbEngine.create_decarb_engine_with_yearly_goals(this_client,2)
     #DecarbEngine.test_decarb_engine()
     
  
