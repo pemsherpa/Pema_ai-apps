@@ -8,6 +8,7 @@ from components.electricity.optimization_calculation import *
 from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
 from steps.provider_info import ProviderInfo
+from steps.electric_recommendations import Electric_Recommendations
 
 
 
@@ -29,6 +30,7 @@ class ElectricDecarbStep(DecarbStep):
         self.carbon_optimise=carbon_optimise
         self.provider_info=provider_info
         self.new_provider_info=new_provider_info
+        self.recommendations=[]
         
         self.ranking_zscore = ranking_zscore
         self.steps = []
@@ -186,3 +188,16 @@ class ElectricDecarbStep(DecarbStep):
         carbon_from_electric = float(self.get_carbon_from_electric(self.kwh_used))
         emissions_saved = carbon_from_electric * (1 - (new_renewable - current_renewable_percentage))
         return emissions_saved
+    
+    def generate_and_append_recommendations(self, current_provider, cur_year, cur_quarter):
+        electric_recommendations = Electric_Recommendations(
+            current_provider=current_provider,
+            electric_step=self,
+            cur_year=cur_year,
+            cur_quarter=cur_quarter
+        ).recommendations
+        self.add_recommendations(electric_recommendations)
+
+    def add_recommendations(self, recs):
+        # Append each set of recommendations as a new sublist
+        self.recommendations.append(recs)

@@ -1,6 +1,5 @@
 import pandas as pd
 from steps.quarterly_step import QuaterStep
-from steps.electric_decarb_step import ElectricDecarbStep
 from steps.decarb_step_type import DecarbStepType
 from steps.provider_info import ProviderInfo
 
@@ -152,6 +151,14 @@ class Electric_Recommendations:
             provider_infos.append(provider_info)
         
         return provider_infos
+    
+    def get_recommendations(self):
+        return self.recommendations
+    
+    def add_recommendations(self, recs):
+        # Append each set of recommendations as a new sublist
+        self.recommendations.append(recs)
+
 
 
 
