@@ -39,6 +39,8 @@ class DecarbStep:
         }
 
     def compute_savings(self):
+        print("compute_savings")
+        print(f"{self.cur_cost } {self.new_cost}")
         return self.cur_cost - self.new_cost
 
     def compute_emissions_savings(self):

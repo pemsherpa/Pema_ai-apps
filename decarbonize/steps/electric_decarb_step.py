@@ -11,7 +11,6 @@ from steps.provider_info import ProviderInfo
 from steps.electric_recommendations import Electric_Recommendations
 
 
-
 class ElectricDecarbStep(DecarbStep):
 
     def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty, meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise,provider_info,new_provider_info):
@@ -71,7 +70,6 @@ class ElectricDecarbStep(DecarbStep):
        get_info=ProviderInfo(self.user_current_plan,company,phone_number,website_link)
        return get_info
        
-
     def get_new_plan(self, HasCCA):
         ew = ElectricityWork('Electricity Rate Plan.xlsx', self.user_zip_code,self.usage_data)
         switch_cca=electricity_cca('Electricity Rate Plan.xlsx', self.cost_optimise,self.carbon_optimise)
@@ -98,24 +96,22 @@ class ElectricDecarbStep(DecarbStep):
             new_plan= ew.check_condition_and_run(self.user_sector, self.user_bundled)
             new_cost=new_plan[1]
             self.steps.append(new_cost)
-            
          else:
              new_cost = 0
          return new_cost
-
    
     def compute_savings(self):
         new_plan=self.get_new_plan(self.HasCCA)
         current_cost=self.get_cur_cost(self.UseCCA,self.cost_optimise)
         new_cost=self.get_new_cost(self.HasCCA,self.cost_optimise)
-        if(current_cost!=0 and new_cost!=0):
-         saving = (current_cost - new_cost)/current_cost * self.user_cur_cost
-        
-        #print(new_plan)
-        #print(current_cost)
-        #print(new_cost)
-        #print(saving)
-         return saving
+
+        if not current_cost:
+           current_cost = 0
+        if not new_cost:
+           new_cost = 0
+           
+        saving = current_cost - new_cost
+        return saving
     
     def get_current_renewable_percentage(self, UseCCA, user_zip_code,carbon_optimise):
         if (carbon_optimise==1 or carbon_optimise==0.5):
@@ -170,7 +166,6 @@ class ElectricDecarbStep(DecarbStep):
         # TODO fix with API call
         cur_emission = self.kwh_used * 1.5
         return cur_emission
-    
     
     def get_electric_carbon_savings(self):
         current_renewable_percentage = float(self.get_current_renewable_percentage(self.UseCCA, self.user_zip_code,self.carbon_optimise))

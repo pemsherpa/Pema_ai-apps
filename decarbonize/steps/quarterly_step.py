@@ -1,8 +1,8 @@
-class QuaterStep:
+class QuarterStep:
     def __init__(self, year, quarter):
         self.year = year
         self.quarter = quarter
-        self.scope1_steps = []  #
+        self.scope1_steps = []
         self.scope2_steps = [] 
         self.scope3_steps = []  
 

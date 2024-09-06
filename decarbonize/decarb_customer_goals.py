@@ -1,8 +1,6 @@
 
 
 import math
-from steps.decarb_step import DecarbStep
-from steps.decarb_step_type import DecarbStepType
 
 class DecarbCustomerGoals():
     

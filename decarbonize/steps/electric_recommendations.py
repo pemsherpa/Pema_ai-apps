@@ -1,5 +1,5 @@
 import pandas as pd
-from steps.quarterly_step import QuaterStep
+from steps.quarterly_step import QuarterStep
 from steps.decarb_step_type import DecarbStepType
 from steps.provider_info import ProviderInfo
 
