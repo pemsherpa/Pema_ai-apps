@@ -192,7 +192,7 @@ class DecarbEngine:
         scope1_target = .55 
         scope2_target = .75 
         scope3_target = .25
-        time_frame = 2
+        time_frame = 3
         decarb_goals = DecarbCustomerGoals(time_frame,customer_id, year, scope1_emissions, scope2_emissions, scope3_emissions, scope1_target, scope2_target, scope3_target)
         return decarb_goals
     
@@ -300,6 +300,8 @@ class DecarbEngine:
                     quarter_step.add_step(step)
                 yearly_steps.append(quarter_step)
 
+     
+
      print(yearly_steps)
      print("decarb flow 3.1")
     # Step 5: Ensure CRU is only purchased once a year
@@ -313,18 +315,29 @@ class DecarbEngine:
      yearly_steps = []
      # TODO change list -> dictionary
      cur_quarter = current_quarter
-
-     for current_year in range(current_year, current_year + timeframe):
+     cur_year=current_year
+     for _ in range(timeframe):
         while cur_quarter < 5:  
             # Initialize a QuaterStep instance
             quarter_step = QuarterStep(
-                year=current_year,
-                quarter=current_quarter
+                year=cur_year,
+                quarter=cur_quarter,
+                
             )
+            print("FLOWWWWWW")
             yearly_steps.append(quarter_step)
             cur_quarter+=1
+        
         cur_quarter=1
-      
+        cur_year+=1
+        if(cur_year==current_year+timeframe):
+            break
+     
+     for step in yearly_steps:
+        if hasattr(step, 'electric_step') and hasattr(step.electric_step, 'recommendations'):
+            print(f"Year: {step.year}, Quarter: {step.quarter}, Recommendations: {step.electric_step.recommendations}")
+        else:
+            print(f"Year: {step.year}, Quarter: {step.quarter}, No recommendations available")
      return yearly_steps
     
     def add_cru_steps(self, yearly_steps):

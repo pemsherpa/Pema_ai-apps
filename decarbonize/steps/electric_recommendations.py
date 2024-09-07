@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 from steps.quarterly_step import QuarterStep
 from steps.decarb_step_type import DecarbStepType
 from steps.provider_info import ProviderInfo
@@ -12,6 +13,14 @@ class Electric_Recommendations:
         self.electric_plan = electric_step.get_new_plan(HasCCA='Yes')
         self.optimized_plan = self.electric_plan
         self.current_provider = current_provider
+
+        if cur_year is None or cur_quarter is None:
+            current_date = datetime.now()
+            self.cur_year = current_date.year
+            self.cur_quarter = (current_date.month - 1) // 3 + 1  # Calculate quarter from current month
+        else:
+            self.cur_year = cur_year
+            self.cur_quarter = cur_quarter
 
         # Initialize the current renewable percentage
         if current_provider in dataset_electric["Electrical Company Name"].values:
@@ -31,8 +40,8 @@ class Electric_Recommendations:
         self.generate_recommendations(5)  # Plans for 5 years
 
     def generate_recommendations(self, years):
-        for year in range(1, years + 1):
-            recommendation = self.recommend_plan(year)
+        for year in range(1, years):
+            recommendation = self.recommend_plan(self.cur_year+year)
             self.recommendations.append(recommendation)
 
             # Update state based on the recommendation
