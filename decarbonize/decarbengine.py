@@ -289,16 +289,24 @@ class DecarbEngine:
      yearly_steps=[]
 
      print("decarb flow 2")
-     cur_goal_quarter = current_quarter
-     for step in decarb_steps:
-        print(f"step {step}")
-        for goal_yr in range(0, decarb_goals.timeframe):
-            print(f"goal_yr {goal_yr}")
-            cur_goal_yr = current_year + goal_yr
-            for quarter_step in yearly_steps_orig:
-                if quarter_step.year == cur_goal_yr and quarter_step.quarter == cur_goal_quarter:
+     for goal_yr in range(decarb_goals.timeframe):
+      cur_goal_yr = current_year + goal_yr
+      cur_goal_quarter = current_quarter
+
+      for quarter in range(1, 5):  # Iterate through all four quarters
+        for quarter_step in yearly_steps_orig:
+            if quarter_step.year == cur_goal_yr and quarter_step.quarter == quarter:
+                # Add steps to the corresponding quarter
+                for step in decarb_steps:
                     quarter_step.add_step(step)
-                yearly_steps.append(quarter_step)
+                
+                # Append quarter_step if it's not already in yearly_steps
+                if quarter_step not in yearly_steps:
+                    yearly_steps.append(quarter_step)
+        
+        # Update current quarter for the next iteration
+        cur_goal_quarter = (cur_goal_quarter % 4) + 1
+                
 
      
 
