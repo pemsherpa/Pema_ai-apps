@@ -36,7 +36,135 @@
                     "stops": 0
                 }
             }
-        ]
+        ],
+        "recommendations": {
+            "current_provider": "SJCE_TotalGreen(100%Renewable)",
+            "current_renew_percent": 100,
+            "cur_year": 2025,
+            "cur_quarter": 4,
+            "recommendations": [
+                {
+                    "year": 2024,
+                    "recommended_plan": 100,
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "New Provider": [
+                        "SJCE_TotalGreen(100%Renewable)",
+                        "Ava Renewable 100",
+                        "PCE_ECO100(100%Renewable)",
+                        "Pioneer_Green100(100%Renewable)",
+                        "RCEA_Repower+(100%Renewable)",
+                        "SVCE_GreenPrime",
+                        "VCE_UltreaGreen(100%Renewable)",
+                        "CleanpowerSF_Supergeen_100%_Renewable",
+                        "MCE_Deep_Green(100%Renewable)",
+                        "SCP_EverGreen(100%Renewable)"
+                    ],
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Pioneer_Green100(100%Renewable)",
+                            "phone_number": "1-844-937-7466",
+                            "website_link": "https://pioneercommunityenergy.org/residential/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "RCEA_Repower+(100%Renewable)",
+                            "phone_number": "1-707-269-1700",
+                            "website_link": "https://redwoodenergy.org/residential-electricity-service/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SVCE_GreenPrime",
+                            "phone_number": "1-844-474-7823",
+                            "website_link": "https://svcleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "VCE_UltreaGreen(100%Renewable)",
+                            "phone_number": "1-855-699-8232",
+                            "website_link": "https://valleycleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "CleanpowerSF_Supergeen_100%_Renewable",
+                            "phone_number": "1-415-554-0773",
+                            "website_link": "https://www.cleanpowersf.org/rates"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SCP_EverGreen(100%Renewable)",
+                            "phone_number": "1-855-202-2139",
+                            "website_link": "https://sonomacleanpower.org/residential-customers"
+                        }
+                    ]
+                },
+                {
+                    "year": 2025,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2027,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2028,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2029,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                }
+            ],
+            "recommended_providers": [
+                "SJCE_TotalGreen(100%Renewable)"
+            ]
+        }
     },
     {
         "year": 2024,
@@ -75,7 +203,135 @@
                     "stops": 0
                 }
             }
-        ]
+        ],
+        "recommendations": {
+            "current_provider": "SJCE_TotalGreen(100%Renewable)",
+            "current_renew_percent": 100,
+            "cur_year": 2025,
+            "cur_quarter": 4,
+            "recommendations": [
+                {
+                    "year": 2024,
+                    "recommended_plan": 100,
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "New Provider": [
+                        "SJCE_TotalGreen(100%Renewable)",
+                        "Ava Renewable 100",
+                        "PCE_ECO100(100%Renewable)",
+                        "Pioneer_Green100(100%Renewable)",
+                        "RCEA_Repower+(100%Renewable)",
+                        "SVCE_GreenPrime",
+                        "VCE_UltreaGreen(100%Renewable)",
+                        "CleanpowerSF_Supergeen_100%_Renewable",
+                        "MCE_Deep_Green(100%Renewable)",
+                        "SCP_EverGreen(100%Renewable)"
+                    ],
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Pioneer_Green100(100%Renewable)",
+                            "phone_number": "1-844-937-7466",
+                            "website_link": "https://pioneercommunityenergy.org/residential/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "RCEA_Repower+(100%Renewable)",
+                            "phone_number": "1-707-269-1700",
+                            "website_link": "https://redwoodenergy.org/residential-electricity-service/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SVCE_GreenPrime",
+                            "phone_number": "1-844-474-7823",
+                            "website_link": "https://svcleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "VCE_UltreaGreen(100%Renewable)",
+                            "phone_number": "1-855-699-8232",
+                            "website_link": "https://valleycleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "CleanpowerSF_Supergeen_100%_Renewable",
+                            "phone_number": "1-415-554-0773",
+                            "website_link": "https://www.cleanpowersf.org/rates"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SCP_EverGreen(100%Renewable)",
+                            "phone_number": "1-855-202-2139",
+                            "website_link": "https://sonomacleanpower.org/residential-customers"
+                        }
+                    ]
+                },
+                {
+                    "year": 2025,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2027,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2028,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2029,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                }
+            ],
+            "recommended_providers": [
+                "SJCE_TotalGreen(100%Renewable)"
+            ]
+        }
     },
     {
         "year": 2025,
@@ -114,7 +370,135 @@
                     "stops": 0
                 }
             }
-        ]
+        ],
+        "recommendations": {
+            "current_provider": "SJCE_TotalGreen(100%Renewable)",
+            "current_renew_percent": 100,
+            "cur_year": 2025,
+            "cur_quarter": 4,
+            "recommendations": [
+                {
+                    "year": 2024,
+                    "recommended_plan": 100,
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "New Provider": [
+                        "SJCE_TotalGreen(100%Renewable)",
+                        "Ava Renewable 100",
+                        "PCE_ECO100(100%Renewable)",
+                        "Pioneer_Green100(100%Renewable)",
+                        "RCEA_Repower+(100%Renewable)",
+                        "SVCE_GreenPrime",
+                        "VCE_UltreaGreen(100%Renewable)",
+                        "CleanpowerSF_Supergeen_100%_Renewable",
+                        "MCE_Deep_Green(100%Renewable)",
+                        "SCP_EverGreen(100%Renewable)"
+                    ],
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Pioneer_Green100(100%Renewable)",
+                            "phone_number": "1-844-937-7466",
+                            "website_link": "https://pioneercommunityenergy.org/residential/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "RCEA_Repower+(100%Renewable)",
+                            "phone_number": "1-707-269-1700",
+                            "website_link": "https://redwoodenergy.org/residential-electricity-service/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SVCE_GreenPrime",
+                            "phone_number": "1-844-474-7823",
+                            "website_link": "https://svcleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "VCE_UltreaGreen(100%Renewable)",
+                            "phone_number": "1-855-699-8232",
+                            "website_link": "https://valleycleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "CleanpowerSF_Supergeen_100%_Renewable",
+                            "phone_number": "1-415-554-0773",
+                            "website_link": "https://www.cleanpowersf.org/rates"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SCP_EverGreen(100%Renewable)",
+                            "phone_number": "1-855-202-2139",
+                            "website_link": "https://sonomacleanpower.org/residential-customers"
+                        }
+                    ]
+                },
+                {
+                    "year": 2025,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2027,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2028,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2029,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                }
+            ],
+            "recommended_providers": [
+                "SJCE_TotalGreen(100%Renewable)"
+            ]
+        }
     },
     {
         "year": 2025,
@@ -153,7 +537,135 @@
                     "stops": 0
                 }
             }
-        ]
+        ],
+        "recommendations": {
+            "current_provider": "SJCE_TotalGreen(100%Renewable)",
+            "current_renew_percent": 100,
+            "cur_year": 2025,
+            "cur_quarter": 4,
+            "recommendations": [
+                {
+                    "year": 2024,
+                    "recommended_plan": 100,
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "New Provider": [
+                        "SJCE_TotalGreen(100%Renewable)",
+                        "Ava Renewable 100",
+                        "PCE_ECO100(100%Renewable)",
+                        "Pioneer_Green100(100%Renewable)",
+                        "RCEA_Repower+(100%Renewable)",
+                        "SVCE_GreenPrime",
+                        "VCE_UltreaGreen(100%Renewable)",
+                        "CleanpowerSF_Supergeen_100%_Renewable",
+                        "MCE_Deep_Green(100%Renewable)",
+                        "SCP_EverGreen(100%Renewable)"
+                    ],
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Pioneer_Green100(100%Renewable)",
+                            "phone_number": "1-844-937-7466",
+                            "website_link": "https://pioneercommunityenergy.org/residential/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "RCEA_Repower+(100%Renewable)",
+                            "phone_number": "1-707-269-1700",
+                            "website_link": "https://redwoodenergy.org/residential-electricity-service/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SVCE_GreenPrime",
+                            "phone_number": "1-844-474-7823",
+                            "website_link": "https://svcleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "VCE_UltreaGreen(100%Renewable)",
+                            "phone_number": "1-855-699-8232",
+                            "website_link": "https://valleycleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "CleanpowerSF_Supergeen_100%_Renewable",
+                            "phone_number": "1-415-554-0773",
+                            "website_link": "https://www.cleanpowersf.org/rates"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SCP_EverGreen(100%Renewable)",
+                            "phone_number": "1-855-202-2139",
+                            "website_link": "https://sonomacleanpower.org/residential-customers"
+                        }
+                    ]
+                },
+                {
+                    "year": 2025,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2027,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2028,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2029,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                }
+            ],
+            "recommended_providers": [
+                "SJCE_TotalGreen(100%Renewable)"
+            ]
+        }
     },
     {
         "year": 2025,
@@ -192,7 +704,135 @@
                     "stops": 0
                 }
             }
-        ]
+        ],
+        "recommendations": {
+            "current_provider": "SJCE_TotalGreen(100%Renewable)",
+            "current_renew_percent": 100,
+            "cur_year": 2025,
+            "cur_quarter": 4,
+            "recommendations": [
+                {
+                    "year": 2024,
+                    "recommended_plan": 100,
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "New Provider": [
+                        "SJCE_TotalGreen(100%Renewable)",
+                        "Ava Renewable 100",
+                        "PCE_ECO100(100%Renewable)",
+                        "Pioneer_Green100(100%Renewable)",
+                        "RCEA_Repower+(100%Renewable)",
+                        "SVCE_GreenPrime",
+                        "VCE_UltreaGreen(100%Renewable)",
+                        "CleanpowerSF_Supergeen_100%_Renewable",
+                        "MCE_Deep_Green(100%Renewable)",
+                        "SCP_EverGreen(100%Renewable)"
+                    ],
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Pioneer_Green100(100%Renewable)",
+                            "phone_number": "1-844-937-7466",
+                            "website_link": "https://pioneercommunityenergy.org/residential/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "RCEA_Repower+(100%Renewable)",
+                            "phone_number": "1-707-269-1700",
+                            "website_link": "https://redwoodenergy.org/residential-electricity-service/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SVCE_GreenPrime",
+                            "phone_number": "1-844-474-7823",
+                            "website_link": "https://svcleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "VCE_UltreaGreen(100%Renewable)",
+                            "phone_number": "1-855-699-8232",
+                            "website_link": "https://valleycleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "CleanpowerSF_Supergeen_100%_Renewable",
+                            "phone_number": "1-415-554-0773",
+                            "website_link": "https://www.cleanpowersf.org/rates"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SCP_EverGreen(100%Renewable)",
+                            "phone_number": "1-855-202-2139",
+                            "website_link": "https://sonomacleanpower.org/residential-customers"
+                        }
+                    ]
+                },
+                {
+                    "year": 2025,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2027,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2028,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2029,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                }
+            ],
+            "recommended_providers": [
+                "SJCE_TotalGreen(100%Renewable)"
+            ]
+        }
     },
     {
         "year": 2025,
@@ -231,7 +871,135 @@
                     "stops": 0
                 }
             }
-        ]
+        ],
+        "recommendations": {
+            "current_provider": "SJCE_TotalGreen(100%Renewable)",
+            "current_renew_percent": 100,
+            "cur_year": 2025,
+            "cur_quarter": 4,
+            "recommendations": [
+                {
+                    "year": 2024,
+                    "recommended_plan": 100,
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "New Provider": [
+                        "SJCE_TotalGreen(100%Renewable)",
+                        "Ava Renewable 100",
+                        "PCE_ECO100(100%Renewable)",
+                        "Pioneer_Green100(100%Renewable)",
+                        "RCEA_Repower+(100%Renewable)",
+                        "SVCE_GreenPrime",
+                        "VCE_UltreaGreen(100%Renewable)",
+                        "CleanpowerSF_Supergeen_100%_Renewable",
+                        "MCE_Deep_Green(100%Renewable)",
+                        "SCP_EverGreen(100%Renewable)"
+                    ],
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Pioneer_Green100(100%Renewable)",
+                            "phone_number": "1-844-937-7466",
+                            "website_link": "https://pioneercommunityenergy.org/residential/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "RCEA_Repower+(100%Renewable)",
+                            "phone_number": "1-707-269-1700",
+                            "website_link": "https://redwoodenergy.org/residential-electricity-service/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SVCE_GreenPrime",
+                            "phone_number": "1-844-474-7823",
+                            "website_link": "https://svcleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "VCE_UltreaGreen(100%Renewable)",
+                            "phone_number": "1-855-699-8232",
+                            "website_link": "https://valleycleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "CleanpowerSF_Supergeen_100%_Renewable",
+                            "phone_number": "1-415-554-0773",
+                            "website_link": "https://www.cleanpowersf.org/rates"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SCP_EverGreen(100%Renewable)",
+                            "phone_number": "1-855-202-2139",
+                            "website_link": "https://sonomacleanpower.org/residential-customers"
+                        }
+                    ]
+                },
+                {
+                    "year": 2025,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2027,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2028,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2029,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                }
+            ],
+            "recommended_providers": [
+                "SJCE_TotalGreen(100%Renewable)"
+            ]
+        }
     },
     {
         "year": 2026,
@@ -270,7 +1038,135 @@
                     "stops": 0
                 }
             }
-        ]
+        ],
+        "recommendations": {
+            "current_provider": "SJCE_TotalGreen(100%Renewable)",
+            "current_renew_percent": 100,
+            "cur_year": 2025,
+            "cur_quarter": 4,
+            "recommendations": [
+                {
+                    "year": 2024,
+                    "recommended_plan": 100,
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "New Provider": [
+                        "SJCE_TotalGreen(100%Renewable)",
+                        "Ava Renewable 100",
+                        "PCE_ECO100(100%Renewable)",
+                        "Pioneer_Green100(100%Renewable)",
+                        "RCEA_Repower+(100%Renewable)",
+                        "SVCE_GreenPrime",
+                        "VCE_UltreaGreen(100%Renewable)",
+                        "CleanpowerSF_Supergeen_100%_Renewable",
+                        "MCE_Deep_Green(100%Renewable)",
+                        "SCP_EverGreen(100%Renewable)"
+                    ],
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Pioneer_Green100(100%Renewable)",
+                            "phone_number": "1-844-937-7466",
+                            "website_link": "https://pioneercommunityenergy.org/residential/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "RCEA_Repower+(100%Renewable)",
+                            "phone_number": "1-707-269-1700",
+                            "website_link": "https://redwoodenergy.org/residential-electricity-service/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SVCE_GreenPrime",
+                            "phone_number": "1-844-474-7823",
+                            "website_link": "https://svcleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "VCE_UltreaGreen(100%Renewable)",
+                            "phone_number": "1-855-699-8232",
+                            "website_link": "https://valleycleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "CleanpowerSF_Supergeen_100%_Renewable",
+                            "phone_number": "1-415-554-0773",
+                            "website_link": "https://www.cleanpowersf.org/rates"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SCP_EverGreen(100%Renewable)",
+                            "phone_number": "1-855-202-2139",
+                            "website_link": "https://sonomacleanpower.org/residential-customers"
+                        }
+                    ]
+                },
+                {
+                    "year": 2025,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2027,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2028,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2029,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                }
+            ],
+            "recommended_providers": [
+                "SJCE_TotalGreen(100%Renewable)"
+            ]
+        }
     },
     {
         "year": 2026,
@@ -309,7 +1205,135 @@
                     "stops": 0
                 }
             }
-        ]
+        ],
+        "recommendations": {
+            "current_provider": "SJCE_TotalGreen(100%Renewable)",
+            "current_renew_percent": 100,
+            "cur_year": 2025,
+            "cur_quarter": 4,
+            "recommendations": [
+                {
+                    "year": 2024,
+                    "recommended_plan": 100,
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "New Provider": [
+                        "SJCE_TotalGreen(100%Renewable)",
+                        "Ava Renewable 100",
+                        "PCE_ECO100(100%Renewable)",
+                        "Pioneer_Green100(100%Renewable)",
+                        "RCEA_Repower+(100%Renewable)",
+                        "SVCE_GreenPrime",
+                        "VCE_UltreaGreen(100%Renewable)",
+                        "CleanpowerSF_Supergeen_100%_Renewable",
+                        "MCE_Deep_Green(100%Renewable)",
+                        "SCP_EverGreen(100%Renewable)"
+                    ],
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Pioneer_Green100(100%Renewable)",
+                            "phone_number": "1-844-937-7466",
+                            "website_link": "https://pioneercommunityenergy.org/residential/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "RCEA_Repower+(100%Renewable)",
+                            "phone_number": "1-707-269-1700",
+                            "website_link": "https://redwoodenergy.org/residential-electricity-service/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SVCE_GreenPrime",
+                            "phone_number": "1-844-474-7823",
+                            "website_link": "https://svcleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "VCE_UltreaGreen(100%Renewable)",
+                            "phone_number": "1-855-699-8232",
+                            "website_link": "https://valleycleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "CleanpowerSF_Supergeen_100%_Renewable",
+                            "phone_number": "1-415-554-0773",
+                            "website_link": "https://www.cleanpowersf.org/rates"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SCP_EverGreen(100%Renewable)",
+                            "phone_number": "1-855-202-2139",
+                            "website_link": "https://sonomacleanpower.org/residential-customers"
+                        }
+                    ]
+                },
+                {
+                    "year": 2025,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2027,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2028,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2029,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                }
+            ],
+            "recommended_providers": [
+                "SJCE_TotalGreen(100%Renewable)"
+            ]
+        }
     },
     {
         "year": 2026,
@@ -348,7 +1372,135 @@
                     "stops": 0
                 }
             }
-        ]
+        ],
+        "recommendations": {
+            "current_provider": "SJCE_TotalGreen(100%Renewable)",
+            "current_renew_percent": 100,
+            "cur_year": 2025,
+            "cur_quarter": 4,
+            "recommendations": [
+                {
+                    "year": 2024,
+                    "recommended_plan": 100,
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "New Provider": [
+                        "SJCE_TotalGreen(100%Renewable)",
+                        "Ava Renewable 100",
+                        "PCE_ECO100(100%Renewable)",
+                        "Pioneer_Green100(100%Renewable)",
+                        "RCEA_Repower+(100%Renewable)",
+                        "SVCE_GreenPrime",
+                        "VCE_UltreaGreen(100%Renewable)",
+                        "CleanpowerSF_Supergeen_100%_Renewable",
+                        "MCE_Deep_Green(100%Renewable)",
+                        "SCP_EverGreen(100%Renewable)"
+                    ],
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Pioneer_Green100(100%Renewable)",
+                            "phone_number": "1-844-937-7466",
+                            "website_link": "https://pioneercommunityenergy.org/residential/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "RCEA_Repower+(100%Renewable)",
+                            "phone_number": "1-707-269-1700",
+                            "website_link": "https://redwoodenergy.org/residential-electricity-service/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SVCE_GreenPrime",
+                            "phone_number": "1-844-474-7823",
+                            "website_link": "https://svcleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "VCE_UltreaGreen(100%Renewable)",
+                            "phone_number": "1-855-699-8232",
+                            "website_link": "https://valleycleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "CleanpowerSF_Supergeen_100%_Renewable",
+                            "phone_number": "1-415-554-0773",
+                            "website_link": "https://www.cleanpowersf.org/rates"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SCP_EverGreen(100%Renewable)",
+                            "phone_number": "1-855-202-2139",
+                            "website_link": "https://sonomacleanpower.org/residential-customers"
+                        }
+                    ]
+                },
+                {
+                    "year": 2025,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2027,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2028,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2029,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                }
+            ],
+            "recommended_providers": [
+                "SJCE_TotalGreen(100%Renewable)"
+            ]
+        }
     },
     {
         "year": 2026,
@@ -387,6 +1539,134 @@
                     "stops": 0
                 }
             }
-        ]
+        ],
+        "recommendations": {
+            "current_provider": "SJCE_TotalGreen(100%Renewable)",
+            "current_renew_percent": 100,
+            "cur_year": 2025,
+            "cur_quarter": 4,
+            "recommendations": [
+                {
+                    "year": 2024,
+                    "recommended_plan": 100,
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "New Provider": [
+                        "SJCE_TotalGreen(100%Renewable)",
+                        "Ava Renewable 100",
+                        "PCE_ECO100(100%Renewable)",
+                        "Pioneer_Green100(100%Renewable)",
+                        "RCEA_Repower+(100%Renewable)",
+                        "SVCE_GreenPrime",
+                        "VCE_UltreaGreen(100%Renewable)",
+                        "CleanpowerSF_Supergeen_100%_Renewable",
+                        "MCE_Deep_Green(100%Renewable)",
+                        "SCP_EverGreen(100%Renewable)"
+                    ],
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "PCE_ECO100(100%Renewable)",
+                            "phone_number": "1-866-966-0110",
+                            "website_link": "https://www.peninsulacleanenergy.com/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "Pioneer_Green100(100%Renewable)",
+                            "phone_number": "1-844-937-7466",
+                            "website_link": "https://pioneercommunityenergy.org/residential/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "RCEA_Repower+(100%Renewable)",
+                            "phone_number": "1-707-269-1700",
+                            "website_link": "https://redwoodenergy.org/residential-electricity-service/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SVCE_GreenPrime",
+                            "phone_number": "1-844-474-7823",
+                            "website_link": "https://svcleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "VCE_UltreaGreen(100%Renewable)",
+                            "phone_number": "1-855-699-8232",
+                            "website_link": "https://valleycleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "CleanpowerSF_Supergeen_100%_Renewable",
+                            "phone_number": "1-415-554-0773",
+                            "website_link": "https://www.cleanpowersf.org/rates"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_SV",
+                            "company": "SCP_EverGreen(100%Renewable)",
+                            "phone_number": "1-855-202-2139",
+                            "website_link": "https://sonomacleanpower.org/residential-customers"
+                        }
+                    ]
+                },
+                {
+                    "year": 2025,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2027,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2028,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                },
+                {
+                    "year": 2029,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "New Provider": [],
+                    "carbon_emission_savings": 0,
+                    "provider_info": []
+                }
+            ],
+            "recommended_providers": [
+                "SJCE_TotalGreen(100%Renewable)"
+            ]
+        }
     }
 ]

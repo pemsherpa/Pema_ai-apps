@@ -1,3 +1,4 @@
+from steps.decarb_step import DecarbStepType
 class QuarterStep:
     def __init__(self, year, quarter):
         self.year = year
@@ -19,10 +20,19 @@ class QuarterStep:
         return {
             "year": self.year,
             "quarter": self.quarter,
-            "scope1_steps": [step.step_to_dict() for step in self.scope1_steps],
-            "scope2_steps": [step.step_to_dict() for step in self.scope2_steps],
-            "scope3_steps": [step.step_to_dict() for step in self.scope3_steps],
+            "scope1_steps": [self._convert_step(step) for step in self.scope1_steps],
+            "scope2_steps": [self._convert_step(step) for step in self.scope2_steps],
+            "scope3_steps": [self._convert_step(step) for step in self.scope3_steps],
+            "recommendations": self.recommendations if hasattr(self, 'recommendations') else []
         }
+
+    def _convert_step(self, step):
+        if isinstance(step, dict):
+            return step  # If step is already a dictionary, return it as is
+        elif hasattr(step, 'step_to_dict'):
+            return step.step_to_dict()  # Use the step's method to convert to a dictionary
+        else:
+            raise TypeError(f"Unexpected step type: {type(step)}")  # Handle unexpected types
 
 
 

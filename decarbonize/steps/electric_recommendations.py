@@ -14,13 +14,13 @@ class Electric_Recommendations:
         self.optimized_plan = self.electric_plan
         self.current_provider = current_provider
 
-        if cur_year is None or cur_quarter is None:
+        '''if cur_year is None or cur_quarter is None:
             current_date = datetime.now()
             self.cur_year = current_date.year
             self.cur_quarter = (current_date.month - 1) // 3 + 1  # Calculate quarter from current month
         else:
             self.cur_year = cur_year
-            self.cur_quarter = cur_quarter
+            self.cur_quarter = cur_quarter'''
 
         # Initialize the current renewable percentage
         if current_provider in dataset_electric["Electrical Company Name"].values:
@@ -40,8 +40,10 @@ class Electric_Recommendations:
         self.generate_recommendations(5)  # Plans for 5 years
 
     def generate_recommendations(self, years):
-        for year in range(1, years):
+        for year in range(0, years):
             recommendation = self.recommend_plan(self.cur_year+year)
+            
+            print(recommendation)
             self.recommendations.append(recommendation)
 
             # Update state based on the recommendation
@@ -161,12 +163,19 @@ class Electric_Recommendations:
         
         return provider_infos
     
-    def get_recommendations(self):
-        return self.recommendations
-    
-    def add_recommendations(self, recs):
-        # Append each set of recommendations as a new sublist
-        self.recommendations.append(recs)
+    def to_dict(self):
+        # Converts recommendations to a dictionary format
+        return {
+            "current_provider": self.current_provider,
+            "current_renew_percent": self.current_renew_percent,
+            "cur_year": self.cur_year,
+            "cur_quarter": self.cur_quarter,
+            "recommendations": [rec for rec in self.recommendations],
+            "recommended_providers": list(self.recommended_providers),
+        }
+
+
+
 
 
 

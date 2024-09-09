@@ -29,6 +29,7 @@ from components.FlightEmissionsCalculator import FlightEmissionsCalculator
 from components.FlightEmissionsCalculator import Flight
 from steps.decarb_emissions_step import FlightOptimizerDecarbStep
 from steps.quarterly_step import QuarterStep
+from steps.provider_info import ProviderInfo
 
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
@@ -107,8 +108,13 @@ class DecarbEngine:
         self.steps.append(cru_step)
         
     def provide_recommendations(self, electric_step):
-       electric_recs = Electric_Recommendations(self.provider_info, electric_step,2024,2)
-       return electric_recs
+       now = datetime.datetime.now()
+       current_year = now.year
+    
+       month = now.month
+       current_quarter = (month - 1) // 3 + 1
+       electric_recs = Electric_Recommendations(self.provider_info, electric_step,current_year,current_quarter)
+       return electric_recs.to_dict()
 
     def run_electric_step(self): 
         # Electricity Step
@@ -266,6 +272,8 @@ class DecarbEngine:
             return float(data)
         elif isinstance(data, np.ndarray):
             return data.tolist()
+        elif isinstance(data, ProviderInfo):
+            return data.to_dict()
         else:
             return data
         
@@ -282,13 +290,14 @@ class DecarbEngine:
      decarb_engine.run_flight_analyzer()
      dict_zscore = decarb_engine.get_dict_zscore(decarb_steps)
 
-     print("decarb flow 1")
+     
      current_quarter = decarb_engine.get_cur_quadrant() 
      current_year = int(decarb_goals.year)
      yearly_steps_orig = decarb_engine.init_yearly_steps(decarb_goals.timeframe, current_year, current_quarter)
+     
      yearly_steps=[]
 
-     print("decarb flow 2")
+     
      for goal_yr in range(decarb_goals.timeframe):
       cur_goal_yr = current_year + goal_yr
       cur_goal_quarter = current_quarter
@@ -299,6 +308,9 @@ class DecarbEngine:
                 # Add steps to the corresponding quarter
                 for step in decarb_steps:
                     quarter_step.add_step(step)
+
+                    if hasattr(step, 'recommendations') and step.recommendations:
+                            quarter_step.recommendations = step.recommendations  
                 
                 # Append quarter_step if it's not already in yearly_steps
                 if quarter_step not in yearly_steps:
@@ -306,16 +318,10 @@ class DecarbEngine:
         
         # Update current quarter for the next iteration
         cur_goal_quarter = (cur_goal_quarter % 4) + 1
-                
-
-     
-
-     print(yearly_steps)
-     print("decarb flow 3.1")
+    
     # Step 5: Ensure CRU is only purchased once a year
      #decarb_engine.add_cru_steps(yearly_steps)
 
-     print("decarb flow done")
      decarb_engine.output_json_to_file(yearly_steps, output_file)
 
     def init_yearly_steps(self, timeframe, current_year, current_quarter):
@@ -332,7 +338,6 @@ class DecarbEngine:
                 quarter=cur_quarter,
                 
             )
-            print("FLOWWWWWW")
             yearly_steps.append(quarter_step)
             cur_quarter+=1
         
@@ -340,13 +345,8 @@ class DecarbEngine:
         cur_year+=1
         if(cur_year==current_year+timeframe):
             break
-     
-     for step in yearly_steps:
-        if hasattr(step, 'electric_step') and hasattr(step.electric_step, 'recommendations'):
-            print(f"Year: {step.year}, Quarter: {step.quarter}, Recommendations: {step.electric_step.recommendations}")
-        else:
-            print(f"Year: {step.year}, Quarter: {step.quarter}, No recommendations available")
      return yearly_steps
+     
     
     def add_cru_steps(self, yearly_steps):
         cru_purchased = False
@@ -360,8 +360,8 @@ class DecarbEngine:
                 quarter_step.scope3_steps = [step for step in quarter_step.scope3_steps if "CRU" not in step.description]
         
     def get_dict_zscore(self, decarb_steps):
-        print(f"decarb_steps length {len(decarb_steps)}")
-        [print(f"step {step}") for step in decarb_steps]
+        (f"decarb_steps length {len(decarb_steps)}")
+        [(f"step {step}") for step in decarb_steps]
     
         # Step 2: Compute difficulties, savings, and emissions
         difficulties = [float(step.difficulty) for step in decarb_steps]
@@ -393,7 +393,7 @@ class DecarbEngine:
             this_step_type = step.step_type.name
             dict_zscore[this_step_type] = this_z_score
 
-            print(f"step = {step}")
+           
 
         num_steps = len(decarb_steps)
         dict_zscore["avg-zscore"] = total_zscore / num_steps if num_steps > 0 else 0
