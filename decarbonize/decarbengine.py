@@ -135,7 +135,7 @@ class DecarbEngine:
         #self.run_carpool_step()
         self.run_electric_step()
         #self.run_flight_optimizer_step()
-        self.run_CRU_step()
+        #self.run_CRU_step()
 
         return self.steps
     

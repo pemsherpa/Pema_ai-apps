@@ -1,7 +1,5 @@
 import pandas as pd
-from datetime import datetime
-from steps.quarterly_step import QuarterStep
-from steps.decarb_step_type import DecarbStepType
+from steps.electric_recommendation import Electric_Recommendation
 from steps.provider_info import ProviderInfo
 
 # Load the dataset
@@ -14,20 +12,11 @@ class Electric_Recommendations:
         self.optimized_plan = self.electric_plan
         self.current_provider = current_provider
 
-        '''if cur_year is None or cur_quarter is None:
-            current_date = datetime.now()
-            self.cur_year = current_date.year
-            self.cur_quarter = (current_date.month - 1) // 3 + 1  # Calculate quarter from current month
-        else:
-            self.cur_year = cur_year
-            self.cur_quarter = cur_quarter'''
-
         # Initialize the current renewable percentage
         if current_provider in dataset_electric["Electrical Company Name"].values:
             self.current_renew_percent = dataset_electric.loc[
                 dataset_electric["Electrical Company Name"] == self.current_provider,
-                "Renewable Percentages"
-            ].values[0]
+                "Renewable Percentages"].values[0]
         else:
             raise ValueError("Current provider not found.")
 
@@ -43,16 +32,12 @@ class Electric_Recommendations:
         for year in range(0, years):
             recommendation = self.recommend_plan(self.cur_year+year)
             
-            print(recommendation)
+            print(recommendation.to_json())
             self.recommendations.append(recommendation)
 
             # Update state based on the recommendation
-            if recommendation['recommended_plan'] == 50:
-                self.current_renew_percent = 50
-                self.update_provider(recommendation['New Provider'])
-            elif recommendation['recommended_plan'] == 100:
-                self.current_renew_percent = 100
-                self.update_provider(recommendation['New Provider'])
+            if recommendation.recommended_plan == 50 or recommendation.recommended_plan == 100:
+                self.current_renew_percent = recommendation.recommended_plan
 
             self.cur_year += (self.cur_quarter // 4)
             self.cur_quarter = (self.cur_quarter % 4) + 1
@@ -66,62 +51,25 @@ class Electric_Recommendations:
 
     def recommend_plan(self, year):
         if self.current_renew_percent == 100:
-            return {
-                "year": year,
-                "recommended_plan": 100,
-                "message": "Continue using 100% renewable energy.",
-                "New Provider": [],
-                "carbon_emission_savings": 0,
-                "provider_info": []
-            }
+            return Electric_Recommendation(year, 100, "Continue using 100% renewable energy.", 0, [])
 
         # Calculate carbon emission savings
         carbon_emission_savings = self.electric_step.compute_emissions_savings()
 
         if year == 1:
             new_plan_name = self.optimized_plan
-            new_company = self.get_company_for_plan(new_plan_name)
             provider_infos = self.get_provider_info(new_plan_name)
-            return {
-                "year": year,
-                "recommended_plan": new_plan_name,
-                "message": f"Switch to the {new_plan_name} plan.",
-                "Providers of this plan": list(set(dataset_electric.loc[
-                    dataset_electric["Plan"] == new_plan_name, "Electrical Company Name"].tolist())),
-                "carbon_emission_savings": carbon_emission_savings,
-                "provider_info": [str(info) for info in provider_infos]
-            }
-
+            return Electric_Recommendation(year, new_plan_name, f"Switch to the {new_plan_name} plan.", carbon_emission_savings, provider_infos)
         if year == 2 or self.current_renew_percent < 50:
             new_providers = self.get_unique_providers(50, self.current_renew_percent)
             provider_infos = [info for provider in new_providers for info in self.get_provider_info(self.optimized_plan, provider)]
-            return {
-                "year": year,
-                "recommended_plan": 50,
-                "message": "Switch to a plan with at least 50% renewable energy.",
-                "New Provider": new_providers,
-                "provider_info": provider_infos
-            }
-
+            return Electric_Recommendation(year, 50, "Switch to a plan with at least 50% renewable energy.", carbon_emission_savings, provider_infos)
         if year >= 3 and self.current_renew_percent < 100:
             new_providers = self.get_unique_providers(100, self.current_renew_percent)
             provider_infos = [info for provider in new_providers for info in self.get_provider_info(self.optimized_plan, provider)]
-            return {
-                "year": year,
-                "recommended_plan": 100,
-                "message": "Switch to a plan with 100% renewable energy.",
-                "New Provider": new_providers,
-                "provider_info": provider_infos
-            }
-
-        return {
-            "year": year,
-            "recommended_plan": self.current_renew_percent,
-            "message": "Continue with the current plan.",
-            "New Provider": [],
-            "carbon_emission_savings": 0,
-            "provider_info": []
-        }
+            return Electric_Recommendation(year, 100, "Switch to a plan with 100% renewable energy.", carbon_emission_savings, provider_infos)
+        
+        return Electric_Recommendation(year, self.current_renew_percent, "Continue with the current plan.", 0, [])
 
     def get_unique_providers(self, target_percent, current_percent):
         """
@@ -170,8 +118,7 @@ class Electric_Recommendations:
             "current_renew_percent": self.current_renew_percent,
             "cur_year": self.cur_year,
             "cur_quarter": self.cur_quarter,
-            "recommendations": [rec for rec in self.recommendations],
-            "recommended_providers": list(self.recommended_providers),
+            "recommendations": [rec.to_json() for rec in self.recommendations]
         }
 
 
