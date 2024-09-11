@@ -327,7 +327,6 @@ class DecarbEngine:
     def init_yearly_steps(self, timeframe, current_year, current_quarter):
      # Step 3: Create quarterly goals
      yearly_steps = []
-     # TODO change list -> dictionary
      cur_quarter = current_quarter
      cur_year=current_year
      for _ in range(timeframe):
@@ -553,7 +552,7 @@ class DecarbEngine:
         user_current_plan ='B-19_SV'
         UseCCA = 'Yes'
         HasCCA = 'Yes'
-        self.provider_info='Ava Bright Choice'
+        self.provider_info='PG&E'
         self.new_provider_info='None'
 
         return self.test_electric_step(user_zip_code, user_bundled, user_sector, user_current_plan, UseCCA, HasCCA, "lcu",cost_optimise,carbon_optimise,self.provider_info,self.new_provider_info)
