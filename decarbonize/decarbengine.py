@@ -34,8 +34,8 @@ from steps.provider_info import ProviderInfo
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
-        self.FLIGHT_API_KEY = '4a5943954857866eb389c4790010ddd81a6083280e490d110057457f379c0e2b'
-        #self.FLIGHT_API_KEY = '006946305a3f90e0e828df3343e8cb95dbf024a1c528aa880c32ac4dfbb7ecf4'
+        #self.FLIGHT_API_KEY = '4a5943954857866eb389c4790010ddd81a6083280e490d110057457f379c0e2b'
+        self.FLIGHT_API_KEY = '006946305a3f90e0e828df3343e8cb95dbf024a1c528aa880c32ac4dfbb7ecf4'
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.COORDINATES_API_KEY = "0c608aea6eb74a9da052e7a83df8c693"
         self.firm = firm
@@ -118,7 +118,7 @@ class DecarbEngine:
 
     def run_electric_step(self): 
         # Electricity Step
-        electric_step = self.test_electric_lcu_cca(0,1)
+        electric_step = self.test_electric_lcu_cca(0.5,0.5)
         electric_step.recommendations = self.provide_recommendations(electric_step)
         self.steps.append(electric_step)
 
@@ -274,6 +274,8 @@ class DecarbEngine:
             return data.tolist()
         elif isinstance(data, ProviderInfo):
             return data.to_dict()
+        elif isinstance(data, set):
+            return list(data)
         else:
             return data
         
@@ -401,8 +403,7 @@ class DecarbEngine:
     def output_json_to_file(self, yearly_steps_array, output_file):
         # Convert data to JSON-serializable format
         json_data = [quarter_step.to_dict() for quarter_step in yearly_steps_array]
-        json_data_serializable = self.convert_to_json_serializable(json_data)  # Ensure all values are serializable
-        
+        json_data_serializable = self.convert_to_json_serializable(json_data)  
         # Save the result as a JSON file
         with open(output_file, 'w') as f:
             json.dump(json_data_serializable, f, indent=4)

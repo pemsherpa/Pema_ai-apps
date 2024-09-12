@@ -2,8 +2,10 @@ import pandas as pd
 from steps.electric_recommendation import Electric_Recommendation
 from steps.provider_info import ProviderInfo
 
-# Load the dataset
+# Load the main dataset and the unbundled and bundled sheets
 dataset_electric = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Joint Rate Plan')
+unbundled_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Unbundled Peak Time Price')
+bundled_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Bundled Peak Time Price')
 
 class Electric_Recommendations:
     def __init__(self, current_provider, electric_step, cur_year, cur_quarter):
@@ -18,7 +20,7 @@ class Electric_Recommendations:
                 dataset_electric["Electrical Company Name"] == self.current_provider,
                 "Renewable Percentages"].values[0]
         else:
-            raise ValueError("Current provider not found.")
+            raise ValueError("Current provider not found in the dataset.")
 
         print("Initial Current Renewable Percentage:", self.current_renew_percent)
 
@@ -34,18 +36,12 @@ class Electric_Recommendations:
         for year in range(0, years):
             recommendation = self.recommend_plan(self.cur_year + year)
             print(f"Year: {self.cur_year + year}, Recommended Plan: {recommendation.recommended_plan}")
-            
-            # Log state before updating
-            print(f"Before update - Current Renew Percent: {self.current_renew_percent}")
 
             self.recommendations.append(recommendation)
 
             # Update state based on the recommendation
             if recommendation.recommended_plan in [50, 100]:
                 self.current_renew_percent = recommendation.recommended_plan
-            
-            # Log state after updating
-            print(f"After update - Current Renew Percent: {self.current_renew_percent}")
 
             self.cur_year += (self.cur_quarter // 4)
             self.cur_quarter = (self.cur_quarter % 4) + 1
@@ -59,31 +55,112 @@ class Electric_Recommendations:
 
     def recommend_plan(self, year):
         if self.current_renew_percent == 100:
-            return Electric_Recommendation(year, 100, "Continue using 100% renewable energy.", 0, [])
+            return Electric_Recommendation(year, 100, "Continue using 100% renewable energy.", 0, 0,0,0, [], [])
 
         # Calculate carbon emission savings
         carbon_emission_savings = self.electric_step.compute_emissions_savings()
+        cost_savings = self.electric_step.compute_savings()
 
-        # Year 1: Recommend the calculated optimized plan
         if year == self.cur_year:
             new_plan_name = self.optimized_plan
-            provider_infos = self.get_provider_info(new_plan_name)
+            provider_infos, first_provider_info = self.get_provider_info(new_plan_name)
             optimized_plan_renew_percent = self.get_renewable_percent(new_plan_name)
-            return Electric_Recommendation(year,  self.optimized_plan, f"Switch to the {new_plan_name} plan.", carbon_emission_savings, provider_infos)
-        
-        # Year 2: If the current renewable percentage is less than 50%, recommend a 50% renewable plan
+
+            # Get peak and off-peak prices for the optimized plan
+            peak_price, off_peak_price = self.get_peak_off_peak_prices(new_plan_name)
+
+            return Electric_Recommendation(
+                year,
+                self.optimized_plan,
+                f"Switch to the {new_plan_name} plan.",
+                carbon_emission_savings,
+                cost_savings,
+                peak_price,
+                off_peak_price,
+                provider_infos,
+                first_provider_info
+            )
+
+        # Year 2: Recommend 50% renewable plan if necessary
         if year == self.cur_year + 1 and self.current_renew_percent < 50:
             new_providers = self.get_unique_providers(50, self.current_renew_percent)
-            provider_infos = [info for provider in new_providers for info in self.get_provider_info(self.optimized_plan, provider)]
-            return Electric_Recommendation(year, 50, "Switch to a plan with at least 50% renewable energy.", carbon_emission_savings, provider_infos)
-        
-        # From year 3 onwards: Recommend 100% renewable plans based on the plans recommended in year 2
+            provider_infos = []
+            first_provider_info = None
+            for provider in new_providers:
+                infos, first_info = self.get_provider_info(self.optimized_plan, provider)
+                provider_infos.extend(infos)
+                if first_provider_info is None:
+                    first_provider_info = first_info
+            
+            peak_price, off_peak_price = self.get_peak_off_peak_prices(self.optimized_plan)
+
+            return Electric_Recommendation(
+                year,
+                50,
+                "Switch to a plan with at least 50% renewable energy.",
+                carbon_emission_savings,
+                cost_savings,
+                peak_price,
+                off_peak_price,
+                provider_infos,
+                first_provider_info
+            )
+
+        # From year 3 onwards: Recommend 100% renewable plans
         if year >= self.cur_year + 2:
             new_providers = self.get_unique_providers(100, self.current_renew_percent)
-            provider_infos = [info for provider in new_providers for info in self.get_provider_info(self.optimized_plan, provider)]
-            return Electric_Recommendation(year, 100, "Switch to a plan with 100% renewable energy.", carbon_emission_savings, provider_infos)
+            provider_infos = []
+            first_provider_info = None
+            for provider in new_providers:
+                infos, first_info = self.get_provider_info(self.optimized_plan, provider)
+                provider_infos.extend(infos)
+                if first_provider_info is None:
+                    first_provider_info = first_info
+            
+            peak_price, off_peak_price = self.get_peak_off_peak_prices(self.optimized_plan)
+
+            return Electric_Recommendation(
+                year,
+                100,
+                "Switch to a plan with 100% renewable energy.",
+                carbon_emission_savings,
+                cost_savings,
+                peak_price,
+                off_peak_price,
+                provider_infos,
+                first_provider_info
+            )
+
+        return Electric_Recommendation(year, self.current_renew_percent, "Continue with the current plan.", 0, 0,0,0, [], None)
+
+    def get_peak_off_peak_prices(self, plan_name):
         
-        return Electric_Recommendation(year, self.current_renew_percent, "Continue with the current plan.", 0, [])
+     # Filter rows for the given plan name
+        unbundled_price = unbundled_df.loc[unbundled_df['Plan'] == plan_name]
+        bundled_price = bundled_df.loc[bundled_df['Plan'] == plan_name]
+
+    # Initialize peak and off-peak prices
+        peak_price = None
+        off_peak_price = None
+
+        if not unbundled_price.empty:
+        # Find peak and off-peak prices in the unbundled dataframe
+            peak_row = unbundled_price[unbundled_price['Type'].str.lower() == 'peak']
+            off_peak_row = unbundled_price[unbundled_price['Type'].str.lower() == 'off-peak']
+            peak_price = peak_row['Customer Charge Rate'].iloc[0] if not peak_row.empty else None
+            off_peak_price = off_peak_row['Customer Charge Rate'].iloc[0] if not off_peak_row.empty else None
+
+        if not bundled_price.empty:
+        # Find peak and off-peak prices in the bundled dataframe if not found in unbundled
+            if peak_price is None:
+                peak_row = bundled_price[bundled_price['Type'].str.lower() == 'peak']
+                peak_price = peak_row['Customer Charge Rate'].iloc[0] if not peak_row.empty else None
+            if off_peak_price is None:
+                off_peak_row = bundled_price[bundled_price['Type'].str.lower() == 'off-peak']
+                off_peak_price = off_peak_row['Customer Charge Rate'].iloc[0] if not off_peak_row.empty else None
+
+        return peak_price, off_peak_price
+
 
     def get_unique_providers(self, target_percent, current_percent):
         """
@@ -117,14 +194,18 @@ class Electric_Recommendations:
             df = self.jrp_plans_df[self.jrp_plans_df['Plan'] == plan_name]
         
         provider_infos = []
+        first_provider_info = None
         for _, row in df.iterrows():
             provider_number = row['Phone Number of provider']
             company_link = row['URL of the provider']
             provider_info = ProviderInfo(plan_name, row['Electrical Company Name'], provider_number, company_link)
             provider_infos.append(provider_info)
+
+            if first_provider_info is None:
+                first_provider_info = provider_info
         
-        return provider_infos
-    
+        return provider_infos, first_provider_info
+
     def get_renewable_percent(self, plan_name):
         """
         Retrieves the renewable percentage of a specific plan.
@@ -140,13 +221,3 @@ class Electric_Recommendations:
             "current_provider": self.current_provider,
             "recommendations": [rec.to_json() for rec in self.recommendations]
         }
-
-
-
-
-
-
-
-
-
-
