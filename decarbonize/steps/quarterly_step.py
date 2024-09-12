@@ -1,4 +1,6 @@
 from steps.decarb_step import DecarbStepType
+from steps.electric_decarb_annual_step import ElectricDecarbAnnualStep
+from steps.electric_decarb_step import ElectricDecarbStep
 
 class QuarterStep:
     def __init__(self, year, quarter):
@@ -17,12 +19,20 @@ class QuarterStep:
         elif step.scope == 3:
             self.scope3_steps.append(step)
 
+    def add_rec_to_scope2(self, e_step, rec):
+        if not (type(e_step) is ElectricDecarbStep):
+            raise TypeError(f"add_rec_to_scope2: Unexpected step type: {type(e_step)}")  
+        
+        e_annual_step = ElectricDecarbAnnualStep(rec, e_step.cur_cost, e_step.new_cost, e_step.cur_emissions, e_step.new_emissions, e_step.description, e_step.difficulty)
+        print("add_rec_to_scope2")
+        self.scope2_steps.append(e_annual_step)
+
     def to_dict(self):
         return {
             "year": self.year,
             "quarter": self.quarter,
             "scope1_steps": [self._convert_step(step) for step in self.scope1_steps],
-            "scope2_steps": [self._convert_step_with_recommendations(step) for step in self.scope2_steps],
+            "scope2_steps": [self._convert_step(step) for step in self.scope2_steps],
             "scope3_steps": [self._convert_step(step) for step in self.scope3_steps],
         }
 
@@ -33,13 +43,6 @@ class QuarterStep:
             return step.step_to_dict()  # Use the step's method to convert to a dictionary
         else:
             raise TypeError(f"Unexpected step type: {type(step)}")  # Handle unexpected types
-
-    def _convert_step_with_recommendations(self, step):
-        step_dict = self._convert_step(step)
-        if hasattr(step, 'recommendations') and step.recommendations:
-            # Add recommendations to the step dictionary
-            step_dict['recommendations'] = step.recommendations
-        return step_dict
 
 
 

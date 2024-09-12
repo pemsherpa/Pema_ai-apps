@@ -9,6 +9,7 @@ class DecarbStepType(Enum):
     FLIGHTS_RETURN = auto()
     FLIGHT_OPTIMIZER = auto()
     ELECTRICITY = auto()
+    ELECTRICITY_ANNUAL = auto()
     CRU = auto()
 
     def __str__(self) -> str:

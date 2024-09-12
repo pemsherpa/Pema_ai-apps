@@ -12,10 +12,10 @@ class DecarbStep:
         self.new_emissions = new_emissions
         self.description = description
         self.difficulty = difficulty
-        
        
         scope_mapping = {
             DecarbStepType.ELECTRICITY: 2,
+            DecarbStepType.ELECTRICITY_ANNUAL: 2,
             DecarbStepType.COMMUTING_CARPOOL: 3,
             DecarbStepType.COMMUTING_INDIVIDUAL: 3,
             DecarbStepType.FLIGHTS: 3,
@@ -24,7 +24,6 @@ class DecarbStep:
             DecarbStepType.FLIGHT_OPTIMIZER: 3,
         }
         
-       
         self.scope = scope_mapping.get(step_type)
         if self.scope is None:
             print(f"Unhandled step type: {step_type}")
@@ -61,8 +60,3 @@ class DecarbStep:
 
     def generate_step_description(self):
         return f"{self.description}"
-
-
-
-
-    
