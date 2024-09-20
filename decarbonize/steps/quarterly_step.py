@@ -19,6 +19,10 @@ class QuarterStep:
         elif step.scope == 3:
             self.scope3_steps.append(step)
 
+    def add_electric_step(self, e_rec, e_step):
+        e_annual_step = ElectricDecarbAnnualStep(e_rec, e_step)
+        self.scope2_steps.append(e_annual_step)
+
     def add_rec_to_scope2(self, e_step, rec):
         if not (type(e_step) is ElectricDecarbStep):
             raise TypeError(f"add_rec_to_scope2: Unexpected step type: {type(e_step)}")  

@@ -4,30 +4,25 @@
         "quarter": 3,
         "scope1_steps": [],
         "scope2_steps": [
-            {
-                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
-                "difficulty": 2,
-                "savings": 5.954999999999998,
-                "emissions_savings": 90.0
-            }
+            null
         ],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
+                "savings": 602,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
                 }
             },
             {
-                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
-                "emissions_savings": 26700.0,
+                "savings": 602,
+                "emissions_savings": 25500.0,
                 "data": {
-                    "stops": 1
+                    "stops": 0
                 }
             }
         ]
@@ -36,31 +31,24 @@
         "year": 2024,
         "quarter": 4,
         "scope1_steps": [],
-        "scope2_steps": [
-            {
-                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
-                "difficulty": 2,
-                "savings": 5.954999999999998,
-                "emissions_savings": 90.0
-            }
-        ],
+        "scope2_steps": [],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
+                "savings": 602,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
                 }
             },
             {
-                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
-                "emissions_savings": 26700.0,
+                "savings": 602,
+                "emissions_savings": 25500.0,
                 "data": {
-                    "stops": 1
+                    "stops": 0
                 }
             }
         ]
@@ -69,31 +57,24 @@
         "year": 2025,
         "quarter": 1,
         "scope1_steps": [],
-        "scope2_steps": [
-            {
-                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
-                "difficulty": 2,
-                "savings": 5.954999999999998,
-                "emissions_savings": 90.0
-            }
-        ],
+        "scope2_steps": [],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
+                "savings": 602,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
                 }
             },
             {
-                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
-                "emissions_savings": 26700.0,
+                "savings": 602,
+                "emissions_savings": 25500.0,
                 "data": {
-                    "stops": 1
+                    "stops": 0
                 }
             }
         ]
@@ -102,31 +83,24 @@
         "year": 2025,
         "quarter": 2,
         "scope1_steps": [],
-        "scope2_steps": [
-            {
-                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
-                "difficulty": 2,
-                "savings": 5.954999999999998,
-                "emissions_savings": 90.0
-            }
-        ],
+        "scope2_steps": [],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
+                "savings": 602,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
                 }
             },
             {
-                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
-                "emissions_savings": 26700.0,
+                "savings": 602,
+                "emissions_savings": 25500.0,
                 "data": {
-                    "stops": 1
+                    "stops": 0
                 }
             }
         ]
@@ -136,30 +110,25 @@
         "quarter": 3,
         "scope1_steps": [],
         "scope2_steps": [
-            {
-                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
-                "difficulty": 2,
-                "savings": 5.954999999999998,
-                "emissions_savings": 90.0
-            }
+            null
         ],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
+                "savings": 602,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
                 }
             },
             {
-                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
-                "emissions_savings": 26700.0,
+                "savings": 602,
+                "emissions_savings": 25500.0,
                 "data": {
-                    "stops": 1
+                    "stops": 0
                 }
             }
         ]
@@ -168,31 +137,24 @@
         "year": 2025,
         "quarter": 4,
         "scope1_steps": [],
-        "scope2_steps": [
-            {
-                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
-                "difficulty": 2,
-                "savings": 5.954999999999998,
-                "emissions_savings": 90.0
-            }
-        ],
+        "scope2_steps": [],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
+                "savings": 602,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
                 }
             },
             {
-                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
-                "emissions_savings": 26700.0,
+                "savings": 602,
+                "emissions_savings": 25500.0,
                 "data": {
-                    "stops": 1
+                    "stops": 0
                 }
             }
         ]
@@ -201,31 +163,24 @@
         "year": 2026,
         "quarter": 1,
         "scope1_steps": [],
-        "scope2_steps": [
-            {
-                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
-                "difficulty": 2,
-                "savings": 5.954999999999998,
-                "emissions_savings": 90.0
-            }
-        ],
+        "scope2_steps": [],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
+                "savings": 602,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
                 }
             },
             {
-                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
-                "emissions_savings": 26700.0,
+                "savings": 602,
+                "emissions_savings": 25500.0,
                 "data": {
-                    "stops": 1
+                    "stops": 0
                 }
             }
         ]
@@ -234,31 +189,24 @@
         "year": 2026,
         "quarter": 2,
         "scope1_steps": [],
-        "scope2_steps": [
-            {
-                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
-                "difficulty": 2,
-                "savings": 5.954999999999998,
-                "emissions_savings": 90.0
-            }
-        ],
+        "scope2_steps": [],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
+                "savings": 602,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
                 }
             },
             {
-                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
-                "emissions_savings": 26700.0,
+                "savings": 602,
+                "emissions_savings": 25500.0,
                 "data": {
-                    "stops": 1
+                    "stops": 0
                 }
             }
         ]
@@ -267,31 +215,24 @@
         "year": 2026,
         "quarter": 3,
         "scope1_steps": [],
-        "scope2_steps": [
-            {
-                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
-                "difficulty": 2,
-                "savings": 5.954999999999998,
-                "emissions_savings": 90.0
-            }
-        ],
+        "scope2_steps": [],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
+                "savings": 602,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
                 }
             },
             {
-                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
-                "emissions_savings": 26700.0,
+                "savings": 602,
+                "emissions_savings": 25500.0,
                 "data": {
-                    "stops": 1
+                    "stops": 0
                 }
             }
         ]
@@ -300,31 +241,24 @@
         "year": 2026,
         "quarter": 4,
         "scope1_steps": [],
-        "scope2_steps": [
-            {
-                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
-                "difficulty": 2,
-                "savings": 5.954999999999998,
-                "emissions_savings": 90.0
-            }
-        ],
+        "scope2_steps": [],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
+                "savings": 602,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
                 }
             },
             {
-                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 617,
-                "emissions_savings": 26700.0,
+                "savings": 602,
+                "emissions_savings": 25500.0,
                 "data": {
-                    "stops": 1
+                    "stops": 0
                 }
             }
         ]
