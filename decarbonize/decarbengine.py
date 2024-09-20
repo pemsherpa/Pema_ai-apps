@@ -292,60 +292,40 @@ class DecarbEngine:
      decarb_engine.run_flight_analyzer()
      dict_zscore = decarb_engine.get_dict_zscore(decarb_steps)
 
+     
      current_quarter = decarb_engine.get_cur_quadrant() 
      current_year = int(decarb_goals.year)
      yearly_steps_orig = decarb_engine.init_yearly_steps(decarb_goals.timeframe, current_year, current_quarter)
-     yearly_steps=[]
      
-     electric_step = None
-     # TODO revisit this loop
+     yearly_steps=[]
+
+     
      for goal_yr in range(decarb_goals.timeframe):
       cur_goal_yr = current_year + goal_yr
       cur_goal_quarter = current_quarter
-      
+
       for quarter in range(1, 5):  # Iterate through all four quarters
         for quarter_step in yearly_steps_orig:
             if quarter_step.year == cur_goal_yr and quarter_step.quarter == quarter:
                 # Add steps to the corresponding quarter
                 for step in decarb_steps:
-                    if not electric_step and type(step) is ElectricDecarbStep:
-                        electric_step = step
-                    else:
-                        quarter_step.add_step(step)                
+                    quarter_step.add_step(step)
+
+                    if hasattr(step, 'recommendations') and step.recommendations:
+                            quarter_step.recommendations = step.recommendations  
+                
                 # Append quarter_step if it's not already in yearly_steps
                 if quarter_step not in yearly_steps:
                     yearly_steps.append(quarter_step)
         
         # Update current quarter for the next iteration
         cur_goal_quarter = (cur_goal_quarter % 4) + 1
-     
-     # Step 5: Ensure CRU is only purchased once a year
+    
+    # Step 5: Ensure CRU is only purchased once a year
      #decarb_engine.add_cru_steps(yearly_steps)
-     # convert electric_step into quarters
-     if electric_step:
-      recs = electric_step.recommendations["recommendations"]
-      print("recs")
-      final_steps = []
-      for goal_yr in range(decarb_goals.timeframe):
-       cur_goal_yr = current_year + goal_yr
-       cur_goal_quarter = current_quarter
-       print(f"cur_goal_yr{cur_goal_yr}")
-       print(f"cur_goal_quarter{cur_goal_quarter}")
 
-       for cur_quarter in range(1, 5):
-        for quarter_step in yearly_steps:
-         if quarter_step.year == cur_goal_yr and quarter_step.quarter == cur_quarter:
-          rec = recs[goal_yr]
-          print("calling add_rec_to_scope2 with the rec")
-          print(rec)
-          quarter_step.add_rec_to_scope2(electric_step, rec)
-         final_steps.append(quarter_step)
-         print("calling decarb engine")
-         print(final_steps)
-       decarb_engine.output_json_to_file(final_steps, output_file)
-     else:
-      decarb_engine.output_json_to_file(yearly_steps, output_file)
-     
+     decarb_engine.output_json_to_file(yearly_steps, output_file)
+
     def init_yearly_steps(self, timeframe, current_year, current_quarter):
      # Step 3: Create quarterly goals
      yearly_steps = []
@@ -367,6 +347,7 @@ class DecarbEngine:
         if(cur_year==current_year+timeframe):
             break
      return yearly_steps
+     
     
     def add_cru_steps(self, yearly_steps):
         cru_purchased = False
@@ -724,4 +705,5 @@ def main():
  
 if __name__ == "__main__":
     main()
+    
     
