@@ -8,7 +8,5 @@ class ElectricDecarbAnnualStep(DecarbStep):
 
     def step_to_dict(self):
         dict = super().step_to_dict()
-        dict['data'] = {
-            'newdata gowri': "FIX STRING"
-        }
+        dict['recommendation'] = self.rec
         return dict

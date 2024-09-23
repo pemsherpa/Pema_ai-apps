@@ -318,11 +318,11 @@ class DecarbEngine:
             if quarter_step.year == cur_goal_yr and quarter_step.quarter == quarter:
                 # Add steps to the corresponding quarter
                 for step in decarb_steps:
-                    if type(step) is ElectricDecarbStep:
-                        print("capturing the Electric Decarb Step")
-                        electric_step = step  
+                    if isinstance(step, ElectricDecarbStep):
+                            print("Capturing the Electric Decarb Step")
+                            electric_step = step  
                     else:
-                        quarter_step.add_step(step)                            
+                            quarter_step.add_step(step)                               
                 
                 # Append quarter_step if it's not already in yearly_steps
                 if quarter_step not in yearly_steps:
