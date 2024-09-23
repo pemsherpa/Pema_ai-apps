@@ -240,7 +240,7 @@ class DecarbEngine:
         scope1_target = .55 
         scope2_target = .75 
         scope3_target = .25
-        time_frame = 3
+        time_frame = 5
         decarb_goals = DecarbCustomerGoals(time_frame,customer_id, year, scope1_emissions, scope2_emissions, scope3_emissions, scope1_target, scope2_target, scope3_target)
         return decarb_goals
 
@@ -310,6 +310,7 @@ class DecarbEngine:
 
      electric_step = None
      for goal_yr in range(decarb_goals.timeframe):
+      print(decarb_goals.timeframe)
       cur_goal_yr = current_year + goal_yr
       cur_goal_quarter = current_quarter
 
@@ -318,11 +319,11 @@ class DecarbEngine:
             if quarter_step.year == cur_goal_yr and quarter_step.quarter == quarter:
                 # Add steps to the corresponding quarter
                 for step in decarb_steps:
-                    if type(step) is ElectricDecarbStep:
-                        print("capturing the Electric Decarb Step")
-                        electric_step = step  
+                    if isinstance(step, ElectricDecarbStep):
+                            print("Capturing the Electric Decarb Step")
+                            electric_step = step  
                     else:
-                        quarter_step.add_step(step)                            
+                            quarter_step.add_step(step)                               
                 
                 # Append quarter_step if it's not already in yearly_steps
                 if quarter_step not in yearly_steps:
@@ -335,15 +336,15 @@ class DecarbEngine:
      # Add Electric Steps as Quarter Steps, once per Year
      cur_e_year = current_year
      for goal_yr in range(decarb_goals.timeframe):
-      # Electric_Recommendations
-      cur_e_year += goal_yr
       
-      e_rec = electric_step.recommendations['recommendations'][goal_yr]
-      for quarter_step in yearly_steps_orig:
-       if quarter_step.year == cur_e_year and quarter_step.quarter == current_quarter:
-           print("Adding the electric rec once a year")
-           print(e_rec)
-           quarter_step.add_electric_step(e_rec, electric_step)   
+        cur_e_year =current_year+goal_yr
+        print(goal_yr)
+        e_rec = electric_step.recommendations['recommendations'][goal_yr]
+        for quarter_step in yearly_steps_orig:
+            if quarter_step.year == cur_e_year and quarter_step.quarter == current_quarter:
+              print("Adding the electric rec once a year")
+              print(e_rec)
+              quarter_step.add_electric_step(e_rec, electric_step)   
          
     # Step 5: Ensure CRU is only purchased once a year
      #decarb_engine.add_cru_steps(yearly_steps)

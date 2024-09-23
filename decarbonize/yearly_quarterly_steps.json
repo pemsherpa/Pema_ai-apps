@@ -4,13 +4,101 @@
         "quarter": 3,
         "scope1_steps": [],
         "scope2_steps": [
-            null
+            {
+                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
+                "difficulty": 2,
+                "savings": 99973.414,
+                "emissions_savings": 90.0,
+                "recommendation": {
+                    "year": 2024,
+                    "recommended_plan": "B-19_PV",
+                    "message": "Switch to the B-19_PV plan.",
+                    "carbon_emission_savings": 90.0,
+                    "cost savings": 5.954999999999998,
+                    "peak": 92.10522,
+                    "off_peak": 92.10522,
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "PG&E",
+                            "phone_number": "1-800-743-5000",
+                            "website_link": "https://www.pge.com/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "Ava Bright Choice",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "PG&E",
+                            "phone_number": "1-800-743-5000",
+                            "website_link": "https://www.pge.com/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "MCE_Light_Green(61%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "PG&E",
+                            "phone_number": "1-800-743-5000",
+                            "website_link": "https://www.pge.com/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "3Cchoice",
+                            "phone_number": "1-877-455-2223",
+                            "website_link": "https://3cenergy.org/billing/energy-choices/3cchoice/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "PG&E",
+                            "phone_number": "1-800-743-5000",
+                            "website_link": "https://www.pge.com/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "SJCE_GreenSource(60%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        }
+                    ],
+                    "our recommendation": {
+                        "plan_name": "B-19_PV",
+                        "company": "PG&E",
+                        "phone_number": "1-800-743-5000",
+                        "website_link": "https://www.pge.com/"
+                    }
+                }
+            }
         ],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
@@ -19,7 +107,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 25500.0,
                 "data": {
                     "stops": 0
@@ -36,7 +124,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
@@ -45,7 +133,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 25500.0,
                 "data": {
                     "stops": 0
@@ -62,7 +150,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
@@ -71,7 +159,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 25500.0,
                 "data": {
                     "stops": 0
@@ -88,7 +176,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
@@ -97,7 +185,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 25500.0,
                 "data": {
                     "stops": 0
@@ -110,13 +198,71 @@
         "quarter": 3,
         "scope1_steps": [],
         "scope2_steps": [
-            null
+            {
+                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
+                "difficulty": 2,
+                "savings": 99973.414,
+                "emissions_savings": 90.0,
+                "recommendation": {
+                    "year": 2025,
+                    "recommended_plan": 50,
+                    "message": "Switch to a plan with at least 50% renewable energy.",
+                    "carbon_emission_savings": 90.0,
+                    "cost savings": 5.954999999999998,
+                    "peak": 92.10522,
+                    "off_peak": 92.10522,
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "MCE_Light_Green(61%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "Ava Bright Choice",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "SJCE_GreenSource(60%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        }
+                    ],
+                    "our recommendation": {
+                        "plan_name": "B-19_PV",
+                        "company": "MCE_Deep_Green(100%Renewable)",
+                        "phone_number": "1-888-632-3674",
+                        "website_link": "https://mcecleanenergy.org/home-electrification/"
+                    }
+                }
+            }
         ],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
@@ -125,7 +271,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 25500.0,
                 "data": {
                     "stops": 0
@@ -142,7 +288,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
@@ -151,7 +297,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 25500.0,
                 "data": {
                     "stops": 0
@@ -168,7 +314,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
@@ -177,7 +323,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 25500.0,
                 "data": {
                     "stops": 0
@@ -194,7 +340,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
@@ -203,7 +349,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 25500.0,
                 "data": {
                     "stops": 0
@@ -215,12 +361,54 @@
         "year": 2026,
         "quarter": 3,
         "scope1_steps": [],
-        "scope2_steps": [],
+        "scope2_steps": [
+            {
+                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
+                "difficulty": 2,
+                "savings": 99973.414,
+                "emissions_savings": 90.0,
+                "recommendation": {
+                    "year": 2027,
+                    "recommended_plan": 100,
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "carbon_emission_savings": 90.0,
+                    "cost savings": 5.954999999999998,
+                    "peak": 92.10522,
+                    "off_peak": 92.10522,
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "Ava Renewable 100",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/"
+                        }
+                    ],
+                    "our recommendation": {
+                        "plan_name": "B-19_PV",
+                        "company": "MCE_Deep_Green(100%Renewable)",
+                        "phone_number": "1-888-632-3674",
+                        "website_link": "https://mcecleanenergy.org/home-electrification/"
+                    }
+                }
+            }
+        ],
         "scope3_steps": [
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
@@ -229,7 +417,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 25500.0,
                 "data": {
                     "stops": 0
@@ -246,7 +434,7 @@
             {
                 "description": "Analyze flight costs and emissions, with 1 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
                 "emissions_savings": 27100.0,
                 "data": {
                     "stops": 1
@@ -255,7 +443,251 @@
             {
                 "description": "Analyze flight costs and emissions, with 0 stop(s)",
                 "difficulty": 3,
-                "savings": 602,
+                "savings": 582,
+                "emissions_savings": 25500.0,
+                "data": {
+                    "stops": 0
+                }
+            }
+        ]
+    },
+    {
+        "year": 2027,
+        "quarter": 1,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 27100.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 25500.0,
+                "data": {
+                    "stops": 0
+                }
+            }
+        ]
+    },
+    {
+        "year": 2027,
+        "quarter": 2,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 27100.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 25500.0,
+                "data": {
+                    "stops": 0
+                }
+            }
+        ]
+    },
+    {
+        "year": 2027,
+        "quarter": 3,
+        "scope1_steps": [],
+        "scope2_steps": [
+            {
+                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
+                "difficulty": 2,
+                "savings": 99973.414,
+                "emissions_savings": 90.0,
+                "recommendation": {
+                    "year": 2028,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "carbon_emission_savings": 0,
+                    "cost savings": 0,
+                    "peak": 0,
+                    "off_peak": 0,
+                    "provider_info": [],
+                    "our recommendation": []
+                }
+            }
+        ],
+        "scope3_steps": [
+            {
+                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 27100.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 25500.0,
+                "data": {
+                    "stops": 0
+                }
+            }
+        ]
+    },
+    {
+        "year": 2027,
+        "quarter": 4,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 27100.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 25500.0,
+                "data": {
+                    "stops": 0
+                }
+            }
+        ]
+    },
+    {
+        "year": 2028,
+        "quarter": 1,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 27100.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 25500.0,
+                "data": {
+                    "stops": 0
+                }
+            }
+        ]
+    },
+    {
+        "year": 2028,
+        "quarter": 2,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 27100.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 25500.0,
+                "data": {
+                    "stops": 0
+                }
+            }
+        ]
+    },
+    {
+        "year": 2028,
+        "quarter": 3,
+        "scope1_steps": [],
+        "scope2_steps": [
+            {
+                "description": "zipcode: 94706 cur_cost: 32.541000000000004 self.new_cost: 26.586000000000006",
+                "difficulty": 2,
+                "savings": 99973.414,
+                "emissions_savings": 90.0,
+                "recommendation": {
+                    "year": 2029,
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "carbon_emission_savings": 0,
+                    "cost savings": 0,
+                    "peak": 0,
+                    "off_peak": 0,
+                    "provider_info": [],
+                    "our recommendation": []
+                }
+            }
+        ],
+        "scope3_steps": [
+            {
+                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 27100.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 25500.0,
+                "data": {
+                    "stops": 0
+                }
+            }
+        ]
+    },
+    {
+        "year": 2028,
+        "quarter": 4,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": [
+            {
+                "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
+                "emissions_savings": 27100.0,
+                "data": {
+                    "stops": 1
+                }
+            },
+            {
+                "description": "Analyze flight costs and emissions, with 0 stop(s)",
+                "difficulty": 3,
+                "savings": 582,
                 "emissions_savings": 25500.0,
                 "data": {
                     "stops": 0
