@@ -295,3 +295,6 @@ food_disposal_probabilities = {
     "Yogurt cake": [0.6, 0.2, 0.1, 0.05, 0.05],
     "Yogurt, goat's milk, plain, around 5% fat": [0.5, 0.1, 0.2, 0.1, 0.1]
 }
+
+# Add this line at the end of the file
+__all__ = ['food_disposal_probabilities']

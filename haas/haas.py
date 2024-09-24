@@ -187,6 +187,19 @@ def main():
 
     print("Results have been written to 'haas/output/haas_emissions_report.xlsx'")
     
+    '''
+    TODO food waste
+    read every row of food sheet from haas/input_csv/haas_report_1727043593.xlsx
+    then, for each row, use the function food_waste_calculator() to calculate the
+    emissions abmount based on the food category it falls into from 
+    haas/food_waste_category.py
+    then, use the function food_waste_disposal_probability() to calculate the 
+    probability of each food waste disposal method for each food category
+    '''
+
+def food_waste_calculator(food_category):
+   #@pbryzk get the carbonssutain.io food waste calculation logic and put it here
+   return
 if __name__ == '__main__':
     main()
 

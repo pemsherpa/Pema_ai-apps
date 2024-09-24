@@ -420,3 +420,6 @@ food_waste_category = {
     "Yogurt, goat's milk, plain, around 5% fat"
   ]
 }
+
+# Add this line at the end of the file
+__all__ = ['food_waste_category']
