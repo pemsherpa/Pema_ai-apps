@@ -16,14 +16,14 @@ class CalculateEmission:
   def set_nonstudent_distrib(self):
     train_percent_non_student = 0.02
     bike_percent_non_student = 0.3
-    car_percent_non_student = 0.6
+    car_percent_non_student = 0.61 # added 0.01 since total was 0.99
     flight_percent_non_student = 0.05
     bus_percent_non_student = 0.02 
     self.nonstudent_distribution = AttendeeDistribution(train_percent_non_student, bike_percent_non_student, car_percent_non_student, flight_percent_non_student, bus_percent_non_student )
 
   def set_student_distrib(self):
     train_percent_student = 0.04
-    bike_percent_student = 0.5
+    bike_percent_student = 0.6 # added 0.1 since total was 0.9
     car_percent_student = 0.3
     flight_percent_student = 0.01
     bus_percent_student = 0.05
@@ -44,18 +44,18 @@ class CalculateEmission:
      return (emissions_min, emissions_mean, emissions_max)
      
   def get_haas_event_tuples(self):
-   emission_obj = {}
+   emission_obj = []
    for event in self.haas_events:
       student_emissions = self.student_distribution.get_emission_dict(event.mean_attendance, event.student_percentage)  
       nonstudent_emissions = self.nonstudent_distribution.get_emission_dict(event.mean_attendance, event.non_student_percentage)   
-      emission_obj[event.name] = {
+      emission_obj.append({
          "student": student_emissions,
          "nonstudent": nonstudent_emissions
-         }
+         })
    return emission_obj
   
   def calculate_haas_events_emissions(self):
-   emission_obj = {}
+   emission_obj = []
    for event in self.haas_events:
       emissions_student_obj = self.get_emission_range(self.student_distribution, event, event.student_percentage)
       emissions_nonstudent_obj = self.get_emission_range(self.nonstudent_distribution, event, event.non_student_percentage)
@@ -64,19 +64,19 @@ class CalculateEmission:
       student_intensity = emissions_student_obj[1] / event.student_attendance
       non_student_intensity = emissions_nonstudent_obj[1] / event.non_student_attendance
 
-      emission_obj[event.name] = {
+      emission_obj.append( {
          "student": event.emissions_student_obj,
          "nonstudent": event.emissions_nonstudent_obj,
          "mean_attendance": event.mean_attendance,
          "mean_student_intensity": student_intensity,
          "non_student_intensity": non_student_intensity,
-         }
+         })
    return emission_obj
   
   def set_haas_events(self, haas_events):
      self.haas_events = haas_events
 
-def create_haas_events(num_attendees):
+def create_haas_events(num_attendees, event_type, event_location, event_time):
     haas_events = []
     range = 0
     if num_attendees < 75 and num_attendees > 25:
@@ -89,62 +89,103 @@ def create_haas_events(num_attendees):
     min = num_attendees - range
     max = num_attendees + range
     estimated_attendance = [min, max]
-    
-    # Event Type
-    # Career Fair
-    # Conference
-    # Blockchain/Sustainability
-    # Lunch
-    # Cal: Kickoffs / Celebratory 
 
     # TODO expect to match the eventtype with the student/non-student distribution
-    #if event_type == "lunch":
-      #student = .85
-      #non_student = .15
-    #elif event_type == "conference":
-      #student = .85
-      #non_student = .15
-    #elif event_type == "industry_specific":
+    if event_type == "lunch":
+        student = .85
+        non_student = .15
+    elif event_type == "conference":
+        student = .85
+        non_student = .15
+    elif event_type == "industry_sector":
+        student = .50
+        non_student = .50
+    elif event_type == "celebration":
+        student = .70
+        non_student = .30
+    elif event_type == "career_fair":
+        student = .80
+        non_student = .20
 
-    #elif event_type == "celebration":
-
-    # Career Fair	80	5	15
-    # Conference	60	20	20
-    # Blockchain/Sustainability	50	20	30
-    # Lunch	85	10	5
-    # Cal: Kickoffs / Celebratory 	70	25	5
-    
-    student = .85
-    non_student = .15
-
-    event_name = "EWMBA lunch"
-    event_location = "Haas courtyard"
-    event_time = "8/12/2023 12:00pm"
-
-    haas_event = HaasEvent(estimated_attendance, student, non_student, event_name, event_location, event_time)
+    haas_event = HaasEvent(estimated_attendance, student, non_student, event_location, event_time)
     haas_events.append(haas_event)
     return haas_events
 
-def write_new_excelsheet():
-   pass
-   
-def main():    
+import pandas as pd
+from openpyxl import Workbook
+
+def read_excel_sheet():
+    df = pd.read_excel('haas/input_csv/haas_report_1727043593.xlsx', sheet_name='event_totals')
+    return df
+
+def process_event_data(row):
+    print(row)
+    return create_haas_events(row['attendees'], row['event_type'], row['location'], row['event_date'])
+
+def write_new_excelsheet(tuples):
+    wb = Workbook()
+    ws_emissions = wb.active
+    ws_emissions.title = "transportation"
+
+    # Define headers
+    headers = [
+        "student-train", "student-car", "student-plane", "student-bus", "student-bike",
+        "nonstudent-train", "nonstudent-car", "nonstudent-plane", "nonstudent-bus", "nonstudent-bike"
+    ]
+    ws_emissions.append(headers)
+
+    # Write data
+    for tup in tuples:
+        row_data = []
+        for category in ['student', 'nonstudent']:
+            for transport in ['train', 'car', 'plane', 'bus', 'bike']:
+                row_data.append(tup[category][transport])
+        ws_emissions.append(row_data)
+
+    try:
+        wb.save('haas/output_csv/haas_emissions_report.xlsx')
+        print("Excel file saved successfully.")
+    except Exception as e:
+        print(f"Error saving Excel file: {e}")
+        print("Attempting to handle the error...")
+        
+        if isinstance(e, FileNotFoundError):
+            print("The output directory doesn't exist. Please check the path.")
+        elif isinstance(e, PermissionError):
+            print("Permission denied. Please check file permissions.")
+        else:
+            print("Unexpected error occurred. Please check your data and try again.")
+        
+        # You might want to implement a fallback save method here
+        # For example, saving to a different location or format
+
+def main():
     calculate_emissions = CalculateEmission()
-    #TODO Kentaro read excel sheet populate per haas event.
-    haas_events = create_haas_events()
-    calculate_emissions.set_haas_events(haas_events)
+    
+    # Read the Excel sheet
+    df = read_excel_sheet()
+    
+    # Process each row and create HaasEvent objects
+    all_haas_events = []
+    for _, row in df.iterrows():
+        haas_events = process_event_data(row)
+        all_haas_events.extend(haas_events)
+    
+    # Set HaasEvents and calculate emissions
+    calculate_emissions.set_haas_events(all_haas_events)
     emissions = calculate_emissions.calculate_haas_events_emissions()
     tuples = calculate_emissions.get_haas_event_tuples()
 
-    print ("emissions are")
+    print("Emissions are:")
     print(emissions)
 
-    print ("tuples are")
+    print("Tuples are:")
     print(tuples)
 
-    # TODO
+    # Write results to a new Excel sheet
+    write_new_excelsheet(tuples)
 
-    write_new_excelsheet()
+    print("Results have been written to 'haas/output/haas_emissions_report.xlsx'")
     
 if __name__ == '__main__':
     main()
