@@ -59,14 +59,14 @@ def estimate_probabilities(food_item):
 
     return [landfilled, combusted, composted, anaerobic_dry, anaerobic_wet]
 
-df = pd.read_excel('input_csv/haas_report_1727043593.xlsx', sheet_name='food')
-unique_food_names = df['food_name'].unique().tolist()
-# Applying the function to each food item in the dataset
-probability_dict = {food_item: estimate_probabilities(food_item) for food_item in unique_food_names}
+# df = pd.read_excel('input_csv/haas_report_1727043593.xlsx', sheet_name='food')
+# unique_food_names = df['food_name'].unique().tolist()
+# # Applying the function to each food item in the dataset
+# probability_dict = {food_item: estimate_probabilities(food_item) for food_item in unique_food_names}
 
 
-# Return the complete dictionary
-probability_dict
+# # Return the complete dictionary
+# probability_dict
 
 # run this script above to get the data below
 
