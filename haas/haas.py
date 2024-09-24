@@ -11,6 +11,8 @@ from attendee import AttendeeDistribution
 from haasevent import HaasEvent
 from food_waste_category import food_waste_category
 from food_waste_disposal_probability import food_waste_disposal_probability
+import pandas as pd
+from openpyxl import Workbook
 
 class CalculateEmission:
   
@@ -120,8 +122,7 @@ def create_haas_events(num_attendees, event_type, event_location, event_time, ca
     haas_events.append(haas_event)
     return haas_events
 
-import pandas as pd
-from openpyxl import Workbook
+
 
 def read_excel_sheet(sheet_name):
     df = pd.read_excel('input_csv/haas_report_1727043593.xlsx', sheet_name=sheet_name)
