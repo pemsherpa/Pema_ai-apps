@@ -115,7 +115,7 @@ import pandas as pd
 from openpyxl import Workbook
 
 def read_excel_sheet():
-    df = pd.read_excel('haas/input_csv/haas_report_1727043593.xlsx', sheet_name='event_totals')
+    df = pd.read_excel('input_csv/haas_report_1727043593.xlsx', sheet_name='event_totals')
     return df
 
 def process_event_data(row):
@@ -143,7 +143,7 @@ def write_new_excelsheet(tuples):
         ws_emissions.append(row_data)
 
     try:
-        wb.save('haas/output_csv/haas_emissions_report.xlsx')
+        wb.save('output_csv/haas_emissions_report.xlsx')
         print("Excel file saved successfully.")
     except Exception as e:
         print(f"Error saving Excel file: {e}")
@@ -185,7 +185,7 @@ def main():
     # Write results to a new Excel sheet
     write_new_excelsheet(tuples)
 
-    print("Results have been written to 'haas/output/haas_emissions_report.xlsx'")
+    print("Results have been written to 'haas/output_csv/haas_emissions_report.xlsx'")
     
     '''
     TODO food waste
