@@ -49,6 +49,10 @@ class CalculateEmission:
       student_emissions = self.student_distribution.get_emission_dict(event.mean_attendance, event.student_percentage)  
       nonstudent_emissions = self.nonstudent_distribution.get_emission_dict(event.mean_attendance, event.non_student_percentage)   
       emission_obj.append({
+         "event-attendance": event.mean_attendance,
+         "event-time": event.time,
+         "event-location": event.location,
+         "event-catering": event.catering,
          "student": student_emissions,
          "nonstudent": nonstudent_emissions
          })
@@ -65,6 +69,10 @@ class CalculateEmission:
       non_student_intensity = emissions_nonstudent_obj[1] / event.non_student_attendance
 
       emission_obj.append( {
+         "event-attendance": event.mean_attendance,
+         "event-time": event.time,
+         "event-location": event.location,
+         "event-catering": event.catering,
          "student": event.emissions_student_obj,
          "nonstudent": event.emissions_nonstudent_obj,
          "mean_attendance": event.mean_attendance,
@@ -76,7 +84,7 @@ class CalculateEmission:
   def set_haas_events(self, haas_events):
      self.haas_events = haas_events
 
-def create_haas_events(num_attendees, event_type, event_location, event_time):
+def create_haas_events(num_attendees, event_type, event_location, event_time, catering):
     haas_events = []
     range = 0
     if num_attendees < 75 and num_attendees > 25:
@@ -107,7 +115,7 @@ def create_haas_events(num_attendees, event_type, event_location, event_time):
         student = .80
         non_student = .20
 
-    haas_event = HaasEvent(estimated_attendance, student, non_student, event_location, event_time)
+    haas_event = HaasEvent(estimated_attendance, student, non_student, event_location, event_time, catering)
     haas_events.append(haas_event)
     return haas_events
 
@@ -120,7 +128,7 @@ def read_excel_sheet():
 
 def process_event_data(row):
     print(row)
-    return create_haas_events(row['attendees'], row['event_type'], row['location'], row['event_date'])
+    return create_haas_events(row['attendees'], row['event_type'], row['location'], row['event_date'], row['catering_company'])
 
 def write_new_excelsheet(tuples):
     wb = Workbook()
@@ -129,17 +137,27 @@ def write_new_excelsheet(tuples):
 
     # Define headers
     headers = [
-        "student-train", "student-car", "student-plane", "student-bus", "student-bike",
-        "nonstudent-train", "nonstudent-car", "nonstudent-plane", "nonstudent-bus", "nonstudent-bike"
+        "event-time", "event-location", "event-catering", "event-attendance",
+        "student-train", "student-car", "student-plane", "student-bus", "student-bike", "student-total",
+        "nonstudent-train", "nonstudent-car", "nonstudent-plane", "nonstudent-bus", "nonstudent-bike", "nonstudent-total", "total-emissions"
     ]
     ws_emissions.append(headers)
 
     # Write data
     for tup in tuples:
-        row_data = []
+        row_data = [
+            tup["event-time"], tup["event-location"], tup["event-catering"], tup["event-attendance"]
+        ]
+        total = 0
         for category in ['student', 'nonstudent']:
+            sum = 0
             for transport in ['train', 'car', 'plane', 'bus', 'bike']:
-                row_data.append(tup[category][transport])
+                val = tup[category][transport]
+                sum += val
+                row_data.append(val)
+            row_data.append(sum)
+            total += sum
+        row_data.append(total)
         ws_emissions.append(row_data)
 
     try:
