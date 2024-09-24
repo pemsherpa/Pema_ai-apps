@@ -16,7 +16,7 @@ from openpyxl import Workbook
 import requests
 import asyncio
 class CalculateEmission:
-  def call_calculator_API(self, material, method, quantity, units):
+  async def call_calculator_API(self, material, method, quantity, units):
      print("making request")
      headers = {
             'Content-Type': 'application/json'
@@ -36,13 +36,13 @@ class CalculateEmission:
      response_json = response.json()
      return response_json
   
-  def calculate_waste_emissions_per_tuple(self, tuple, quantities):
+  async def calculate_waste_emissions_per_tuple(self, tuple, quantities):
      total_waste_kg = 0
      disposal_methods = ['landfilled', 'combusted', 'composted', 'anaerobicallyDigestedDry', 'anaerobicallyDigestedWet']
      for method, quantity in zip(disposal_methods, quantities):
         if quantity > 0:  
             material = tuple['food_waste_category']
-            response_json = self.call_calculator_API(material, method, quantity, 'kilogram (kg)')
+            response_json = await self.call_calculator_API(material, method, quantity, 'kilogram (kg)')
             total_waste_kg += response_json['co2_emissions']
      return total_waste_kg
   
@@ -164,14 +164,19 @@ def create_haas_events(num_attendees, event_type, event_location, event_time, ca
     haas_events.append(haas_event)
     return haas_events
 
+
+
 def read_excel_sheet(sheet_name):
-    df = pd.read_excel('input_csv/haas_report_1727205562.xlsx', sheet_name=sheet_name)
+    df = pd.read_excel('input_csv/haas_report_1727043593.xlsx', sheet_name=sheet_name)
     return df
 
 def process_event_data(row):
     return create_haas_events(row['attendees'], row['event_type'], row['location'], row['event_date'], row['catering_company'])
-   
-def write_new_excelsheet(transportation_tuples, waste_tuples):
+
+
+    
+
+async def write_new_excelsheet(transportation_tuples, waste_tuples):
     wb = Workbook()
     sheet_to_delete = wb['Sheet'] 
     wb.remove(sheet_to_delete) 
@@ -180,7 +185,7 @@ def write_new_excelsheet(transportation_tuples, waste_tuples):
     write_transportation_tab(ws_transportation, transportation_tuples)
 
     ws_waste = wb.create_sheet("food_waste")
-    write_waste_tab(ws_waste, waste_tuples)
+    await write_waste_tab(ws_waste, waste_tuples)
 
     try:
         wb.save('output_csv/haas_emissions_report.xlsx')
@@ -199,11 +204,11 @@ def write_new_excelsheet(transportation_tuples, waste_tuples):
         # You might want to implement a fallback save method here
         # For example, saving to a different location or format
 
-def write_waste_tab(worksheet, waste_tuples):
+async def write_waste_tab(worksheet, waste_tuples):
     # Define headers
     # [Landfilled, Combusted, Composted, Anaerobically Digested (Dry Digestate with Curing),
-    #  Anaerobically Digested (Wet Digestate with Curing)]
-    #event_date	location	catering_company	attendees	food_item	total_footprint_foodprint	total_footprint_gpt	servings	food_quantity	food_price	footprint_per_kg	quantity	units	food_name	food_footprint	food_rating_quality			
+#  Anaerobically Digested (Wet Digestate with Curing)]
+#event_date	location	catering_company	attendees	food_item	total_footprint_foodprint	total_footprint_gpt	servings	food_quantity	food_price	footprint_per_kg	quantity	units	food_name	food_footprint	food_rating_quality			
     headers = [
         "event_date", "location", "catering_company", "attendees", "food_item", "total_footprint_foodprint", "total_footprint_gpt", "servings", "food_quantity", "food_price", "footprint_per_kg", "quantity", "units", "food_name", "food_footprint", "food_rating_quality",
         "food_waste_category", "food_quantity", "landfill_probability", "combusted_probability", "composted_probability", "anaerobically_digested_dry_probability", "anaerobically_digested_wet_probability", "probability_sum_check",
@@ -212,7 +217,6 @@ def write_waste_tab(worksheet, waste_tuples):
     worksheet.append(headers)
     calculate_emissions = CalculateEmission()
     for waste_tuple in waste_tuples:
-        #print(f"waste_tuple {waste_tuple}")
         probability_sum_check = waste_tuple['landfill_prob'] + waste_tuple['combustion_prob'] + waste_tuple['compost_prob'] + waste_tuple['anaerobic_dry_prob'] + waste_tuple['anaerobic_wet_prob']
         multiplier = waste_tuple['food_quantity'] / waste_tuple['servings']
         kg_per_serving = waste_tuple['quantity'] / 1000 
@@ -228,8 +232,8 @@ def write_waste_tab(worksheet, waste_tuples):
         kg_anaerobically_digested_wet = kg_total_waste_after_donation * waste_tuple['anaerobic_wet_prob']
         
         quantities = [kg_landfill, kg_combusted, kg_composted, kg_anaerobically_digested_dry, kg_anaerobically_digested_wet]
-        carbon_footprint_waste = calculate_emissions.calculate_waste_emissions_per_tuple(waste_tuple, quantities)
-        #print("carbon_footprint_waste: ", carbon_footprint_waste)
+        carbon_footprint_waste = await calculate_emissions.calculate_waste_emissions_per_tuple(waste_tuple, quantities)
+        print( "carbon_footprint_waste: ", carbon_footprint_waste)
 
         row_data = [
             waste_tuple['event_date'], waste_tuple['location'], waste_tuple['catering_company'], waste_tuple['attendees'], waste_tuple['food_item'], waste_tuple['total_footprint_foodprint'], waste_tuple['total_footprint_gpt'], waste_tuple['servings'], waste_tuple['food_quantity'], waste_tuple['food_price'], waste_tuple['footprint_per_kg'], waste_tuple['quantity'], waste_tuple['units'], waste_tuple['food_name'], waste_tuple['food_footprint'], waste_tuple['food_rating_quality'],
@@ -265,7 +269,7 @@ def write_transportation_tab(worksheet, tuples):
         row_data.append(total)
         worksheet.append(row_data)
 
-def main():
+async def main():
     calculate_emissions = CalculateEmission()
     
     # Read the Excel sheet
@@ -283,6 +287,7 @@ def main():
     transportation_tuples = calculate_emissions.get_haas_event_tuples()
 
     # read food waste sheet
+
     df_food = read_excel_sheet('food')
     waste_tuples = []
     for _, row in df_food.iterrows():
@@ -320,14 +325,15 @@ def main():
         }
         waste_tuples.append(waste_tuple)
     
+    
     # Write results to a new Excel sheet
-    write_new_excelsheet(transportation_tuples, waste_tuples)
+    await write_new_excelsheet(transportation_tuples, waste_tuples)
 
     print("Results have been written to 'haas/output_csv/haas_emissions_report.xlsx'")
 
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())
 
 #For Students
 #Number people bike,train,plane ...
