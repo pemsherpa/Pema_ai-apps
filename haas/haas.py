@@ -9,7 +9,8 @@ Original file is located at
 
 from attendee import AttendeeDistribution
 from haasevent import HaasEvent
-
+from food_waste_category import food_waste_category
+from food_waste_disposal_probability import food_waste_disposal_probability
 
 class CalculateEmission:
   
@@ -122,43 +123,27 @@ def create_haas_events(num_attendees, event_type, event_location, event_time, ca
 import pandas as pd
 from openpyxl import Workbook
 
-def read_excel_sheet():
-    df = pd.read_excel('input_csv/haas_report_1727043593.xlsx', sheet_name='event_totals')
+def read_excel_sheet(sheet_name):
+    df = pd.read_excel('input_csv/haas_report_1727043593.xlsx', sheet_name=sheet_name)
     return df
 
 def process_event_data(row):
     print(row)
     return create_haas_events(row['attendees'], row['event_type'], row['location'], row['event_date'], row['catering_company'])
 
-def write_new_excelsheet(tuples):
+
+    
+
+def write_new_excelsheet(transportation_tuples, waste_tuples):
     wb = Workbook()
-    ws_emissions = wb.active
-    ws_emissions.title = "transportation"
+    sheet_to_delete = wb['Sheet'] 
+    wb.remove(sheet_to_delete) 
+    ws_transportation = wb.create_sheet("transportation")
+    
+    write_transportation_tab(ws_transportation, transportation_tuples)
 
-    # Define headers
-    headers = [
-        "event-time", "event-location", "event-catering", "event-attendance",
-        "student-train", "student-car", "student-plane", "student-bus", "student-bike", "student-total",
-        "nonstudent-train", "nonstudent-car", "nonstudent-plane", "nonstudent-bus", "nonstudent-bike", "nonstudent-total", "total-emissions"
-    ]
-    ws_emissions.append(headers)
-
-    # Write data
-    for tup in tuples:
-        row_data = [
-            tup["event-time"], tup["event-location"], tup["event-catering"], tup["event-attendance"]
-        ]
-        total = 0
-        for category in ['student', 'nonstudent']:
-            sum = 0
-            for transport in ['train', 'car', 'plane', 'bus', 'bike']:
-                val = tup[category][transport]
-                sum += val
-                row_data.append(val)
-            row_data.append(sum)
-            total += sum
-        row_data.append(total)
-        ws_emissions.append(row_data)
+    ws_waste = wb.create_sheet("food_waste")
+    write_waste_tab(ws_waste, waste_tuples)
 
     try:
         wb.save('output_csv/haas_emissions_report.xlsx')
@@ -177,11 +162,49 @@ def write_new_excelsheet(tuples):
         # You might want to implement a fallback save method here
         # For example, saving to a different location or format
 
+def write_waste_tab(worksheet, tuples):
+    # Define headers
+    # [Landfilled, Combusted, Composted, Anaerobically Digested (Dry Digestate with Curing),
+#  Anaerobically Digested (Wet Digestate with Curing)]
+#event_date	location	catering_company	attendees	food_item	total_footprint_foodprint	total_footprint_gpt	servings	food_quantity	food_price	footprint_per_kg	quantity	units	food_name	food_footprint	food_rating_quality			
+    headers = [
+        "event_date", "location", "catering_company", "attendees", "food_item", "total_footprint_foodprint", "total_footprint_gpt", "servings", "food_quantity", "food_price", "footprint_per_kg", "quantity", "units", "food_name", "food_footprint", "food_rating_quality",
+        "food_waste_category", "food_waste_amount", "landfill_probability", "combusted_probability", "composted_probability", "anaerobically_digested_dry_probability", "anaerobically_digested_wet_probability"
+    ]
+    worksheet.append(headers)
+    
+
+def write_transportation_tab(worksheet, tuples):
+    # Define headers
+    headers = [
+        "event-time", "event-location", "event-catering", "event-attendance",
+        "student-train", "student-car", "student-plane", "student-bus", "student-bike", "student-total",
+        "nonstudent-train", "nonstudent-car", "nonstudent-plane", "nonstudent-bus", "nonstudent-bike", "nonstudent-total", "total-emissions"
+    ]
+    worksheet.append(headers)
+
+    # Write data
+    for tup in tuples:
+        row_data = [
+            tup["event-time"], tup["event-location"], tup["event-catering"], tup["event-attendance"]
+        ]
+        total = 0
+        for category in ['student', 'nonstudent']:
+            sum = 0
+            for transport in ['train', 'car', 'plane', 'bus', 'bike']:
+                val = tup[category][transport]
+                sum += val
+                row_data.append(val)
+            row_data.append(sum)
+            total += sum
+        row_data.append(total)
+        worksheet.append(row_data)
+
 def main():
     calculate_emissions = CalculateEmission()
     
     # Read the Excel sheet
-    df = read_excel_sheet()
+    df = read_excel_sheet('event_totals')
     
     # Process each row and create HaasEvent objects
     all_haas_events = []
@@ -192,16 +215,48 @@ def main():
     # Set HaasEvents and calculate emissions
     calculate_emissions.set_haas_events(all_haas_events)
     emissions = calculate_emissions.calculate_haas_events_emissions()
-    tuples = calculate_emissions.get_haas_event_tuples()
+    transportation_tuples = calculate_emissions.get_haas_event_tuples()
 
     print("Emissions are:")
     print(emissions)
 
     print("Tuples are:")
-    print(tuples)
+    print(transportation_tuples)
 
+    # read food waste sheet
+    df_food = read_excel_sheet('food')
+    waste_tuples = []
+    for _, row in df_food.iterrows():
+        food_name = row['food_name']
+        
+        # Find the category for this food item
+        food_category = None
+        for category, items in food_waste_category.items():
+            if food_name in items:
+                food_category = category
+                break
+        
+        if food_category is None:
+            print(f"Warning: No category found for {food_name}")
+            continue
+        
+        # Get the disposal probability for this category
+        disposal_probability = food_waste_disposal_probability.get(food_name, [0, 0, 0, 0, 0])
+        
+        # Create a new tuple with the food information
+        waste_tuple = {
+            'food_name': food_name,
+            'food_category': food_category,
+            'landfill_prob': disposal_probability[0],
+            'combustion_prob': disposal_probability[1],
+            'compost_prob': disposal_probability[2],
+            'anaerobic_dry_prob': disposal_probability[3],
+            'anaerobic_wet_prob': disposal_probability[4]
+        }
+        waste_tuples.append(waste_tuple)
+    
     # Write results to a new Excel sheet
-    write_new_excelsheet(tuples)
+    write_new_excelsheet(transportation_tuples, waste_tuples)
 
     print("Results have been written to 'haas/output_csv/haas_emissions_report.xlsx'")
     
