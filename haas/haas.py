@@ -9,8 +9,8 @@ Original file is located at
 
 from attendee import AttendeeDistribution
 from haasevent import HaasEvent
-from food_waste_category import food_waste_category
-from food_waste_disposal_probability import food_waste_disposal_probability
+from food_waste_classifier_objects.food_waste_disposal_probability import food_waste_disposal_probability
+import json
 import pandas as pd
 from openpyxl import Workbook
 
@@ -35,8 +35,19 @@ class CalculateEmission:
   def __init__(self):    
     self.set_student_distrib()
     self.set_nonstudent_distrib()
+    with open('food_waste_classifier_objects/food_item_category.json', 'r') as file:
+        self.food_waste_item_category = json.load(file)
+
+  def find_food_waste_category(self, food_item):
+    ret = self.food_waste_item_category.get(food_item)
+    if ret is None:
+        print("Unknown food item: ", food_item)
+        return "Food Waste (meat)" # skew higher since we don't know what it is
+    else:
+      return ret
     
   def get_emission_range(self, distrib, event, distrib_percentage):
+
      min = distrib_percentage * event.ci_distribution[0]
      mean = distrib_percentage * event.mean_attendance
      max = distrib_percentage * event.ci_distribution[1]
@@ -163,16 +174,23 @@ def write_new_excelsheet(transportation_tuples, waste_tuples):
         # You might want to implement a fallback save method here
         # For example, saving to a different location or format
 
-def write_waste_tab(worksheet, tuples):
+def write_waste_tab(worksheet, waste_tuples):
     # Define headers
     # [Landfilled, Combusted, Composted, Anaerobically Digested (Dry Digestate with Curing),
 #  Anaerobically Digested (Wet Digestate with Curing)]
 #event_date	location	catering_company	attendees	food_item	total_footprint_foodprint	total_footprint_gpt	servings	food_quantity	food_price	footprint_per_kg	quantity	units	food_name	food_footprint	food_rating_quality			
     headers = [
         "event_date", "location", "catering_company", "attendees", "food_item", "total_footprint_foodprint", "total_footprint_gpt", "servings", "food_quantity", "food_price", "footprint_per_kg", "quantity", "units", "food_name", "food_footprint", "food_rating_quality",
-        "food_waste_category", "food_waste_amount", "landfill_probability", "combusted_probability", "composted_probability", "anaerobically_digested_dry_probability", "anaerobically_digested_wet_probability"
+        "food_waste_category", "food_quantity", "landfill_probability", "combusted_probability", "composted_probability", "anaerobically_digested_dry_probability", "anaerobically_digested_wet_probability", "probability_sum_check"
     ]
     worksheet.append(headers)
+    for waste_tuple in waste_tuples:
+        probability_sum_check = waste_tuple['landfill_prob'] + waste_tuple['combustion_prob'] + waste_tuple['compost_prob'] + waste_tuple['anaerobic_dry_prob'] + waste_tuple['anaerobic_wet_prob']
+        row_data = [
+            waste_tuple['event_date'], waste_tuple['location'], waste_tuple['catering_company'], waste_tuple['attendees'], waste_tuple['food_item'], waste_tuple['total_footprint_foodprint'], waste_tuple['total_footprint_gpt'], waste_tuple['servings'], waste_tuple['food_quantity'], waste_tuple['food_price'], waste_tuple['footprint_per_kg'], waste_tuple['quantity'], waste_tuple['units'], waste_tuple['food_name'], waste_tuple['food_footprint'], waste_tuple['food_rating_quality'],
+            waste_tuple['food_waste_category'], waste_tuple['food_quantity'], waste_tuple['landfill_prob'], waste_tuple['combustion_prob'], waste_tuple['compost_prob'], waste_tuple['anaerobic_dry_prob'], waste_tuple['anaerobic_wet_prob'], probability_sum_check
+        ]
+        worksheet.append(row_data)
     
 
 def write_transportation_tab(worksheet, tuples):
@@ -225,29 +243,37 @@ def main():
     print(transportation_tuples)
 
     # read food waste sheet
+
     df_food = read_excel_sheet('food')
     waste_tuples = []
     for _, row in df_food.iterrows():
         food_name = row['food_name']
         
-        # Find the category for this food item
-        food_category = None
-        for category, items in food_waste_category.items():
-            if food_name in items:
-                food_category = category
-                break
-        
-        if food_category is None:
-            print(f"Warning: No category found for {food_name}")
-            continue
-        
+        food_waste_category = calculate_emissions.find_food_waste_category(food_name)
         # Get the disposal probability for this category
         disposal_probability = food_waste_disposal_probability.get(food_name, [0, 0, 0, 0, 0])
         
         # Create a new tuple with the food information
         waste_tuple = {
-            'food_name': food_name,
-            'food_category': food_category,
+            "event_date": row['event_date'],
+            "location": row['location'],
+            "catering_company": row['catering_company'],
+            "attendees": row['attendees'],
+            "food_item": row['food_item'],
+            "total_footprint_foodprint": row['total_footprint_foodprint'],
+            "total_footprint_gpt": row['total_footprint_gpt'],
+            "servings": row['servings'],
+            "food_quantity": row['food_quantity'],
+            "food_price": row['food_price'],
+            "footprint_per_kg": row['footprint_per_kg'],
+            "quantity": row['quantity'],
+            "units": row['units'],
+            "food_name": row['food_name'],
+            "food_footprint": row['food_footprint'],
+            "food_rating_quality": row['food_rating_quality'],
+            "food_quantity": row['food_quantity'],
+
+            'food_waste_category': food_waste_category,
             'landfill_prob': disposal_probability[0],
             'combustion_prob': disposal_probability[1],
             'compost_prob': disposal_probability[2],
@@ -255,6 +281,9 @@ def main():
             'anaerobic_wet_prob': disposal_probability[4]
         }
         waste_tuples.append(waste_tuple)
+    
+    print("Waste tuples are:")
+    print(waste_tuples)
     
     # Write results to a new Excel sheet
     write_new_excelsheet(transportation_tuples, waste_tuples)
