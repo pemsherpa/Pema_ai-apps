@@ -14,7 +14,7 @@ from haasevent import HaasEvent
 class CalculateEmission:
   
   def set_nonstudent_distrib(self):
-    train_percent_non_student = 0.03
+    train_percent_non_student = 0.02
     bike_percent_non_student = 0.3
     car_percent_non_student = 0.6
     flight_percent_non_student = 0.05
@@ -22,11 +22,11 @@ class CalculateEmission:
     self.nonstudent_distribution = AttendeeDistribution(train_percent_non_student, bike_percent_non_student, car_percent_non_student, flight_percent_non_student, bus_percent_non_student )
 
   def set_student_distrib(self):
-    train_percent_student = 0.03
-    bike_percent_student = 0.6
+    train_percent_student = 0.04
+    bike_percent_student = 0.5
     car_percent_student = 0.3
-    flight_percent_student = 0.05
-    bus_percent_student = 0.02
+    flight_percent_student = 0.01
+    bus_percent_student = 0.05
     self.student_distribution = AttendeeDistribution(train_percent_student,bike_percent_student, car_percent_student, flight_percent_student, bus_percent_student )
 
   def __init__(self):    
@@ -76,17 +76,61 @@ class CalculateEmission:
   def set_haas_events(self, haas_events):
      self.haas_events = haas_events
 
-def create_haas_events():
+def create_haas_events(num_attendees):
     haas_events = []
-    estimated_attendance = [101, 125]
+    range = 0
+    if num_attendees < 75 and num_attendees > 25:
+       range = 7
+    elif num_attendees < 150:
+       range = 15
+    else:
+       range = 25
+    
+    min = num_attendees - range
+    max = num_attendees + range
+    estimated_attendance = [min, max]
+    
+    # Event Type
+    # Career Fair
+    # Conference
+    # Blockchain/Sustainability
+    # Lunch
+    # Cal: Kickoffs / Celebratory 
+
+    # TODO expect to match the eventtype with the student/non-student distribution
+    #if event_type == "lunch":
+      #student = .85
+      #non_student = .15
+    #elif event_type == "conference":
+      #student = .85
+      #non_student = .15
+    #elif event_type == "industry_specific":
+
+    #elif event_type == "celebration":
+
+    # Career Fair	80	5	15
+    # Conference	60	20	20
+    # Blockchain/Sustainability	50	20	30
+    # Lunch	85	10	5
+    # Cal: Kickoffs / Celebratory 	70	25	5
+    
     student = .85
     non_student = .15
-    haas_event = HaasEvent(estimated_attendance, student, non_student, "EWMBA lunch", "Haas courtyard", "8/12/2023 12:00pm")
+
+    event_name = "EWMBA lunch"
+    event_location = "Haas courtyard"
+    event_time = "8/12/2023 12:00pm"
+
+    haas_event = HaasEvent(estimated_attendance, student, non_student, event_name, event_location, event_time)
     haas_events.append(haas_event)
     return haas_events
-    
+
+def write_new_excelsheet():
+   pass
+   
 def main():    
     calculate_emissions = CalculateEmission()
+    #TODO Kentaro read excel sheet populate per haas event.
     haas_events = create_haas_events()
     calculate_emissions.set_haas_events(haas_events)
     emissions = calculate_emissions.calculate_haas_events_emissions()
@@ -97,6 +141,10 @@ def main():
 
     print ("tuples are")
     print(tuples)
+
+    # TODO
+
+    write_new_excelsheet()
     
 if __name__ == '__main__':
     main()
