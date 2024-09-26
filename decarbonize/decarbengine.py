@@ -34,8 +34,7 @@ from steps.provider_info import ProviderInfo
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
-        #self.FLIGHT_API_KEY = '4a5943954857866eb389c4790010ddd81a6083280e490d110057457f379c0e2b'
-        self.FLIGHT_API_KEY = '006946305a3f90e0e828df3343e8cb95dbf024a1c528aa880c32ac4dfbb7ecf4'
+        self.FLIGHT_API_KEY = '7afef474c061eff1d01477d4a67693a2fdb2821437d63642750002ee4350e901' #Replaced the API Key on 26/09
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.COORDINATES_API_KEY = "0c608aea6eb74a9da052e7a83df8c693"
         self.firm = firm
@@ -128,22 +127,22 @@ class DecarbEngine:
         
         self.steps.append(commuting_step)
 
-    def init_flight_analyzer(self, origin, destination, departure_date, return_date):
-        self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
+    #def init_flight_analyzer(self, origin, destination, departure_date, return_date):
+        #self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
 
-    def run_flight_step(self, origin, destination, departure_date, return_date):
-        self.init_flight_analyzer(origin, destination, departure_date, return_date)
+    #def run_flight_step(self, origin, destination, departure_date, return_date):
+        #self.init_flight_analyzer(origin, destination, departure_date, return_date)
 
         #flight costs
         optimal_flight = self.flight_analyzer.analyze_flight_costs()
         flight_step = self.create_flight_step(optimal_flight, 3)
         self.steps.append(flight_step)
 
-    def run_return_flight_step(self):
+    #def run_return_flight_step(self):
         # Assumes that run_flight_step has been called first.
-        return_flight = self.flight_analyzer.get_return_flight_options()
-        return_flight_step = self.create_flight_step(return_flight, 3)
-        self.steps.append(return_flight_step)
+        #return_flight = self.flight_analyzer.get_return_flight_options()
+        #return_flight_step = self.create_flight_step(return_flight, 3)
+        #self.steps.append(return_flight_step)
     def run_CRU_step(self):
         # CRU Step
         cru_step = self.create_CRU_step()
@@ -186,8 +185,8 @@ class DecarbEngine:
         destination = "JFK"
         departure_date = "2024-10-30"
         return_date = "2024-11-03"
-        decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
-        decarb_engine.run_return_flight_step()
+        #decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
+        #decarb_engine.run_return_flight_step()
 
     def create_flight_step(self, return_flight, difficulty):
         return_flight_savings = return_flight['Price'].iloc[0]
