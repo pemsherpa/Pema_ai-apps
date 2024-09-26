@@ -59,7 +59,7 @@ class ElectricDecarbStep(DecarbStep):
             self.steps.append(cur_cost)
          else:
             cur_cost = "0"
-         return float(cur_cost)
+         return round(float(cur_cost),2)
         else:
            return 0
         
@@ -98,7 +98,7 @@ class ElectricDecarbStep(DecarbStep):
             self.steps.append(new_cost)
          else:
              new_cost = 0
-         return new_cost
+         return round(float(new_cost),2)
    
     def compute_savings(self):
         new_plan=self.get_new_plan(self.HasCCA)

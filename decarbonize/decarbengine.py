@@ -309,7 +309,6 @@ class DecarbEngine:
 
      electric_step = None
      for goal_yr in range(decarb_goals.timeframe):
-      print(decarb_goals.timeframe)
       cur_goal_yr = current_year + goal_yr
       cur_goal_quarter = current_quarter
 
@@ -319,7 +318,6 @@ class DecarbEngine:
                 # Add steps to the corresponding quarter
                 for step in decarb_steps:
                     if isinstance(step, ElectricDecarbStep):
-                            print("Capturing the Electric Decarb Step")
                             electric_step = step  
                     else:
                             quarter_step.add_step(step)                               
@@ -331,7 +329,6 @@ class DecarbEngine:
         # Update current quarter for the next iteration
         cur_goal_quarter = (cur_goal_quarter % 4) + 1
      
-     print(f"the recs from step {electric_step.recommendations['recommendations']}")
      # Add Electric Steps as Quarter Steps, once per Year
      cur_e_year = current_year
      for goal_yr in range(decarb_goals.timeframe):
@@ -346,7 +343,7 @@ class DecarbEngine:
               quarter_step.add_electric_step(e_rec, electric_step)   
          
     # Step 5: Ensure CRU is only purchased once a year
-     #decarb_engine.add_cru_steps(yearly_steps)
+     decarb_engine.add_cru_steps(yearly_steps)
 
      decarb_engine.output_json_to_file(yearly_steps, output_file)
 

@@ -55,11 +55,14 @@ class Electric_Recommendations:
 
     def recommend_plan(self, year):
         if self.current_renew_percent == 100:
-            return Electric_Recommendation(year, 100, "Continue using 100% renewable energy.", 0, 0,0,0, [], [])
+            return Electric_Recommendation(100, "Continue using 100% renewable energy.", 0, 0,0,0, [], [])
 
         # Calculate carbon emission savings
         carbon_emission_savings = self.electric_step.compute_emissions_savings()
         cost_savings = self.electric_step.compute_savings()
+        carbon_emission_savings = format(carbon_emission_savings, ".2f")
+        cost_savings = format(cost_savings, ".2f")
+
 
         if year == self.cur_year:
             new_plan_name = self.optimized_plan
@@ -70,15 +73,14 @@ class Electric_Recommendations:
             peak_price, off_peak_price = self.get_peak_off_peak_prices(new_plan_name)
 
             return Electric_Recommendation(
-                year,
                 self.optimized_plan,
                 f"Switch to the {new_plan_name} plan.",
                 carbon_emission_savings,
                 cost_savings,
                 peak_price,
                 off_peak_price,
-                provider_infos,
-                first_provider_info
+                f"Switch to Plan {new_plan_name} with your current provider",
+                "Current Provider"
             )
 
         # Year 2: Recommend 50% renewable plan if necessary
@@ -95,8 +97,7 @@ class Electric_Recommendations:
             peak_price, off_peak_price = self.get_peak_off_peak_prices(self.optimized_plan)
 
             return Electric_Recommendation(
-                year,
-                50,
+                "50 Renewable Plan",
                 "Switch to a plan with at least 50% renewable energy.",
                 carbon_emission_savings,
                 cost_savings,
@@ -120,8 +121,7 @@ class Electric_Recommendations:
             peak_price, off_peak_price = self.get_peak_off_peak_prices(self.optimized_plan)
 
             return Electric_Recommendation(
-                year,
-                100,
+                "100 Renewable Plan",
                 "Switch to a plan with 100% renewable energy.",
                 carbon_emission_savings,
                 cost_savings,
@@ -131,7 +131,7 @@ class Electric_Recommendations:
                 first_provider_info
             )
 
-        return Electric_Recommendation(year, self.current_renew_percent, "Continue with the current plan.", 0, 0,0,0, [], None)
+        return Electric_Recommendation( self.current_renew_percent, "Continue with the current plan.", 0, 0,0,0, [], None)
 
     def get_peak_off_peak_prices(self, plan_name):
         
