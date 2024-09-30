@@ -89,10 +89,10 @@ class DecarbEngine:
         print(f"Total Savings: ${total_savings}")
         print(f"Total Emissions Savings: {total_emission_savings} kg CO2\n")
 
-    def analyze_commuting_costs(self):
-        return self.commuting_analyzer.calculate_current_costs_and_emissions()
+    """def analyze_commuting_costs(self):
+        return self.commuting_analyzer.calculate_current_costs_and_emissions()"""
     
-    def run_commuting_step(self):
+    """def run_commuting_step(self):
         # commuting costs and emissions for individual
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
         commuting_step = DecarbStep(
@@ -104,9 +104,9 @@ class DecarbEngine:
             description="Analyze commuting costs and emissions for individual",
             difficulty=1
         )
-        self.steps.append(commuting_step)
+        self.steps.append(commuting_step)"""
     
-    def run_carpool_step(self):
+    """def run_carpool_step(self):
         # commuting cost for carpool
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
         carpool_savings,carpool_saving_emission = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,2,30)
@@ -125,7 +125,7 @@ class DecarbEngine:
             difficulty= 3
         )
         
-        self.steps.append(commuting_step)
+        self.steps.append(commuting_step)"""
 
     #def init_flight_analyzer(self, origin, destination, departure_date, return_date):
         #self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
@@ -134,9 +134,9 @@ class DecarbEngine:
         #self.init_flight_analyzer(origin, destination, departure_date, return_date)
 
         #flight costs
-        optimal_flight = self.flight_analyzer.analyze_flight_costs()
-        flight_step = self.create_flight_step(optimal_flight, 3)
-        self.steps.append(flight_step)
+        #optimal_flight = self.flight_analyzer.analyze_flight_costs()
+        #flight_step = self.create_flight_step(optimal_flight, 3)
+        #self.steps.append(flight_step)
 
     #def run_return_flight_step(self):
         # Assumes that run_flight_step has been called first.
