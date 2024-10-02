@@ -31,9 +31,15 @@ class Electric_Recommendations:
         self.generate_recommendations(5)  # Plans for 5 years
 
     def generate_recommendations(self, years):
+        temp_year = self.cur_year
+        temp_quarter = self.cur_quarter
         for year in range(0, years):
+            print(self.cur_year + year)
             recommendation = self.recommend_plan(self.cur_year + year)
             print(f"Year: {self.cur_year + year}, Recommended Plan: {recommendation.recommended_plan}")
+
+            if recommendation.recommended_plan == 100:
+                self.current_renew_percent = 100
 
             self.recommendations.append(recommendation)
 
@@ -41,8 +47,14 @@ class Electric_Recommendations:
             if recommendation.recommended_plan in [50, 100]:
                 self.current_renew_percent = recommendation.recommended_plan
 
-            self.cur_year += (self.cur_quarter // 4)
-            self.cur_quarter = (self.cur_quarter % 4) + 1
+            temp_quarter += 1
+            if temp_quarter > 4:
+               temp_quarter = 1
+               temp_year += 1
+
+    
+            self.cur_year = temp_year
+            self.cur_quarter = temp_quarter
 
     def recommend_plan(self, year):
         # Calculate carbon emission and cost savings
@@ -67,7 +79,7 @@ class Electric_Recommendations:
 
             return Electric_Recommendation(
                 self.optimized_plan,
-                "Switch to a plan with less than 50% renewable energy.",
+                "Switch to a plan with atmost 50% renewable energy.",
                 carbon_emission_savings,
                 cost_savings,
                 peak_price,
@@ -123,14 +135,26 @@ class Electric_Recommendations:
             )
 
         # Year 4 and beyond: Recommend continuing with 100% renewable energy
-        elif year >= self.cur_year + 3 and self.current_renew_percent == 100:
+        elif year >= self.cur_year + 3:
+            new_providers = self.get_unique_providers(100, self.current_renew_percent)
+            new_providers = [p for p in new_providers if self.get_renewable_percent(p) == 100]
+            for provider in new_providers:
+                infos, first_info = self.get_provider_info(self.optimized_plan, provider)
+                provider_infos.extend(infos)
+                if first_provider_info is None:
+                    first_provider_info = first_info
+
+            peak_price, off_peak_price = self.get_peak_off_peak_prices(self.optimized_plan)
             return Electric_Recommendation(
                 100,
                 "Continue using 100% renewable energy.",
                 carbon_emission_savings,
                 cost_savings,
-                0, 0,  # No specific peak/off-peak prices needed for continuation
-                [], None
+                peak_price,
+                off_peak_price,
+                provider_infos,
+                first_provider_info
+                
             )
 
         # Default recommendation
