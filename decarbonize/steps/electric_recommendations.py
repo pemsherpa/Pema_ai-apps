@@ -58,10 +58,6 @@ class Electric_Recommendations:
 
     def recommend_plan(self, year):
         # Calculate carbon emission and cost savings
-        carbon_emission_savings = self.electric_step.compute_emissions_savings()
-        cost_savings = self.electric_step.compute_savings()
-        carbon_emission_savings = format(carbon_emission_savings, ".2f")
-        cost_savings = format(cost_savings, ".2f")
 
         provider_infos = []
         first_provider_info = None
@@ -75,15 +71,9 @@ class Electric_Recommendations:
                 if first_provider_info is None:
                     first_provider_info = first_info
 
-            peak_price, off_peak_price = self.get_peak_off_peak_prices(self.optimized_plan)
-
             return Electric_Recommendation(
                 self.optimized_plan,
                 "Switch to a plan with atmost 50% renewable energy.",
-                carbon_emission_savings,
-                cost_savings,
-                peak_price,
-                off_peak_price,
                 provider_infos,
                 first_provider_info
             )
@@ -98,15 +88,9 @@ class Electric_Recommendations:
                 if first_provider_info is None:
                     first_provider_info = first_info
 
-            peak_price, off_peak_price = self.get_peak_off_peak_prices(self.optimized_plan)
-
             return Electric_Recommendation(
                 "50-75% Renewable Plan",
                 "Switch to a plan with renewable energy between 50% and 75%.",
-                carbon_emission_savings,
-                cost_savings,
-                peak_price,
-                off_peak_price,
                 provider_infos,
                 first_provider_info
             )
@@ -121,15 +105,9 @@ class Electric_Recommendations:
                 if first_provider_info is None:
                     first_provider_info = first_info
 
-            peak_price, off_peak_price = self.get_peak_off_peak_prices(self.optimized_plan)
-
             return Electric_Recommendation(
                 "100% Renewable Plan",
                 "Switch to a plan with 100% renewable energy.",
-                carbon_emission_savings,
-                cost_savings,
-                peak_price,
-                off_peak_price,
                 provider_infos,
                 first_provider_info
             )
@@ -144,14 +122,9 @@ class Electric_Recommendations:
                 if first_provider_info is None:
                     first_provider_info = first_info
 
-            peak_price, off_peak_price = self.get_peak_off_peak_prices(self.optimized_plan)
             return Electric_Recommendation(
                 100,
                 "Continue using 100% renewable energy.",
-                carbon_emission_savings,
-                cost_savings,
-                peak_price,
-                off_peak_price,
                 provider_infos,
                 first_provider_info
                 
@@ -161,7 +134,6 @@ class Electric_Recommendations:
         return Electric_Recommendation(
             100,
             "Continue with the current plan.",
-            0, 0, 0, 0,
             [], None
         )
 
@@ -191,9 +163,17 @@ class Electric_Recommendations:
         ]
         else:
             df = self.jrp_plans_df[self.jrp_plans_df['Plan'] == plan_name]
-    
+        
+        
         provider_infos = {}
         first_provider_info = None
+
+        carbon_emission_savings = self.electric_step.compute_emissions_savings()
+        cost_savings = self.electric_step.compute_savings()
+        carbon_emission_savings = format(carbon_emission_savings, ".2f")
+        cost_savings = format(cost_savings, ".2f")
+
+
         for _, row in df.iterrows():
             provider_number = row['Phone Number of provider']
             company_name = row['Electrical Company Name']
@@ -203,7 +183,7 @@ class Electric_Recommendations:
 
         # Use the company name as the unique key to avoid duplicate entries
             if company_name not in provider_infos:
-                provider_info = ProviderInfo(plan_name, company_name, renewable_percent,provider_number, company_link,description)
+                provider_info = ProviderInfo(plan_name, company_name, renewable_percent,provider_number, company_link,description,carbon_emission_savings,cost_savings)
                 provider_infos[company_name] = provider_info
             
                 if first_provider_info is None:

@@ -82,7 +82,7 @@ class  electricity_cca:
         renewable_percent=additional_info['Renewable Percentages']
         description= additional_info['Description']
 
-        new_info=ProviderInfo(new_plan_name,new_company,renewable_percent,provider_number,company_link,description)
+        new_info=ProviderInfo(new_plan_name,new_company,renewable_percent,provider_number,company_link,description,carbon_emission_savings=0,cost_savings=0)
         return new_plan_name, new_cost, new_company,new_info
 
     def optimize_renewable(self, price):

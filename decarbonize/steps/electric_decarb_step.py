@@ -69,7 +69,7 @@ class ElectricDecarbStep(DecarbStep):
        renewable_percent=39
        website_link='https://www.pge.com/'
        description='PG&E is a utility company focused on clean energy solutions, infrastructure improvements, and sustainability efforts, aiming to reduce carbon emissions and offer reliable energy to homes and businesses.'
-       get_info=ProviderInfo(self.user_current_plan,company,renewable_percent,phone_number,website_link,description)
+       get_info=ProviderInfo(self.user_current_plan,company,renewable_percent,phone_number,website_link,description,carbon_emission_savings=0,cost_savings=0)
        return get_info
        
     def get_new_plan(self, HasCCA):
