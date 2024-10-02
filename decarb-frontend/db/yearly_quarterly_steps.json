@@ -1,0 +1,402 @@
+[
+    {
+        "year": 2024,
+        "quarter": 4,
+        "scope1_steps": [],
+        "scope2_steps": [
+            {
+                "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
+                "difficulty": 2,
+                "savings": 99973.41,
+                "emissions_savings": 90.0,
+                "recommendation": {
+                    "recommended_plan": "B-19_PV",
+                    "message": "Switch to a plan with atmost 50% renewable energy.",
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "PG&E",
+                            "renewable percent provided": 39.0,
+                            "phone_number": "1-800-743-5000",
+                            "website_link": "https://www.pge.com/",
+                            "description of the company": "PG&E is a utility company focused on clean energy solutions, infrastructure improvements, and sustainability efforts, aiming to reduce carbon emissions and offer reliable energy to homes and businesses.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        }
+                    ],
+                    "our recommendation": {
+                        "plan_name": "B-19_PV",
+                        "company": "PG&E",
+                        "renewable percent provided": 39.0,
+                        "phone_number": "1-800-743-5000",
+                        "website_link": "https://www.pge.com/",
+                        "description of the company": "PG&E is a utility company focused on clean energy solutions, infrastructure improvements, and sustainability efforts, aiming to reduce carbon emissions and offer reliable energy to homes and businesses.",
+                        "Carbon savings": "90.00",
+                        "Cost savings": "5.95",
+                        "Peak Cost": "92.11",
+                        "Off-Peak Cost": "92.11"
+                    }
+                }
+            }
+        ],
+        "scope3_steps": []
+    },
+    {
+        "year": 2025,
+        "quarter": 1,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2025,
+        "quarter": 2,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2025,
+        "quarter": 3,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2025,
+        "quarter": 4,
+        "scope1_steps": [],
+        "scope2_steps": [
+            {
+                "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
+                "difficulty": 2,
+                "savings": 99973.41,
+                "emissions_savings": 90.0,
+                "recommendation": {
+                    "recommended_plan": "50-75% Renewable Plan",
+                    "message": "Switch to a plan with renewable energy between 50% and 75%.",
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "SJCE_GreenSource(60%Renewable)",
+                            "renewable percent provided": 60.0,
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/",
+                            "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "Ava Bright Choice",
+                            "renewable percent provided": 50.0,
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/",
+                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "MCE_Light_Green(61%Renewable)",
+                            "renewable percent provided": 61.0,
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/",
+                            "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        }
+                    ],
+                    "our recommendation": {
+                        "plan_name": "B-19_PV",
+                        "company": "SJCE_GreenSource(60%Renewable)",
+                        "renewable percent provided": 60.0,
+                        "phone_number": "1-833-432-2454",
+                        "website_link": "https://sanjosecleanenergy.org/",
+                        "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                        "Carbon savings": "90.00",
+                        "Cost savings": "5.95",
+                        "Peak Cost": "92.11",
+                        "Off-Peak Cost": "92.11"
+                    }
+                }
+            }
+        ],
+        "scope3_steps": []
+    },
+    {
+        "year": 2026,
+        "quarter": 1,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2026,
+        "quarter": 2,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2026,
+        "quarter": 3,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2026,
+        "quarter": 4,
+        "scope1_steps": [],
+        "scope2_steps": [
+            {
+                "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
+                "difficulty": 2,
+                "savings": 99973.41,
+                "emissions_savings": 90.0,
+                "recommendation": {
+                    "recommended_plan": "100% Renewable Plan",
+                    "message": "Switch to a plan with 100% renewable energy.",
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "Ava Renewable 100",
+                            "renewable percent provided": 100.0,
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/",
+                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "renewable percent provided": 100.0,
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/",
+                            "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "renewable percent provided": 100.0,
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/",
+                            "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        }
+                    ],
+                    "our recommendation": {
+                        "plan_name": "B-19_PV",
+                        "company": "Ava Renewable 100",
+                        "renewable percent provided": 100.0,
+                        "phone_number": "1-833-699-3223",
+                        "website_link": "https://avaenergy.org/change-my-plan/",
+                        "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                        "Carbon savings": "90.00",
+                        "Cost savings": "5.95",
+                        "Peak Cost": "92.11",
+                        "Off-Peak Cost": "92.11"
+                    }
+                }
+            }
+        ],
+        "scope3_steps": []
+    },
+    {
+        "year": 2027,
+        "quarter": 1,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2027,
+        "quarter": 2,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2027,
+        "quarter": 3,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2027,
+        "quarter": 4,
+        "scope1_steps": [],
+        "scope2_steps": [
+            {
+                "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
+                "difficulty": 2,
+                "savings": 99973.41,
+                "emissions_savings": 90.0,
+                "recommendation": {
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "Ava Renewable 100",
+                            "renewable percent provided": 100.0,
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/",
+                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "renewable percent provided": 100.0,
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/",
+                            "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "renewable percent provided": 100.0,
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/",
+                            "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        }
+                    ],
+                    "our recommendation": {
+                        "plan_name": "B-19_PV",
+                        "company": "Ava Renewable 100",
+                        "renewable percent provided": 100.0,
+                        "phone_number": "1-833-699-3223",
+                        "website_link": "https://avaenergy.org/change-my-plan/",
+                        "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                        "Carbon savings": "90.00",
+                        "Cost savings": "5.95",
+                        "Peak Cost": "92.11",
+                        "Off-Peak Cost": "92.11"
+                    }
+                }
+            }
+        ],
+        "scope3_steps": []
+    },
+    {
+        "year": 2028,
+        "quarter": 1,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2028,
+        "quarter": 2,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2028,
+        "quarter": 3,
+        "scope1_steps": [],
+        "scope2_steps": [],
+        "scope3_steps": []
+    },
+    {
+        "year": 2028,
+        "quarter": 4,
+        "scope1_steps": [],
+        "scope2_steps": [
+            {
+                "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
+                "difficulty": 2,
+                "savings": 99973.41,
+                "emissions_savings": 90.0,
+                "recommendation": {
+                    "recommended_plan": 100,
+                    "message": "Continue using 100% renewable energy.",
+                    "provider_info": [
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "renewable percent provided": 100.0,
+                            "phone_number": "1-833-432-2454",
+                            "website_link": "https://sanjosecleanenergy.org/",
+                            "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "Ava Renewable 100",
+                            "renewable percent provided": 100.0,
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/",
+                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        },
+                        {
+                            "plan_name": "B-19_PV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "renewable percent provided": 100.0,
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/",
+                            "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                            "Carbon savings": "90.00",
+                            "Cost savings": "5.95",
+                            "Peak Cost": "92.11",
+                            "Off-Peak Cost": "92.11"
+                        }
+                    ],
+                    "our recommendation": {
+                        "plan_name": "B-19_PV",
+                        "company": "SJCE_TotalGreen(100%Renewable)",
+                        "renewable percent provided": 100.0,
+                        "phone_number": "1-833-432-2454",
+                        "website_link": "https://sanjosecleanenergy.org/",
+                        "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                        "Carbon savings": "90.00",
+                        "Cost savings": "5.95",
+                        "Peak Cost": "92.11",
+                        "Off-Peak Cost": "92.11"
+                    }
+                }
+            }
+        ],
+        "scope3_steps": []
+    }
+]
