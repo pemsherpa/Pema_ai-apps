@@ -1,0 +1,122 @@
+
+:host {
+    display: block;
+    width: 100%;
+    }
+    
+    .decarbonize-header {
+    text-align: left;
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    }
+    
+    .decarbonize-header h1 {
+    font-size: 2rem;
+    margin: 0;
+    }
+    
+    .decarbonize-header p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 2rem;
+    }
+    
+    /* Buttons styling */
+    .quartile-buttons {
+    display: flex;
+    gap: 0.75rem; /* Smaller gap to match the design */
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    justify-content: flex-start;
+    padding-left: 2rem;
+    }
+    
+    .quartile-button {
+    padding: 0.5rem 1.5rem;
+    border: 2px solid #8e44ad; /* Purple border */
+    border-radius: 1.5rem;
+    background-color: transparent;
+    color: #8e44ad;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    .quartile-button.active {
+    background-color: #8e44ad; /* Active button fill */
+    color: white; /* White text for active button */
+    }
+    
+    .quartile-button:hover {
+    background-color: rgba(142, 68, 173, 0.1); /* Light purple background on hover */
+    }
+    
+    .content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 2rem;
+    }
+    
+    .main-content {
+    flex: 2;
+    padding: 1rem;
+    box-sizing: border-box;
+    }
+    
+    .side-content {
+    flex: 1;
+    padding: 1rem;
+    box-sizing: border-box;
+    }
+    
+    /* Styling for the dropdown menus */
+    .dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    }
+    
+    .dropdown-header:hover {
+    background-color: #e6e6e6;
+    }
+    
+    .dropdown-content {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    display: none; /* Hidden by default */
+    }
+    
+    .dropdown-content.show {
+    display: block; /* Show when clicked */
+    }
+    
+    .dropdown-arrow {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+    }
+    
+    .dropdown-arrow.open {
+    transform: rotate(180deg); /* Rotate arrow when dropdown is open */
+    }
+    
+    @media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+    }
+    
+    .quartile-buttons {
+        justify-content: flex-start;
+    }
+    }
