@@ -75,12 +75,14 @@ class  electricity_cca:
         additional_info = self.jrp_plans_df[
             (self.jrp_plans_df['Plan'] == new_plan_name) & 
             (self.jrp_plans_df['Electrical Company Name'] == new_company)
-        ][['Phone Number of provider', 'URL of the provider']].iloc[0]
+        ][['Phone Number of provider', 'URL of the provider','Renewable Percentages','Description']].iloc[0]
 
         provider_number = additional_info['Phone Number of provider']
         company_link = additional_info['URL of the provider']
+        renewable_percent=additional_info['Renewable Percentages']
+        description= additional_info['Description']
 
-        new_info=ProviderInfo(new_plan_name,new_company,provider_number,company_link)
+        new_info=ProviderInfo(new_plan_name,new_company,renewable_percent,provider_number,company_link,description,carbon_emission_savings=0,cost_savings=0)
         return new_plan_name, new_cost, new_company,new_info
 
     def optimize_renewable(self, price):
