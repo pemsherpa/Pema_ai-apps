@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { DecarbShoppingCartComponent } from './decarb-shopping-cart/decarb-shopping-cart.component';
 
 
 @Component({
   selector: 'app-decarb-journey',
   standalone: true,
-  imports: [RouterOutlet, RouterModule],
+  imports: [RouterOutlet, RouterModule,DecarbShoppingCartComponent],
   templateUrl: './decarb-journey.component.html',
   styleUrl: './decarb-journey.component.css'
 })
