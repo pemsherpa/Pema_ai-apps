@@ -1,1 +1,39 @@
-<p>decarb-shopping-cart works!</p>
+<div class="container">
+  <!-- Target Section -->
+  <div class="target">
+    <div class="target-info">
+      <p>Target</p>
+      <p>-{{ currentSavings }}/{{ targetGoal }} kgCO2e</p>
+    </div>
+
+    <!-- Progress Bar Section -->
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="getProgressPercentage()"></div>
+    </div>
+    <p>Great job! You're {{ getProgressPercentage() | number: '1.0-0' }}% to your goal!</p>
+  </div>
+
+  <!-- Journey Items -->
+  <div *ngFor="let item of cartItems; let i = index" class="journey-item">
+    <button class="remove-btn" (click)="removeItem(i)">×</button>
+    
+    <!-- Content aligned horizontally -->
+    <h4>{{ item.name }}</h4>
+    <p class="transition-percentage">{{ item.transition }}% Transition</p>
+    
+    <div class="savings-container">
+      <p class="savings">${{ item.costSavings }}</p>
+      <p class="savings">{{ item.co2Savings }} kgCO2e</p>
+    </div>
+  </div>
+
+  <!-- Add Item Button -->
+  <button (click)="addItem()">Add Item</button>
+
+  <!-- Savings Summary -->
+  <div class="savings-summary">
+    <p>Savings</p>
+    <h3>${{ getTotalCostSavings() }}K</h3>
+    <h3>{{ getTotalCO2Savings() }} kgCO2e</h3>
+  </div>
+</div>

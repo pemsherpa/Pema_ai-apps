@@ -1,0 +1,107 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.target {
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.target-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.target-info h3,
+.target-info p {
+  margin: 0;
+}
+
+.progress-bar {
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 4px;
+  margin: 10px 0;
+}
+
+.progress {
+  background-color: #1abc9c;
+  height: 100%;
+  transition: width 0.3s;
+}
+
+/* Journey Item Container */
+.journey-item {
+  position: relative;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Journey item title and transition percentage styles */
+.journey-item h4 {
+  margin: 0;
+}
+
+.transition-percentage {
+  margin: 5px 0; /* Add space between the name and transition */
+  font-size: 14px;
+  color: #888;
+}
+
+/* Savings container for horizontal alignment */
+.savings-container {
+  display: flex;
+  justify-content: space-between; /* Ensure savings are spaced out */
+  gap: 67px; /* Space between savings elements */
+}
+
+/* Savings styling */
+.savings {
+  margin: 0;
+}
+
+/* Remove Button (X) */
+.remove-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  color:darkgrey;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.remove-btn:hover {
+  color: black;
+}
+
+/* Savings Summary */
+.savings-summary {
+  background-color: #1abc9c;
+  color: white;
+  padding: 10px;
+  display:flex;
+  text-align: center;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.savings-summary p {
+  margin: 0;
+  padding: 20px;
+}
+
+.savings-summary h3 {
+  margin: 0;
+  padding:20px;
+}
+
