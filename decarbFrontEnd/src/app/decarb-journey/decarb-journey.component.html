@@ -4,10 +4,6 @@
     
     <!-- Quartile buttons placed under the header -->
     <div class="quartile-buttons">
-      <div class="quartile-button active">First Quartile</div>
-      <div class="quartile-button">Second Quartile</div>
-      <div class="quartile-button">Third Quartile</div>
-      <div class="quartile-button">Fourth Quartile</div>
       <div class="quartile-button">2025</div>
       <div class="quartile-button">2026</div>
       <div class="quartile-button">2027</div>
@@ -16,38 +12,25 @@
   </div>
   
   <div class="content">
-    <div class="main-content">
-      <!-- 2/3rd of the screen space -->
-      <h2>First Quartile</h2>
-      <p>Following steps focus on reducing scope 1 emissions.</p>
-  
-      <!-- First Dropdown: Change Electricity Provider -->
-      <div (click)="toggleDropdown('dropdown1')" class="dropdown-header">
-        <span>Change Electricity Provider</span>
-        <span [class.open]="isDropdownOpen['dropdown1']" class="dropdown-arrow">&#9662;</span>
+    <div class="content">
+      <div class="main-content">
+        <!-- Loop through all quartiles and display each one with its dropdowns -->
+        <div *ngFor="let quartile of quartileData; let qIndex = index">
+          <h2>{{ quartile.title }}</h2>
+          <p>{{ quartile.scopeDescription }}</p>
+    
+          <!-- Loop through each quartile's dropdowns -->
+          <div *ngFor="let dropdown of quartile.dropdowns; let dIndex = index">
+            <div (click)="toggleDropdown('dropdown' + qIndex + '_' + dIndex)" class="dropdown-header">
+              <span>{{ dropdown.title }}</span>
+              <span [class.open]="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" class="dropdown-arrow">&#9662;</span>
+            </div>
+            <div [class.show]="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" class="dropdown-content">
+              <p>{{ dropdown.content }}</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div [class.show]="isDropdownOpen['dropdown1']" class="dropdown-content">
-        <p>decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb</p>
-      </div>
-  
-      <!-- Second Dropdown: Reduce First Class Travel -->
-      <div (click)="toggleDropdown('dropdown2')" class="dropdown-header">
-        <span>Reduce First Class Travel</span>
-        <span [class.open]="isDropdownOpen['dropdown2']" class="dropdown-arrow">&#9662;</span>
-      </div>
-      <div [class.show]="isDropdownOpen['dropdown2']" class="dropdown-content">
-        <p>decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb</p>
-      </div>
-  
-      <!-- Third Dropdown: Introduce Fuel-Efficient Vehicles -->
-      <div (click)="toggleDropdown('dropdown3')" class="dropdown-header">
-        <span>Introduce Fuel-Efficient Vehicles</span>
-        <span [class.open]="isDropdownOpen['dropdown3']" class="dropdown-arrow">&#9662;</span>
-      </div>
-      <div [class.show]="isDropdownOpen['dropdown3']" class="dropdown-content">
-        <p>decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb decarb</p>
-      </div>
-    </div>
     
     <div class="side-content">
       <cs-decarb-shopping-cart></cs-decarb-shopping-cart>
