@@ -1,10 +1,51 @@
 .container {
-  max-width: 600px;
+  width: 300px;
+  padding: 20px;
+  justify-content: right;
+}
+
+.reduction-section {
+  max-width: 400px;
   margin: 0 auto;
+  padding:30px;
+}
+
+.timeframe {
+  text-align: right;
+  color: gray;
+  font-size: 10px;
+}
+
+.reduction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  height: 5px;
+  overflow: hidden;
+  flex-grow: 1;
+  margin:  10px 0;
+}
+
+.progress {
+  background-color:darkgrey;
+  height: 100%;
+  transition: width 0.3s;
+}
+
+p {
+  margin: 0;
+  font-size: 14px;
 }
 
 .target {
-  padding: 10px;
+  
+  padding: 20px;
   margin-bottom: 20px;
 }
 
@@ -13,43 +54,69 @@
   justify-content: space-between;
   align-items: center;
 }
-
 .target-info h3,
 .target-info p {
   margin: 0;
 }
 
-.progress-bar {
-  background-color: #e0e0e0;
+/* Tooltip Styling with Delay */
+.tooltip {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  overflow: hidden;
-  height: 4px;
-  margin: 10px 0;
+  padding: 15px;
+  position: absolute;
+  z-index: 1;
+  top: 50px;
+  right: -50px;
+  width: 300px;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  white-space: normal;
+  
+  opacity: 0; /* Initially hidden */
+  visibility: hidden; /* Hidden at the start */
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
 }
 
-.progress {
-  background-color: #1abc9c;
-  height: 100%;
-  transition: width 0.3s;
+/* When hovering over target, show tooltip */
+.target-info:hover .tooltip {
+  opacity: 1; /* Show tooltip */
+  visibility: visible; /* Make it visible */
 }
 
-/* Journey Item Container */
+
+/* Force elongation if necessary */
+.tooltip p {
+  margin-bottom: 8px; /* Add some spacing between paragraphs */
+}
+
+/* Forcing elongation by adding extra padding or extra lines */
+.tooltip::after {
+  content: ''; /* You can add more space or dummy content */
+  display: block;
+  height: 20px; /* Add height to elongate */
+}
+
+
 .journey-item {
   position: relative;
   margin: 15px 0;
   padding: 10px;
-  background-color: #f0f0f0;
   border: 1px solid #ddd;
   border-radius: 5px;
+  background-color: #f0f0f0;
+}
+.journey-info {
+  margin-bottom: 5px; /* Space between the name and savings */
 }
 
-/* Journey item title and transition percentage styles */
+/* Journey item title */
 .journey-item h4 {
   margin: 0;
 }
-
 .transition-percentage {
-  margin: 5px 0; /* Add space between the name and transition */
+  margin: 0;
   font-size: 14px;
   color: #888;
 }
@@ -58,50 +125,55 @@
 .savings-container {
   display: flex;
   justify-content: space-between; /* Ensure savings are spaced out */
-  gap: 67px; /* Space between savings elements */
+  gap: 10px; /* Space between savings elements */
 }
-
-/* Savings styling */
-.savings {
-  margin: 0;
-}
-
-/* Remove Button (X) */
 .remove-btn {
-  position: absolute;
-  top: 5px;
-  right: 10px;
   background-color: transparent;
   border: none;
-  color:darkgrey;
-  font-size: 20px;
+  color: darkgray;
   cursor: pointer;
-  line-height: 1;
-  padding: 0;
 }
 
 .remove-btn:hover {
   color: black;
 }
 
-/* Savings Summary */
-.savings-summary {
-  background-color: #1abc9c;
-  color: white;
-  padding: 10px;
-  display:flex;
-  text-align: center;
-  margin-top: 20px;
-  border-radius: 5px;
+.savings-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.savings {
+  margin: 0;
+  font-weight: bold;
 }
 
 .savings-summary p {
   margin: 0;
-  padding: 20px;
+  padding:20px;
 }
-
 .savings-summary h3 {
   margin: 0;
   padding:20px;
 }
 
+.savings-summary {
+  background-color: #1abc9c;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+  border-radius: 5px;
+  display:flex;
+}
+
+
+button {
+  cursor: pointer;
+  padding: 10px;
+  background-color: darkgray;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}

@@ -1,9 +1,54 @@
-<div class="container">
+
+
   <!-- Target Section -->
   <div class="target">
     <div class="target-info">
       <p>Target</p>
-      <p>-{{ currentSavings }}/{{ targetGoal }} kgCO2e</p>
+      <p>
+        -{{ currentSavings }}/{{ targetGoal }} kgCO2e
+        <i
+          class="info-icon"
+          (mouseenter)="showScopeTargets = true"
+          (mouseleave)="showScopeTargets = false"
+          title="Info">ℹ️</i>
+      </p>
+      
+      <!-- Tooltip for scope targets -->
+      <div *ngIf="showScopeTargets" class="tooltip">
+        <div class="container">
+          <!-- Reduction Percentage Section -->
+          <div class="reduction-section">
+            <h4>Reduction percentage</h4>
+            <p class="timeframe">Period 5 years</p>
+            
+            <!-- Scope 1 Reduction -->
+            <div class="reduction-item">
+              <p>Scope 1</p>
+              <div class="progress-bar">
+                <div class="progress" [style.width.%]="scopeData.scope_1_target * 100"></div>
+              </div>
+              <p>{{ scopeData.scope_1_target * 100 }}%</p>
+            </div>
+        
+            <!-- Scope 2 Reduction -->
+            <div class="reduction-item">
+              <p>Scope 2</p>
+              <div class="progress-bar">
+                <div class="progress" [style.width.%]="scopeData.scope_2_target * 100"></div>
+              </div>
+              <p>{{ scopeData.scope_2_target * 100 }}%</p>
+            </div>
+        
+            <!-- Scope 3 Reduction -->
+            <div class="reduction-item">
+              <p>Scope 3</p>
+              <div class="progress-bar">
+                <div class="progress" [style.width.%]="scopeData.scope_3_target * 100"></div>
+              </div>
+              <p>{{ scopeData.scope_3_target * 100 }}%</p>
+            </div>
+          </div>
+      </div>
     </div>
 
     <!-- Progress Bar Section -->
@@ -37,3 +82,4 @@
     <h3>{{ getTotalCO2Savings() }} kgCO2e</h3>
   </div>
 </div>
+
