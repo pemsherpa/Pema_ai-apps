@@ -9,6 +9,7 @@ Original file is located at
 import math
 import datetime
 import json
+import requests
 from decarb_customer_goals import DecarbCustomerGoals
 import numpy as np
 from components.biz_commute_analyzer import BusinessCommutingAnalyzer
@@ -287,6 +288,34 @@ class DecarbEngine:
         else:
             return data
         
+    def query_cs_backend_api(self,company_id):
+        """
+    This function makes an API request to the CS backend API to fetch carbon emission data.
+    For now, it returns a hardcoded JSON response.
+        """
+    #URL
+    #api_url = f"create API"
+
+    # response = requests.get(api_url)
+    # json_data = response.json()
+
+    #Hardcoded data for now
+        json_data = {
+            "company_id": company_id,
+            "scope_total": {
+            "scope_1_total": 100,
+            "scope_2_total": 50,
+            "scope_3_total": 10,
+            "scope_total": 160,
+            "scope_1_target": 0.75,
+            "scope_2_target": 1.0,
+            "scope_3_target": 0.50,
+            "target_timeframe": 5
+        }
+    }
+
+        return json_data
+        
     def create_decarb_engine_with_yearly_goals(decarb_goals, output_file='yearly_quarterly_steps.json'):
     # Step 1: Initialize the decarbonization engine
      firm = '2107 Addison St, Berkeley, CA'
@@ -344,8 +373,11 @@ class DecarbEngine:
          
     # Step 5: Ensure CRU is only purchased once a year
      decarb_engine.add_cru_steps(yearly_steps)
+     output_data=decarb_engine.query_cs_backend_api(1)
 
-     decarb_engine.output_json_to_file(yearly_steps, output_file)
+     decarb_engine.output_json_to_file(output_data,yearly_steps, output_file)
+
+    
 
     def init_yearly_steps(self, timeframe, current_year, current_quarter):
      # Step 3: Create quarterly goals
@@ -421,13 +453,17 @@ class DecarbEngine:
         dict_zscore["avg-zscore"] = total_zscore / num_steps if num_steps > 0 else 0
         return dict_zscore
 
-    def output_json_to_file(self, yearly_steps_array, output_file):
-        # Convert data to JSON-serializable format
+    def output_json_to_file(self, output_data,yearly_steps_array, output_file):
+         # Convert data to JSON-serializable format
         json_data = [quarter_step.to_dict() for quarter_step in yearly_steps_array]
         json_data_serializable = self.convert_to_json_serializable(json_data)  
+        output_data = {
+        "cs_backend_data": output_data,
+        "yearly_steps": json_data_serializable
+         }
         # Save the result as a JSON file
         with open(output_file, 'w') as f:
-            json.dump(json_data_serializable, f, indent=4)
+            json.dump(output_data, f, indent=4)
 
         return json_data_serializable
 
