@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
-import * as scopeDataFile from './assets/yearly_quarterly_steps.json'; // Use a relative path
-
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 interface CartItem {
   name: string;
@@ -11,7 +10,6 @@ interface CartItem {
 }
 
 interface ScopeData {
-  company_id: number; 
   scope_1_total: number;
   scope_2_total: number;
   scope_3_total: number;
@@ -27,32 +25,36 @@ interface ScopeData {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './decarb-shopping-cart.component.html',
-  styleUrls: ['./decarb-shopping-cart.component.css']
+  styleUrls: ['./decarb-shopping-cart.component.css'],
 })
 export class DecarbShoppingCartComponent implements OnInit {
-  targetGoal: number = 40000;   // Fake value
-  scopeData: ScopeData | null = null; // Initialize scopeData
+  targetGoal: number = 40000; // Example target goal
+  scopeData: ScopeData | null = null;
   showScopeTargets = false;
 
-  // Journey items for the shopping cart
   cartItems: CartItem[] = [
     { name: 'Change Electricity Provider', costSavings: 6000, co2Savings: -100, transition: 50 },
     { name: 'Switch to Business class travel', costSavings: 2500, co2Savings: -45, transition: 25 }
   ];
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.fetchScopeData();
-    console.log(this.scopeData);
   }
 
   fetchScopeData(): void {
-    // Directly access the imported JSON data and assign it to scopeData
-    this.scopeData = (scopeDataFile as any).cs_backend_data.scope_total;
+    this.http.get<{ cs_backend_data: { scope_total: ScopeData } }>('/yearly_quarterly_steps.json')
+      .subscribe({
+        next: (data) => {
+          this.scopeData = data.cs_backend_data.scope_total;
+        },
+        error: (err) => {
+          console.error('Error fetching scope data:', err);
+        }
+      });
   }
 
-  // Calculate the total cost savings
   getTotalCostSavings(): number {
     return this.cartItems.reduce((total, item) => total + item.costSavings, 0);
   }
@@ -62,8 +64,8 @@ export class DecarbShoppingCartComponent implements OnInit {
   }
 
   getProgressPercentage(): number {
-    const currentSavings = this.getTotalCO2Savings(); // Calculate current savings dynamically
-    return (currentSavings / this.targetGoal) * 100;
+    const totalCO2Savings = this.getTotalCO2Savings();
+    return (Math.abs(totalCO2Savings) / this.targetGoal) * 100;
   }
 
   getScopePercentage(scope: number): number {
@@ -72,9 +74,15 @@ export class DecarbShoppingCartComponent implements OnInit {
 
   removeItem(index: number) {
     this.cartItems.splice(index, 1);
+    this.updateProgress();
   }
 
   addItem() {
     this.cartItems.push({ name: 'New Journey Item', costSavings: 3000, co2Savings: -60, transition: 0 });
+    this.updateProgress();
+  }
+
+  updateProgress() {
+    this.getProgressPercentage();
   }
 }

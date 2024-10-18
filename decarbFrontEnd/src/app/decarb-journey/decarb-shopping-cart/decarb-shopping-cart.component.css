@@ -1,27 +1,46 @@
 .container {
   width: 300px;
-  padding: 20px;
-  justify-content: right;
+  padding: 0px;
+  justify-content: center;
 }
 
 .reduction-section {
-  max-width: 400px;
+  max-width: 300px;
   margin: 0 auto;
-  padding:30px;
+  padding:0px;
+  border-radius: 30px;
 }
 
 .timeframe {
   text-align: right;
-  color: gray;
-  font-size: 10px;
+  color: rgba(57, 56, 56, 0.587);
+  font-size: 12px;
 }
 
 .reduction-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin: 0;
 }
+
+.reduction-header {
+  display: flex;
+  justify-content: space-between; /* Ensures even spacing between items */
+  align-items: center; /* Aligns items vertically in the center */
+  margin-bottom: 10px; /* Adds some spacing below the header */
+}
+.reduction-header h4 {
+  margin: 0; /* Removes default margin */
+}
+.reduction-header .timeframe {
+  margin: 0; /* Removes default margin */
+  font-size: 14px; /* Adjust font size if needed */
+  color: #666; /* Optional: Change color to make it visually distinct */
+}
+
+
+
 
 .progress-bar {
   background-color: #e0e0e0;
@@ -37,12 +56,21 @@
   height: 100%;
   transition: width 0.3s;
 }
-
+.progress-scope{
+  background-color:black;
+  height: 100%;
+  transition: width 0.3s;
+}
 p {
   margin: 0;
   font-size: 14px;
 }
-
+.description{
+  display: flex;
+  }
+  .description span{
+   padding-left:100px;
+  }
 .target {
   
   padding: 20px;
@@ -68,7 +96,7 @@ p {
   position: absolute;
   z-index: 1;
   top: 50px;
-  left: 100px;
+  right:80px;
   width: 300px;
   height: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -102,13 +130,21 @@ p {
 .journey-item {
   position: relative;
   margin: 15px 0;
-  padding: 10px;
+  padding: 30px;
   border: 1px solid #ddd;
   border-radius: 5px;
   background-color: #f0f0f0;
+  display: flex; /* Use flexbox to control the alignment */
+  justify-content: space-between;
+  gap: 10px; /* Add space between items */
 }
 .journey-info {
   margin-bottom: 5px; /* Space between the name and savings */
+}
+.journey-item-info {
+  display: flex;
+  flex-direction: column; /* Stack the name and percentage vertically */
+  margin-bottom: 5px; /* Add space between the journey-item-info and savings */
 }
 
 /* Journey item title */
@@ -128,6 +164,9 @@ p {
   gap: 10px; /* Space between savings elements */
 }
 .remove-btn {
+  position: absolute; /* Use absolute positioning */
+  top: 10px; /* Position it 5px from the top */
+  right: 5px; /* Position it 5px from the right */
   background-color: transparent;
   border: none;
   color: darkgray;

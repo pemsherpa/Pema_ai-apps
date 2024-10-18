@@ -16,14 +16,16 @@
       <div class="container">
         <!-- Reduction Percentage Section -->
         <div class="reduction-section">
-          <h4>Reduction percentage</h4>
-          <p class="timeframe">Period 5 years</p>
+          <div class="reduction-header">
+            <h4>Reduction percentage</h4>
+            <p class="timeframe">Period 5 years</p>
+          </div>
           
           <!-- Scope 1 Reduction -->
           <div class="reduction-item" *ngIf="scopeData">
             <p>Scope 1</p>
             <div class="progress-bar">
-              <div class="progress" [style.width.%]="getScopePercentage(scopeData.scope_1_target)"></div>
+              <div class="progress-scope" [style.width.%]="getScopePercentage(scopeData.scope_1_target)"></div>
             </div>
             <p>{{ scopeData.scope_1_target * 100 | number: '1.0-0' }}%</p>
           </div>
@@ -32,7 +34,7 @@
           <div class="reduction-item" *ngIf="scopeData">
             <p>Scope 2</p>
             <div class="progress-bar">
-              <div class="progress" [style.width.%]="getScopePercentage(scopeData.scope_2_target)"></div>
+              <div class="progress-scope"[style.width.%]="getScopePercentage(scopeData.scope_2_target)"></div>
             </div>
             <p>{{ scopeData.scope_2_target * 100 | number: '1.0-0' }}%</p>
           </div>
@@ -41,7 +43,7 @@
           <div class="reduction-item" *ngIf="scopeData">
             <p>Scope 3</p>
             <div class="progress-bar">
-              <div class="progress" [style.width.%]="getScopePercentage(scopeData.scope_3_target)"></div>
+              <div class="progress-scope" [style.width.%]="getScopePercentage(scopeData.scope_3_target)"></div>
             </div>
             <p>{{ scopeData.scope_3_target * 100 | number: '1.0-0' }}%</p>
           </div>
@@ -51,10 +53,14 @@
   </div>
 
   <!-- Progress Bar Section -->
+  
   <div class="progress-bar">
     <div class="progress" [style.width.%]="getProgressPercentage()"></div>
   </div>
+  <div class="description">
   <p>Great job! You're {{ getProgressPercentage() | number: '1.0-0' }}% to your goal!</p>
+  <span class="emoji">😊</span>
+</div>
 </div>
 
 <!-- Journey Items -->
@@ -62,8 +68,10 @@
   <button class="remove-btn" (click)="removeItem(i)">×</button>
   
   <!-- Content aligned horizontally -->
-  <h4>{{ item.name }}</h4>
-  <p class="transition-percentage">{{ item.transition }}% Transition</p>
+  <div class="journey-item-info">
+    <h4>{{ item.name }}</h4>
+    <p class="transition-percentage">{{ item.transition }}% Transition</p>
+  </div>
   
   <div class="savings-container">
     <p class="savings">${{ item.costSavings }}</p>
