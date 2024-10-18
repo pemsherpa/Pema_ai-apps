@@ -1,85 +1,85 @@
-
-
-  <!-- Target Section -->
-  <div class="target">
-    <div class="target-info">
-      <p>Target</p>
-      <p>
-        -{{ currentSavings }}/{{ targetGoal }} kgCO2e
-        <i
-          class="info-icon"
-          (mouseenter)="showScopeTargets = true"
-          (mouseleave)="showScopeTargets = false"
-          title="Info">ℹ️</i>
-      </p>
-      
-      <!-- Tooltip for scope targets -->
-      <div *ngIf="showScopeTargets" class="tooltip">
-        <div class="container">
-          <!-- Reduction Percentage Section -->
-          <div class="reduction-section">
-            <h4>Reduction percentage</h4>
-            <p class="timeframe">Period 5 years</p>
-            
-            <!-- Scope 1 Reduction -->
-            <div class="reduction-item">
-              <p>Scope 1</p>
-              <div class="progress-bar">
-                <div class="progress" [style.width.%]="scopeData.scope_1_target * 100"></div>
-              </div>
-              <p>{{ scopeData.scope_1_target * 100 }}%</p>
+<!-- Target Section -->
+<div class="target">
+  <div class="target-info">
+    <p><b>Target</b></p>
+    <p>
+      -{{ getTotalCO2Savings() }}/{{ targetGoal }} kgCO2e
+      <i
+        class="info-icon"
+        (mouseenter)="showScopeTargets = true"
+        (mouseleave)="showScopeTargets = false"
+        title="Info">ℹ️</i>
+    </p>
+    
+    <!-- Tooltip for scope targets -->
+    <div *ngIf="showScopeTargets" class="tooltip">
+      <div class="container">
+        <!-- Reduction Percentage Section -->
+        <div class="reduction-section">
+          <h4>Reduction percentage</h4>
+          <p class="timeframe">Period 5 years</p>
+          
+          <!-- Scope 1 Reduction -->
+          <div class="reduction-item" *ngIf="scopeData">
+            <p>Scope 1</p>
+            <div class="progress-bar">
+              <div class="progress" [style.width.%]="getScopePercentage(scopeData.scope_1_target)"></div>
             </div>
-        
-            <!-- Scope 2 Reduction -->
-            <div class="reduction-item">
-              <p>Scope 2</p>
-              <div class="progress-bar">
-                <div class="progress" [style.width.%]="scopeData.scope_2_target * 100"></div>
-              </div>
-              <p>{{ scopeData.scope_2_target * 100 }}%</p>
-            </div>
-        
-            <!-- Scope 3 Reduction -->
-            <div class="reduction-item">
-              <p>Scope 3</p>
-              <div class="progress-bar">
-                <div class="progress" [style.width.%]="scopeData.scope_3_target * 100"></div>
-              </div>
-              <p>{{ scopeData.scope_3_target * 100 }}%</p>
-            </div>
+            <p>{{ scopeData.scope_1_target * 100 | number: '1.0-0' }}%</p>
           </div>
+      
+          <!-- Scope 2 Reduction -->
+          <div class="reduction-item" *ngIf="scopeData">
+            <p>Scope 2</p>
+            <div class="progress-bar">
+              <div class="progress" [style.width.%]="getScopePercentage(scopeData.scope_2_target)"></div>
+            </div>
+            <p>{{ scopeData.scope_2_target * 100 | number: '1.0-0' }}%</p>
+          </div>
+      
+          <!-- Scope 3 Reduction -->
+          <div class="reduction-item" *ngIf="scopeData">
+            <p>Scope 3</p>
+            <div class="progress-bar">
+              <div class="progress" [style.width.%]="getScopePercentage(scopeData.scope_3_target)"></div>
+            </div>
+            <p>{{ scopeData.scope_3_target * 100 | number: '1.0-0' }}%</p>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- Progress Bar Section -->
-    <div class="progress-bar">
-      <div class="progress" [style.width.%]="getProgressPercentage()"></div>
-    </div>
-    <p>Great job! You're {{ getProgressPercentage() | number: '1.0-0' }}% to your goal!</p>
   </div>
 
-  <!-- Journey Items -->
-  <div *ngFor="let item of cartItems; let i = index" class="journey-item">
-    <button class="remove-btn" (click)="removeItem(i)">×</button>
-    
-    <!-- Content aligned horizontally -->
-    <h4>{{ item.name }}</h4>
-    <p class="transition-percentage">{{ item.transition }}% Transition</p>
-    
-    <div class="savings-container">
-      <p class="savings">${{ item.costSavings }}</p>
-      <p class="savings">{{ item.co2Savings }} kgCO2e</p>
-    </div>
+  <!-- Progress Bar Section -->
+  <div class="progress-bar">
+    <div class="progress" [style.width.%]="getProgressPercentage()"></div>
   </div>
+  <p>Great job! You're {{ getProgressPercentage() | number: '1.0-0' }}% to your goal!</p>
+</div>
 
-  <!-- Add Item Button -->
-  <button (click)="addItem()">Add Item</button>
-
-  <!-- Savings Summary -->
-  <div class="savings-summary">
-    <p>Savings</p>
-    <h3>${{ getTotalCostSavings() }}K</h3>
-    <h3>{{ getTotalCO2Savings() }} kgCO2e</h3>
+<!-- Journey Items -->
+<div *ngFor="let item of cartItems; let i = index" class="journey-item">
+  <button class="remove-btn" (click)="removeItem(i)">×</button>
+  
+  <!-- Content aligned horizontally -->
+  <h4>{{ item.name }}</h4>
+  <p class="transition-percentage">{{ item.transition }}% Transition</p>
+  
+  <div class="savings-container">
+    <p class="savings">${{ item.costSavings }}</p>
+    <p class="savings">{{ item.co2Savings }} kgCO2e</p>
   </div>
 </div>
+
+<!-- Add Item Button -->
+<button (click)="addItem()">Add Item</button>
+
+<!-- Savings Summary -->
+<div class="savings-summary">
+  <p>Savings</p>
+  <h3>${{ getTotalCostSavings() }}K</h3>
+  <h3>{{ getTotalCO2Savings() }} kgCO2e</h3>
+</div>
+
+
 

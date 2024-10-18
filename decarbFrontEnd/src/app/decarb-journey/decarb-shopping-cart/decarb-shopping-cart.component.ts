@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
+import * as scopeDataFile from './assets/yearly_quarterly_steps.json'; // Use a relative path
+
 
 interface CartItem {
   name: string;
@@ -8,39 +10,49 @@ interface CartItem {
   transition: number; // percentage of transition
 }
 
+interface ScopeData {
+  company_id: number; 
+  scope_1_total: number;
+  scope_2_total: number;
+  scope_3_total: number;
+  scope_total: number;
+  scope_1_target: number;
+  scope_2_target: number;
+  scope_3_target: number;
+  target_timeframe: number;
+}
+
 @Component({
   selector: 'cs-decarb-shopping-cart',
   standalone: true,
-  imports: [CommonModule], 
+  imports: [CommonModule],
   templateUrl: './decarb-shopping-cart.component.html',
-  styleUrl: './decarb-shopping-cart.component.css'
+  styleUrls: ['./decarb-shopping-cart.component.css']
 })
-export class DecarbShoppingCartComponent {
-  // Target goal for CO2 reduction
+export class DecarbShoppingCartComponent implements OnInit {
   targetGoal: number = 40000;   // Fake value
-  currentSavings: number = 15200; // Fake value
+  scopeData: ScopeData | null = null; // Initialize scopeData
+  showScopeTargets = false;
 
-  // Shopping cart items hardcoded
+  // Journey items for the shopping cart
   cartItems: CartItem[] = [
     { name: 'Change Electricity Provider', costSavings: 6000, co2Savings: -100, transition: 50 },
     { name: 'Switch to Business class travel', costSavings: 2500, co2Savings: -45, transition: 25 }
   ];
 
-  showScopeTargets = false; // For controlling the tooltip visibility
+  constructor() {}
 
-  // Hardcoded scope data for the progress bars
-  scopeData = {
-    scope_1_total: 100,
-    scope_2_total: 50,
-    scope_3_total: 10,
-    scope_total: 160,
-    scope_1_target: 0.75,  // 75% for Scope 1
-    scope_2_target: 1.0,   // 100% for Scope 2
-    scope_3_target: 0.5,   // 50% for Scope 3
-    target_timeframe: 5,   // Timeframe in years
-  };
+  ngOnInit(): void {
+    this.fetchScopeData();
+    console.log(this.scopeData);
+  }
 
-  // Calculate the total savings
+  fetchScopeData(): void {
+    // Directly access the imported JSON data and assign it to scopeData
+    this.scopeData = (scopeDataFile as any).cs_backend_data.scope_total;
+  }
+
+  // Calculate the total cost savings
   getTotalCostSavings(): number {
     return this.cartItems.reduce((total, item) => total + item.costSavings, 0);
   }
@@ -50,20 +62,18 @@ export class DecarbShoppingCartComponent {
   }
 
   getProgressPercentage(): number {
-    return (this.currentSavings / this.targetGoal) * 100;
+    const currentSavings = this.getTotalCO2Savings(); // Calculate current savings dynamically
+    return (currentSavings / this.targetGoal) * 100;
   }
 
-  // Calculate individual scope percentage
   getScopePercentage(scope: number): number {
-    return (scope / this.scopeData.scope_total) * 100;
+    return this.scopeData ? (scope / this.scopeData.scope_total) * 100 : 0;
   }
 
-  // Remove item from the list
   removeItem(index: number) {
     this.cartItems.splice(index, 1);
   }
 
-  // Add a new item to the list (you can modify this to accept custom input)
   addItem() {
     this.cartItems.push({ name: 'New Journey Item', costSavings: 3000, co2Savings: -60, transition: 0 });
   }
