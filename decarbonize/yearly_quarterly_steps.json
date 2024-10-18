@@ -55,7 +55,38 @@
                     }
                 }
             ],
-            "scope3_steps": []
+            "scope3_steps": [{
+                "description": "Purchase Carbon Removal Units (CRUs) to Offset",
+                "difficulty": 1,
+                "savings": -1000,
+                "emissions_savings": 1000.0000,
+                "recommendation": {
+                    "recommended_plan": "Rancho Da Montanha",
+                    "message": "Purchase Carbon Removal Units (CRUs): Rainforest Reforestation Offsets",
+                    "provider_info": [
+                        {
+                            "plan_name": "Rancho Da Montanha",
+                            "company": "Intrinsic Methods",
+                            "phone_number": "1-800-743-5000",
+                            "website_link": "https://registry.intrinsicmethods.com/dashboard/projects/Brazil%20Rancho%20Da%20Montanha%2003182024/#details",
+                            "description": "Use of an innovative system to restore land that has been severely damaged for the last 200 years. Pocket Forest: method to restore degraded areas. In Pocket Forest, we apply the method of densification, with one tree per square meter.",
+                            "carbon_savings": "1000.0000",
+                            "cost_savings": "-1000.00",
+                            "location": "Paraíba do Sul, Brazil"
+                        }
+                    ],
+                    "our recommendation": {
+                        "plan_name": "Rancho Da Montanha",
+                            "company": "Intrinsic Methods",
+                            "phone_number": "1-800-743-5000",
+                            "website_link": "https://registry.intrinsicmethods.com/dashboard/projects/Brazil%20Rancho%20Da%20Montanha%2003182024/#details",
+                            "description": "Use of an innovative system to restore land that has been severely damaged for the last 200 years. Pocket Forest: method to restore degraded areas. In Pocket Forest, we apply the method of densification, with one tree per square meter.",
+                            "carbon_savings": "1000.0000",
+                            "cost_savings": "-1000.00",
+                            "location": "Paraíba do Sul, Brazil"
+                    }
+                }
+            }]
         },
         {
             "year": 2025,
