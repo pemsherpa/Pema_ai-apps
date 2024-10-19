@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { DecarbShoppingCartComponent } from './decarb-shopping-cart/decarb-shopping-cart.component';
@@ -11,11 +11,16 @@ import { DecarbShoppingCartComponent } from './decarb-shopping-cart/decarb-shopp
   templateUrl: './decarb-journey.component.html',
   styleUrl: './decarb-journey.component.css'
 })
-export class DecarbJourneyComponent {
+export class DecarbJourneyComponent implements AfterViewInit{
   title = 'decarbonization-journey';
+  @ViewChild(DecarbShoppingCartComponent) shoppingcartComponent!: DecarbShoppingCartComponent;
 
   isDropdownOpen: { [key: string]: boolean } = {};
-
+  ngAfterViewInit(): void { 
+    console.log("PRINT 1")
+    if (this.shoppingcartComponent) { 
+    this.shoppingcartComponent.fetchScopeData(); 
+    console.log("Print")}}// Access custom component's methods or properties } }
   // // Data for 2024, quarters 1, 2, and 3
   // quartileData1: any;
   // quartileData2: any;

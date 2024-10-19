@@ -1,13 +1,11 @@
 <!-- Target Section -->
-<div class="target">
+<div class="target"(mouseenter)="showScopeTargets = true" (mouseleave)="showScopeTargets = false">
   <div class="target-info">
-    <p><b>Target</b></p>
+    <p><b>Reduction Target</b></p>
     <p>
-      -{{ getTotalCO2Savings() }}/{{ targetGoal }} kgCO2e
+      {{ getTotalCO2Savings() }}/{{ targetGoal }} kgCO2e
       <i
         class="info-icon"
-        (mouseenter)="showScopeTargets = true"
-        (mouseleave)="showScopeTargets = false"
         title="Info">ℹ️</i>
     </p>
     
@@ -25,7 +23,7 @@
           <div class="reduction-item" *ngIf="scopeData">
             <p>Scope 1</p>
             <div class="progress-bar">
-              <div class="progress-scope" [style.width.%]="getScopePercentage(scopeData.scope_1_target)"></div>
+              <div class="progress-scope" [ngStyle]="{'width': getScopePercentage(scopeData.scope_1_target) + '%'}"></div>
             </div>
             <p>{{ scopeData.scope_1_target * 100 | number: '1.0-0' }}%</p>
           </div>
@@ -59,10 +57,12 @@
   </div>
   <div class="description">
   <p>Great job! You're {{ getProgressPercentage() | number: '1.0-0' }}% to your goal!</p>
-  <span class="emoji">😊</span>
 </div>
 </div>
-
+<div class="journey-item-header">
+  <p>Your Journey</p>
+<p>Cost Savings</p>
+<p>CO2 Savings</p></div>
 <!-- Journey Items -->
 <div *ngFor="let item of cartItems; let i = index" class="journey-item">
   <button class="remove-btn" (click)="removeItem(i)">×</button>

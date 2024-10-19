@@ -43,7 +43,7 @@ export class DecarbShoppingCartComponent implements OnInit {
     this.fetchScopeData();
   }
 
-  fetchScopeData(): void {
+  public fetchScopeData(): void {
     this.http.get<{ cs_backend_data: { scope_total: ScopeData } }>('/yearly_quarterly_steps.json')
       .subscribe({
         next: (data) => {
@@ -69,8 +69,14 @@ export class DecarbShoppingCartComponent implements OnInit {
   }
 
   getScopePercentage(scope: number): number {
-    return this.scopeData ? (scope / this.scopeData.scope_total) * 100 : 0;
+    if (!this.scopeData || this.scopeData.scope_total === 0) {
+      console.warn('scope_total is zero or undefined');
+      return 0; 
+    }
+    //console.log('scope:', scope, 'scope_total:', this.scopeData.scope_total);
+    return (scope / this.scopeData.scope_total) * 100*100;
   }
+  
 
   removeItem(index: number) {
     this.cartItems.splice(index, 1);
@@ -78,7 +84,7 @@ export class DecarbShoppingCartComponent implements OnInit {
   }
 
   addItem() {
-    this.cartItems.push({ name: 'New Journey Item', costSavings: 3000, co2Savings: -60, transition: 0 });
+    this.cartItems.push({ name: 'New Journey Item', costSavings: 3000, co2Savings: -600, transition: 0 });
     this.updateProgress();
   }
 
