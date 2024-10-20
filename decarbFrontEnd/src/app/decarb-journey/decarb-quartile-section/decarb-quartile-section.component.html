@@ -1,0 +1,24 @@
+ <!-- Quartile buttons placed under the header -->
+ <div class="quartile-buttons">
+    <div class="quartile-button">2025</div>
+    <div class="quartile-button">2026</div>
+    <div class="quartile-button">2027</div>
+    <div class="quartile-button">2028</div>
+  </div>
+    <div class="quartile-content" *ngFor="let quartile of quartileData; let qIndex = index">
+        <h2>{{ quartile.title }}</h2>
+        <p>{{ quartile.scopeDescription }}</p>
+  
+        <!-- Loop through each quartile's dropdowns -->
+        <div *ngFor="let dropdown of quartile.dropdowns; let dIndex = index">
+          <div (click)="toggleDropdown('dropdown' + qIndex + '_' + dIndex)" class="dropdown-header">
+            <span>{{ dropdown.title }}</span>
+            <span [class.open]="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" class="dropdown-arrow">&#9662;</span>
+          </div>
+          <div [class.show]="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" class="dropdown-content">
+            <p>{{ dropdown.content }}</p>
+          </div>
+        </div>
+      
+    </div>
+

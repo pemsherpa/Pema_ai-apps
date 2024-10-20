@@ -1,38 +1,14 @@
 <div class="decarbonize-header">
     <h1>Your decarbonization journey with AI</h1>
-    <p>Choose from a variety of AI-recommended actions to get started on your decarbonization journey...</p>
+    <p>Choose from a variety of AI-recommended actions to get started on your decarbonization journey. Add prefered actions to track your progress towards your CO2 savings goal in real-time,just like a shopping cart. Calculate your total savings and see how close you are to achieving your target. </p>
     
-    <!-- Quartile buttons placed under the header -->
-    <div class="quartile-buttons">
-      <div class="quartile-button">2025</div>
-      <div class="quartile-button">2026</div>
-      <div class="quartile-button">2027</div>
-      <div class="quartile-button">2028</div>
-    </div>
-  </div>
+</div>
   
   <div class="content">
-    <div class="content">
       <div class="main-content">
-        <!-- Loop through all quartiles and display each one with its dropdowns -->
-        <div *ngFor="let quartile of quartileData; let qIndex = index">
-          <h2>{{ quartile.title }}</h2>
-          <p>{{ quartile.scopeDescription }}</p>
-    
-          <!-- Loop through each quartile's dropdowns -->
-          <div *ngFor="let dropdown of quartile.dropdowns; let dIndex = index">
-            <div (click)="toggleDropdown('dropdown' + qIndex + '_' + dIndex)" class="dropdown-header">
-              <span>{{ dropdown.title }}</span>
-              <span [class.open]="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" class="dropdown-arrow">&#9662;</span>
-            </div>
-            <div [class.show]="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" class="dropdown-content">
-              <p>{{ dropdown.content }}</p>
-            </div>
-          </div>
-        </div>
+        <cs-decarb-quartile-section></cs-decarb-quartile-section>
       </div>
-    
-    <div class="side-content">
+        <div class="side-content">
       <cs-decarb-shopping-cart></cs-decarb-shopping-cart>
     </div>
   </div>
