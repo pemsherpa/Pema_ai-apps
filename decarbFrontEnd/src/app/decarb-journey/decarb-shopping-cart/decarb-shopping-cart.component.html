@@ -57,6 +57,9 @@
   </div>
   <div class="description">
   <p>Great job! You're {{ getProgressPercentage() | number: '1.0-0' }}% to your goal!</p>
+  <div class="expression-container">
+    <img [src]="getExpression()" alt="Facial Expression" />
+  </div>
 </div>
 </div>
 <div class="journey-item-header">
@@ -80,7 +83,7 @@
 </div>
 
 <!-- Add Item Button -->
-<button (click)="addItem()">Add Item</button>
+<!--<button (click)="addItem(New Journey Item', 3000, -6000, 0)">Add Item</button>-->
 
 <!-- Savings Summary -->
 <div class="savings-summary">

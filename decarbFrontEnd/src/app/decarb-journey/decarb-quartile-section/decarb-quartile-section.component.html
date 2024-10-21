@@ -1,24 +1,38 @@
- <!-- Quartile buttons placed under the header -->
- <div class="quartile-buttons">
-    <div class="quartile-button">2025</div>
-    <div class="quartile-button">2026</div>
-    <div class="quartile-button">2027</div>
-    <div class="quartile-button">2028</div>
+<div class="main-buttons">
+  <div class="quartile-buttons">
+    <div class="quartile-button">First Quartile</div>
+    <div class="quartile-button">Second Quartile</div>
+    <div class="quartile-button">Third Quartile</div>
+    <div class="quartile-button">Fourth Quartile</div>
   </div>
-    <div class="quartile-content" *ngFor="let quartile of quartileData; let qIndex = index">
-        <h2>{{ quartile.title }}</h2>
-        <p>{{ quartile.scopeDescription }}</p>
-  
-        <!-- Loop through each quartile's dropdowns -->
-        <div *ngFor="let dropdown of quartile.dropdowns; let dIndex = index">
-          <div (click)="toggleDropdown('dropdown' + qIndex + '_' + dIndex)" class="dropdown-header">
-            <span>{{ dropdown.title }}</span>
-            <span [class.open]="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" class="dropdown-arrow">&#9662;</span>
-          </div>
-          <div [class.show]="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" class="dropdown-content">
-            <p>{{ dropdown.content }}</p>
-          </div>
-        </div>
-      
+  <div class="year-buttons">
+    <div class="year-button">2025</div>
+    <div class="year-button">2026</div>
+    <div class="year-button">2027</div>
+    <div class="year-button">2028</div>
+  </div>
+</div>
+
+<div class="quartile-content" *ngFor="let quartile of quartileData; let qIndex = index">
+  <h2>{{ quartile.title }}</h2>
+  <p>{{ quartile.scopeDescription }}</p>
+
+  <!-- Loop through each quartile's dropdowns -->
+  <div *ngFor="let dropdown of quartile.dropdowns; let dIndex = index">
+    <div (click)="toggleDropdown('dropdown' + qIndex + '_' + dIndex)" class="dropdown-header">
+      <span>
+        <input type="checkbox" [checked]="dropdown.isCompleted" (click)="toggleCompletion(qIndex, dIndex); $event.stopPropagation();" />
+        <!-- Checkmark if completed -->
+        <span [class.completed]="dropdown.isCompleted" class="checkmark">&#10003;</span> 
+        {{ dropdown.title }}
+      </span>
+      <span [class.open]="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" class="dropdown-arrow">&#9662;</span>
     </div>
+    <div [class.show]="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" class="dropdown-content">
+      <p>{{ dropdown.content }}</p>
+    </div>
+  </div>
+</div>
+
+
 

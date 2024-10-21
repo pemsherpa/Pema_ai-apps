@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
@@ -73,22 +73,47 @@ export class DecarbShoppingCartComponent implements OnInit {
       console.warn('scope_total is zero or undefined');
       return 0; 
     }
-    //console.log('scope:', scope, 'scope_total:', this.scopeData.scope_total);
-    return (scope / this.scopeData.scope_total) * 100*100;
+    return (scope / this.scopeData.scope_total) * 100 * 100;
   }
   
+  // Function to return the appropriate facial expression based on the progress percentage
+  getExpression(): string {
+    const progressPercentage = this.getProgressPercentage();
+
+    if (progressPercentage <= 25) {
+      return '1';
+    } else if (progressPercentage <= 50) {
+      return '1';
+    } else if (progressPercentage <= 75) {
+      return '2';
+    } else {
+      return '/excited.svg';
+    }
+  }
 
   removeItem(index: number) {
     this.cartItems.splice(index, 1);
     this.updateProgress();
   }
 
-  addItem() {
-    this.cartItems.push({ name: 'New Journey Item', costSavings: 3000, co2Savings: -600, transition: 0 });
-    this.updateProgress();
+  //addItem() {
+    //this.cartItems.push({ name: 'New Journey Item', costSavings: 3000, co2Savings: -6000, transition: 0 });
+    //this.updateProgress();
+  //}
+  addItem(item: CartItem) {
+    const existingItem = this.cartItems.find(cartItem => cartItem.name === item.name);
+    if (!existingItem) {
+      this.cartItems.push(item);
+    }
   }
+
+  removeItemByName(itemName: string) {
+    this.cartItems = this.cartItems.filter(item => item.name !== itemName);
+  }
+
 
   updateProgress() {
     this.getProgressPercentage();
   }
 }
+

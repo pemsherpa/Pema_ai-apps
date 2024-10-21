@@ -1,15 +1,17 @@
 <div class="decarbonize-header">
-    <h1>Your decarbonization journey with AI</h1>
-    <p>Choose from a variety of AI-recommended actions to get started on your decarbonization journey. Add prefered actions to track your progress towards your CO2 savings goal in real-time,just like a shopping cart. Calculate your total savings and see how close you are to achieving your target. </p>
-    
+  <h1>Your decarbonization journey with AI</h1>
+  <p>Choose from a variety of AI-recommended actions to get started on your decarbonization journey. Add preferred actions to track your progress towards your CO2 savings goal in real-time, just like a shopping cart. Calculate your total savings and see how close you are to achieving your target. </p>
 </div>
-  
-  <div class="content">
-      <div class="main-content">
-        <cs-decarb-quartile-section></cs-decarb-quartile-section>
+
+<div class="content">
+  <div class="main-content">
+      <cs-decarb-quartile-section (itemChecked)="onItemChecked($event)"></cs-decarb-quartile-section>
+      <div>
       </div>
-        <div class="side-content">
-      <cs-decarb-shopping-cart></cs-decarb-shopping-cart>
-    </div>
   </div>
+  <div class="side-content">
+      <cs-decarb-shopping-cart></cs-decarb-shopping-cart>
+  </div>
+</div>
+
   

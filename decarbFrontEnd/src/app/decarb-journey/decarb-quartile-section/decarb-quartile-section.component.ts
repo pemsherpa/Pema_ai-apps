@@ -1,47 +1,58 @@
+
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'cs-decarb-quartile-section',
   standalone: true,
-  imports: [CommonModule,],
+  imports: [CommonModule],
   templateUrl: './decarb-quartile-section.component.html',
-  styleUrl: './decarb-quartile-section.component.css'
+  styleUrls: ['./decarb-quartile-section.component.css'],
 })
 export class DecarbQuartileSectionComponent {
+  @Output() itemChecked = new EventEmitter<{
+    name: string; 
+    costSavings: number; 
+    co2Savings: number; 
+    transition: number; 
+    isChecked: boolean;
+  }>();
+
   isDropdownOpen: { [key: string]: boolean } = {};
+
   quartileData = [
     {
       title: 'First Quartile',
       scopeDescription: 'Following steps focus on reducing scope 1 emissions.',
       dropdowns: [
-        { title: 'Change Electricity Provider', content: 'Switch to a provider offering more renewable energy.' },
-        { title: 'Reduce First Class Travel', content: 'Switching from first class to business class reduces emissions.' },
-        { title: 'Introduce Fuel-Efficient Vehicles', content: 'Implement fuel-efficient vehicles to cut emissions.' }
+        { title: 'Change Electricity Provider', content: 'Switch to a provider offering more renewable energy.', costSavings: 6000, co2Savings: -100, transition: 50, isCompleted: false },
+        { title: 'Reduce First Class Travel', content: 'Switching from first class to business class reduces emissions.', costSavings: 2500, co2Savings: -45, transition: 25, isCompleted: false },
+        { title: 'Introduce Fuel-Efficient Vehicles', content: 'Implement fuel-efficient vehicles to cut emissions.', costSavings: 5000, co2Savings: -75, transition: 30, isCompleted: false }
       ]
     },
-    {
-      title: 'Second Quartile',
-      scopeDescription: 'Following steps focus on reducing scope 2 emissions.',
-      dropdowns: [
-        { title: 'Engage in Sustainability Initiatives', content: 'Involve employees in sustainability programs.' },
-        { title: 'Implement Carbon Capture', content: 'Deploy carbon capture technologies to reduce emissions.' },
-        { title: 'Introduce Hybrid Vehicles', content: 'Consider introducing hybrid vehicles for your fleet.' }
-      ]
-    },
-    {
-      title: 'Third Quartile',
-      scopeDescription: 'Following steps focus on reducing scope 3 emissions.',
-      dropdowns: [
-        { title: 'Carbon Offsetting', content: 'Offset emissions through certified carbon credits.' },
-        { title: 'Optimize Supply Chain', content: 'Reduce emissions by optimizing supply chain processes.' },
-        { title: 'Carbon Capture and Storage', content: 'Invest in carbon capture and storage technologies.' }
-      ]
-    }
+    // ... other quartiles
   ];
-
-  // Function to toggle dropdown visibility
+  quartileSelected: boolean[] = [false, false, false, false];
   toggleDropdown(dropdownId: string): void {
     this.isDropdownOpen[dropdownId] = !this.isDropdownOpen[dropdownId];
   }
+
+  toggleCompletion(quartileIndex: number, dropdownIndex: number): void {
+    const selectedDropdown = this.quartileData[quartileIndex].dropdowns[dropdownIndex];
+    selectedDropdown.isCompleted = !selectedDropdown.isCompleted;
+
+    // Emit the name of the task and its completion state along with savings data
+    this.itemChecked.emit({
+      name: selectedDropdown.title,
+      costSavings: selectedDropdown.costSavings,
+      co2Savings: selectedDropdown.co2Savings,
+      transition: selectedDropdown.transition,
+      isChecked: selectedDropdown.isCompleted
+    });
+  }
+  toggleQuartileButton(index: number): void {
+    this.quartileSelected[index] = !this.quartileSelected[index];
+  }
 }
+
+
