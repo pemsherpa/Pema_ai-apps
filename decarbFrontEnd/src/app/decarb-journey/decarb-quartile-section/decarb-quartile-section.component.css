@@ -1,31 +1,5 @@
 /* General button styles */
-.main-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .quartile-buttons, .year-buttons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .quartile-button, .year-button {
-    padding: 6px;
-    border: 1px solid #673be5;
-    border-radius: 20px;
-    cursor: pointer;
-    color: #673be5;
-  }
-  
-  .quartile-button:hover, .year-button:hover {
-    background-color: #673be5;
-    color:white
-  }
-  
-  .quartile-content {
-    margin-bottom: 20px;
-  }
+
   
   /* Dropdown styles */
   .dropdown-header {
@@ -33,10 +7,8 @@
     justify-content: space-between;
     cursor: pointer;
     padding: 10px 15px;
-    border: 1px solid #ccc;
     border-radius: 4px;
     margin-top: 10px;
-    background-color: #f9f9f9;
   }
   
   .dropdown-arrow {
@@ -50,18 +22,29 @@
   }
   
   .dropdown-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    padding: 0 15px;
+    display: none;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
   }
   
   .dropdown-content.show {
-    max-height: 100px; /* Adjust based on content size */
+    display:block;
   }
   
   .dropdown-content p {
     margin: 10px 0;
+  }
+  .provider-info {
+    margin-top: 10px;
+  }
+  .provider-info ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .provider-info li {
+    margin-bottom: 10px;
   }
   
   /* Tick mark and completion styles */
