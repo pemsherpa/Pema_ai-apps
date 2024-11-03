@@ -21,6 +21,7 @@ class DecarbStep:
             DecarbStepType.FLIGHTS: 3,
             DecarbStepType.FLIGHTS_RETURN: 3,
             DecarbStepType.CRU: 3,
+            DecarbStepType.CRU_ANNUAL:3,
             DecarbStepType.FLIGHT_OPTIMIZER: 3,
         }
         

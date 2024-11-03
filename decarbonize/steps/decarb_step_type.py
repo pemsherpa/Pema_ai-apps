@@ -11,6 +11,7 @@ class DecarbStepType(Enum):
     ELECTRICITY = auto()
     ELECTRICITY_ANNUAL = auto()
     CRU = auto()
+    CRU_ANNUAL=auto()
 
     def __str__(self) -> str:
         return self.name

@@ -14,6 +14,7 @@ from decarb_customer_goals import DecarbCustomerGoals
 import numpy as np
 from components.biz_commute_analyzer import BusinessCommutingAnalyzer
 from steps.decarb_step_cru import Decarb_CRU
+from steps.decarb_step_cru import CRUDecarbStep
 from steps.electric_decarb_step import ElectricDecarbStep
 from components.electricity.sectors.lcbsector import LCBSector_simplified
 from components.electricity.sectors.lcusector import LCUSector_simplified
@@ -24,6 +25,7 @@ from steps.decarb_step import DecarbStep
 from steps.decarb_step_type import DecarbStepType
 from steps.decarb_weight import DecarbWeight
 from steps.electric_recommendations import Electric_Recommendations
+from steps.cru_recommendations import CRU_Recommendations
 import pandas as pd
 from steps.flight_decarb_step import FlightDecarbStep
 from components.FlightEmissionsCalculator import FlightEmissionsCalculator
@@ -31,6 +33,7 @@ from components.FlightEmissionsCalculator import Flight
 from steps.decarb_emissions_step import FlightOptimizerDecarbStep
 from steps.quarterly_step import QuarterStep
 from steps.provider_info import ProviderInfo
+from steps.provider_info_cru import ProviderInfoCru
 
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
@@ -147,6 +150,8 @@ class DecarbEngine:
     def run_CRU_step(self):
         # CRU Step
         cru_step = self.create_CRU_step()
+        cru_step.recommendations =  self.provide_cru_recommendations(cru_step)
+        print(cru_step.recommendations)
         self.steps.append(cru_step)
         
     def provide_recommendations(self, electric_step):
@@ -157,6 +162,12 @@ class DecarbEngine:
        current_quarter = (month - 1) // 3 + 1
        electric_recs = Electric_Recommendations(self.provider_info, electric_step,current_year,current_quarter)
        return electric_recs.to_dict()
+    
+    def provide_cru_recommendations(self, cru_step):
+       now = datetime.datetime.now()
+       current_year = now.year
+       cru_recs = CRU_Recommendations(self.provider_info, cru_step,current_year,4)
+       return cru_recs.to_dict()
 
     def run_electric_step(self): 
         # Electricity Step
@@ -177,7 +188,7 @@ class DecarbEngine:
         #self.run_carpool_step()
         self.run_electric_step()
         #self.run_flight_optimizer_step()
-        #self.run_CRU_step()
+        self.run_CRU_step()
 
         return self.steps
     
@@ -283,6 +294,8 @@ class DecarbEngine:
             return data.tolist()
         elif isinstance(data, ProviderInfo):
             return data.to_dict()
+        elif isinstance(data, ProviderInfoCru):
+            return data.to_dict()
         elif isinstance(data, set):
             return list(data)
         else:
@@ -337,6 +350,7 @@ class DecarbEngine:
      yearly_steps=[]
 
      electric_step = None
+     cru_step=None
      for goal_yr in range(decarb_goals.timeframe):
       cur_goal_yr = current_year + goal_yr
       cur_goal_quarter = current_quarter
@@ -357,6 +371,16 @@ class DecarbEngine:
         
         # Update current quarter for the next iteration
         cur_goal_quarter = (cur_goal_quarter % 4) + 1
+      for quarter_step in yearly_steps_orig:
+             if quarter_step.year == cur_goal_yr and quarter_step.quarter == 4:
+                for step in decarb_steps:
+                    if isinstance(step, CRUDecarbStep):
+                        cru_step = step
+                    else: 
+                        quarter_step.add_step(step)
+
+                if quarter_step not in yearly_steps:
+                    yearly_steps.append(quarter_step)
      
      # Add Electric Steps as Quarter Steps, once per Year
      cur_e_year = current_year
@@ -365,11 +389,17 @@ class DecarbEngine:
         cur_e_year =current_year+goal_yr
         print(goal_yr)
         e_rec = electric_step.recommendations['recommendations'][goal_yr]
+        cru_rec=cru_step.recommendations
         for quarter_step in yearly_steps_orig:
             if quarter_step.year == cur_e_year and quarter_step.quarter == current_quarter:
               print("Adding the electric rec once a year")
               print(e_rec)
-              quarter_step.add_electric_step(e_rec, electric_step)   
+              quarter_step.add_electric_step(e_rec, electric_step) 
+        for quarter_step in yearly_steps_orig:
+            if quarter_step.year == cur_e_year and quarter_step.quarter == 4:
+              print("Adding the CRU rec once a year")
+              print(cru_step)
+              quarter_step.add_cru_step(cru_rec,cru_step)  # Ensure this is being executed    
          
     # Step 5: Ensure CRU is only purchased once a year
      decarb_engine.add_cru_steps(yearly_steps)
@@ -403,15 +433,16 @@ class DecarbEngine:
      
     
     def add_cru_steps(self, yearly_steps):
-        cru_purchased = False
-        for quarter_step in yearly_steps:
-            if not cru_purchased:
-                if any("CRU" in step.description for step in quarter_step.scope1_steps + quarter_step.scope2_steps + quarter_step.scope3_steps):
-                    cru_purchased = True
-            else:
-                quarter_step.scope1_steps = [step for step in quarter_step.scope1_steps if "CRU" not in step.description]
-                quarter_step.scope2_steps = [step for step in quarter_step.scope2_steps if "CRU" not in step.description]
-                quarter_step.scope3_steps = [step for step in quarter_step.scope3_steps if "CRU" not in step.description]
+        print(" ")
+        # cru_purchased = False
+        # for quarter_step in yearly_steps:
+        #     if not cru_purchased:
+        #         if any("CRU" in step.description for step in quarter_step.scope1_steps + quarter_step.scope2_steps + quarter_step.scope3_steps):
+        #             cru_purchased = True
+        #     else:
+        #         quarter_step.scope1_steps = [step for step in quarter_step.scope1_steps if "CRU" not in step.description]
+        #         quarter_step.scope2_steps = [step for step in quarter_step.scope2_steps if "CRU" not in step.description]
+        #         quarter_step.scope3_steps = [step for step in quarter_step.scope3_steps if "CRU" not in step.description]
         
     def get_dict_zscore(self, decarb_steps):
         (f"decarb_steps length {len(decarb_steps)}")
@@ -478,6 +509,7 @@ class DecarbEngine:
             new_cost=cost,
             cur_emissions=emission, # fake
             new_emissions=emission-CRU_amt,
+            CRU_amount=1000, #for testing
             description="Analyze CRU costs and emissions",
             difficulty=1,
             timeframe=5

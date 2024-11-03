@@ -1,6 +1,8 @@
 from steps.decarb_step import DecarbStepType
 from steps.electric_decarb_annual_step import ElectricDecarbAnnualStep
 from steps.electric_decarb_step import ElectricDecarbStep
+from steps.annual_cru import CRUAnnualStep
+from steps.decarb_step_cru import CRUDecarbStep
 
 class QuarterStep:
     def __init__(self, year, quarter):
@@ -16,12 +18,16 @@ class QuarterStep:
             self.scope1_steps.append(step)
         elif step.scope == 2:
             self.scope2_steps.append(step)
-        elif step.scope == 3:
-            self.scope3_steps.append(step)
+        # elif step.scope == 3:
+        #     self.scope3_steps.append(step)
 
     def add_electric_step(self, e_rec, e_step):
         e_annual_step = ElectricDecarbAnnualStep(e_rec, e_step)
         self.scope2_steps.append(e_annual_step)
+
+    def add_cru_step(self,cru_rec,cru_step):
+        cru_annual= CRUAnnualStep(cru_rec,cru_step)
+        self.scope3_steps.append(cru_annual)
 
     def add_rec_to_scope2(self, e_step, rec):
         if not (type(e_step) is ElectricDecarbStep):
@@ -31,6 +37,14 @@ class QuarterStep:
         print("add_rec_to_scope2")
         self.scope2_steps.append(e_annual_step)
 
+    def add_rec_to_scope3(self, cru_step, rec):
+        if not (type(cru_step) is CRUDecarbStep):
+            raise TypeError(f"add_rec_to_scope2: Unexpected step type: {type(cru_step)}")  
+        
+        cru_annual_step = CRUAnnualStep(rec, cru_step.cur_cost, cru_step.new_cost, cru_step.cur_emissions, cru_step.new_emissions, cru_step.description, cru_step.difficulty)
+        print("add_rec_to_scope3")
+        self.scope2_steps.append(cru_annual_step)
+        
     def to_dict(self):
         return {
             "year": self.year,
@@ -45,8 +59,8 @@ class QuarterStep:
             return step  # If step is already a dictionary, return it as is
         elif hasattr(step, 'step_to_dict'):
             return step.step_to_dict()  # Use the step's method to convert to a dictionary
-        else:
-            raise TypeError(f"Unexpected step type: {type(step)}")  # Handle unexpected types
+        # else:
+        #     raise TypeError(f"Unexpected step type: {type(step)}")  # Handle unexpected types
 
 
 
