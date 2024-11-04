@@ -1,1 +1,8 @@
-<p>scope3-steps works!</p>
+<div class="step">
+    <input 
+      type="checkbox" 
+      [checked]="stepData.isCompleted" 
+      (change)="toggleCompletion()" 
+    /> 
+    <span>{{ stepData.title }}</span>
+  </div>

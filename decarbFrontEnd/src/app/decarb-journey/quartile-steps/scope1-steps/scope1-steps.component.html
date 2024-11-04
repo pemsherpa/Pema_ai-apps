@@ -1,1 +1,20 @@
-<p>scope1-steps works!</p>
+<div class="step-details">
+  <input type="checkbox" [checked]="stepData.isCompleted" (change)="toggleCompletion()" /> 
+  <span>{{ stepData.title }}</span>
+  <p><strong>Provider Information:</strong></p>
+  <ul>
+    <li *ngFor="let provider of stepData.providerInfo">
+      <strong>{{ provider.name }}</strong> - {{ provider.details }}
+      <br>
+      Renewable Percentage: {{ provider.renewablePercentage }}%
+      <br>
+      Phone: {{ provider.phone }}
+      <a [href]="provider.website" target="_blank">Visit Website</a>
+    </li>
+  </ul>
+  <p><strong>Cost Savings:</strong> {{ stepData.costSavings }}</p>
+  <p><strong>CO₂ Savings:</strong> {{ stepData.co2Savings }}</p>
+  <p><strong>Transition:</strong> {{ stepData.transition }}</p>
+</div>
+
+  

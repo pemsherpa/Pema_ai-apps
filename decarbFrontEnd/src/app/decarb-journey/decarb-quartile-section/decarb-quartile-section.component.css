@@ -1,72 +1,92 @@
 /* General button styles */
+button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
 
-  
-  /* Dropdown styles */
-  .dropdown-header {
-    display: flex;
-    justify-content: space-between;
-    cursor: pointer;
-    padding: 10px 15px;
-    border-radius: 4px;
-    margin-top: 10px;
-  }
-  
-  .dropdown-arrow {
-    font-size: 18px;
-    transform: rotate(0);
-    transition: transform 0.3s ease;
-  }
-  
-  .dropdown-arrow.open {
-    transform: rotate(180deg);
-  }
-  
-  .dropdown-content {
-    display: none;
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Dropdown styles */
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+  background-color: #f1f1f1;
+}
+
+.dropdown-arrow {
+  font-size: 10px;
+  transform: rotate(0);
+  transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-content {
+  display: none;
   padding: 10px;
   border: 1px solid #ddd;
   background-color: #f9f9f9;
-  }
-  
-  .dropdown-content.show {
-    display:block;
-  }
-  
-  .dropdown-content p {
-    margin: 10px 0;
-  }
-  .provider-info {
-    margin-top: 10px;
-  }
-  .provider-info ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .provider-info li {
-    margin-bottom: 10px;
-  }
-  
-  /* Tick mark and completion styles */
-  .checkmark {
-    display: inline-block;
-    color: green;
-    margin-right: 10px;
-    font-size: 18px;
-    visibility: hidden;
-  }
-  
-  .checkmark.completed {
-    visibility: visible;
-  }
-  
-  input[type="checkbox"] {
-    margin-right: 10px;
-  }
-  
-  .completed-task {
-    color: green;
-    font-weight: bold;
-  }
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-content p {
+  margin: 10px 0;
+}
+
+/* Provider information styles */
+.provider-info {
+  margin-top: 10px;
+}
+
+.provider-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.provider-info li {
+  margin-bottom: 10px;
+}
+
+/* Tick mark and completion styles */
+.checkmark {
+  display: inline-block;
+  color: green;
+  margin-right: 10px;
+  font-size: 18px;
+  visibility: hidden;
+}
+
+.checkmark.completed {
+  visibility: visible;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.completed-task {
+  color: green;
+  font-weight: bold;
+}
+
   
   

@@ -1,40 +1,18 @@
-<div class="quartile-content" *ngFor="let quartile of quartileData; let qIndex = index">
-  <h2>{{ quartile.title }}</h2>
-  <p>{{ quartile.scopeDescription }}</p>
+<div *ngFor="let step of quartileData; let i = index" class="step-container">
+  <div class="step-title-bar" (click)="toggleStep(i)">
+    <span>{{ step.title }}</span>
+      <span *ngIf="step.isExpanded" class="dropdown-arrow">&#9650;</span> <!-- Up arrow when expanded -->
+    
+    
+  </div>
 
-  <div *ngFor="let dropdown of quartile.dropdowns; let dIndex = index" class="dropdown-container">
-    <div (click)="toggleDropdown('dropdown' + qIndex + '_' + dIndex)" class="dropdown-header">
-      <span>
-        <input 
-          type="checkbox" 
-          [checked]="dropdown.isCompleted" 
-          (click)="toggleCompletion(qIndex, dIndex); $event.stopPropagation();" 
-        />
-        <span [class.completed]="dropdown.isCompleted" class="checkmark">&#10003;</span> 
-        {{ dropdown.title }}
-      </span>
-      <span 
-        [class.open]="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" 
-        class="dropdown-arrow">&#9662;
-      </span>
-    </div>
-
-    <!-- Updated: Ensuring description and provider information displays fully -->
-    <div *ngIf="isDropdownOpen['dropdown' + qIndex + '_' + dIndex]" class="dropdown-content show">
-      <p>{{ dropdown.description }}</p>
-
-      <div *ngIf="dropdown.providerInfo">
-        <h4>Provider Information:</h4>
-        <ul>
-          <li *ngFor="let provider of dropdown.providerInfo">
-            <strong>{{ provider.plan_name }}</strong> - {{ provider.company }}
-            <p>{{ provider['description of the company'] }}</p>
-            <p>Renewable Percentage: {{ provider['renewable percent provided'] }}%</p>
-            <p>Phone: {{ provider.phone_number }}</p>
-            <a [href]="provider.website_link" target="_blank">Visit Website</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+  <div *ngIf="step.isExpanded">
+    <ng-container [ngSwitch]="step.scope">
+      <app-scope1-step *ngSwitchCase="'scope1'" [stepData]="step" (stepToggled)="onStepToggled(step)"></app-scope1-step>
+      <app-scope2-step *ngSwitchCase="'scope2'" [stepData]="step" (stepToggled)="onStepToggled(step)"></app-scope2-step>
+      <app-scope3-step *ngSwitchCase="'scope3'" [stepData]="step" (stepToggled)="onStepToggled(step)"></app-scope3-step>
+    </ng-container>
   </div>
 </div>
+
+

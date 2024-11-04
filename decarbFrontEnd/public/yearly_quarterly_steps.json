@@ -21,6 +21,12 @@
                 {
                     "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
                     "difficulty": 2,
+                    "savings": 5.949999999999999,
+                    "emissions_savings": 90.0
+                },
+                {
+                    "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
+                    "difficulty": 2,
                     "savings": 99973.41,
                     "emissions_savings": 90.0,
                     "recommendation": {
@@ -55,7 +61,56 @@
                     }
                 }
             ],
-            "scope3_steps": []
+            "scope3_steps": [
+                {
+                    "description": "Analyze CRU costs and emissions",
+                    "difficulty": 1,
+                    "savings": -45000.0,
+                    "emissions_savings": 2000.0,
+                    "recommendation": {
+                        "recommendations": [
+                            {
+                                "recommended_plan": "Switch to the optimized plan for carbon removal.",
+                                "message": "Welcome to Carbon Savings",
+                                "carbon_emission_savings": 2000.0,
+                                "cost_savings": -45000.0,
+                                "provider_info": [
+                                    {
+                                        "company": "Climeworks",
+                                        "phone_number": " +41 44 533 29 99",
+                                        "website_link": " https://climeworks.com ",
+                                        "company_description": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                        "type": "Direct Air Capture (DAC)",
+                                        "location": "Zurich, Switzerland",
+                                        "carbon_savings": 2000.0,
+                                        "cost_savings": -45000.0
+                                    },
+                                    {
+                                        "company": "Carbon Engineering",
+                                        "phone_number": "+1 604-416-0056",
+                                        "website_link": "https://carbonengineering.com/",
+                                        "company_description": "Carbon Engineering develops DAC technology to capture CO\u2082 from the atmosphere for large-scale removal or utilization.",
+                                        "type": "Direct Air Capture (DAC)",
+                                        "location": "Squamish, British Columbia, Canada",
+                                        "carbon_savings": 2000.0,
+                                        "cost_savings": -45000.0
+                                    }
+                                ],
+                                "our_recommendation": {
+                                    "company": "Climeworks",
+                                    "phone_number": " +41 44 533 29 99",
+                                    "website_link": " https://climeworks.com ",
+                                    "company_description": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                    "type": "Direct Air Capture (DAC)",
+                                    "location": "Zurich, Switzerland",
+                                    "carbon_savings": 2000.0,
+                                    "cost_savings": -45000.0
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
         },
         {
             "year": 2025,
@@ -83,6 +138,12 @@
             "quarter": 4,
             "scope1_steps": [],
             "scope2_steps": [
+                {
+                    "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
+                    "difficulty": 2,
+                    "savings": 5.949999999999999,
+                    "emissions_savings": 90.0
+                },
                 {
                     "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
                     "difficulty": 2,
@@ -106,11 +167,11 @@
                             },
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "SJCE_GreenSource(60%Renewable)",
-                                "renewable percent provided": 60.0,
-                                "phone_number": "1-833-432-2454",
-                                "website_link": "https://sanjosecleanenergy.org/",
-                                "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                                "company": "Ava Bright Choice",
+                                "renewable percent provided": 50.0,
+                                "phone_number": "1-833-699-3223",
+                                "website_link": "https://avaenergy.org/change-my-plan/",
+                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                                 "Carbon savings": "90.00",
                                 "Cost savings": "5.95",
                                 "Peak Cost": "92.11",
@@ -118,11 +179,11 @@
                             },
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "Ava Bright Choice",
-                                "renewable percent provided": 50.0,
-                                "phone_number": "1-833-699-3223",
-                                "website_link": "https://avaenergy.org/change-my-plan/",
-                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                                "company": "SJCE_GreenSource(60%Renewable)",
+                                "renewable percent provided": 60.0,
+                                "phone_number": "1-833-432-2454",
+                                "website_link": "https://sanjosecleanenergy.org/",
+                                "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
                                 "Carbon savings": "90.00",
                                 "Cost savings": "5.95",
                                 "Peak Cost": "92.11",
@@ -144,7 +205,56 @@
                     }
                 }
             ],
-            "scope3_steps": []
+            "scope3_steps": [
+                {
+                    "description": "Analyze CRU costs and emissions",
+                    "difficulty": 1,
+                    "savings": -45000.0,
+                    "emissions_savings": 2000.0,
+                    "recommendation": {
+                        "recommendations": [
+                            {
+                                "recommended_plan": "Switch to the optimized plan for carbon removal.",
+                                "message": "Welcome to Carbon Savings",
+                                "carbon_emission_savings": 2000.0,
+                                "cost_savings": -45000.0,
+                                "provider_info": [
+                                    {
+                                        "company": "Climeworks",
+                                        "phone_number": " +41 44 533 29 99",
+                                        "website_link": " https://climeworks.com ",
+                                        "company_description": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                        "type": "Direct Air Capture (DAC)",
+                                        "location": "Zurich, Switzerland",
+                                        "carbon_savings": 2000.0,
+                                        "cost_savings": -45000.0
+                                    },
+                                    {
+                                        "company": "Carbon Engineering",
+                                        "phone_number": "+1 604-416-0056",
+                                        "website_link": "https://carbonengineering.com/",
+                                        "company_description": "Carbon Engineering develops DAC technology to capture CO\u2082 from the atmosphere for large-scale removal or utilization.",
+                                        "type": "Direct Air Capture (DAC)",
+                                        "location": "Squamish, British Columbia, Canada",
+                                        "carbon_savings": 2000.0,
+                                        "cost_savings": -45000.0
+                                    }
+                                ],
+                                "our_recommendation": {
+                                    "company": "Climeworks",
+                                    "phone_number": " +41 44 533 29 99",
+                                    "website_link": " https://climeworks.com ",
+                                    "company_description": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                    "type": "Direct Air Capture (DAC)",
+                                    "location": "Zurich, Switzerland",
+                                    "carbon_savings": 2000.0,
+                                    "cost_savings": -45000.0
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
         },
         {
             "year": 2026,
@@ -172,6 +282,12 @@
             "quarter": 4,
             "scope1_steps": [],
             "scope2_steps": [
+                {
+                    "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
+                    "difficulty": 2,
+                    "savings": 5.949999999999999,
+                    "emissions_savings": 90.0
+                },
                 {
                     "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
                     "difficulty": 2,
@@ -183,11 +299,11 @@
                         "provider_info": [
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "MCE_Deep_Green(100%Renewable)",
+                                "company": "Ava Renewable 100",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-888-632-3674",
-                                "website_link": "https://mcecleanenergy.org/home-electrification/",
-                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                                "phone_number": "1-833-699-3223",
+                                "website_link": "https://avaenergy.org/change-my-plan/",
+                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                                 "Carbon savings": "90.00",
                                 "Cost savings": "5.95",
                                 "Peak Cost": "92.11",
@@ -195,11 +311,11 @@
                             },
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "Ava Renewable 100",
+                                "company": "MCE_Deep_Green(100%Renewable)",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-833-699-3223",
-                                "website_link": "https://avaenergy.org/change-my-plan/",
-                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                                "phone_number": "1-888-632-3674",
+                                "website_link": "https://mcecleanenergy.org/home-electrification/",
+                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
                                 "Carbon savings": "90.00",
                                 "Cost savings": "5.95",
                                 "Peak Cost": "92.11",
@@ -220,11 +336,11 @@
                         ],
                         "our recommendation": {
                             "plan_name": "B-19_PV",
-                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "company": "Ava Renewable 100",
                             "renewable percent provided": 100.0,
-                            "phone_number": "1-888-632-3674",
-                            "website_link": "https://mcecleanenergy.org/home-electrification/",
-                            "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/",
+                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                             "Carbon savings": "90.00",
                             "Cost savings": "5.95",
                             "Peak Cost": "92.11",
@@ -233,7 +349,56 @@
                     }
                 }
             ],
-            "scope3_steps": []
+            "scope3_steps": [
+                {
+                    "description": "Analyze CRU costs and emissions",
+                    "difficulty": 1,
+                    "savings": -45000.0,
+                    "emissions_savings": 2000.0,
+                    "recommendation": {
+                        "recommendations": [
+                            {
+                                "recommended_plan": "Switch to the optimized plan for carbon removal.",
+                                "message": "Welcome to Carbon Savings",
+                                "carbon_emission_savings": 2000.0,
+                                "cost_savings": -45000.0,
+                                "provider_info": [
+                                    {
+                                        "company": "Climeworks",
+                                        "phone_number": " +41 44 533 29 99",
+                                        "website_link": " https://climeworks.com ",
+                                        "company_description": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                        "type": "Direct Air Capture (DAC)",
+                                        "location": "Zurich, Switzerland",
+                                        "carbon_savings": 2000.0,
+                                        "cost_savings": -45000.0
+                                    },
+                                    {
+                                        "company": "Carbon Engineering",
+                                        "phone_number": "+1 604-416-0056",
+                                        "website_link": "https://carbonengineering.com/",
+                                        "company_description": "Carbon Engineering develops DAC technology to capture CO\u2082 from the atmosphere for large-scale removal or utilization.",
+                                        "type": "Direct Air Capture (DAC)",
+                                        "location": "Squamish, British Columbia, Canada",
+                                        "carbon_savings": 2000.0,
+                                        "cost_savings": -45000.0
+                                    }
+                                ],
+                                "our_recommendation": {
+                                    "company": "Climeworks",
+                                    "phone_number": " +41 44 533 29 99",
+                                    "website_link": " https://climeworks.com ",
+                                    "company_description": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                    "type": "Direct Air Capture (DAC)",
+                                    "location": "Zurich, Switzerland",
+                                    "carbon_savings": 2000.0,
+                                    "cost_savings": -45000.0
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
         },
         {
             "year": 2027,
@@ -264,6 +429,12 @@
                 {
                     "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
                     "difficulty": 2,
+                    "savings": 5.949999999999999,
+                    "emissions_savings": 90.0
+                },
+                {
+                    "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
+                    "difficulty": 2,
                     "savings": 99973.41,
                     "emissions_savings": 90.0,
                     "recommendation": {
@@ -272,11 +443,11 @@
                         "provider_info": [
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "MCE_Deep_Green(100%Renewable)",
+                                "company": "Ava Renewable 100",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-888-632-3674",
-                                "website_link": "https://mcecleanenergy.org/home-electrification/",
-                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                                "phone_number": "1-833-699-3223",
+                                "website_link": "https://avaenergy.org/change-my-plan/",
+                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                                 "Carbon savings": "90.00",
                                 "Cost savings": "5.95",
                                 "Peak Cost": "92.11",
@@ -284,11 +455,11 @@
                             },
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "Ava Renewable 100",
+                                "company": "MCE_Deep_Green(100%Renewable)",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-833-699-3223",
-                                "website_link": "https://avaenergy.org/change-my-plan/",
-                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                                "phone_number": "1-888-632-3674",
+                                "website_link": "https://mcecleanenergy.org/home-electrification/",
+                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
                                 "Carbon savings": "90.00",
                                 "Cost savings": "5.95",
                                 "Peak Cost": "92.11",
@@ -309,11 +480,11 @@
                         ],
                         "our recommendation": {
                             "plan_name": "B-19_PV",
-                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "company": "Ava Renewable 100",
                             "renewable percent provided": 100.0,
-                            "phone_number": "1-888-632-3674",
-                            "website_link": "https://mcecleanenergy.org/home-electrification/",
-                            "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/",
+                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                             "Carbon savings": "90.00",
                             "Cost savings": "5.95",
                             "Peak Cost": "92.11",
@@ -322,7 +493,56 @@
                     }
                 }
             ],
-            "scope3_steps": []
+            "scope3_steps": [
+                {
+                    "description": "Analyze CRU costs and emissions",
+                    "difficulty": 1,
+                    "savings": -45000.0,
+                    "emissions_savings": 2000.0,
+                    "recommendation": {
+                        "recommendations": [
+                            {
+                                "recommended_plan": "Switch to the optimized plan for carbon removal.",
+                                "message": "Welcome to Carbon Savings",
+                                "carbon_emission_savings": 2000.0,
+                                "cost_savings": -45000.0,
+                                "provider_info": [
+                                    {
+                                        "company": "Climeworks",
+                                        "phone_number": " +41 44 533 29 99",
+                                        "website_link": " https://climeworks.com ",
+                                        "company_description": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                        "type": "Direct Air Capture (DAC)",
+                                        "location": "Zurich, Switzerland",
+                                        "carbon_savings": 2000.0,
+                                        "cost_savings": -45000.0
+                                    },
+                                    {
+                                        "company": "Carbon Engineering",
+                                        "phone_number": "+1 604-416-0056",
+                                        "website_link": "https://carbonengineering.com/",
+                                        "company_description": "Carbon Engineering develops DAC technology to capture CO\u2082 from the atmosphere for large-scale removal or utilization.",
+                                        "type": "Direct Air Capture (DAC)",
+                                        "location": "Squamish, British Columbia, Canada",
+                                        "carbon_savings": 2000.0,
+                                        "cost_savings": -45000.0
+                                    }
+                                ],
+                                "our_recommendation": {
+                                    "company": "Climeworks",
+                                    "phone_number": " +41 44 533 29 99",
+                                    "website_link": " https://climeworks.com ",
+                                    "company_description": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                    "type": "Direct Air Capture (DAC)",
+                                    "location": "Zurich, Switzerland",
+                                    "carbon_savings": 2000.0,
+                                    "cost_savings": -45000.0
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
         },
         {
             "year": 2028,
@@ -353,12 +573,30 @@
                 {
                     "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
                     "difficulty": 2,
+                    "savings": 5.949999999999999,
+                    "emissions_savings": 90.0
+                },
+                {
+                    "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
+                    "difficulty": 2,
                     "savings": 99973.41,
                     "emissions_savings": 90.0,
                     "recommendation": {
                         "recommended_plan": 100,
                         "message": "Continue using 100% renewable energy.",
                         "provider_info": [
+                            {
+                                "plan_name": "B-19_PV",
+                                "company": "Ava Renewable 100",
+                                "renewable percent provided": 100.0,
+                                "phone_number": "1-833-699-3223",
+                                "website_link": "https://avaenergy.org/change-my-plan/",
+                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                                "Carbon savings": "90.00",
+                                "Cost savings": "5.95",
+                                "Peak Cost": "92.11",
+                                "Off-Peak Cost": "92.11"
+                            },
                             {
                                 "plan_name": "B-19_PV",
                                 "company": "MCE_Deep_Green(100%Renewable)",
@@ -382,27 +620,15 @@
                                 "Cost savings": "5.95",
                                 "Peak Cost": "92.11",
                                 "Off-Peak Cost": "92.11"
-                            },
-                            {
-                                "plan_name": "B-19_PV",
-                                "company": "Ava Renewable 100",
-                                "renewable percent provided": 100.0,
-                                "phone_number": "1-833-699-3223",
-                                "website_link": "https://avaenergy.org/change-my-plan/",
-                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
-                                "Carbon savings": "90.00",
-                                "Cost savings": "5.95",
-                                "Peak Cost": "92.11",
-                                "Off-Peak Cost": "92.11"
                             }
                         ],
                         "our recommendation": {
                             "plan_name": "B-19_PV",
-                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "company": "Ava Renewable 100",
                             "renewable percent provided": 100.0,
-                            "phone_number": "1-888-632-3674",
-                            "website_link": "https://mcecleanenergy.org/home-electrification/",
-                            "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/",
+                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                             "Carbon savings": "90.00",
                             "Cost savings": "5.95",
                             "Peak Cost": "92.11",
@@ -411,7 +637,56 @@
                     }
                 }
             ],
-            "scope3_steps": []
+            "scope3_steps": [
+                {
+                    "description": "Analyze CRU costs and emissions",
+                    "difficulty": 1,
+                    "savings": -45000.0,
+                    "emissions_savings": 2000.0,
+                    "recommendation": {
+                        "recommendations": [
+                            {
+                                "recommended_plan": "Switch to the optimized plan for carbon removal.",
+                                "message": "Welcome to Carbon Savings",
+                                "carbon_emission_savings": 2000.0,
+                                "cost_savings": -45000.0,
+                                "provider_info": [
+                                    {
+                                        "company": "Climeworks",
+                                        "phone_number": " +41 44 533 29 99",
+                                        "website_link": " https://climeworks.com ",
+                                        "company_description": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                        "type": "Direct Air Capture (DAC)",
+                                        "location": "Zurich, Switzerland",
+                                        "carbon_savings": 2000.0,
+                                        "cost_savings": -45000.0
+                                    },
+                                    {
+                                        "company": "Carbon Engineering",
+                                        "phone_number": "+1 604-416-0056",
+                                        "website_link": "https://carbonengineering.com/",
+                                        "company_description": "Carbon Engineering develops DAC technology to capture CO\u2082 from the atmosphere for large-scale removal or utilization.",
+                                        "type": "Direct Air Capture (DAC)",
+                                        "location": "Squamish, British Columbia, Canada",
+                                        "carbon_savings": 2000.0,
+                                        "cost_savings": -45000.0
+                                    }
+                                ],
+                                "our_recommendation": {
+                                    "company": "Climeworks",
+                                    "phone_number": " +41 44 533 29 99",
+                                    "website_link": " https://climeworks.com ",
+                                    "company_description": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                    "type": "Direct Air Capture (DAC)",
+                                    "location": "Zurich, Switzerland",
+                                    "carbon_savings": 2000.0,
+                                    "cost_savings": -45000.0
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
         }
     ]
 }
