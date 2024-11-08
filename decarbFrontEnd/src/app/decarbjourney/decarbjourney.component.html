@@ -32,7 +32,7 @@
       </div>
       <div class="column-timeline">
         <img src="../../assets/icons/clock.png" alt="Clock Icon">
-        {{ journey.years }} yrs {{ journey.months }} months {{ journey.days }} days
+        {{ journey.years }} yrs 
       </div>
       <div class="column-cost">
         <img src="assets/icons/cash.png" alt="Cash Icon">
@@ -81,8 +81,7 @@
           <label for="timeline">Timeline:</label>
           <div style="display: flex;">
             <input type="number" id="years" name="years" [(ngModel)]="newJourney.years" placeholder="Years" style="flex: 1; margin-right: 10px;" />
-            <input type="number" id="months" name="months" [(ngModel)]="newJourney.months" placeholder="Months" style="flex: 1; margin-right: 10px;" />
-            <input type="number" id="days" name="days" [(ngModel)]="newJourney.days" placeholder="Days" style="flex: 1;" />
+            
           </div>
         </div>
 

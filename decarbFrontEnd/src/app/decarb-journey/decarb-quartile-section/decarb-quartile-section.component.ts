@@ -84,7 +84,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
   }
 
   fetchQuartileData(): Observable<any> {
-    return this.http.get<any>('/yearly_quarterly_steps.json');
+    return this.http.get<any>('../../assets/yearly_quarterly_steps.json');
   }
 
   toggleStep(index: number): void {

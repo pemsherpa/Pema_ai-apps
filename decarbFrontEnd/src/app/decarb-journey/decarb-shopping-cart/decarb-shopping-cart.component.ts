@@ -44,7 +44,7 @@ export class DecarbShoppingCartComponent implements OnInit {
   }
 
   public fetchScopeData(): void {
-    this.http.get<{ cs_backend_data: { scope_total: ScopeData } }>('/yearly_quarterly_steps.json')
+    this.http.get<{ cs_backend_data: { scope_total: ScopeData } }>('../../assets/yearly_quarterly_steps.json')
       .subscribe({
         next: (data) => {
           this.scopeData = data.cs_backend_data.scope_total;
