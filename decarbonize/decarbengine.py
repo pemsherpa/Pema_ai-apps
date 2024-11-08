@@ -37,7 +37,7 @@ from steps.provider_info_cru import ProviderInfoCru
 
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
-        self.GOOGLE_MAPS_API_KEY = "AIzaSyD1fbsNKLIWwHly5YcSBcuMWhYd2kTIN08"
+        self.GOOGLE_MAPS_API_KEY = "AIzaSyDNBM20_Bc2on1-q14X8NE-hWTa1imUhH4"
         self.FLIGHT_API_KEY = '7afef474c061eff1d01477d4a67693a2fdb2821437d63642750002ee4350e901' #Replaced the API Key on 26/09
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.COORDINATES_API_KEY = "0c608aea6eb74a9da052e7a83df8c693"
@@ -93,10 +93,10 @@ class DecarbEngine:
         print(f"Total Savings: ${total_savings}")
         print(f"Total Emissions Savings: {total_emission_savings} kg CO2\n")
 
-    """def analyze_commuting_costs(self):
-        return self.commuting_analyzer.calculate_current_costs_and_emissions()"""
+    def analyze_commuting_costs(self):
+        return self.commuting_analyzer.calculate_current_costs_and_emissions()
     
-    """def run_commuting_step(self):
+    def run_commuting_step(self):
         # commuting costs and emissions for individual
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
         commuting_step = DecarbStep(
@@ -108,9 +108,9 @@ class DecarbEngine:
             description="Analyze commuting costs and emissions for individual",
             difficulty=1
         )
-        self.steps.append(commuting_step)"""
+        self.steps.append(commuting_step)
     
-    """def run_carpool_step(self):
+    def run_carpool_step(self):
         # commuting cost for carpool
         commuting_costs, commuting_emissions = self.analyze_commuting_costs()
         carpool_savings,carpool_saving_emission = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,2,30)
@@ -129,7 +129,7 @@ class DecarbEngine:
             difficulty= 3
         )
         
-        self.steps.append(commuting_step)"""
+        self.steps.append(commuting_step)
 
     #def init_flight_analyzer(self, origin, destination, departure_date, return_date):
         #self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
@@ -184,8 +184,8 @@ class DecarbEngine:
         return savings
     
     def run_decarb_engine(self):
-        #self.run_commuting_step()
-        #self.run_carpool_step()
+        self.run_commuting_step()
+        self.run_carpool_step()
         self.run_electric_step()
         #self.run_flight_optimizer_step()
         self.run_CRU_step()
