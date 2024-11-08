@@ -1,11 +1,19 @@
+// main.ts
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
-bootstrapApplication(AppComponent, {
+// Add provideHttpClient with `withFetch()` to the existing appConfig providers
+const combinedConfig = {
+  ...appConfig,
   providers: [
-    provideHttpClient(withFetch()), // Enables fetch for better performance in SSR /
+    ...appConfig.providers,
+    provideHttpClient(withFetch()) // Enables fetch for better performance in SSR
   ],
-}).catch((err) => console.error(err));
+};
+
+bootstrapApplication(AppComponent, combinedConfig)
+  .catch((err) => console.error(err));
+
 

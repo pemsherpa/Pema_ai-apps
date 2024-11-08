@@ -1,0 +1,109 @@
+<div>
+  <div class="top-right-link">
+    <a [routerLink]="['/map']" class="compare-link">
+      <img src="assets/icons/AI.png" alt="AI Icon">
+      See how you compare with other companies
+    </a>
+  </div>
+
+  <div class="header">
+    <h2 class="decarb-title">Saved Decarbonization Journeys</h2>
+    <button (click)="openModal()" class="create-journey">
+      <img src="../../assets/icons/add-circle-outline.png" alt="circle outline Icon"> Create New Journey
+    </button>
+  </div>
+
+  <!-- Column Headers -->
+  <div class="journey-header">
+    <div class="column-title">Title</div>
+    <div class="column-scope">Scope</div>
+    <div class="column-timeline">Timeline</div>
+    <div class="column-cost">Cost savings</div>
+    <div class="column-co2">CO2 savings</div>
+    <div class="column-actions"></div>
+  </div>
+
+  <!-- Journey List -->
+  <div class="journey-list">
+    <div *ngFor="let journey of journeys; let i = index" class="journey-item">
+      <div class="column-title">{{ journey.title }}</div>
+      <div class="column-scope">
+        <img src="../../assets/icons/scope.png" alt="Scope Icon"> {{ journey.scope }}
+      </div>
+      <div class="column-timeline">
+        <img src="../../assets/icons/clock.png" alt="Clock Icon">
+        {{ journey.years }} yrs {{ journey.months }} months {{ journey.days }} days
+      </div>
+      <div class="column-cost">
+        <img src="assets/icons/cash.png" alt="Cash Icon">
+        ${{ journey.costSavings }}{{ journey.costUnit }}
+      </div>
+      <div class="column-co2">
+        <img src="../../assets/icons/carbon.png" alt="Carbon Icon"> {{ journey.co2Savings }} mt CO2e
+      </div>
+      <div class="column-actions journey-actions">
+        <button class="view-button">View</button>
+        <div class="dropdown">
+          <button class="dots-button" (click)="toggleDropdown(i)">...</button>
+          <!-- <div *ngIf="activeDropdown === i" class="dropdown-content">
+            <button (click)="editJourney(i)">Edit</button>
+            <button (click)="deleteJourney(i)">Delete</button>
+          </div> -->
+          <div class="dropdown-content" *ngIf="activeDropdown === i">
+            <button (click)="editJourney(i)">Edit</button>
+            <button (click)="deleteJourney(i)">Delete</button>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for creating a new journey -->
+  <div class="modal" id="createJourneyModal" *ngIf="showModal">
+    <div class="modal-content">
+      <span class="close-button" (click)="closeModal()">&times;</span>
+      <h2>Create New Journey</h2>
+      <form (ngSubmit)="createJourney()">
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" [(ngModel)]="newJourney.title" required />
+        </div>
+
+        <div class="form-group">
+          <label for="scope">Scope:</label>
+          <select id="scope" name="scope" [(ngModel)]="newJourney.scope" required>
+            <option value="" disabled selected>Select Scope</option>
+            <option *ngFor="let option of scopeOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="timeline">Timeline:</label>
+          <div style="display: flex;">
+            <input type="number" id="years" name="years" [(ngModel)]="newJourney.years" placeholder="Years" style="flex: 1; margin-right: 10px;" />
+            <input type="number" id="months" name="months" [(ngModel)]="newJourney.months" placeholder="Months" style="flex: 1; margin-right: 10px;" />
+            <input type="number" id="days" name="days" [(ngModel)]="newJourney.days" placeholder="Days" style="flex: 1;" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="costSavings">Cost Savings:</label>
+          <div style="display: flex;">
+            <input type="number" id="costSavings" name="costSavings" [(ngModel)]="newJourney.costSavings" required style="flex: 1; margin-right: 10px;" />
+            <select name="costUnit" [(ngModel)]="newJourney.costUnit" required style="width: 70px;">
+              <option value="K">K</option>
+              <option value="M">M</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="co2Savings">CO2 Savings (in mt CO2e):</label>
+          <input type="number" id="co2Savings" name="co2Savings" [(ngModel)]="newJourney.co2Savings" required />
+        </div>
+        <a [routerLink]="['/journey']" class="compare-link">
+        <button type="submit" class="submit-button">Save Journey</button></a>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+
+<hr>
+<div class="main">
+  <button mat-raised-button color="primary" (click)="goBack()">Back</button>
+  <mat-card class="header-card">
+    <h1>See How You Compare with Other Companies</h1>
+    <section>
+      Explore decarbonization effects across your industry and region
+    </section>
+  </mat-card>
+
+  <mat-card class="leaders-card">
+    <div class="top-leaders">
+      <div class="text-section">
+        <h4>Top Leaders</h4>
+        <p>Industry Type: Sporting Goods Manufacturing</p>
+        <p>Sector: Consumer Discretionary</p>
+      </div>
+      <div class="leaders-logos">
+        <img src="assets/Colgate-logo.png" alt="Colgate" (click)="selectCompany('Colgate')" />
+        <img src="assets/Adidas-logo.png" alt="Adidas" (click)="selectCompany('Adidas')" />
+        <img src="assets/CVS_Health-logo.png" alt="CVS Health" (click)="selectCompany('CVS_Health')" />
+        <img src="assets/ag-barr-logo.png" alt="AG Barr" (click)="selectCompany('AG Barr')" />
+        <img src="assets/davita-logo.png" alt="DaVita" (click)="selectCompany('DaVita')" />
+      </div>
+    </div>
+  </mat-card>
+
+  <div class="map-and-table">
+    <mat-card class="map-container">
+      <google-map #googleMapContainer height="500px" width="100%" [center]="center" [zoom]="zoom">
+        <map-marker
+          *ngFor="let marker of markers"
+          [position]="marker.position"
+          [label]="marker.label.text"
+          [title]="marker.title"
+          [icon]="marker.icon"
+          #markerRef="mapMarker"
+          (mapClick)="openInfoWindow(markerRef, marker.info)"
+        >
+        </map-marker>
+        <map-info-window>
+          <img
+            *ngIf="selectedCompany?.logo"
+            [src]="selectedCompany?.logo"
+            alt="{{ selectedCompany?.name }}"
+            style="width: 100px; height: auto"
+          />
+          <h5>{{ selectedCompany?.name }}</h5>
+          <p>{{ selectedCompany?.description }}</p>
+          <p>Revenue: ${{ selectedCompany?.revenue }}M</p>
+          <p>Savings: ${{ selectedCompany?.savings }}M</p>
+          <p>Current Emissions: {{ selectedCompany?.current_emissions }}mt CO2</p>
+          <p>Emissions Avoided: {{ selectedCompany?.emissions_avoided }}mt CO2</p>
+        </map-info-window>
+      </google-map>
+    </mat-card>
+
+    <mat-card *ngIf="selectedCompany" class="actions-table">
+      <div class="actions-header">
+        <h3>{{ selectedCompany.name }} - Sustainable Actions</h3>
+        <img
+          [src]="'assets/' + selectedCompany.name + '-logo.png'"
+          alt="{{ selectedCompany.name }}"
+        />
+      </div>
+
+      <div id="map" class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-table">
+        <!-- Action Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Action Name</th>
+          <td mat-cell *matCellDef="let action">{{ action.name }}</td>
+        </ng-container>
+      
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let action">{{ action.description }}</td>
+        </ng-container>
+      
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let action">{{ action.date }}</td>
+        </ng-container>
+      
+        <!-- Percentage Complete Column -->
+        <ng-container matColumnDef="percentageComplete">
+          <th mat-header-cell *matHeaderCellDef>Percentage Complete</th>
+          <td mat-cell *matCellDef="let action">
+            <mat-progress-bar
+              mode="determinate"
+              [value]="action.percentageComplete"
+            ></mat-progress-bar>
+            {{ action.percentageComplete }}%
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card>
+  </div>
+</div>
