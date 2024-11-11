@@ -6,3 +6,11 @@
 .step-details{
   background-color: pink;
 }
+.dropdown-content {
+  display: none;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: pink;
+  border-radius: 4px;
+  margin-top: 5px;
+}

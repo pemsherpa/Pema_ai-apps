@@ -1,9 +1,18 @@
+<div class="main-buttons">
+  <div class="year-buttons">
+    <div 
+      class="year-button" 
+      *ngFor="let year of availableYears" 
+      [class.selected]="selectedYears[year]"
+      (click)="toggleYearSelection(year)">
+      {{ year }}
+    </div>
+  </div>
+</div>
+
 <div *ngFor="let step of quartileData; let i = index" class="step-container">
   <div class="step-title-bar" (click)="toggleStep(i)">
     <span>{{ step.title }}</span>
-      <span *ngIf="step.isExpanded" class="dropdown-arrow">&#9650;</span> <!-- Up arrow when expanded -->
-    
-    
   </div>
 
   <div *ngIf="step.isExpanded">
@@ -14,5 +23,4 @@
     </ng-container>
   </div>
 </div>
-
 

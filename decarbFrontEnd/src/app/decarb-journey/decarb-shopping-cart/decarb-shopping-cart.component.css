@@ -1,6 +1,12 @@
+*{
+  font-family: 'Karla', sans-serif;
+}
+.Shopping-cart{
+  padding:20px;
+}
 .container {
   width: 300px;
-  padding: 0px;
+  padding: 10px;
   justify-content: center;
 }
 
@@ -72,6 +78,10 @@ p {
   }
   .description span{
    padding-left:100px;
+  }
+
+  .expression-container{
+    margin-left: auto;
   }
 .target {
   
@@ -156,12 +166,16 @@ p {
   color: #888;
 }
 
-/* Savings container for horizontal alignment */
 .savings-container {
   display: flex;
-  justify-content: space-between; /* Ensure savings are spaced out */
-  gap: 20px; /* Space between savings elements */
+  justify-content: space-between;
+  gap: 80px;
 }
+
+.savings-container > :first-child {
+  margin-right: auto; /* Pushes the first element to the left */
+}
+
 .remove-btn {
   position: absolute; /* Use absolute positioning */
   top: -15px; /* Position it 5px from the top */
@@ -187,7 +201,7 @@ p {
 .savings-summary p {
   margin: 0;
   padding:20px;
-  font-size: 25px;
+  font-size: 20px;
 }
 .savings-summary h3 {
   margin: 0;
@@ -222,5 +236,5 @@ button {
   display:flex;
   justify-content: space-evenly;
   font-weight: bold;
-  gap:20px
+  gap:45px
 }

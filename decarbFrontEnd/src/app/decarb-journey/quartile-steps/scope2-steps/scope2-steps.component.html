@@ -1,22 +1,61 @@
 <div class="step-details">
-  <input type="checkbox" [checked]="stepData.isCompleted" (change)="toggleCompletion()" />
-  <span>{{ stepData.title }}</span>
-  <p><strong>Provider Information:</strong></p>
-  <ul>
-    <!-- Loop over each provider in providerInfo array -->
-    <li *ngFor="let provider of stepData.providerInfo">
-      <strong>{{ provider.name }}</strong> - {{ provider.details }}
-      <br>
-      Renewable Percentage: {{ provider.renewablePercentage }}%
-      <br>
-      Phone: {{ provider.phone }}
-      <br>
-      <a [href]="provider.website" target="_blank">Visit Website</a>
-    </li>
-  </ul>
-  <p><strong>Cost Savings:</strong> {{ stepData.costSavings }}</p>
-  <p><strong>CO₂ Savings:</strong> {{ stepData.co2Savings }}</p>
-  <p><strong>Transition:</strong> {{ stepData.transition }}</p>
-</div>
+  <!-- SVG Toggle and Title -->
+  <div class="step-header" (click)="handleClick()">
+    <ng-container *ngIf="stepData.isCompleted; else unchecked">
+      <img src="../../assets/checked.svg" alt="Checked" class="checkbox-icon" />
+    </ng-container>
+    <ng-template #unchecked>
+      <img src="../../assets/add.svg" alt="Unchecked" class="checkbox-icon" />
+    </ng-template>
+    <span class="title">{{ stepData.title }}</span>
 
-  
+    <!-- Expand/Collapse Arrow -->
+    <span class="dropdown-arrow">
+      <ng-container *ngIf="isExpanded; else downArrow">
+        <!-- Up Arrow Outline SVG -->
+        <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 15l6-6 6 6" />
+        </svg>
+      </ng-container>
+      <ng-template #downArrow>
+        <!-- Down Arrow Outline SVG -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </ng-template>
+    </span>
+  </div>
+
+  <!-- Expandable content -->
+  <div *ngIf="isExpanded" class="step-content">
+    <!-- Provider Information Section -->
+    <div class="provider-info">
+      <p><strong>Provider Information:</strong></p>
+      <div class="dropdown-content">
+        <ul *ngIf="stepData?.providerInfo?.length">
+          <li *ngFor="let provider of stepData?.providerInfo" class="provider-item">
+            <strong>{{ provider.name }}</strong> - {{ provider?.details }}
+            <br>
+            Renewable Percentage: {{ provider?.renewablePercentage }}%
+            <br>
+            Phone: {{ provider?.phone }}
+            <br>
+            <a *ngIf="provider?.website" [href]="provider?.website" target="_blank">Visit Website</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Fallback message if no provider info is available -->
+    <div *ngIf="stepData?.providerInfo?.length === 0">
+      <p>No provider information available.</p>
+    </div>
+
+    <!-- Savings and Transition Information -->
+    <div class="savings-info">
+      <p *ngIf="stepData?.costSavings"><strong>Cost Savings:</strong> {{ stepData.costSavings }}</p>
+      <p *ngIf="stepData?.co2Savings"><strong>CO₂ Savings:</strong> {{ stepData.co2Savings }}</p>
+      <p *ngIf="stepData?.transition"><strong>Transition:</strong> {{ stepData.transition }}</p>
+    </div>
+  </div>
+</div>

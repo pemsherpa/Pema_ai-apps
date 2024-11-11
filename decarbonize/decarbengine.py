@@ -131,22 +131,22 @@ class DecarbEngine:
         
         self.steps.append(commuting_step)
 
-    #def init_flight_analyzer(self, origin, destination, departure_date, return_date):
-        #self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
+    def init_flight_analyzer(self, origin, destination, departure_date, return_date):
+        self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
 
-    #def run_flight_step(self, origin, destination, departure_date, return_date):
-        #self.init_flight_analyzer(origin, destination, departure_date, return_date)
+    def run_flight_step(self, origin, destination, departure_date, return_date):
+        self.init_flight_analyzer(origin, destination, departure_date, return_date)
 
         #flight costs
-        #optimal_flight = self.flight_analyzer.analyze_flight_costs()
-        #flight_step = self.create_flight_step(optimal_flight, 3)
-        #self.steps.append(flight_step)
+        optimal_flight = self.flight_analyzer.analyze_flight_costs()
+        flight_step = self.create_flight_step(optimal_flight, 3)
+        self.steps.append(flight_step)
 
-    #def run_return_flight_step(self):
+    def run_return_flight_step(self):
         # Assumes that run_flight_step has been called first.
-        #return_flight = self.flight_analyzer.get_return_flight_options()
-        #return_flight_step = self.create_flight_step(return_flight, 3)
-        #self.steps.append(return_flight_step)
+        return_flight = self.flight_analyzer.get_return_flight_options()
+        return_flight_step = self.create_flight_step(return_flight, 3)
+        self.steps.append(return_flight_step)
     def run_CRU_step(self):
         # CRU Step
         cru_step = self.create_CRU_step()
@@ -187,7 +187,7 @@ class DecarbEngine:
         self.run_commuting_step()
         self.run_carpool_step()
         self.run_electric_step()
-        #self.run_flight_optimizer_step()
+        self.run_flight_optimizer_step()
         self.run_CRU_step()
 
         return self.steps
@@ -195,10 +195,10 @@ class DecarbEngine:
     def run_flight_analyzer(decarb_engine):
         origin = "LAX"
         destination = "JFK"
-        departure_date = "2024-10-30"
-        return_date = "2024-11-03"
-        #decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
-        #decarb_engine.run_return_flight_step()
+        departure_date = "2024-12-02"
+        return_date = "2024-12-05"
+        decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
+        decarb_engine.run_return_flight_step()
 
     def create_flight_step(self, return_flight, difficulty):
         return_flight_savings = return_flight['Price'].iloc[0]
@@ -342,7 +342,7 @@ class DecarbEngine:
      decarb_engine.run_flight_analyzer()
      dict_zscore = decarb_engine.get_dict_zscore(decarb_steps)
 
-     
+     #data such as facilities--> For calcualtion of transition percentage
      current_quarter = decarb_engine.get_cur_quadrant() 
      current_year = int(decarb_goals.year)
      yearly_steps_orig = decarb_engine.init_yearly_steps(decarb_goals.timeframe, current_year, current_quarter)

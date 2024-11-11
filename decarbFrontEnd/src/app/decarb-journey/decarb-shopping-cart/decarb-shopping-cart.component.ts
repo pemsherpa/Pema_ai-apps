@@ -33,8 +33,7 @@ export class DecarbShoppingCartComponent implements OnInit {
   showScopeTargets = false;
 
   cartItems: CartItem[] = [
-    { name: 'Change Electricity Provider', costSavings: 6000, co2Savings: -100, transition: 50 },
-    { name: 'Switch to Business class travel', costSavings: 2500, co2Savings: -45, transition: 25 }
+    
   ];
 
   constructor(private http: HttpClient) {}
@@ -81,13 +80,13 @@ export class DecarbShoppingCartComponent implements OnInit {
     const progressPercentage = this.getProgressPercentage();
 
     if (progressPercentage <= 25) {
-      return '1';
+      return '../../assets/red-smily.svg';
     } else if (progressPercentage <= 50) {
-      return '1';
+      return '../../assets/orange-smily.svg';
     } else if (progressPercentage <= 75) {
-      return '2';
+      return '../../assets/yellow-smily.svg';
     } else {
-      return '/excited.svg';
+      return '../../assets/green-smily.svg';
     }
   }
 

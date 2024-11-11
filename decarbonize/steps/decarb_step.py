@@ -4,7 +4,7 @@ from steps.decarb_step_type import DecarbStepType
 
 
 class DecarbStep:
-    def __init__(self, step_type: DecarbStepType, cur_cost, new_cost, cur_emissions, new_emissions, description, difficulty):
+    def __init__(self, step_type: DecarbStepType, cur_cost, new_cost, cur_emissions, new_emissions, description, difficulty,transition_percentage):
         self.step_type = step_type
         self.cur_cost = cur_cost
         self.new_cost = new_cost
@@ -12,6 +12,7 @@ class DecarbStep:
         self.new_emissions = new_emissions
         self.description = description
         self.difficulty = difficulty
+        self.transition_percentage= transition_percentage
        
         scope_mapping = {
             DecarbStepType.ELECTRICITY: 2,
@@ -24,7 +25,7 @@ class DecarbStep:
             DecarbStepType.CRU_ANNUAL:3,
             DecarbStepType.FLIGHT_OPTIMIZER: 3,
         }
-        
+        #Transition percentage of each step: Must be added in decarb step
         self.scope = scope_mapping.get(step_type)
         if self.scope is None:
             print(f"Unhandled step type: {step_type}")

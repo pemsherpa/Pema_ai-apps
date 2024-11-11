@@ -1,4 +1,30 @@
-/* General button styles */
+.main-buttons {
+  display: flex;
+  gap:50px;
+  margin-bottom: 20px;
+}
+
+ .year-buttons {
+  display: flex;
+  gap: 30px;
+}
+
+ .year-button {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top:10px;
+  padding-bottom:10px;
+  border: 1px solid #673be5;
+  border-radius: 30px;
+  cursor: pointer;
+  color: #673be5;
+  transition: background-color 0.3s;
+}
+
+ .year-button.year-button.selected {
+  background-color: #673be5;
+  color:white
+}
 button {
   padding: 8px 12px;
   border: none;

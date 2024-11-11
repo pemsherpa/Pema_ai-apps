@@ -1,6 +1,69 @@
-.step {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
+.step-details {
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.checkbox-icon {
+  width: 150px;
+  height: 150px;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 1.2em;
+  font-weight: bold;
+  flex: 1;
+}
+
+.dropdown-arrow svg {
+  width: 16px;
+  height: 16px;
+  color: #5c2bff; /* Adjust color as needed */
+}
+
+.step-content {
+  padding-top: 10px;
+}
+
+.implementation,
+.provider-info,
+.savings-info {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.provider-info p,
+.savings-info p,
+.implementation p {
+  margin: 0;
+}
+
+.provider-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.provider-item:last-child {
+  border-bottom: none;
+}
+
+.provider-info a {
+  color: #5c2bff;
+  text-decoration: none;
+}
+
+.provider-info a:hover {
+  text-decoration: underline;
+}
+

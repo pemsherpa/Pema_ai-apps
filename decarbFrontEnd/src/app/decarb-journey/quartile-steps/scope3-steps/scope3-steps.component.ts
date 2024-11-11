@@ -1,28 +1,39 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-scope3-step',
   standalone: true,
-  imports:[CommonModule],
+  imports: [CommonModule],
   templateUrl: './scope3-steps.component.html',
-  styleUrl: './scope3-steps.component.css'
 })
 export class Scope3StepsComponent {
-  @Input() stepData!: {
-    title: string;
-    description: string;
-    costSavings: number;
-    co2Savings: number;
-    transition: number;
-    isCompleted: boolean;
-    providerInfo?: string;  // Add providerInfo here, with optional typing if needed
+  @Input() stepData!: { 
+    title: string; 
+    description: string; 
+    costSavings: number; 
+    co2Savings: number; 
+    transition: number; 
+    isCompleted: boolean; 
+    providerInfo: any[] 
   };
+  
   @Output() stepToggled = new EventEmitter<void>();
+
+  isExpanded = false; // Track dropdown expansion state
+
+  handleClick() {
+    this.toggleCompletion();
+    this.toggleExpansion();
+  }
 
   toggleCompletion(): void {
     this.stepData.isCompleted = !this.stepData.isCompleted;
     this.stepToggled.emit();
+    console.log(this.stepData);
+  }
+
+  toggleExpansion(): void {
+    this.isExpanded = !this.isExpanded; // Toggle the dropdown state
   }
 }
