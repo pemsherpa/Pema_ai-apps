@@ -41,7 +41,7 @@ export class ClassifymapComponent implements OnInit, AfterViewInit {
   @ViewChildren(MapMarker) mapMarkers!: QueryList<MapMarker>;
 
   center!: google.maps.LatLngLiteral;
-  zoom = 8;
+  zoom = 7;
   companies: Company[] = companies;
   selectedCompany: Company | null = null;
   customIcon!: google.maps.Icon;
@@ -53,33 +53,53 @@ export class ClassifymapComponent implements OnInit, AfterViewInit {
     {
       position: { lat: 37.7749, lng: -122.4194 },
       label: { text: '' },
-      title: 'San Francisco',
+      title: 'Adidas',
       icon: {
         url: 'assets/Adidas-logo.png',
-        scaledSize: new google.maps.Size(50, 50),
+        scaledSize: new google.maps.Size(40, 40),
       },
       info: companies[0], 
     },
     {
-      position: { lat: 37.3382, lng: -121.8863 },
+      position: { lat: 36.3382, lng: -121.8863 },
       label: { text: '' },
-      title: 'San Jose',
+      title: 'Colgate',
       icon: {
         url: 'assets/Colgate-logo.png',
-        scaledSize: new google.maps.Size(50, 50),
+        scaledSize: new google.maps.Size(40, 40),
       },
       info: companies[1], 
     },
     {
       position: { lat: 37.4749, lng: -120.4194 },
       label: { text: '' },
-      title: 'San Francisco',
+      title: 'CVS Health',
       icon: {
         url: 'assets/CVS_Health-logo.png',
-        scaledSize: new google.maps.Size(50, 50),
+        scaledSize: new google.maps.Size(40, 40),
       },
       info: companies[2], 
     },
+    {
+      position: { lat: 36.4749, lng: -118.4194 },
+      label: { text: '' },
+      title: 'AG-Barr',
+      icon: {
+        url: 'assets/AG-Barr-logo.png',
+        scaledSize: new google.maps.Size(40, 40),
+      },
+      info: companies[3], 
+    },
+    {
+      position: { lat: 38.4749, lng: -119.4194 },
+      label: { text: '' },
+      title: 'Davita',
+      icon: {
+        url: 'assets/Davita-logo.png',
+        scaledSize: new google.maps.Size(40, 40),
+      },
+      info: companies[4], 
+    }
   ];
 
   selectedInfo: string = '';
@@ -92,6 +112,12 @@ export class ClassifymapComponent implements OnInit, AfterViewInit {
     this.waitForGoogleMapsApi().then(() => {
       this.center = { lat: 37.7749, lng: -122.4194 }; // San Francisco
     });
+    if (this.companies.length > 0) {
+      this.selectedCompany = this.companies[0];
+      this.dataSource.data = this.selectedCompany.actions;
+      this.changeDetectorRef.detectChanges();
+      this.initTable(); 
+    }
   }
 
   map!: google.maps.Map;

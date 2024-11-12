@@ -1,7 +1,10 @@
 
 <hr>
 <div class="main">
-  <button mat-raised-button color="primary" (click)="goBack()">Back</button>
+  <div class="back-button-container">
+    <img src="assets/icons/back-button.png" alt="back-button" (click)="goBack()" class="back-button-image" />
+    <button mat-raised-button color="primary" (click)="goBack()"><u>Back</u></button>
+  </div>
   <mat-card class="header-card">
     <h1>See How You Compare with Other Companies</h1>
     <section>
@@ -20,8 +23,8 @@
         <img src="assets/Colgate-logo.png" alt="Colgate" (click)="selectCompany('Colgate')" />
         <img src="assets/Adidas-logo.png" alt="Adidas" (click)="selectCompany('Adidas')" />
         <img src="assets/CVS_Health-logo.png" alt="CVS Health" (click)="selectCompany('CVS_Health')" />
-        <img src="assets/ag-barr-logo.png" alt="AG Barr" (click)="selectCompany('AG Barr')" />
-        <img src="assets/davita-logo.png" alt="DaVita" (click)="selectCompany('DaVita')" />
+        <img src="assets/AG-Barr-logo.png" alt="AG Barr" (click)="selectCompany('AG-Barr')" />
+        <img src="assets/Davita-logo.png" alt="DaVita" (click)="selectCompany('Davita')" />
       </div>
     </div>
   </mat-card>

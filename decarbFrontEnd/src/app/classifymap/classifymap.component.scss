@@ -1,10 +1,18 @@
+body, html {
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .main{
-    background-color: #F5F6F7;
+    background: var(--background-white, rgba(245, 246, 247, 1));
+    
 }
 
 .main button{
   font-family: 'Karla', sans-serif;
-  padding: 3px;
+  // padding: 3px;
 }
 
 h1, section {
@@ -25,6 +33,24 @@ h1, section {
     font-family: 'Lato', sans-serif;
     color: #252525;
   }
+
+  .back-button-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .back-button-image {
+    height: 25px; 
+    width: auto;
+    cursor: pointer;
+  }
+  
+  .main button {
+    font-family: 'Karla', sans-serif;
+    padding: 5px 10px;
+  }
+  
   
   .header-card {
     // padding: 20px;
@@ -33,9 +59,10 @@ h1, section {
   }
   
   .leaders-card {
-    padding: 5px;
+    // padding: 3px;
     margin-bottom: 20px;
     border-radius: 2rem;
+    max-height: 200px;
   }
   
   .top-leaders {
@@ -53,7 +80,7 @@ h1, section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-right: 120px; /* Adds space between text and logos */
+    margin-right: 120px; 
   }
   
   .text-section h4 {
@@ -71,7 +98,7 @@ h1, section {
     flex-direction: row;
     justify-content: space-between; 
     gap: 20px; 
-    flex-grow: 1; /* Ensures the logos section expands to fill available space */
+    flex-grow: 1; 
   }
   
   .leaders-logos img {
@@ -126,7 +153,8 @@ h1, section {
   }
   
   .mat-card {
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 24px 24px 0px rgba(129, 148, 166, 0.04), 
+    0px 4px 4px 0px rgba(129, 148, 166, 0.08);
   }
   
   
@@ -140,8 +168,9 @@ h1, section {
   }
 
   .leaders-card, .map-container, .actions-table {
-    background-color: #FEFEFE;
-    box-shadow: 0px 24px 24px 0px rgba(129, 148, 166, 0.04);
-    box-shadow: 0px 4px 4px 0px rgba(129, 148, 166, 0.08);
+    background: var(--Elemental-White, rgba(254, 254, 254, 1));
+    border-radius: 2rem;
+    box-shadow: 0px 24px 24px 0px rgba(129, 148, 166, 0.04),
+    0px 4px 4px 0px rgba(129, 148, 166, 0.08);
 
   }
