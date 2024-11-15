@@ -26,11 +26,26 @@
     </span>
   </div>
 
+
+  
+
   <!-- Expandable content -->
   <div *ngIf="isExpanded" class="step-content">
     <!-- Provider Information Section -->
     <div class="provider-info">
       <p><strong>Provider Information:</strong></p>
+      <!-- Display the correct SVG based on difficulty (transition) value -->
+    <div class="svg-container">
+      <ng-container *ngIf="stepData.transition >= 1 && stepData.transition < 3">
+        <img src="../../assets/low_imp.svg" alt="Difficulty Level 1-3" />Easy Implementation
+      </ng-container>
+      <ng-container *ngIf="stepData.transition >= 3 && stepData.transition < 6">
+        <img src="../../assets/meduim_imp.svg" alt="Difficulty Level 3-6" />Medium Implementation
+      </ng-container>
+      <ng-container *ngIf="stepData.transition >= 6 && stepData.transition <= 9">
+        <img src="../../assets/high_imp.svg" alt="Difficulty Level 6-9" />Difficult Implementation
+      </ng-container>
+    </div>
       <div class="dropdown-content">
         <ul *ngIf="stepData?.providerInfo?.length">
           <li *ngFor="let provider of stepData?.providerInfo" class="provider-item">
@@ -55,7 +70,6 @@
     <div class="savings-info">
       <p *ngIf="stepData?.costSavings"><strong>Cost Savings:</strong> {{ stepData.costSavings }}</p>
       <p *ngIf="stepData?.co2Savings"><strong>CO₂ Savings:</strong> {{ stepData.co2Savings }}</p>
-      <p *ngIf="stepData?.transition"><strong>Transition:</strong> {{ stepData.transition }}</p>
     </div>
   </div>
 </div>

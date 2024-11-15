@@ -1,69 +1,98 @@
 .step-details {
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .step-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 10px;
-  }
-  
-  .checkbox-icon {
-    width: 150px;
-    height: 150px;
-    margin-right: 10px;
-  }
-  
-  .title {
-    font-size: 1.2em;
-    font-weight: bold;
-    flex: 1;
-  }
-  
-  .dropdown-arrow svg {
-    width: 16px;
-    height: 16px;
-    color: #5c2bff; /* Adjust color as needed */
-  }
-  
-  .step-content {
-    padding-top: 10px;
-  }
-  
-  .implementation,
-  .provider-info,
-  .savings-info {
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .provider-info p,
-  .savings-info p,
-  .implementation p {
-    margin: 0;
-  }
-  
-  .provider-item {
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .provider-item:last-child {
-    border-bottom: none;
-  }
-  
-  .provider-info a {
-    color: #5c2bff;
-    text-decoration: none;
-  }
-  
-  .provider-info a:hover {
-    text-decoration: underline;
-  }
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.checkbox-icon {
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 16px; /* Add space between the icon and title */
+  flex: 1;
+}
+
+.dropdown-arrow svg {
+  width: 25px;
+  height: 25px;
+}
+
+.step-content {
+  padding-top: 10px;
+}
+
+.svg-container img {
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+}
+
+.svg-container {
+  display: flex;
+  align-items: center;
+  font-size: 16px; /* Increase font size for implementation labels */
+  font-weight: 500;
+  margin: 8px 0;
+}
+
+.implementation,
+.provider-info,
+.savings-info {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.provider-info p,
+.savings-info p,
+.implementation p {
+  margin: 0;
+  padding:2px;
+}
+
+.provider-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.provider-item:last-child {
+  border-bottom: none;
+}
+
+.provider-info a {
+  color: #5c2bff;
+  text-decoration: none;
+}
+
+.provider-info a:hover {
+  text-decoration: underline;
+}
+
+.provider-info ul {
+  padding-left: 20px; /* Add spacing between provider items */
+}
+
+.provider-info strong {
+  display: block;
+  margin-bottom: 4px; /* Add spacing between provider name and details */
+}
+
+.savings-info p {
+  margin-bottom: 8px; /* Add space between cost savings and CO₂ savings */
+}
+
   

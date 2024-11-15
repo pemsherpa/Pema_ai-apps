@@ -10,17 +10,27 @@
   </div>
 </div>
 
-<div *ngFor="let step of quartileData; let i = index" class="step-container">
-  <div class="step-title-bar" (click)="toggleStep(i)">
-    <span>{{ step.title }}</span>
-  </div>
+<div *ngFor="let step of quartileData">
+  <ng-container [ngSwitch]="step.scope">
+    <h2 class="scope-headings" *ngSwitchCase="'scope1'">Scope 1</h2>
+    <app-scope1-step
+      *ngSwitchCase="'scope1'"
+      [stepData]="step"
+      (stepToggled)="onStepToggled(step)">
+    </app-scope1-step>
 
-  <div *ngIf="step.isExpanded">
-    <ng-container [ngSwitch]="step.scope">
-      <app-scope1-step *ngSwitchCase="'scope1'" [stepData]="step" (stepToggled)="onStepToggled(step)"></app-scope1-step>
-      <app-scope2-step *ngSwitchCase="'scope2'" [stepData]="step" (stepToggled)="onStepToggled(step)"></app-scope2-step>
-      <app-scope3-step *ngSwitchCase="'scope3'" [stepData]="step" (stepToggled)="onStepToggled(step)"></app-scope3-step>
-    </ng-container>
-  </div>
+    <h2 class="scope-headings" *ngSwitchCase="'scope2'">Scope 2</h2>
+    <app-scope2-step
+      *ngSwitchCase="'scope2'"
+      [stepData]="step"
+      (stepToggled)="onStepToggled(step)">
+    </app-scope2-step>
+
+    <h2 class="scope-headings" *ngSwitchCase="'scope3'">Scope 3</h2>
+    <app-scope3-step
+      *ngSwitchCase="'scope3'"
+      [stepData]="step"
+      (stepToggled)="onStepToggled(step)">
+    </app-scope3-step>
+  </ng-container>
 </div>
-

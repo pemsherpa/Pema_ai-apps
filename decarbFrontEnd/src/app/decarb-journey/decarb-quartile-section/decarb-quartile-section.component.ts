@@ -32,8 +32,9 @@ export class DecarbQuartileSectionComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.availableYears = Array.from({ length: 5}, (_, i) => 2024 + i);
-    this.availableYears.forEach(year => this.selectedYears[year] = true);
+    const currentYear = new Date().getFullYear();
+    this.availableYears = Array.from({ length: 5 }, (_, i) => currentYear + i);
+    this.availableYears.forEach(year => (this.selectedYears[year] = true));
     this.loadDataForYearAndQuarter();
   }
 
@@ -47,7 +48,6 @@ export class DecarbQuartileSectionComponent implements OnInit {
       next: (data: any) => {
         this.quartileData = [];
 
-        // Only load data for selected years
         this.availableYears.forEach(year => {
           if (this.selectedYears[year]) {
             const yearData = data.yearly_steps.find(
@@ -58,9 +58,9 @@ export class DecarbQuartileSectionComponent implements OnInit {
             }
           }
         });
-        console.log(this.quartileData); // Verify the data structure
+        console.log(this.quartileData);
       },
-      error: (error) => {
+      error: error => {
         console.error('Error loading quartile data:', error);
       },
     });
@@ -71,10 +71,9 @@ export class DecarbQuartileSectionComponent implements OnInit {
       ...yearData.scope1_steps.map((step: any) => ({
         ...step,
         scope: 'scope1',
-        isExpanded: false,
       })),
       ...yearData.scope2_steps.map((step: any) => ({
-        title: step.recommendation?.recommended_plan,
+        title: step.recommendation?.message,
         description: step.description,
         costSavings: step.savings,
         co2Savings: step.emissions_savings,
@@ -88,27 +87,32 @@ export class DecarbQuartileSectionComponent implements OnInit {
           website: provider.website_link,
         })) || [],
         scope: 'scope2',
-        isExpanded: false,
       })),
       ...yearData.scope3_steps.map((step: any) => ({
-        title: step.description || 'Scope 3 Step',
+        title: step.description,
         costSavings: step.savings,
         co2Savings: step.emissions_savings,
         transition: step.difficulty,
         isCompleted: false,
-        providerInfo: step.recommendation?.provider_info || [],
+        providerInfo: step.recommendation?.recommendations?.flatMap((rec: any) =>
+          rec.provider_info?.map((provider: any) => ({
+            name: provider.company,
+            details: provider.company_description,
+            type: provider.type,
+            location: provider.location,
+            carbonSavings: provider.carbon_savings,
+            costSavings: provider.cost_savings,
+            phone: provider.phone_number,
+            website: provider.website_link,
+          })) || []
+        ) || [],
         scope: 'scope3',
-        isExpanded: false,
       })),
     ];
   }
 
   fetchQuartileData(): Observable<any> {
     return this.http.get<any>('../../assets/yearly_quarterly_steps.json');
-  }
-
-  toggleStep(index: number): void {
-    this.quartileData[index].isExpanded = !this.quartileData[index].isExpanded;
   }
 
   onStepToggled(step: any): void {

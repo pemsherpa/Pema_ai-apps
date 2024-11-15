@@ -27,7 +27,8 @@ export class DecarbJourneyComponent implements AfterViewInit {
   }
 
   onItemChecked(event: { name: string; costSavings: number; co2Savings: number; transition: number; isChecked: boolean }) {
-    const { name, costSavings, co2Savings, transition, isChecked } = event;
+    const { name, costSavings, co2Savings, isChecked } = event;
+    const transition = event.transition || 0;
     if (isChecked) {
       this.shoppingcartComponent.cartItems.push({ name, costSavings, co2Savings, transition });
       this.shoppingcartComponent.updateProgress();

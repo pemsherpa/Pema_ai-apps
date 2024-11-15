@@ -6,6 +6,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './scope2-steps.component.html',
+  styleUrls: ['./scope2-steps.component.css']
 })
 export class Scope2StepsComponent {
   @Input() stepData!: { 
