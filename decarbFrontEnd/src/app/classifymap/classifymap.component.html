@@ -1,15 +1,14 @@
-
-<hr>
 <div class="main">
-  <div class="back-button-container">
-    <img src="assets/icons/back-button.png" alt="back-button" (click)="goBack()" class="back-button-image" />
-    <button mat-raised-button color="primary" (click)="goBack()"><u>Back</u></button>
-  </div>
+  <div class="line"></div>
   <mat-card class="header-card">
-    <h1>See How You Compare with Other Companies</h1>
-    <section>
-      Explore decarbonization effects across your industry and region
-    </section>
+    <div class="back-button-container">
+      <img src="assets/icons/back-button.png" alt="back-button" (click)="goBack()" class="back-button-image" />
+      <button mat-raised-button color="primary" (click)="goBack()"><u>Back</u></button>
+    </div>
+    <div>
+      <h1>See How You Compare with Other Companies</h1>
+      <section>Explore decarbonization effects across your industry and region</section>
+    </div>
   </mat-card>
 
   <mat-card class="leaders-card">
@@ -31,6 +30,7 @@
 
   <div class="map-and-table">
     <mat-card class="map-container">
+      <div class="google-map-container">
       <google-map #googleMapContainer height="500px" width="100%" [center]="center" [zoom]="zoom">
         <map-marker
           *ngFor="let marker of markers"
@@ -57,6 +57,7 @@
           <p>Emissions Avoided: {{ selectedCompany?.emissions_avoided }}mt CO2</p>
         </map-info-window>
       </google-map>
+    </div>
     </mat-card>
 
     <mat-card *ngIf="selectedCompany" class="actions-table">
@@ -70,25 +71,22 @@
 
       <div id="map" class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort class="mat-table">
-        <!-- Action Name Column -->
+
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Action Name</th>
           <td mat-cell *matCellDef="let action">{{ action.name }}</td>
         </ng-container>
-      
-        <!-- Description Column -->
+  
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef>Description</th>
           <td mat-cell *matCellDef="let action">{{ action.description }}</td>
         </ng-container>
-      
-        <!-- Date Column -->
+
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef>Date</th>
           <td mat-cell *matCellDef="let action">{{ action.date }}</td>
         </ng-container>
-      
-        <!-- Percentage Complete Column -->
+
         <ng-container matColumnDef="percentageComplete">
           <th mat-header-cell *matHeaderCellDef>Percentage Complete</th>
           <td mat-cell *matCellDef="let action">
