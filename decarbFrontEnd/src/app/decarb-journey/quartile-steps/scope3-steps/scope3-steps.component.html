@@ -36,6 +36,7 @@
       <p><strong>Provider Information:</strong></p>
       <!-- Display the correct SVG based on difficulty (transition) value -->
     <div class="svg-container">
+      <div class="implement">
       <ng-container *ngIf="stepData.transition >= 1 && stepData.transition < 3">
         <img src="../../assets/low_imp.svg" alt="Difficulty Level 1-3" />Easy Implementation
       </ng-container>
@@ -45,6 +46,13 @@
       <ng-container *ngIf="stepData.transition >= 6 && stepData.transition <= 9">
         <img src="../../assets/high_imp.svg" alt="Difficulty Level 6-9" />Difficult Implementation
       </ng-container>
+    </div>
+      <div class="top-right-link">
+        <a [routerLink]="['/make-switch']" class="switch-link">
+          <img src="assets/forward.svg" alt="AI Icon">
+          Make this switch now
+        </a>
+    </div>
     </div>
       <div class="dropdown-content">
         <ul *ngIf="stepData?.providerInfo?.length">

@@ -45,7 +45,12 @@
       <ng-container *ngIf="stepData.transition >= 6 && stepData.transition <= 9">
         <img src="../../assets/high_imp.svg" alt="Difficulty Level 6-9" />Difficult Implementation
       </ng-container>
+      <div class="top-right-link">
+        <a [routerLink]="['/make-switch']" class="compare-link">
+          Make this switch now
+        </a>
     </div>
+
       <div class="dropdown-content">
         <ul *ngIf="stepData?.providerInfo?.length">
           <li *ngFor="let provider of stepData?.providerInfo" class="provider-item">

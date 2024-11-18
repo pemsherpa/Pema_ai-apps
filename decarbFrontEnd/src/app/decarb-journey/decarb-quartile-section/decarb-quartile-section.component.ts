@@ -54,7 +54,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
               (step: any) => step.year === year && step.quarter === this.selectedQuarter
             );
             if (yearData) {
-              this.quartileData.push(...this.mapYearData(yearData));
+        this.quartileData.push(...this.mapYearData(yearData,year,this.selectedQuarter));
             }
           }
         });
@@ -66,11 +66,14 @@ export class DecarbQuartileSectionComponent implements OnInit {
     });
   }
 
-  private mapYearData(yearData: any): any[] {
+  private mapYearData(yearData: any, year: number,quarter:number): any[] {
     return [
       ...yearData.scope1_steps.map((step: any) => ({
+        title: step.recommendation?.message,
         ...step,
         scope: 'scope1',
+        year: year, // Add year
+        quarter: quarter
       })),
       ...yearData.scope2_steps.map((step: any) => ({
         title: step.recommendation?.message,
@@ -87,6 +90,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
           website: provider.website_link,
         })) || [],
         scope: 'scope2',
+        year: year, // Add year
+        quarter: quarter
       })),
       ...yearData.scope3_steps.map((step: any) => ({
         title: step.description,
@@ -107,6 +112,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
           })) || []
         ) || [],
         scope: 'scope3',
+        year: year, // Add year
+        quarter: quarter
       })),
     ];
   }

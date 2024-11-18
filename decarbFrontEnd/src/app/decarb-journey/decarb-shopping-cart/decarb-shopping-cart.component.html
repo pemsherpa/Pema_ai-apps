@@ -79,7 +79,7 @@
   </div>
   
   <div class="savings-container">
-    <p class="savings">${{ item.costSavings }}</p>
+    <p class="savings">{{ formatCostSavings(item.costSavings) }}</p>
     <p class="savings">{{ item.co2Savings }} kgCO2e</p>
   </div>
 </div>
@@ -91,7 +91,7 @@
 <div class="savings-summary">
   <h3>Savings</h3>
   <div class="savings-content">
-  <p>${{ getTotalCostSavings() }}K</p>
+  <p>{{getFormattedTotalCostSavings()}}</p>
   <p>{{ getTotalCO2Savings() }} kgCO2e</p>
 </div>
 </div>

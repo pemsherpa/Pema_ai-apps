@@ -96,40 +96,40 @@ class DecarbEngine:
     def analyze_commuting_costs(self):
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
     
-    def run_commuting_step(self):
-        # commuting costs and emissions for individual
-        commuting_costs, commuting_emissions = self.analyze_commuting_costs()
-        commuting_step = DecarbStep(
-            step_type=DecarbStepType.COMMUTING_INDIVIDUAL,
-            cur_cost=commuting_costs,
-            new_cost=self.commuting_analyzer.stipent_individual(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, 1, 50, 2,30)[2],
-            cur_emissions=commuting_emissions,
-            new_emissions=commuting_emissions * 0.9,  # fake num
-            description="Analyze commuting costs and emissions for individual",
-            difficulty=1
-        )
-        self.steps.append(commuting_step)
+    # def run_commuting_step(self):
+    #     # commuting costs and emissions for individual
+    #     commuting_costs, commuting_emissions = self.analyze_commuting_costs()
+    #     commuting_step = DecarbStep(
+    #         step_type=DecarbStepType.COMMUTING_INDIVIDUAL,
+    #         cur_cost=commuting_costs,
+    #         new_cost=self.commuting_analyzer.stipent_individual(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, 1, 50, 2,30)[2],
+    #         cur_emissions=commuting_emissions,
+    #         new_emissions=commuting_emissions * 0.9,  # fake num
+    #         description="Analyze commuting costs and emissions for individual",
+    #         difficulty=1
+    #     )
+    #     self.steps.append(commuting_step)
     
-    def run_carpool_step(self):
-        # commuting cost for carpool
-        commuting_costs, commuting_emissions = self.analyze_commuting_costs()
-        carpool_savings,carpool_saving_emission = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,2,30)
-        print(f'init commuting_costs is {commuting_costs}')
-        print(f'init commuting_emi is {commuting_emissions}')
-        print(f'init carpool commuting savings is {carpool_savings}')
-        print(f'new carpool commuting savings is {carpool_saving_emission}')
+    # def run_carpool_step(self):
+    #     # commuting cost for carpool
+    #     commuting_costs, commuting_emissions = self.analyze_commuting_costs()
+    #     carpool_savings,carpool_saving_emission = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,2,30)
+    #     print(f'init commuting_costs is {commuting_costs}')
+    #     print(f'init commuting_emi is {commuting_emissions}')
+    #     print(f'init carpool commuting savings is {carpool_savings}')
+    #     print(f'new carpool commuting savings is {carpool_saving_emission}')
 
-        commuting_step = DecarbStep(
-            step_type=DecarbStepType.COMMUTING_CARPOOL,
-            cur_cost=commuting_costs,
-            new_cost = commuting_costs-carpool_savings,
-            new_emissions = carpool_saving_emission,
-            cur_emissions=commuting_emissions,
-            description="Analyze commuting costs and emissions for carpool", 
-            difficulty= 3
-        )
+    #     commuting_step = DecarbStep(
+    #         step_type=DecarbStepType.COMMUTING_CARPOOL,
+    #         cur_cost=commuting_costs,
+    #         new_cost = commuting_costs-carpool_savings,
+    #         new_emissions = carpool_saving_emission,
+    #         cur_emissions=commuting_emissions,
+    #         description="Analyze commuting costs and emissions for carpool", 
+    #         difficulty= 3
+    #     )
         
-        self.steps.append(commuting_step)
+    #     self.steps.append(commuting_step)
 
     def init_flight_analyzer(self, origin, destination, departure_date, return_date):
         self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
@@ -184,8 +184,8 @@ class DecarbEngine:
         return savings
     
     def run_decarb_engine(self):
-        self.run_commuting_step()
-        self.run_carpool_step()
+        #self.run_commuting_step()
+        #self.run_carpool_step()
         self.run_electric_step()
         self.run_flight_optimizer_step()
         self.run_CRU_step()
@@ -351,6 +351,7 @@ class DecarbEngine:
 
      electric_step = None
      cru_step=None
+     flight_optimizer= None
      for goal_yr in range(decarb_goals.timeframe):
       cur_goal_yr = current_year + goal_yr
       cur_goal_quarter = current_quarter
@@ -376,6 +377,8 @@ class DecarbEngine:
                 for step in decarb_steps:
                     if isinstance(step, CRUDecarbStep):
                         cru_step = step
+                    elif isinstance(step,FlightOptimizerDecarbStep):
+                        flight_optimizer=step
                     else: 
                         quarter_step.add_step(step)
 
@@ -399,7 +402,12 @@ class DecarbEngine:
             if quarter_step.year == cur_e_year and quarter_step.quarter == 4:
               print("Adding the CRU rec once a year")
               print(cru_step)
-              quarter_step.add_cru_step(cru_rec,cru_step)  # Ensure this is being executed    
+              quarter_step.add_cru_step(cru_rec,cru_step)  # Ensure this is being executed 
+        for quarter_step in yearly_steps_orig:
+            if quarter_step.year == cur_e_year and quarter_step.quarter == 3:
+              print("Adding the optimiser rec once a year")
+              print(flight_optimizer)
+              quarter_step.add_flight_step(flight_optimizer)  # Ensure this is being executed 
          
     # Step 5: Ensure CRU is only purchased once a year
      decarb_engine.add_cru_steps(yearly_steps)
@@ -609,9 +617,10 @@ class DecarbEngine:
 
      description="Reduction in emissions of flights"
      difficulty=5
-     decarb_step=FlightOptimizerDecarbStep(cur_total_cost,new_total_cost, cur_total_emissions, new_total_emissions, description, difficulty)
+     decarb_step=FlightOptimizerDecarbStep(cur_total_cost,new_total_cost, cur_total_emissions, new_total_emissions, description, difficulty,num_stops=2)
      
      self.steps.append(decarb_step)
+     print(self.steps)
     
     ######
     # Test Code

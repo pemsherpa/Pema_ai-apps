@@ -16,8 +16,8 @@ class QuarterStep:
         # Add step based on its scope
         if step.scope == 1:
             self.scope1_steps.append(step)
-        elif step.scope == 2:
-            self.scope2_steps.append(step)
+        # elif step.scope == 2:
+        #     self.scope2_steps.append(step)
         # elif step.scope == 3:
         #     self.scope3_steps.append(step)
 
@@ -28,6 +28,9 @@ class QuarterStep:
     def add_cru_step(self,cru_rec,cru_step):
         cru_annual= CRUAnnualStep(cru_rec,cru_step)
         self.scope3_steps.append(cru_annual)
+
+    def add_flight_step(self,flight_step):
+        self.scope3_steps.append(flight_step)
 
     def add_rec_to_scope2(self, e_step, rec):
         if not (type(e_step) is ElectricDecarbStep):

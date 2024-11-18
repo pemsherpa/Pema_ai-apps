@@ -42,7 +42,7 @@
   margin-right: 8px;
 }
 
-.svg-container {
+.implement{
   display: flex;
   align-items: center;
   font-size: 16px; /* Increase font size for implementation labels */
@@ -92,4 +92,24 @@
 
 .savings-info p {
   margin-bottom: 8px; /* Add space between cost savings and CO₂ savings */
+}
+.compare-link img {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.top-right-link {
+  display: flex;
+  justify-content: flex-end; 
+  
+}
+.svg-container{
+  display:flex;
+  gap: 180px;
+
+}
+.switch-link img{
+  height:25px;
+  width:25px;
+  margin-right: 5px;
+  vertical-align: middle;
 }

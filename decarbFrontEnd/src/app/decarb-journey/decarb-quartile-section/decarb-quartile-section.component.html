@@ -12,21 +12,21 @@
 
 <div *ngFor="let step of quartileData">
   <ng-container [ngSwitch]="step.scope">
-    <h2 class="scope-headings" *ngSwitchCase="'scope1'">Scope 1</h2>
+    <h2 class="scope-headings" *ngSwitchCase="'scope1'">{{ step.year }}<br>{{ step.scope }}<br>{{step.quarter}}</h2>
     <app-scope1-step
       *ngSwitchCase="'scope1'"
       [stepData]="step"
       (stepToggled)="onStepToggled(step)">
     </app-scope1-step>
 
-    <h2 class="scope-headings" *ngSwitchCase="'scope2'">Scope 2</h2>
+    <h2 class="scope-headings" *ngSwitchCase="'scope2'">{{ step.year }}<br>{{ step.scope }}<br>{{step.quarter}}</h2>
     <app-scope2-step
       *ngSwitchCase="'scope2'"
       [stepData]="step"
       (stepToggled)="onStepToggled(step)">
     </app-scope2-step>
 
-    <h2 class="scope-headings" *ngSwitchCase="'scope3'">Scope 3</h2>
+    <h2 class="scope-headings" *ngSwitchCase="'scope3'">{{ step.year }}<br>{{ step.scope }}<br>{{step.quarter}}</h2>
     <app-scope3-step
       *ngSwitchCase="'scope3'"
       [stepData]="step"

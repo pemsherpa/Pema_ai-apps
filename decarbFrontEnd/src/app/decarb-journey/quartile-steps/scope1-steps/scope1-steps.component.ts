@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-scope1-step',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule], // Include RouterModule here
   templateUrl: './scope1-steps.component.html',
   styleUrls: ['./scope1-steps.component.css']
 })
@@ -38,7 +39,3 @@ export class Scope1StepsComponent {
     this.isExpanded = !this.isExpanded; // Toggle the dropdown state
   }
 }
-
-
-
-

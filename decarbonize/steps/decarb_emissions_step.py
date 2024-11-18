@@ -3,16 +3,19 @@ from steps.decarb_step_type import DecarbStepType
 
 class FlightOptimizerDecarbStep(DecarbStep):
 
-    def __init__(self, cur_cost, new_cost, cur_emissions, new_emissions, description, difficulty):
+    def __init__(self, cur_cost, new_cost, cur_emissions, new_emissions, description, difficulty, num_stops):
         super().__init__(DecarbStepType.FLIGHT_OPTIMIZER, cur_cost, new_cost, cur_emissions, new_emissions, description, difficulty)
+        self.num_stops = num_stops  # Ensure num_stops is properly initialized
+
     def step_to_dict(self):
-        dict = self.step_to_dict()
+        # Call the parent class's step_to_dict
+        dict = super().step_to_dict()
+        # Add additional data specific to this step
         dict['data'] = {
-            'stops':self.num_stops
+            'stops': self.num_stops
         }
-        # by switching 1st to economy, you save ... carbon
-        # by decreasing num of flights, you save ... carbon
-        # 1 and 2 can carpool...(display)
-        # by taking bus/subway you can save... dollar and ... carbon
+        return dict
+
+        
 
     

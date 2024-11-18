@@ -57,9 +57,25 @@ export class DecarbShoppingCartComponent implements OnInit {
   getTotalCostSavings(): number {
     return this.cartItems.reduce((total, item) => total + item.costSavings, 0);
   }
+  getFormattedTotalCostSavings(): string {
+    const totalSavingsInK = this.getTotalCostSavings() / 1000;
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 2, // Optional: limit decimals to 2
+    }).format(totalSavingsInK) + 'K'; // Append 'K' to the formatted value
+  }
+  
+  
 
   getTotalCO2Savings(): number {
     return this.cartItems.reduce((total, item) => total + item.co2Savings, 0);
+  }
+  formatCostSavings(value: number): string {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(value);
   }
 
   getProgressPercentage(): number {

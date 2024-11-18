@@ -3,6 +3,7 @@ import { AppComponent } from './app.component';  // Ensure AppComponent is impor
 import { DecarbjourneyComponent } from './decarbjourney/decarbjourney.component';
 import { ClassifymapComponent } from './classifymap/classifymap.component';
 import { DecarbJourneyComponent } from './decarb-journey/decarb-journey.component';
+import { MakeSwitchComponent } from './make-switch/make-switch.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,11 @@ const routes: Routes = [
   component: DecarbJourneyComponent,
   title: 'Decarb-journey'
 },
+{
+  path: 'make-switch',
+  component: MakeSwitchComponent,
+  title: 'Make-the-switch'
+}
 
 ]; 
 export default routes;
