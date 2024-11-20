@@ -614,6 +614,9 @@ class DecarbEngine:
          new_total_emissions+=optimized_flight['emissions']
          if original_distance is None:
              raise ValueError (f"Wrong airport code{flight.departure_airport},{flight.arrival_airport}")
+    
+         cur_total_emissions = round(cur_total_emissions, 2)
+         new_total_emissions = round(new_total_emissions, 2)
 
      description="Reduction in emissions of flights"
      difficulty=5

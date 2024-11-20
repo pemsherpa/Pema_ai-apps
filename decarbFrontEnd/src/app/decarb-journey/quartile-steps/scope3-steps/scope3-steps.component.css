@@ -6,12 +6,13 @@
 
 .step-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   cursor: pointer;
   padding-bottom: 5px;
   border-bottom: 1px solid #ddd;
   margin-bottom: 10px;
+  flex-grow: 1; /* Allow step-header to take remaining space */
 }
 
 .checkbox-icon {
@@ -24,6 +25,7 @@
   font-size: 20px;
   font-weight: bold;
   padding-left: 16px; /* Add space between the icon and title */
+  
   flex: 1;
 }
 
@@ -71,6 +73,10 @@
 .provider-item:last-child {
   border-bottom: none;
 }
+.provider-info{
+  padding-left:80px;
+
+}
 
 .provider-info a {
   color: #5c2bff;
@@ -104,7 +110,7 @@
 }
 .svg-container{
   display:flex;
-  gap: 180px;
+  gap: 100px;
 
 }
 .switch-link img{
@@ -112,6 +118,39 @@
   width:25px;
   margin-right: 5px;
   vertical-align: middle;
+}
+.vertical-line {
+  position: absolute;
+  top: 40px; /* Align with the bottom of the icon */
+  left: 20px; /* Adjust to align with the icons */
+  width: 4px; /* Line thickness */
+  background-color: lightgray; /* Default line color */
+  z-index: 0; /* Place behind other elements */
+  transition: height 0.3s ease, background-color 0.3s ease; /* Smooth animation */
+}
+.scope-header {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* 20px gap between check/uncheck icon and step title */
+}
+.check-box {
+  /* Moved the check/uncheck icon out of the bottom line */
+  flex-shrink: 0; /* Prevents shrinking */
+}
+.step-content {
+  display: block; /* Ensure the content is visible */
+  visibility: visible; /* Make sure it's not hidden */
+  position: relative; /* Check if any positioning issues exist */
+}
+
+.step-content.ngIf {
+  max-height: 500px; /* Adjust based on your content height */
+}
+.savings-info{
+  padding-left:80px;
+}
+.not-available{
+  padding-left:80px;
 }
 
   

@@ -17,14 +17,17 @@ export class Scope2StepsComponent {
     co2Savings: number; 
     transition: number; 
     isCompleted: boolean; 
-    providerInfo: any[] 
+    providerInfo: any[]; 
   };
-  
+
+  @Input() totalSteps=4;
+
   @Output() stepToggled = new EventEmitter<void>();
 
-  isExpanded = false; // Track dropdown expansion state
+  isExpanded = false;
 
-  handleClick() {
+  handleClick(): void {
+    console.log('Step clicked, toggling completion and expansion...');
     this.toggleCompletion();
     this.toggleExpansion();
   }
@@ -32,13 +35,20 @@ export class Scope2StepsComponent {
   toggleCompletion(): void {
     this.stepData.isCompleted = !this.stepData.isCompleted;
     this.stepToggled.emit();
-    console.log(this.stepData);
+    console.log('Step completion toggled:', this.stepData.isCompleted);
   }
 
   toggleExpansion(): void {
-    this.isExpanded = !this.isExpanded; // Toggle the dropdown state
+    this.isExpanded = !this.isExpanded;
+    console.log('Step expansion toggled:', this.isExpanded);
+  }
+
+  calculateLineHeight(): number {
+    return this.stepData.isCompleted ? 60 : 0;
   }
 }
+
+
 
 
 

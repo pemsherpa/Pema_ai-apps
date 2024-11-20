@@ -18,7 +18,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
   quartileData: any[] = [];
   availableYears: number[] = [];
   selectedYears: { [year: number]: boolean } = {};
-  selectedQuarter = 4;
+  selectedQuarters: { [quarter: number]: boolean } = { 3: true, 4: true }; // Default selected quarters: 3 and 4
 
   @Output() itemChecked = new EventEmitter<{
     name: string;
@@ -34,7 +34,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
   ngOnInit(): void {
     const currentYear = new Date().getFullYear();
     this.availableYears = Array.from({ length: 5 }, (_, i) => currentYear + i);
-    this.availableYears.forEach(year => (this.selectedYears[year] = true));
+    this.availableYears.forEach((year) => (this.selectedYears[year] = true));
     this.loadDataForYearAndQuarter();
   }
 
@@ -43,37 +43,46 @@ export class DecarbQuartileSectionComponent implements OnInit {
     this.loadDataForYearAndQuarter();
   }
 
+  toggleQuarterSelection(quarter: number): void {
+    this.selectedQuarters[quarter] = !this.selectedQuarters[quarter];
+    this.loadDataForYearAndQuarter();
+  }
+
   loadDataForYearAndQuarter(): void {
     this.fetchQuartileData().subscribe({
       next: (data: any) => {
         this.quartileData = [];
 
-        this.availableYears.forEach(year => {
+        this.availableYears.forEach((year) => {
           if (this.selectedYears[year]) {
-            const yearData = data.yearly_steps.find(
-              (step: any) => step.year === year && step.quarter === this.selectedQuarter
+            const filteredData = data.yearly_steps.filter(
+              (step: any) =>
+                step.year === year &&
+                this.selectedQuarters[step.quarter] // Check if the quarter is selected
             );
-            if (yearData) {
-        this.quartileData.push(...this.mapYearData(yearData,year,this.selectedQuarter));
-            }
+
+            filteredData.forEach((yearData: any) => {
+              this.quartileData.push(...this.mapYearData(yearData, year, yearData.quarter));
+            });
           }
         });
+
         console.log(this.quartileData);
       },
-      error: error => {
+      error: (error) => {
         console.error('Error loading quartile data:', error);
       },
     });
   }
 
-  private mapYearData(yearData: any, year: number,quarter:number): any[] {
+  private mapYearData(yearData: any, year: number, quarter: number): any[] {
     return [
       ...yearData.scope1_steps.map((step: any) => ({
         title: step.recommendation?.message,
         ...step,
         scope: 'scope1',
         year: year, // Add year
-        quarter: quarter
+        quarter: quarter,
       })),
       ...yearData.scope2_steps.map((step: any) => ({
         title: step.recommendation?.message,
@@ -82,16 +91,17 @@ export class DecarbQuartileSectionComponent implements OnInit {
         co2Savings: step.emissions_savings,
         transition: step.difficulty,
         isCompleted: false,
-        providerInfo: step.recommendation?.provider_info.map((provider: any) => ({
-          name: provider.company,
-          details: provider['description of the company'],
-          renewablePercentage: provider['renewable percent provided'],
-          phone: provider.phone_number,
-          website: provider.website_link,
-        })) || [],
+        providerInfo:
+          step.recommendation?.provider_info.map((provider: any) => ({
+            name: provider.company,
+            details: provider['description of the company'],
+            renewablePercentage: provider['renewable percent provided'],
+            phone: provider.phone_number,
+            website: provider.website_link,
+          })) || [],
         scope: 'scope2',
         year: year, // Add year
-        quarter: quarter
+        quarter: quarter,
       })),
       ...yearData.scope3_steps.map((step: any) => ({
         title: step.description,
@@ -99,21 +109,22 @@ export class DecarbQuartileSectionComponent implements OnInit {
         co2Savings: step.emissions_savings,
         transition: step.difficulty,
         isCompleted: false,
-        providerInfo: step.recommendation?.recommendations?.flatMap((rec: any) =>
-          rec.provider_info?.map((provider: any) => ({
-            name: provider.company,
-            details: provider.company_description,
-            type: provider.type,
-            location: provider.location,
-            carbonSavings: provider.carbon_savings,
-            costSavings: provider.cost_savings,
-            phone: provider.phone_number,
-            website: provider.website_link,
-          })) || []
-        ) || [],
+        providerInfo:
+          step.recommendation?.recommendations?.flatMap((rec: any) =>
+            rec.provider_info?.map((provider: any) => ({
+              name: provider.company,
+              details: provider.company_description,
+              type: provider.type,
+              location: provider.location,
+              carbonSavings: -provider.carbon_savings,
+              costSavings: provider.cost_savings,
+              phone: provider.phone_number,
+              website: provider.website_link,
+            }))
+          ) || [],
         scope: 'scope3',
         year: year, // Add year
-        quarter: quarter
+        quarter: quarter,
       })),
     ];
   }
@@ -133,3 +144,4 @@ export class DecarbQuartileSectionComponent implements OnInit {
     });
   }
 }
+

@@ -1,59 +1,67 @@
-<div class="step-details">
-  <!-- SVG Toggle and Title -->
-  <div class="step-header" (click)="handleClick()">
-    <ng-container *ngIf="stepData.isCompleted; else unchecked">
-      <img src="../../assets/checked.svg" alt="Checked" class="checkbox-icon" />
-    </ng-container>
-    <ng-template #unchecked>
-      <img src="../../assets/add.svg" alt="Unchecked" class="checkbox-icon" />
-    </ng-template>
-    <span class="title">{{ stepData.title }}</span>
-
-    <!-- Expand/Collapse Arrow -->
-    <span class="dropdown-arrow">
-      <ng-container *ngIf="isExpanded; else downArrow">
-        <!-- Up Arrow Outline SVG -->
-        <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 15l6-6 6 6" />
-        </svg>
-      </ng-container>
-      <ng-template #downArrow>
-        <!-- Down Arrow Outline SVG -->
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 9l6 6 6-6" />
-        </svg>
-      </ng-template>
-    </span>
+<div class="step-details" position="relative">
+  <div 
+    class="vertical-line" 
+    [style.height.px]="calculateLineHeight()" 
+    [style.backgroundColor]="stepData.isCompleted ? 'green' : 'lightgray'"
+    style="position: absolute; left: 50%; top: 0;">
   </div>
 
+  <div class="scope-header">
+    <!-- Check/Uncheck Icon (Moved Outside of Bottom Line) -->
+    <div class="check-box" (click)="handleClick()">
+      <ng-container *ngIf="stepData.isCompleted; else unchecked">
+        <img src="../../assets/checked.svg" alt="Checked" class="checkbox-icon" />
+      </ng-container>
+      <ng-template #unchecked>
+        <img src="../../assets/add.svg" alt="Unchecked" class="checkbox-icon" />
+      </ng-template>
+    </div>
 
-  
-
-  <!-- Expandable content -->
+    <!-- Step Header with 20px Gap -->
+    <div class="step-header" (click)="handleClick()">
+      <span class="title">{{ stepData.title }}</span>
+      <span class="dropdown-arrow">
+        <ng-container *ngIf="isExpanded; else downArrow">
+          <!-- Up Arrow -->
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 15l6-6 6 6" />
+          </svg>
+        </ng-container>
+        <ng-template #downArrow>
+          <!-- Down Arrow -->
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </ng-template>
+      </span>
+    </div>
+  </div>
+  <!-- Expandable Content -->
   <div *ngIf="isExpanded" class="step-content">
     <!-- Provider Information Section -->
     <div class="provider-info">
       <p><strong>Provider Information:</strong></p>
-      <!-- Display the correct SVG based on difficulty (transition) value -->
-    <div class="svg-container">
-      <div class="implement">
-      <ng-container *ngIf="stepData.transition >= 1 && stepData.transition < 3">
-        <img src="../../assets/low_imp.svg" alt="Difficulty Level 1-3" />Easy Implementation
-      </ng-container>
-      <ng-container *ngIf="stepData.transition >= 3 && stepData.transition < 6">
-        <img src="../../assets/meduim_imp.svg" alt="Difficulty Level 3-6" />Medium Implementation
-      </ng-container>
-      <ng-container *ngIf="stepData.transition >= 6 && stepData.transition <= 9">
-        <img src="../../assets/high_imp.svg" alt="Difficulty Level 6-9" />Difficult Implementation
-      </ng-container>
-    </div>
-      <div class="top-right-link">
-        <a [routerLink]="['/make-switch']" class="switch-link">
-          <img src="assets/forward.svg" alt="AI Icon">
-          Make this switch now
-        </a>
-    </div>
-    </div>
+      <div class="svg-container">
+        <div class="implement">
+          <!-- Difficulty Level -->
+          <ng-container *ngIf="stepData.transition >= 1 && stepData.transition < 3">
+            <img src="../../assets/low_imp.svg" alt="Difficulty Level 1-3" />Easy Implementation
+          </ng-container>
+          <ng-container *ngIf="stepData.transition >= 3 && stepData.transition < 6">
+            <img src="../../assets/meduim_imp.svg" alt="Difficulty Level 3-6" />Medium Implementation
+          </ng-container>
+          <ng-container *ngIf="stepData.transition >= 6 && stepData.transition <= 9">
+            <img src="../../assets/high_imp.svg" alt="Difficulty Level 6-9" />Difficult Implementation
+          </ng-container>
+        </div>
+        <div class="top-right-link">
+          <a [routerLink]="['/make-switch']" class="switch-link">
+            <img src="assets/forward.svg" alt="AI Icon"> Make this switch now
+          </a>
+        </div>
+      </div>
+
+      <!-- Provider List -->
       <div class="dropdown-content">
         <ul *ngIf="stepData?.providerInfo?.length">
           <li *ngFor="let provider of stepData?.providerInfo" class="provider-item">
@@ -69,15 +77,16 @@
       </div>
     </div>
 
-    <!-- Fallback message if no provider info is available -->
+    <!-- Fallback Message -->
     <div *ngIf="stepData?.providerInfo?.length === 0">
       <p>No provider information available.</p>
     </div>
 
-    <!-- Savings and Transition Information -->
+    <!-- Savings Information -->
     <div class="savings-info">
       <p *ngIf="stepData?.costSavings"><strong>Cost Savings:</strong> {{ stepData.costSavings }}</p>
       <p *ngIf="stepData?.co2Savings"><strong>CO₂ Savings:</strong> {{ stepData.co2Savings }}</p>
     </div>
   </div>
 </div>
+
