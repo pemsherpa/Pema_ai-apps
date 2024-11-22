@@ -1,4 +1,4 @@
-<div>
+<div class="container">
   <div class="top-right-link">
     <a [routerLink]="['/map']" class="compare-link">
       <img src="assets/icons/AI.png" alt="AI Icon">
@@ -13,7 +13,6 @@
     </button>
   </div>
 
-  <!-- Column Headers -->
   <div class="journey-header">
     <div class="column-title">Title</div>
     <div class="column-scope">Scope</div>
@@ -23,12 +22,12 @@
     <div class="column-actions"></div>
   </div>
 
-  <!-- Journey List -->
   <div class="journey-list">
     <div *ngFor="let journey of journeys; let i = index" class="journey-item">
       <div class="column-title">{{ journey.title }}</div>
       <div class="column-scope">
-        <img src="../../assets/icons/scope.png" alt="Scope Icon"> {{ journey.scope }}
+        <img src="../../assets/icons/scope.png" alt="Scope Icon"> 
+        {{ journey.scope.join(', ') }}  <!-- Display scope as 1, 2, 3 -->
       </div>
       <div class="column-timeline">
         <img src="../../assets/icons/clock.png" alt="Clock Icon">
@@ -39,26 +38,23 @@
         ${{ journey.costSavings }}{{ journey.costUnit }}
       </div>
       <div class="column-co2">
-        <img src="../../assets/icons/carbon.png" alt="Carbon Icon"> {{ journey.co2Savings }} mt CO2e
+        <img src="../../assets/icons/carbon.png" alt="Carbon Icon"> 
+        {{ journey.co2Savings }} mt CO2e
       </div>
       <div class="column-actions journey-actions">
         <button class="view-button">View</button>
         <div class="dropdown">
           <button class="dots-button" (click)="toggleDropdown(i)">...</button>
-          <!-- <div *ngIf="activeDropdown === i" class="dropdown-content">
-            <button (click)="editJourney(i)">Edit</button>
-            <button (click)="deleteJourney(i)">Delete</button>
-          </div> -->
           <div class="dropdown-content" *ngIf="activeDropdown === i">
             <button (click)="editJourney(i)">Edit</button>
             <button (click)="deleteJourney(i)">Delete</button>
-        </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Modal for creating a new journey -->
+  
+  
   <div class="modal" id="createJourneyModal" *ngIf="showModal">
     <div class="modal-content">
       <span class="close-button" (click)="closeModal()">&times;</span>
@@ -71,11 +67,31 @@
 
         <div class="form-group">
           <label for="scope">Scope:</label>
-          <select id="scope" name="scope" [(ngModel)]="newJourney.scope" required>
-            <option value="" disabled selected>Select Scope</option>
-            <option *ngFor="let option of scopeOptions" [value]="option">{{ option }}</option>
-          </select>
+          <div class="scope-buttons">
+            <button 
+              type="button" 
+              class="scope-button" 
+              [class.active]="newJourney.scope.includes('Scope 1')" 
+              (click)="toggleScope('Scope 1')">
+              Scope 1
+            </button>
+            <button 
+              type="button" 
+              class="scope-button" 
+              [class.active]="newJourney.scope.includes('Scope 2')" 
+              (click)="toggleScope('Scope 2')">
+              Scope 2
+            </button>
+            <button 
+              type="button" 
+              class="scope-button" 
+              [class.active]="newJourney.scope.includes('Scope 3')" 
+              (click)="toggleScope('Scope 3')">
+              Scope 3
+            </button>
+          </div>
         </div>
+        
 
         <div class="form-group">
           <label for="timeline">Timeline:</label>
@@ -87,19 +103,26 @@
 
         <div class="form-group">
           <label for="costSavings">Cost Savings:</label>
-          <div style="display: flex;">
-            <input type="number" id="costSavings" name="costSavings" [(ngModel)]="newJourney.costSavings" required style="flex: 1; margin-right: 10px;" />
-            <select name="costUnit" [(ngModel)]="newJourney.costUnit" required style="width: 70px;">
-              <option value="K">K</option>
-              <option value="M">M</option>
-            </select>
-          </div>
+          <input 
+            type="number" 
+            id="costSavings" 
+            name="costSavings" 
+            [(ngModel)]="newJourney.costSavings" 
+            disabled 
+          />
         </div>
-
+        
         <div class="form-group">
           <label for="co2Savings">CO2 Savings (in mt CO2e):</label>
-          <input type="number" id="co2Savings" name="co2Savings" [(ngModel)]="newJourney.co2Savings" required />
+          <input 
+            type="number" 
+            id="co2Savings" 
+            name="co2Savings" 
+            [(ngModel)]="newJourney.co2Savings" 
+            disabled 
+          />
         </div>
+        
         <a [routerLink]="['/journey']" class="compare-link">
         <button type="submit" class="submit-button">Save Journey</button></a>
       </form>
