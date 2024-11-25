@@ -15,11 +15,15 @@ class ProviderInfo:
 
         # Set the emissions and cost savings directly from the arguments
         self.carbon_savings = carbon_emission_savings
+        self.carbon_savings= float(self.carbon_savings)
         self.cost_savings = cost_savings
+        self.cost_savings= float(self.cost_savings)
 
         self.peak, self.off_peak = self.get_peak_off_peak_prices(plan_name)
         self.peak = format(self.peak, ".2f")
+        self.peak= float(self.peak)
         self.off_peak = format(self.off_peak, ".2f")
+        self.off_peak=float(self.off_peak)
 
     def __repr__(self):
         return (f"ProviderInfo(plan_name={self.plan_name}, company_name={self.company}, "
@@ -41,6 +45,7 @@ class ProviderInfo:
             "Peak Cost": self.peak,
             "Off-Peak Cost": self.off_peak
         }
+    
     def get_peak_off_peak_prices(self, plan_name):
         """
         Retrieves peak and off-peak prices for the given plan.

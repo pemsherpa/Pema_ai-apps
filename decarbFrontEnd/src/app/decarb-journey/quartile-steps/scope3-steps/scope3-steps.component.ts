@@ -43,7 +43,25 @@ export class Scope3StepsComponent {
     console.log('Step expansion toggled:', this.isExpanded);
   }
 
+
   calculateLineHeight(): number {
-    return this.stepData.isCompleted ? 60 : 0;
+    return this.isExpanded ? this.calculateDynamicHeight() : 0;
+  }
+
+  calculateDynamicHeight(): number {
+    // Base height for the dropdown (e.g., padding, borders)
+    const baseHeight = 100;
+    const new_scope_height=90;
+
+    // Additional height based on content, e.g., 100px per provider item
+    const providerHeight = this.stepData.providerInfo?.length * 175 || 0;
+    console.log("NUmber of steps",this.stepData.providerInfo?.length)
+    console.log(providerHeight)
+
+    // Additional height for static sections like cost/CO2 savings
+    const additionalHeight = this.stepData.costSavings || this.stepData.co2Savings ? 75 : 0;
+    console.log("Adiidtin",additionalHeight)
+
+    return baseHeight + providerHeight + additionalHeight+new_scope_height;
   }
 }

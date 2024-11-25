@@ -92,14 +92,7 @@ button:hover {
   margin-bottom: 10px;
 }
 
-/* Tick mark and completion styles */
-.checkmark {
-  display: inline-block;
-  color: green;
-  margin-right: 10px;
-  font-size: 18px;
-  visibility: hidden;
-}
+
 
 .checkmark.completed {
   visibility: visible;
@@ -109,10 +102,7 @@ input[type="checkbox"] {
   margin-right: 10px;
 }
 
-.completed-task {
-  color: green;
-  font-weight: bold;
-}
+
 .scope-headings{
   padding-left:90px;
   font-size: 20px;

@@ -18,12 +18,15 @@ class ProviderInfoCru:
 
     def to_dict(self):
         return {
+            "plan_name":None,
             "company": self.company,
+            "renewable percent provided": None,
             "phone_number": self.phone_number,
             "website_link": self.website_link,
-            "company_description": self.description,
-            "type":self.provider_type,
+            "description of the company": self.description,
             "location":self.location,
-            "carbon_savings": self.carbon_savings,
-            "cost_savings": self.cost_savings
-        }
+            "Carbon savings": self.carbon_savings,
+            "Cost savings": self.cost_savings,
+            "Peak Cost": None,
+            "Off-Peak Cost":None 
+}

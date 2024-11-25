@@ -1,4 +1,5 @@
 .step-details {
+  position:relative;
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
@@ -14,6 +15,7 @@
   margin-bottom: 10px;
   flex-grow: 1; /* Allow step-header to take remaining space */
 }
+
 
 .checkbox-icon {
   width: 35px;
@@ -73,11 +75,12 @@
 .provider-item:last-child {
   border-bottom: none;
 }
+
 .provider-info{
+  display: flex-column;
   padding-left:80px;
 
 }
-
 .provider-info a {
   color: #5c2bff;
   text-decoration: none;
@@ -129,6 +132,7 @@
   transition: height 0.3s ease, background-color 0.3s ease; /* Smooth animation */
 }
 .scope-header {
+  position: relative; /* Make this the reference for the second child */
   display: flex;
   align-items: center;
   gap: 20px; /* 20px gap between check/uncheck icon and step title */
@@ -138,14 +142,18 @@
   flex-shrink: 0; /* Prevents shrinking */
 }
 .step-content {
-  display: block; /* Ensure the content is visible */
+  display: flex-column; /* Ensure the content is visible */
   visibility: visible; /* Make sure it's not hidden */
   position: relative; /* Check if any positioning issues exist */
+
 }
 
 .step-content.ngIf {
   max-height: 500px; /* Adjust based on your content height */
 }
 .savings-info{
+  padding-left:80px;
+}
+.break-lines{
   padding-left:80px;
 }

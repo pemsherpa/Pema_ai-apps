@@ -1,11 +1,4 @@
 <div class="step-details" position="relative">
-  <div 
-    class="vertical-line" 
-    [style.height.px]="calculateLineHeight()" 
-    [style.backgroundColor]="stepData.isCompleted ? 'green' : 'lightgray'"
-    style="position: absolute; left: 50%; top: 0;">
-  </div>
-
   <div class="scope-header">
     <!-- Check/Uncheck Icon (Moved Outside of Bottom Line) -->
     <div class="check-box" (click)="handleClick()">
@@ -16,6 +9,13 @@
         <img src="../../assets/add.svg" alt="Unchecked" class="checkbox-icon" />
       </ng-template>
     </div>
+    <div 
+    class="vertical-line" 
+    [style.height.px]="calculateLineHeight()" 
+    [style.backgroundColor]="stepData.isCompleted ? 'teal' : 'white'"
+    style="position: absolute; left: 2.5%; top: 100%; width: 1px; z-index: index 0;">
+  </div>
+
 
     <!-- Step Header with 20px Gap -->
     <div class="step-header" (click)="handleClick()">
