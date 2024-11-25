@@ -1,0 +1,23 @@
+[
+    {
+      "title": "Journey 1",
+      "scope": ["Scope 1"],
+      "years": 5,
+      "months": 0,
+      "days": 0,
+      "costSavings": 500,
+      "costUnit": "K",
+      "co2Savings": 1500
+    },
+    {
+      "title": "Journey 2",
+      "scope": ["Scope 2", "Scope 3"],
+      "years": 3,
+      "months": 0,
+      "days": 0,
+      "costSavings": 300,
+      "costUnit": "M",
+      "co2Savings": 1200
+    }
+  ]
+  

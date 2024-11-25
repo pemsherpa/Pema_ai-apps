@@ -199,12 +199,18 @@ h1, section {
   
   
   map-info-window img{
-    height:90px;
-    width:150px;
+    height:50px;
+    width:80px;
   }
   
   map-info-window h3{
-    size:8px;
+    size:12px;
+  }
+
+  map-info-window p img{
+    height:15px;
+    width:25px;
+    margin-right: 5px;
   }
 
   .leaders-card, .map-container, .actions-table {

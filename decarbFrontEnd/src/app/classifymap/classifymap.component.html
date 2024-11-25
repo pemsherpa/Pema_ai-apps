@@ -47,14 +47,15 @@
             *ngIf="selectedCompany?.logo"
             [src]="selectedCompany?.logo"
             alt="{{ selectedCompany?.name }}"
-            style="width: 100px; height: auto"
+            
           />
-          <h5>{{ selectedCompany?.name }}</h5>
-          <p>{{ selectedCompany?.description }}</p>
-          <p>Revenue: ${{ selectedCompany?.revenue }}M</p>
-          <p>Savings: ${{ selectedCompany?.savings }}M</p>
-          <p>Current Emissions: {{ selectedCompany?.current_emissions }}mt CO2</p>
-          <p>Emissions Avoided: {{ selectedCompany?.emissions_avoided }}mt CO2</p>
+          <h3>{{ selectedCompany?.name }}</h3>
+          <p><b>Industry Type : {{ selectedCompany?.industry_type }} </b></p>
+          <p><b>Sector : {{ selectedCompany?.industry_sector }}</b></p>
+          <p><img src="assets/icons/cash.png" />Revenue: ${{ selectedCompany?.revenue }}M</p>
+          <p><img src="assets/icons/trending.png" />Savings: ${{ selectedCompany?.savings }}M</p>
+          <p><img src="assets/icons/carbon.png" />Current Emissions: {{ selectedCompany?.current_emissions }}mt CO2</p>
+          <p><img src="assets/icons/trending.png" />Emissions Avoided: {{ selectedCompany?.emissions_avoided }}mt CO2</p>
         </map-info-window>
       </google-map>
     </div>

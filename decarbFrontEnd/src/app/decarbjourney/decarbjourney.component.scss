@@ -1,8 +1,9 @@
-.container {
-    margin: 20px;
-    position: relative;
-}
 
+.container {
+    margin: 10px;
+    position: relative;
+    padding: 10px;  
+}
 .top-right-link {
     display: flex;
     justify-content: flex-end; 
@@ -22,6 +23,25 @@
     margin-right: 5px;
     vertical-align: middle;
 }
+
+.scope-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+    
+  }
+  
+  .scope-option {
+    display: flex;
+    align-items: center;
+  }
+  
+  .scope-option label {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #39434D;
+  }
 
 .header {
     display: flex;
@@ -231,6 +251,27 @@ select:focus, input:focus {
     margin-bottom: 15px;
     text-align: left;
 }
+
+.scope-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .scope-button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+    color: #39434D;
+  }
+  
+  .scope-button.active {
+    background-color: #6739E9;
+    color: white;
+  }
+  
 
 label {
     font-weight: bold;
