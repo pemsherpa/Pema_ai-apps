@@ -39,6 +39,9 @@
   font-weight: 700;
   color: #6739E9;
   text-decoration: underline;
+  background: none;
+  background-color: transparent;
+  border: none;
   
 }
 .compare-link img {

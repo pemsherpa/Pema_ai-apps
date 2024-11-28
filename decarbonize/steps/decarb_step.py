@@ -4,7 +4,7 @@ from steps.decarb_step_type import DecarbStepType
 
 
 class DecarbStep:
-    def __init__(self, step_type: DecarbStepType, cur_cost, new_cost, cur_emissions, new_emissions, description, difficulty):
+    def __init__(self, step_type: DecarbStepType, cur_cost, new_cost, cur_emissions, new_emissions, description, difficulty,transition_percentage):
         self.step_type = step_type
         self.cur_cost = cur_cost
         self.new_cost = new_cost
@@ -12,6 +12,7 @@ class DecarbStep:
         self.new_emissions = new_emissions
         self.description = description
         self.difficulty = difficulty
+        self.transition_percentage=transition_percentage
        
         scope_mapping = {
             DecarbStepType.ELECTRICITY: 2,
@@ -35,7 +36,8 @@ class DecarbStep:
             "description": self.generate_step_description(),
             "difficulty": self.difficulty,
             "savings": self.compute_savings(),
-            "emissions_savings": self.compute_emissions_savings()
+            "emissions_savings": self.compute_emissions_savings(),
+            "transition_percentage":self.generate_transiton_percentage()
         }
 
     def compute_savings(self):
@@ -61,3 +63,6 @@ class DecarbStep:
 
     def generate_step_description(self):
         return f"{self.description}"
+    
+    def generate_transiton_percentage(self):
+        return self.transition_percentage

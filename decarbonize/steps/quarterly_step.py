@@ -36,7 +36,7 @@ class QuarterStep:
         if not (type(e_step) is ElectricDecarbStep):
             raise TypeError(f"add_rec_to_scope2: Unexpected step type: {type(e_step)}")  
         
-        e_annual_step = ElectricDecarbAnnualStep(rec, e_step.cur_cost, e_step.new_cost, e_step.cur_emissions, e_step.new_emissions, e_step.description, e_step.difficulty)
+        e_annual_step = ElectricDecarbAnnualStep(rec, e_step.cur_cost, e_step.new_cost, e_step.cur_emissions, e_step.new_emissions, e_step.description, e_step.difficulty,e_step.transition_percentage)
         print("add_rec_to_scope2")
         self.scope2_steps.append(e_annual_step)
 
@@ -44,7 +44,7 @@ class QuarterStep:
         if not (type(cru_step) is CRUDecarbStep):
             raise TypeError(f"add_rec_to_scope2: Unexpected step type: {type(cru_step)}")  
         
-        cru_annual_step = CRUAnnualStep(rec, cru_step.cur_cost, cru_step.new_cost, cru_step.cur_emissions, cru_step.new_emissions, cru_step.description, cru_step.difficulty)
+        cru_annual_step = CRUAnnualStep(rec, cru_step.cur_cost, cru_step.new_cost, cru_step.cur_emissions, cru_step.new_emissions, cru_step.description, cru_step.difficulty,cru_step.transition_percentage)
         print("add_rec_to_scope3")
         self.scope2_steps.append(cru_annual_step)
         

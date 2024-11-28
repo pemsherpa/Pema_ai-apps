@@ -16,6 +16,7 @@ export class Scope2StepsComponent {
     costSavings: number; 
     co2Savings: number; 
     transition: number; 
+    difficulty:number;
     isCompleted: boolean; 
     providerInfo: any[]; 
   };
@@ -30,6 +31,7 @@ export class Scope2StepsComponent {
     console.log('Step clicked, toggling completion and expansion...');
     this.toggleCompletion();
     this.toggleExpansion();
+    console.log("I am here",this.stepData.transition)
   }
 
   toggleCompletion(): void {

@@ -2,6 +2,7 @@
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
+  position: relative; /* Ensure child absolute elements can be positioned relative to this container */
 }
 
 .step-header {
@@ -12,12 +13,17 @@
   padding-bottom: 5px;
   border-bottom: 1px solid #ddd;
   margin-bottom: 10px;
+  position: relative; /* Allows the checkbox icon to be positioned relative to the header */
 }
 
 .checkbox-icon {
-  width: 35px;
-  height: 35px;
-  margin-right: 10px;
+  position: absolute; /* Position the icon outside the component */
+  top: 50%; /* Center vertically relative to the parent */
+  left: 100%; /* Place it just outside the component */
+  transform: translate(15px, -50%); /* Adjust position with spacing outside the component */
+  z-index: 10; /* Ensure it appears on top */
+  width: 24px; /* Standardize icon size */
+  height: 24px;
 }
 
 .title {

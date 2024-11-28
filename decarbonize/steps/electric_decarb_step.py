@@ -13,7 +13,7 @@ from steps.electric_recommendations import Electric_Recommendations
 
 class ElectricDecarbStep(DecarbStep):
 
-    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty, meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise,provider_info,new_provider_info):
+    def __init__(self, user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled,user_current_company, user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty,transition_percentage, meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise,provider_info,new_provider_info):
         self.usage_data = usage_data
 
         self.user_cur_cost = user_cur_cost
@@ -39,13 +39,14 @@ class ElectricDecarbStep(DecarbStep):
         self.cur_emission = self.get_carbon_from_electric(kwh_used)
         self.emissions_saved = self.get_electric_carbon_savings()
         self.difficulty = difficulty
+        self.transition_percentage=transition_percentage
         self.meter_input = meter_input
         self.time_in_use = time_in_use
         self.max_15min_usage = max_15min_usage
         new_emissions = self.get_new_electric_emissions()
         self.pge_provider=self.pge_provider_info()
         description = "zipcode: " + str(self.user_zip_code) + " cur_cost: " + str(self.cur_cost) + " self.new_cost: " + str(self.new_cost)
-        super().__init__(DecarbStepType.ELECTRICITY, user_cur_cost, self.new_cost, self.cur_emission, new_emissions, description, self.difficulty)
+        super().__init__(DecarbStepType.ELECTRICITY, user_cur_cost, self.new_cost, self.cur_emission, new_emissions, description, self.difficulty,self.transition_percentage)
 
     def get_cur_cost(self, UseCCA,cost_optimise):
         ce = CurrentElectricity('Electricity Rate Plan.xlsx', self.user_zip_code, self.usage_data)

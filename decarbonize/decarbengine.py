@@ -210,7 +210,8 @@ class DecarbEngine:
             new_emissions=return_flight_emissions,
             description="Analyze flight costs and emissions",
             num_stops=return_flight['Stops'].iloc[0],
-            difficulty=difficulty
+            difficulty=difficulty,
+            transition_percentage=50
         )
         return return_flight_step
     
@@ -520,7 +521,8 @@ class DecarbEngine:
             CRU_amount=1000, #for testing
             description="Analyze CRU costs and emissions",
             difficulty=1,
-            timeframe=5
+            timeframe=5,
+            transition_percentage=35
         )
         return CRU_step
 
@@ -620,7 +622,8 @@ class DecarbEngine:
 
      description="Reduction in emissions of flights"
      difficulty=5
-     decarb_step=FlightOptimizerDecarbStep(cur_total_cost,new_total_cost, cur_total_emissions, new_total_emissions, description, difficulty,num_stops=2)
+     transition_percentage=0
+     decarb_step=FlightOptimizerDecarbStep(cur_total_cost,new_total_cost, cur_total_emissions, new_total_emissions, description, difficulty,transition_percentage,num_stops=2)
      
      self.steps.append(decarb_step)
      print(self.steps)
@@ -759,6 +762,7 @@ class DecarbEngine:
         user_electricity_bill_season = "Summer"
         user_B1STB_highest_demand_15mins = 9
         user_B1STU_highest_demand_15mins = 9
+        transition_percentage=25
         
         usage_data = None
         if usage_type == "lcb":
@@ -771,7 +775,7 @@ class DecarbEngine:
             usage_data = self.create_smb(user_input_peak_usage, user_input_off_peak_usage, user_input_super_off_peak_usage, user_input_part_peak_usage, meter_input,time_in_use,max_15min_usage,user_sector,user_B1STB_highest_demand_15mins,kwh_used)
         
         electric_step = ElectricDecarbStep(user_cur_cost, kwh_used, user_zip_code, user_sector, user_bundled, user_current_company, 
-                                user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty,meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise,provider_info,new_provider_info) 
+                                user_current_plan, UseCCA, HasCCA, usage_data, ranking_zscore, difficulty,transition_percentage,meter_input, time_in_use, max_15min_usage,cost_optimise,carbon_optimise,provider_info,new_provider_info) 
         
         return electric_step
     

@@ -89,7 +89,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
         description: step.description,
         costSavings: step.savings,
         co2Savings: step.emissions_savings,
-        transition: step.difficulty,
+        transition: step.transition_percentage,
+        difficulty:step.difficulty,
         isCompleted: false,
         providerInfo:
           step.recommendation?.provider_info.map((provider: any) => ({
@@ -107,7 +108,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
         title: step.description,
         costSavings: step.savings,
         co2Savings: step.emissions_savings,
-        transition: step.difficulty,
+        transition: step.transition_percentage,
+        difficulty:step.difficulty,
         isCompleted: false,
         providerInfo:
           step.recommendation?.recommendations?.flatMap((rec: any) =>
