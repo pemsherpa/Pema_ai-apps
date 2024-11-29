@@ -28,6 +28,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
     providerInfo: any[];
     isChecked: boolean;
   }>();
+  @Output() makeSwitchClicked = new EventEmitter<string>();
 
   constructor(private http: HttpClient) {}
 
@@ -46,6 +47,9 @@ export class DecarbQuartileSectionComponent implements OnInit {
   toggleQuarterSelection(quarter: number): void {
     this.selectedQuarters[quarter] = !this.selectedQuarters[quarter];
     this.loadDataForYearAndQuarter();
+  }
+  onMakeSwitchClick(scope: string): void {
+    this.makeSwitchClicked.emit(scope);
   }
 
   loadDataForYearAndQuarter(): void {
@@ -80,7 +84,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
       ...yearData.scope1_steps.map((step: any) => ({
         title: step.recommendation?.message,
         ...step,
-        scope: 'scope1',
+        scope: 'Scope1',
         year: year, // Add year
         quarter: quarter,
       })),
@@ -100,7 +104,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
             phone: provider.phone_number,
             website: provider.website_link,
           })) || [],
-        scope: 'scope2',
+        scope: 'Scope2',
         year: year, // Add year
         quarter: quarter,
       })),
@@ -124,7 +128,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
               website: provider.website_link,
             }))
           ) || [],
-        scope: 'scope3',
+        scope: 'Scope3',
         year: year, // Add year
         quarter: quarter,
       })),

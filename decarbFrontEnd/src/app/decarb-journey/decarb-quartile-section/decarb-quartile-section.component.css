@@ -104,13 +104,23 @@ input[type="checkbox"] {
 
 
 .scope-headings{
-  font-size: 20px;
-  text-transform: capitalize;
+  font-size: 25px;
 }
+/* Capitalize the first letter of the scope */
 
 
 .step-content.ngIf {
   max-height: 500px;
 }
- 
+span.scope {
+  color: teal;
+  margin-left: 10px; /* Adds space between the year and the scope */ 
+}
+
+
+/* Smaller and italicized quarter */
+.quarter {
+  font-size: 0.7em; /* Smaller than the year and scope */
+  font-style: italic; /* Italicize the quarter */
+}
   

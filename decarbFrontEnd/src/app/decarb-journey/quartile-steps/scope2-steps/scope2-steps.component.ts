@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-scope2-step',
@@ -24,7 +24,8 @@ export class Scope2StepsComponent {
   @Input() totalSteps=4;
 
   @Output() stepToggled = new EventEmitter<void>();
-
+  @Output() makeSwitchClicked = new EventEmitter<string>();
+  constructor(private router: Router) {}
   isExpanded = false;
 
   handleClick(): void {
@@ -43,6 +44,9 @@ export class Scope2StepsComponent {
   toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;
     console.log('Step expansion toggled:', this.isExpanded);
+  }
+  onMakeSwitchClick(stepData: any) {
+    this.router.navigate(['/make-switch'], { state: { data: stepData } });
   }
 
   calculateLineHeight(): number {

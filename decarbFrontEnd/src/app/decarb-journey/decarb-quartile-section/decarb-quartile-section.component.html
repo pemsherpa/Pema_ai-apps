@@ -12,25 +12,42 @@
 
 <div *ngFor="let step of quartileData">
   <ng-container [ngSwitch]="step.scope">
-    <p class="scope-headings" *ngSwitchCase="'scope1'">{{ step.year }} {{ step.scope }}<br>Q{{step.quarter}}</p>
+
+    <!-- Scope 1 -->
+    <p class="scope-headings" *ngSwitchCase="'Scope1'">
+      <span class="year" >{{ step.year }}</span> 
+      <span class="scope">{{ step.scope }}</span><br>
+      <span class="quarter">Q{{ step.quarter }}</span>
+    </p>
     <app-scope1-step
-      *ngSwitchCase="'scope1'"
+      *ngSwitchCase="'Scope1'"
       [stepData]="step"
       (stepToggled)="onStepToggled(step)">
     </app-scope1-step>
 
-    <p class="scope-headings" *ngSwitchCase="'scope2'">{{ step.year }} {{ step.scope }}<br>Q{{step.quarter}}</p>
+    <!-- Scope 2 -->
+    <p class="scope-headings" *ngSwitchCase="'Scope2'">
+      <span class="year">{{ step.year }}</span> 
+      <span class="scope">{{ step.scope }}</span><br>
+      <span class="quarter">Q{{ step.quarter }}</span>
+    </p>
     <app-scope2-step
-      *ngSwitchCase="'scope2'"
+      *ngSwitchCase="'Scope2'"
       [stepData]="step"
       (stepToggled)="onStepToggled(step)">
     </app-scope2-step>
 
-    <p class="scope-headings" *ngSwitchCase="'scope3'">{{ step.year }} {{ step.scope }}<br>Q{{step.quarter}}</p>
+    <!-- Scope 3 -->
+    <p class="scope-headings" *ngSwitchCase="'Scope3'">
+      <span class="year">{{ step.year }}</span> 
+      <span class="scope">{{ step.scope }}</span><br>
+      <span class="quarter">Q{{ step.quarter }}</span>
+    </p>
     <app-scope3-step
-      *ngSwitchCase="'scope3'"
+      *ngSwitchCase="'Scope3'"
       [stepData]="step"
       (stepToggled)="onStepToggled(step)">
     </app-scope3-step>
+
   </ng-container>
 </div>

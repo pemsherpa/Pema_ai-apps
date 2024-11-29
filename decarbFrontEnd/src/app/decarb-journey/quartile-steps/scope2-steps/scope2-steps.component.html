@@ -54,7 +54,7 @@
           </ng-container>
         </div>
         <div class="top-right-link">
-          <a [routerLink]="['/make-switch']" class="switch-link">
+          <a [routerLink]="['/make-switch']" class="switch-link"(click)="onMakeSwitchClick(stepData)">
             <img src="assets/forward.svg" alt="AI Icon"> Make this switch now
           </a>
         </div>

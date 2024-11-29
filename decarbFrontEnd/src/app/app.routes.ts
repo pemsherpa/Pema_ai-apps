@@ -3,7 +3,7 @@ import { AppComponent } from './app.component';  // Ensure AppComponent is impor
 import { DecarbjourneyComponent } from './decarbjourney/decarbjourney.component';
 import { ClassifymapComponent } from './classifymap/classifymap.component';
 import { DecarbJourneyComponent } from './decarb-journey/decarb-journey.component';
-import { MakeSwitchComponent } from './make-switch/make-switch.component';
+import { MakeSwitchComponent } from './decarb-journey/quartile-steps/make-switch/make-switch.component';
 
 
 const routes: Routes = [

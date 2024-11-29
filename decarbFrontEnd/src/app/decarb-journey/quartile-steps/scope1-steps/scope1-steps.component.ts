@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-scope1-step',
@@ -21,6 +21,7 @@ export class Scope1StepsComponent {
   };
   
   @Output() stepToggled = new EventEmitter<void>();
+  constructor(private router: Router) {}
 
   isExpanded = false; // Track dropdown expansion state
 
@@ -37,5 +38,8 @@ export class Scope1StepsComponent {
 
   toggleExpansion(): void {
     this.isExpanded = !this.isExpanded; // Toggle the dropdown state
+  }
+  onMakeSwitchClick(stepData: any) {
+    this.router.navigate(['/make-switch'], { state: { data: stepData } });
   }
 }

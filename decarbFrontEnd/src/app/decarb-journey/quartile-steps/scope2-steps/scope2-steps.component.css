@@ -12,15 +12,17 @@
 .check-box-container {
   position: absolute;
   top: 40%; /* Align vertically with the step component */
-  left: -40px; /* Move it outside the component */
+  left: -60px; /* Move it outside the component */
   transform: translateY(-50%); /* Center align the container */
   display: flex;
   flex-direction: column; /* Align checkbox and line vertically */
   align-items: center;
 }
 .vertical-line {
-  position:absolute;
+  position: absolute;
+  top: calc(100% + 10px); /* Starts 10px below the checkbox */
   width: 1px;
+  height: calc(100% - 40px); /* Adjusts to fill remaining space */
   background-color: #ddd;
   z-index: 0; /* Keeps the line behind other elements */
 }
@@ -35,11 +37,13 @@
 }
 
 .check-box {
-  position:absolute;
   cursor: pointer;
   margin-bottom: 10px;
 }
-
+.check-box-icon{
+  height:40px;
+  width:40px;
+}
 .title {
   font-size: 20px;
   font-weight: bold;
@@ -67,6 +71,31 @@
   font-weight: 500;
   margin: 8px 0;
 }
+.top-right-link {
+  display: flex; /* Ensures the container behaves as a flexbox */
+  justify-content: flex-end; /* Pushes content to the right */
+  align-items: center; /* Vertically centers the content */
+  margin-left: auto; /* Alternatively, you can use this in a flex container to push it to the right */
+}
+
+
+.top-right-link img {
+  width: 24px; /* Adjust the size of the SVG image */
+  height: 24px;
+  margin-right: 8px; /* Add spacing between the image and the text */
+}
+
+.switch-link {
+  text-decoration: none; /* Remove underline from the link */
+  color: #5c2bff; /* Adjust link color */
+  font-size: 16px; /* Adjust text size */
+  font-weight: 500; /* Optional: Make the text bold */
+}
+
+.switch-link:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
 
 .implementation,
 .provider-info,

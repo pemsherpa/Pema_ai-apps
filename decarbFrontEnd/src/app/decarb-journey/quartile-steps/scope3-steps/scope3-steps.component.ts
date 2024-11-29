@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-scope3-step',
@@ -16,6 +16,7 @@ export class Scope3StepsComponent {
     costSavings: number; 
     co2Savings: number; 
     transition: number; 
+    difficulty: number;
     isCompleted: boolean; 
     providerInfo: any[]; 
   };
@@ -23,7 +24,7 @@ export class Scope3StepsComponent {
   @Input() totalSteps=4;
 
   @Output() stepToggled = new EventEmitter<void>();
-
+  constructor(private router: Router) {}
   isExpanded = false;
 
   handleClick(): void {
@@ -42,7 +43,9 @@ export class Scope3StepsComponent {
     this.isExpanded = !this.isExpanded;
     console.log('Step expansion toggled:', this.isExpanded);
   }
-
+  onMakeSwitchClick(stepData: any) {
+    this.router.navigate(['/make-switch'], { state: { data: stepData } });
+  }
 
   calculateLineHeight(): number {
     return this.isExpanded ? this.calculateDynamicHeight() : 0;
