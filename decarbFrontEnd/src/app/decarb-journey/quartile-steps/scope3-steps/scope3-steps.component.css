@@ -115,3 +115,27 @@
 .savings-info p {
   margin-bottom: 8px; /* Add space between cost savings and CO₂ savings */
 }
+.top-right-link {
+  display: flex; /* Ensures the container behaves as a flexbox */
+  justify-content: flex-end; /* Pushes content to the right */
+  align-items: center; /* Vertically centers the content */
+  margin-left: auto; /* Alternatively, you can use this in a flex container to push it to the right */
+}
+
+
+.top-right-link img {
+  width: 24px; /* Adjust the size of the SVG image */
+  height: 24px;
+  margin-right: 8px; /* Add spacing between the image and the text */
+}
+
+.switch-link {
+  text-decoration: none; /* Remove underline from the link */
+  color: #5c2bff; /* Adjust link color */
+  font-size: 16px; /* Adjust text size */
+  font-weight: 500; /* Optional: Make the text bold */
+}
+
+.switch-link:hover {
+  text-decoration: underline; /* Add underline on hover */
+}

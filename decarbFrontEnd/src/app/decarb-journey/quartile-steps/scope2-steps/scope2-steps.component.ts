@@ -59,7 +59,7 @@ export class Scope2StepsComponent {
     const new_scope_height=70;
 
     // Additional height based on content, e.g., 100px per provider item
-    const providerHeight = this.stepData.providerInfo?.length * 245 || 0;
+    const providerHeight = this.stepData.providerInfo?.length * 215 || 0;
     console.log("NUmber of steps",this.stepData.providerInfo?.length)
     console.log(providerHeight)
 

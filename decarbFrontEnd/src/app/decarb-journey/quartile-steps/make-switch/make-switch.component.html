@@ -1,13 +1,14 @@
-<h2>Switch Now!!</h2>
-<p>You are just a few steps away from saving money and reducing your carbon footprint!</p>
+<button class="back" (click)="location.back()">Back</button>
+<h2 ><span class="switch">Switch</span> <span class="now">now !!</span></h2>
+<p class="content">You are just a few steps away from saving money and reducing your carbon footprint!</p>
 <div class="container">
    
     <div class="card" *ngIf="stepData">
       <h2 class="card-header">{{ stepData.title }}</h2>
       <div class="card-body">
         <p><strong>Details:</strong> {{ stepData.details }}</p>
-        <p *ngIf="stepData.costSavings"><strong>Cost Savings:</strong> {{ stepData.costSavings }}</p>
-        <p *ngIf="stepData.co2Savings"><strong>CO₂ Savings:</strong> {{ stepData.co2Savings }}</p>
+        <p *ngIf="stepData.costSavings"><strong>Cost Savings: </strong>$ {{ stepData.costSavings }}</p>
+        <p *ngIf="stepData.co2Savings"><strong>CO₂ Savings:</strong> {{ stepData.co2Savings }}kCO2</p>
         <ul *ngIf="stepData?.providerInfo?.length">
           <li *ngFor="let provider of stepData.providerInfo">
             <strong>{{ provider.name }}</strong> - {{ provider.details }}
@@ -115,7 +116,7 @@
       </div>
       
   
-    <button class="btn btn-secondary" (click)="location.back()">Go Back</button>
+    
   </div>
 
   

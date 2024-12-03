@@ -1,7 +1,40 @@
+*{
+  font-family: 'Karla', sans-serif;
+  margin:5px;
+}
+.back{
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6739E9;
+  text-decoration: underline;
+  background: none;
+  background-color: transparent;
+  border: none;
+  padding:20px;
+}
+.switch {
+  color: teal;
+  font-weight: bold;  
+  font-size: 40px;
+}
+
+.now {
+  color: black;
+  font-weight: bold; 
+  font-size:40px;
+}
+.content {
+  font-size: 20px;
+  position: relative;  /* Ensure the 'left' property works */
+  left: 5px;  /* Moves the content 20px to the right */
+}
+
 .container {
-    max-width: 600px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px;
   }
   
   .card {
@@ -15,6 +48,7 @@
   .card-header {
     font-size: 1.5rem;
     margin-bottom: 10px;
+    color: #6739E9;
   }
   
   .card-body {
@@ -26,62 +60,63 @@
   }
   .user-details-card {
     width: 100%;
-    max-width: 1200px;
+    max-width: 95%;
     margin: 0 auto;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    background-color: #fff;
-    box-sizing: border-box;
+    background-color: #f4f4f4;
+    border-radius: 10px;
   }
   
   .card-title {
-    font-size: 1.5rem;
     text-align: center;
+    color: teal;
+    font-size: 24px;
     margin-bottom: 20px;
-    color: #333;
+  }
+  
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Create 2 equal columns */
+    gap: 20px;
   }
   
   .form-group {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
   }
   
   label {
-    display: block;
     margin-bottom: 5px;
     font-weight: bold;
   }
   
-  input[type="text"],
-  input[type="email"],
-  input[type="date"],
-  input[type="tel"] {
-    width: 100%;
+  input {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
   }
   
   .checkbox {
-    display: flex;
-    align-items: center;
+    grid-column: span 2; /* Makes the checkbox span across both columns */
   }
   
-  .submit-button {
-    width: 100%;
-    padding: 10px;
+  button.submit-button {
+    grid-column: span 2; /* Makes the button span across both columns */
+    padding: 10px 20px;
     background-color: teal;
     color: white;
-    font-size: 1rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
+    margin-top: 20px;
   }
   
-  .submit-button:hover {
-    background-color: #005f5f;
+  button.submit-button:hover {
+    background-color: darkcyan;
   }
+  
   
   @media (max-width: 768px) {
     .user-details-card {
