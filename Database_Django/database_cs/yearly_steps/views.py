@@ -137,71 +137,6 @@ def trigger_vector_processing(request):
     if request.method == 'POST':
         return process_scopes_and_store_vectors_from_db()
     return JsonResponse({"status": "error", "message": "Invalid request method. Only POST is allowed."}, status=405)
-"""
-
-# OUTLIER
-@csrf_exempt
-def find_total_co2e_anomalies(request):
-    comp = request.GET.get('comp')
-    year = request.GET.get('year')
-    scope = request.GET.get('scope')
-
-    if not (comp and year and scope):
-        return JsonResponse({"status": "error", "message": "Missing required parameters: comp, year, scope"})
-
-    try:
-        # Fetch records from the database
-        records = Total_CO2e.objects.filter(
-            comp=comp,
-            year=year,
-            scope=scope
-        ).values('id', 'total_co2e')
-
-        data = [{'id': record['id'], 'value': record['total_co2e']} for record in records]
-
-        if not data:
-            return JsonResponse({"status": "no_data", "message": "No records found for the given parameters."})
-
-        # Calculate anomalies
-        anomalies = IQR_Outliers_with_std(data)
-        return JsonResponse({"status": "success", "anomalies": anomalies})
-
-    except Exception as e:
-        return JsonResponse({"status": "error", "message": str(e)})
-
-def IQR_Outliers_with_std(data):
-    if not data:
-        return []
-
-    # Extract values
-    data_values = [item['value'] for item in data]
-
-    # Compute Q1, Q3, and IQR
-    Q1 = np.percentile(data_values, 25)
-    Q3 = np.percentile(data_values, 75)
-    IQR = Q3 - Q1
-    lower_bound = Q1 - (1.5 * IQR)
-    upper_bound = Q3 + (1.5 * IQR)
-    print("UB: ",upper_bound)
-    print("LB: ",lower_bound)
-    # Calculate mean and Z-scores
-    mean = np.mean(data_values)
-    z_scores = zscore(data_values)
-
-    # Identify anomalies
-    outliers_info = [
-        {
-            'id': data[i]['id'],
-            'value': value,
-            'z_score': z_scores[i],
-            'mean': mean
-        }
-        for i, value in enumerate(data_values)
-        if value < lower_bound or value > upper_bound
-    ]
-
-    return outliers_info
-"""
 
 
 #Vector table
@@ -416,3 +351,55 @@ def detect_anomalies(request):
             "status": "error",
             "message": str(e)
         })
+
+
+# CART
+@csrf_exempt
+def add_shopping_cart(request):
+    if request.method == 'POST':
+        try:
+            # Parse JSON data
+            data = json.loads(request.body)
+            
+            # Extract fields from JSON
+            company_id = data.get('company_id')
+            year = data.get('year')
+            quarter = data.get('quarter')
+            scope = data.get('scope')
+            transition = data.get('transition')
+            scope_type = data.get('scope_type')
+            difficulty = data.get('difficulty')
+            savings = data.get('savings')
+            emissions_savings = data.get('emissions_savings')
+            recommended_plan = data.get('recommended_plan')
+
+            # Validate required fields
+            if not all([company_id, year, quarter, scope, transition, scope_type, difficulty, savings, emissions_savings, recommended_plan]):
+                return JsonResponse({'error': 'Missing required fields'}, status=400)
+
+            # Create and save the record
+            record = ShoppingCartContents(
+                company_id=company_id,
+                year=year,
+                quarter=quarter,
+                scope=scope,
+                transition=transition,
+                scope_type=scope_type,
+                difficulty=difficulty,
+                savings=savings,
+                emissions_savings=emissions_savings,
+                recommended_plan=recommended_plan
+            )
+            record.save()
+
+            # Return success response
+            return JsonResponse({'message': 'Record added successfully', 'id': record.id}, status=201)
+        
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    
+    else:
+        return JsonResponse({'error': 'Invalid HTTP method. Use POST.'}, status=405)

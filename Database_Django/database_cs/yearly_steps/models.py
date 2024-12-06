@@ -38,14 +38,14 @@ class Recommendation(models.Model):
     peak_cost = models.FloatField(blank=True, null=True)
     off_peak_cost = models.FloatField(blank=True, null=True)
 
-# class ScopeVector(models.Model):
-#     year = models.IntegerField()
-#     quarter = models.IntegerField()
-#     scope_name = models.CharField(max_length=20)  # 'scope1', 'scope2', 'scope3'
-#     vector = VectorField(dimensions=6)  # pgvector with 6 dimensions
+class ScopeVector(models.Model):
+    year = models.IntegerField()
+    quarter = models.IntegerField()
+    scope_name = models.CharField(max_length=20)  # 'scope1', 'scope2', 'scope3'
+    vector = VectorField(dimensions=6)  # pgvector with 6 dimensions
 
-#     class Meta:
-#         db_table = 'scope_vector'
+    class Meta:
+        db_table = 'scope_vector'
 
 # new table created
 class Total_CO2e(models.Model):
@@ -56,7 +56,6 @@ class Total_CO2e(models.Model):
     total_co2e = models.FloatField()
 
 
-
 # class Total_CO2eVector(models.Model):
 #     co2e_vector = VectorField(dimensions=1)
 #     total_co2e = models.ForeignKey('yearly_steps.Total_CO2e', on_delete=models.CASCADE, db_column='parent_id')
@@ -66,10 +65,18 @@ class Total_CO2e(models.Model):
 #         db_table = 'total_co2e_vector'
 
 
-# class Total_CO2eVector(models.Model):
-#     co2e_vector = VectorField(dimensions=1)
-#     total_co2e = models.ForeignKey('yearly_steps.Total_CO2e', on_delete=models.CASCADE, db_column='parent_id')
+class ShoppingCartContents(models.Model):
+    company_id = models.IntegerField()
+    year = models.IntegerField()
+    quarter = models.IntegerField()
+    scope = models.IntegerField()
+    transition = models.FloatField()
+    scope_type = models.CharField()
+    difficulty = models.IntegerField()
+    savings = models.FloatField()
+    emissions_savings = models.FloatField()
+    recommended_plan = models.TextField()
 
-#     class Meta:
-#         managed = True
-#         db_table = 'total_co2e_vector'
+    class Meta:
+        managed = True
+        db_table = 'ShoppingCartContents'
