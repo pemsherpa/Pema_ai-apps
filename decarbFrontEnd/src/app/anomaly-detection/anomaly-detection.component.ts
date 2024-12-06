@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-anomaly-detection',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet, CommonModule, FormsModule, HttpClientModule],
   templateUrl: './anomaly-detection.component.html',
   styleUrl: './anomaly-detection.component.css'
 })
