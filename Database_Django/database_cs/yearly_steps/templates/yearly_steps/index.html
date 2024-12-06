@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yearly Steps Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Yearly Steps Dashboard</h1>
+    
+    <div class="container">
+        <!-- Create Vector Table -->
+        <form id="create-vector-form" action="/yearly_steps/create-vector-table/" method="get">
+            <button type="submit" class="red-button">Create Vector Table</button>
+        </form>
+        <div id="create-vector-result"></div>
+
+        <!-- Run Anomalies -->
+        <form id="run-anomalies-form" action="/yearly_steps/detect_anomalies/" method="get">
+            <input type="number" name="year" placeholder="Enter Year" required>
+            <input type="number" name="comp" placeholder="Enter Company ID" required>
+            <button type="submit" class="red-button" onclick="handleSubmit()">Run Anomalies</button>
+        </form>
+
+        <div id="run-anomalies-result"></div>
+    </div>
+
+    <script>
+        async function  handleSubmit() { 
+            console.log("Hi")
+            const yearElement = document.getElementById('year');
+            const yearSpanElement = document.getElementById('yearSpan');
+            yearSpanElement.innerHTML = yearElement.textContent;
+            console.log(yearElement.textContent)
+            alert(yearElement.textContent)
+            return
+            const form = document.getElementById(formId);
+            const url = new URL(form.action);
+            const formData = new FormData(form);
+            for (const [key, value] of formData.entries()) {
+                url.searchParams.append(key, value);
+            }
+            const response = await fetch(url);
+            const data = await response.json();
+            const resultContainer = document.getElementById(resultId);
+            resultContainer.innerHTML = formatResponse(data);
+
+            form.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                
+                
+        
+            });
+        };
+
+        const formatResponse = (data) => {
+            if (data.status !== "success") {
+                return `<p>Error: ${data.message}</p>`;
+            }
+
+            if (data.message) return `<p>${data.message}</p>`;
+            if (data.anomalies) {
+                return `
+                    <h3>Detected Anomalies: IQR,<span id="yearSpan" ></span>  </h3>
+                    
+                    <ul>
+                        ${data.anomalies.map(a => `<li>Parent ID: ${a.parent_id}, Scope: ${a.scope}, Value: ${a.anomalous_value}</li>`).join('')}
+                    </ul>`;
+            }
+        }
+
+        handleSubmit("create-vector-form", "create-vector-result");
+        handleSubmit("run-anomalies-form", "run-anomalies-result");
+    </script>
+</body>
+</html>

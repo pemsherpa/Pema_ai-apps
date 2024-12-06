@@ -1,0 +1,128 @@
+* {
+    font-family: 'Karla', sans-serif;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size:40px;
+}
+
+/* Card container style */
+.card {
+    width: 60%;
+    max-width: 300px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff; /* White background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
+    border-radius: 10px; /* Rounded corners */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Center the form inside the card */
+.search-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 20px; /* Reduced gap for a more compact design */
+    align-items: center;
+    padding: 50px;
+}
+
+/* Label styling */
+label {
+    font-size: 20px; /* Huge font size */
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap; /* Keep the label on one line */
+}
+
+/* Row for inputs */
+.firstrow, .secondrow {
+    display: flex;
+    gap: 50px;
+}
+
+/* Input row for each line */
+.input-row {
+    display: flex;
+    /*justify-content: space-between;*/
+    width: 100%;
+    gap: 10px;
+}
+
+/* Input styling */
+.search-container input {
+    width: 100%; /* Inputs will take full width of the container */
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #00796b; /* Teal border */
+    border-radius: 5px;
+    /*margin: 5px 0;*/
+}
+
+.search-container input:focus {
+    outline: none;
+    border-color: #004d40; /* Darker teal when focused */
+}
+
+/* Button styling */
+.search-container button {
+    background-color: #00796b; /* Teal button */
+    color: white;
+    padding: 12px 32px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.search-container button:hover {
+    background-color: #004d40; /* Darker teal on hover */
+}
+.buttons{
+    display: flex;
+    gap:50px;
+}
+
+.response-list {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.response-list li {
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+strong {
+  color: #00796b; /* Highlight key names with teal color */
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+
+pre {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 14px;
+  max-width: 100%;
+  overflow-x: auto;
+  word-wrap: break-word;
+}
