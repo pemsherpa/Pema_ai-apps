@@ -1,9 +1,10 @@
 from django.db import models
 from pgvector.django import VectorField
 
+# Yearly quarterly steps, from JSON 
 class Company(models.Model):
     company_id = models.IntegerField(unique=True)  # This is now the unique identifier for referencing
-    # Other fields
+
 
 class ScopeTotal(models.Model):
     company = models.ForeignKey(Company, to_field='company_id', on_delete=models.CASCADE)
@@ -47,13 +48,13 @@ class ScopeVector(models.Model):
     class Meta:
         db_table = 'scope_vector'
 
-# new table created
-class Total_CO2e(models.Model):
-    comp = models.IntegerField()
-    scope = models.IntegerField()
-    subcategory = models.FloatField()
-    year = models.IntegerField()
-    total_co2e = models.FloatField()
+
+# class Total_CO2e(models.Model):
+#     comp = models.IntegerField()
+#     scope = models.IntegerField()
+#     subcategory = models.FloatField()
+#     year = models.IntegerField()
+#     total_co2e = models.FloatField()
 
 
 # class Total_CO2eVector(models.Model):
@@ -65,6 +66,7 @@ class Total_CO2e(models.Model):
 #         db_table = 'total_co2e_vector'
 
 
+# Shopping cart 
 class ShoppingCartContent(models.Model):
     company_id = models.IntegerField(default=1)
     name=models.TextField()
@@ -75,3 +77,24 @@ class ShoppingCartContent(models.Model):
     class Meta:
         managed = True
         db_table = 'ShoppingCartContent'
+
+
+# Tables for Anomaly detection
+
+class Total_CO2e(models.Model):
+    comp = models.IntegerField()
+    scope = models.IntegerField()
+    subcategory = models.FloatField()
+    year = models.IntegerField()
+    total_co2e = models.FloatField()
+    gas1 = models.FloatField()
+    gas2 = models.FloatField()
+    gas3 = models.FloatField()
+
+class VectorTotalCO2e(models.Model):
+    co2e_vector = VectorField(dimensions=4)
+    total_co2e = models.ForeignKey('yearly_steps.Total_CO2e', on_delete=models.CASCADE, db_column='parent_id')
+
+    class Meta:
+        managed = True
+        db_table = 'vector_total_co2e'

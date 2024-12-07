@@ -2,6 +2,8 @@ from django.urls import path
 from yearly_steps.views import load_json_data
 from django.shortcuts import render
 from yearly_steps.views import *
+from yearly_steps.views_anomaly import *
+from yearly_steps.views_create_vector import *
 
 
 urlpatterns = [
