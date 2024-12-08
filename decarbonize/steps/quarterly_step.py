@@ -5,7 +5,8 @@ from steps.annual_cru import CRUAnnualStep
 from steps.decarb_step_cru import CRUDecarbStep
 
 class QuarterStep:
-    def __init__(self, year, quarter):
+    def __init__(self, company_id,year, quarter):
+        self.company_id=company_id
         self.year = year
         self.quarter = quarter
         self.scope1_steps = []
@@ -48,8 +49,9 @@ class QuarterStep:
         print("add_rec_to_scope3")
         self.scope2_steps.append(cru_annual_step)
         
-    def to_dict(self):
+    def to_dict(self,company_id):
         return {
+            "company_id":self.company_id,
             "year": self.year,
             "quarter": self.quarter,
             "scope1_steps": [self._convert_step(step) for step in self.scope1_steps],

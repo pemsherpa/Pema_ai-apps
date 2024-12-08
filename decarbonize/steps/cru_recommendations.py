@@ -9,7 +9,7 @@ cru_providers_df = pd.read_excel('CRU_Providers.xlsx', sheet_name="Sheet1")
 cru_providers_df.columns = cru_providers_df.columns.str.strip()
 
 class CRU_Recommendations:
-    def __init__(self, provider_info, cru_step, cur_year, current_quarter):
+    def __init__(self, provider_info, cru_step, cur_year, current_quarter,new_cost):
         self.cru_step = cru_step
         self.provider_info = provider_info
         self.cur_year = cur_year
@@ -17,9 +17,11 @@ class CRU_Recommendations:
         self.recommendations = []
         self.provider_index = 0  # Track which companies were printed last
         self.total_providers = len(cru_providers_df)  # Total number of companies
+        self.new_cost=new_cost
 
         # Generate CRU recommendations for the next 5 years
         self.generate_recommendations(5)
+
 
     def generate_recommendations(self, year):
         recommendation = self.recommend_plan(year)
@@ -91,7 +93,7 @@ class CRU_Recommendations:
             # Create provider info object
             provider_info = ProviderInfoCru(
                 company, phone_number, website_link, description,
-                provider_type, carbon_emission_savings, cost_savings, location
+                provider_type, carbon_emission_savings, cost_savings, location,self.new_cost
             )
             provider_infos.append(provider_info)
 

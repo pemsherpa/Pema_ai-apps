@@ -20,7 +20,10 @@ export class DecarbQuartileSectionComponent implements OnInit {
   selectedYears: { [year: number]: boolean } = {};
   selectedQuarters: { [quarter: number]: boolean } = { 3: true, 4: true }; // Default selected quarters: 3 and 4
 
+  @Output() yearsUpdated = new EventEmitter<{ [year: number]: boolean }>();
+
   @Output() itemChecked = new EventEmitter<{
+    company_id: number; // Fixed property name
     name: string;
     costSavings: number;
     co2Savings: number;
@@ -37,17 +40,29 @@ export class DecarbQuartileSectionComponent implements OnInit {
     this.availableYears = Array.from({ length: 5 }, (_, i) => currentYear + i);
     this.availableYears.forEach((year) => (this.selectedYears[year] = true));
     this.loadDataForYearAndQuarter();
+    const storedYears = sessionStorage.getItem('selectedYears');
+    if (storedYears) {
+      this.selectedYears = JSON.parse(storedYears);
+      console.log(storedYears)
+    } else {
+      // Default to selecting all years
+      this.availableYears.forEach((year) => (this.selectedYears[year] = true));
+    }
+
+    this.emitYears();
   }
 
   toggleYearSelection(year: number): void {
     this.selectedYears[year] = !this.selectedYears[year];
     this.loadDataForYearAndQuarter();
+    this.emitYears();
   }
 
   toggleQuarterSelection(quarter: number): void {
     this.selectedQuarters[quarter] = !this.selectedQuarters[quarter];
     this.loadDataForYearAndQuarter();
   }
+
   onMakeSwitchClick(scope: string): void {
     this.makeSwitchClicked.emit(scope);
   }
@@ -89,12 +104,13 @@ export class DecarbQuartileSectionComponent implements OnInit {
         quarter: quarter,
       })),
       ...yearData.scope2_steps.map((step: any) => ({
+        company_id: step.company_id, // Use the correct property name
         title: step.recommendation?.message,
         description: step.description,
         costSavings: step.savings,
         co2Savings: step.emissions_savings,
         transition: step.transition_percentage,
-        difficulty:step.difficulty,
+        difficulty: step.difficulty,
         isCompleted: false,
         providerInfo:
           step.recommendation?.provider_info.map((provider: any) => ({
@@ -109,11 +125,12 @@ export class DecarbQuartileSectionComponent implements OnInit {
         quarter: quarter,
       })),
       ...yearData.scope3_steps.map((step: any) => ({
+        company_id: step.company_id, // Use the correct property name
         title: step.description,
         costSavings: step.savings,
         co2Savings: step.emissions_savings,
         transition: step.transition_percentage,
-        difficulty:step.difficulty,
+        difficulty: step.difficulty,
         isCompleted: false,
         providerInfo:
           step.recommendation?.recommendations?.flatMap((rec: any) =>
@@ -138,9 +155,13 @@ export class DecarbQuartileSectionComponent implements OnInit {
   fetchQuartileData(): Observable<any> {
     return this.http.get<any>('../../assets/yearly_quarterly_steps.json');
   }
-
+  emitYears(): void {
+    this.yearsUpdated.emit(this.selectedYears);
+    
+  }
   onStepToggled(step: any): void {
     this.itemChecked.emit({
+      company_id: step.company_id, // Fixed property name
       name: step.title,
       costSavings: step.costSavings,
       co2Savings: -step.co2Savings,
@@ -150,4 +171,3 @@ export class DecarbQuartileSectionComponent implements OnInit {
     });
   }
 }
-

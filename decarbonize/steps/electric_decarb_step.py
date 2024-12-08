@@ -70,7 +70,7 @@ class ElectricDecarbStep(DecarbStep):
        renewable_percent=39
        website_link='https://www.pge.com/'
        description='PG&E is a utility company focused on clean energy solutions, infrastructure improvements, and sustainability efforts, aiming to reduce carbon emissions and offer reliable energy to homes and businesses.'
-       get_info=ProviderInfo(self.user_current_plan,company,renewable_percent,phone_number,website_link,description,carbon_emission_savings=0,cost_savings=0)
+       get_info=ProviderInfo(self.user_current_plan,company,renewable_percent,phone_number,website_link,description,new_cost=0,carbon_emission_savings=0,cost_savings=0)
        return get_info
        
     def get_new_plan(self, HasCCA):
@@ -187,12 +187,13 @@ class ElectricDecarbStep(DecarbStep):
         emissions_saved = carbon_from_electric * (1 - (new_renewable - current_renewable_percentage))
         return emissions_saved
     
-    def generate_and_append_recommendations(self, current_provider, cur_year, cur_quarter):
+    def generate_and_append_recommendations(self, current_provider, cur_year, cur_quarter,new_cost):
         electric_recommendations = Electric_Recommendations(
             current_provider=current_provider,
             electric_step=self,
             cur_year=cur_year,
-            cur_quarter=cur_quarter
+            cur_quarter=cur_quarter,
+            new_cost=new_cost
         ).recommendations
         self.add_recommendations(electric_recommendations)
 

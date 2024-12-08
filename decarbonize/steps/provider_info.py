@@ -5,13 +5,14 @@ bundled_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Bundled Pea
 
 
 class ProviderInfo:
-    def __init__(self, plan_name, company, renewable_percent, phone_number, website_link, description, carbon_emission_savings, cost_savings):
+    def __init__(self, plan_name, company, renewable_percent, phone_number, website_link, description,new_cost, carbon_emission_savings, cost_savings):
         self.plan_name = plan_name
         self.company = company
         self.renewable_percent = renewable_percent
         self.phone_number = phone_number
         self.website_link = website_link
         self.description = description
+        self.new_cost=new_cost
 
         # Set the emissions and cost savings directly from the arguments
         self.carbon_savings = carbon_emission_savings
@@ -25,12 +26,15 @@ class ProviderInfo:
         self.off_peak = format(self.off_peak, ".2f")
         self.off_peak=float(self.off_peak)
 
+        self.total_cost=format(self.new_cost+self.off_peak+self.peak,".2f")
+        self.total_cost=float(self.total_cost)
+
     def __repr__(self):
         return (f"ProviderInfo(plan_name={self.plan_name}, company_name={self.company}, "
                 f"renewable_percent={self.renewable_percent}, provider_number={self.phone_number}, "
                 f"company_link={self.website_link}, description={self.description}, "
                 f"Carbon savings={self.carbon_savings}, Cost savings={self.cost_savings}, "
-                f"Peak Cost={self.peak}, Off-Peak Cost={self.off_peak})")
+                f"Peak Cost={self.peak}, Off-Peak Cost={self.off_peak}), total_cost={self.total_cost}")
 
     def to_dict(self):
         return {
@@ -43,7 +47,8 @@ class ProviderInfo:
             "Carbon savings": self.carbon_savings,
             "Cost savings": self.cost_savings,
             "Peak Cost": self.peak,
-            "Off-Peak Cost": self.off_peak
+            "Off-Peak Cost": self.off_peak,
+            "Total-Cost":self.total_cost
         }
     
     def get_peak_off_peak_prices(self, plan_name):

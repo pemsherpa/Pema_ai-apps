@@ -160,13 +160,13 @@ class DecarbEngine:
     
        month = now.month
        current_quarter = (month - 1) // 3 + 1
-       electric_recs = Electric_Recommendations(self.provider_info, electric_step,current_year,current_quarter)
+       electric_recs = Electric_Recommendations(self.provider_info, electric_step,current_year,current_quarter,electric_step.new_cost)
        return electric_recs.to_dict()
     
     def provide_cru_recommendations(self, cru_step):
        now = datetime.datetime.now()
        current_year = now.year
-       cru_recs = CRU_Recommendations(self.provider_info, cru_step,current_year,4)
+       cru_recs = CRU_Recommendations(self.provider_info, cru_step,current_year,4,cru_step.new_cost)
        return cru_recs.to_dict()
 
     def run_electric_step(self): 
@@ -195,8 +195,8 @@ class DecarbEngine:
     def run_flight_analyzer(decarb_engine):
         origin = "LAX"
         destination = "JFK"
-        departure_date = "2024-12-02"
-        return_date = "2024-12-05"
+        departure_date = "2024-12-08"
+        return_date = "2024-12-12"
         decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
         decarb_engine.run_return_flight_step()
 
@@ -346,7 +346,7 @@ class DecarbEngine:
      #data such as facilities--> For calcualtion of transition percentage
      current_quarter = decarb_engine.get_cur_quadrant() 
      current_year = int(decarb_goals.year)
-     yearly_steps_orig = decarb_engine.init_yearly_steps(decarb_goals.timeframe, current_year, current_quarter)
+     yearly_steps_orig = decarb_engine.init_yearly_steps(decarb_goals.customer_id,decarb_goals.timeframe, current_year, current_quarter)
      
      yearly_steps=[]
 
@@ -412,13 +412,13 @@ class DecarbEngine:
          
     # Step 5: Ensure CRU is only purchased once a year
      decarb_engine.add_cru_steps(yearly_steps)
-     output_data=decarb_engine.query_cs_backend_api(1)
+     output_data=decarb_engine.query_cs_backend_api(10)
 
      decarb_engine.output_json_to_file(output_data,yearly_steps, output_file)
 
     
 
-    def init_yearly_steps(self, timeframe, current_year, current_quarter):
+    def init_yearly_steps(self, company_id,timeframe, current_year, current_quarter):
      # Step 3: Create quarterly goals
      yearly_steps = []
      cur_quarter = current_quarter
@@ -427,6 +427,7 @@ class DecarbEngine:
         while cur_quarter < 5:  
             # Initialize a QuaterStep instance
             quarter_step = QuarterStep(
+                company_id=company_id,
                 year=cur_year,
                 quarter=cur_quarter,
                 
@@ -494,8 +495,9 @@ class DecarbEngine:
         return dict_zscore
 
     def output_json_to_file(self, output_data,yearly_steps_array, output_file):
+        company_id = output_data["company_id"]
          # Convert data to JSON-serializable format
-        json_data = [quarter_step.to_dict() for quarter_step in yearly_steps_array]
+        json_data = [quarter_step.to_dict(company_id) for quarter_step in yearly_steps_array]
         json_data_serializable = self.convert_to_json_serializable(json_data)  
         output_data = {
         "cs_backend_data": output_data,

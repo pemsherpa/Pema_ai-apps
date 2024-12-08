@@ -8,11 +8,12 @@ unbundled_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Unbundled
 bundled_df = pd.read_excel('Electricity Rate Plan.xlsx', sheet_name='Bundled Peak Time Price')
 
 class Electric_Recommendations:
-    def __init__(self, current_provider, electric_step, cur_year, cur_quarter):
+    def __init__(self, current_provider, electric_step, cur_year, cur_quarter,new_cost):
         self.electric_step = electric_step
         self.electric_plan = electric_step.get_new_plan(HasCCA='Yes')
         self.optimized_plan = self.electric_plan
         self.current_provider = current_provider
+        self.new_cost=new_cost
 
         # Initialize the current renewable percentage
         if current_provider in dataset_electric["Electrical Company Name"].values:
@@ -183,7 +184,7 @@ class Electric_Recommendations:
 
         # Use the company name as the unique key to avoid duplicate entries
             if company_name not in provider_infos:
-                provider_info = ProviderInfo(plan_name, company_name, renewable_percent,provider_number, company_link,description,carbon_emission_savings,cost_savings)
+                provider_info = ProviderInfo(plan_name, company_name, renewable_percent,provider_number, company_link,description,self.new_cost,carbon_emission_savings,cost_savings)
                 provider_infos[company_name] = provider_info
             
                 if first_provider_info is None:

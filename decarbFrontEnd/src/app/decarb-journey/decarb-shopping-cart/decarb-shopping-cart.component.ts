@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
 interface CartItem {
+  company_id: number;
   name: string;
   costSavings: number;
   co2Savings: number;
@@ -111,19 +112,23 @@ export class DecarbShoppingCartComponent implements OnInit {
     this.updateProgress();
   }
 
-  //addItem() {
-    //this.cartItems.push({ name: 'New Journey Item', costSavings: 3000, co2Savings: -6000, transition: 0 });
-    //this.updateProgress();
-  //}
   addItem(item: CartItem) {
     const existingItem = this.cartItems.find(cartItem => cartItem.name === item.name);
     if (!existingItem) {
       this.cartItems.push(item);
+      this.saveItemToDatabase(item);
     }
   }
 
   removeItemByName(itemName: string) {
     this.cartItems = this.cartItems.filter(item => item.name !== itemName);
+  }
+   saveItemToDatabase(item: CartItem): void {
+    const apiUrl = 'https://your-backend-api.com/api/cart'; // Replace with actual API URL
+    this.http.post(apiUrl, item).subscribe({
+      next: () => console.log('Item saved to database successfully!'),
+      error: (err) => console.error('Error saving item to database:', err),
+    });
   }
 
 
