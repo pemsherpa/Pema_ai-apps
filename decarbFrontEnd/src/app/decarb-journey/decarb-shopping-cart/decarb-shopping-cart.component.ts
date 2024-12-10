@@ -124,14 +124,7 @@ export class DecarbShoppingCartComponent implements OnInit {
   removeItemByName(itemName: string) {
     this.cartItems = this.cartItems.filter(item => item.name !== itemName);
   }
-  saveItemToDatabase(item: CartItem): void {
-    const apiUrl = 'http://127.0.0.1:8000/yearly_steps/add-shopping-cart/'; // Replace with actual API URL
-    this.http.post(apiUrl, item).subscribe({
-      next: () => console.log('Item saved to database successfully!'),
-      error: (err) => console.error('Error saving item to database:', err),
-    });
-  }
-
+  
 
   updateProgress() {
     this.getProgressPercentage();
