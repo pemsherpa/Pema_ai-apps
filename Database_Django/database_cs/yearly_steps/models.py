@@ -65,18 +65,13 @@ class Total_CO2e(models.Model):
 #         db_table = 'total_co2e_vector'
 
 
-class ShoppingCartContents(models.Model):
-    company_id = models.IntegerField()
-    year = models.IntegerField()
-    quarter = models.IntegerField()
-    scope = models.IntegerField()
-    transition = models.FloatField()
-    scope_type = models.CharField()
-    difficulty = models.IntegerField()
-    savings = models.FloatField()
-    emissions_savings = models.FloatField()
-    recommended_plan = models.TextField()
+class ShoppingCartContent(models.Model):
+    company_id = models.IntegerField(default=1)
+    name=models.TextField()
+    transition= models.FloatField()
+    costSavings = models.FloatField()
+    co2savings = models.FloatField()
 
     class Meta:
         managed = True
-        db_table = 'ShoppingCartContents'
+        db_table = 'ShoppingCartContent'

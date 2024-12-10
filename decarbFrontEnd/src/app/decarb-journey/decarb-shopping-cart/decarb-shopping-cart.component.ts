@@ -116,7 +116,15 @@ export class DecarbShoppingCartComponent implements OnInit {
     const existingItem = this.cartItems.find(cartItem => cartItem.name === item.name);
     if (!existingItem) {
       this.cartItems.push(item);
-      this.saveItemToDatabase(item);
+      console.log("Items: "+item)
+      this.http.post('http://127.0.0.1:8000/yearly_steps/add-shopping-cart/', item).subscribe({
+        next: (response) => {
+          console.log('Item successfully saved to the database:', response);
+        },
+        error: (err) => {
+          console.error('Error saving item to the database:', err);
+        }
+      });
     }
   }
 

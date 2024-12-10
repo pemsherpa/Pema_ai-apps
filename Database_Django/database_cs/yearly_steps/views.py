@@ -358,39 +358,31 @@ def detect_anomalies(request):
 def add_shopping_cart(request):
     if request.method == 'POST':
         try:
+            print("Add to shopping cart")
             # Parse JSON data
             data = json.loads(request.body)
             
             # Extract fields from JSON
             company_id = data.get('company_id')
-            year = data.get('year')
-            quarter = data.get('quarter')
-            scope = data.get('scope')
+            name=data.get('name')
+            costSavings = data.get('costSavings')
+            co2savings = data.get('co2savings')
             transition = data.get('transition')
-            scope_type = data.get('scope_type')
-            difficulty = data.get('difficulty')
-            savings = data.get('savings')
-            emissions_savings = data.get('emissions_savings')
-            recommended_plan = data.get('recommended_plan')
-
+            
             # Validate required fields
-            if not all([company_id, year, quarter, scope, transition, scope_type, difficulty, savings, emissions_savings, recommended_plan]):
+            if not all([company_id, transition]):
                 return JsonResponse({'error': 'Missing required fields'}, status=400)
-
+            
             # Create and save the record
-            record = ShoppingCartContents(
+            record = ShoppingCartContent(
                 company_id=company_id,
-                year=year,
-                quarter=quarter,
-                scope=scope,
+                name=name,
+                costSavings=costSavings,
+                co2savings=co2savings,
                 transition=transition,
-                scope_type=scope_type,
-                difficulty=difficulty,
-                savings=savings,
-                emissions_savings=emissions_savings,
-                recommended_plan=recommended_plan
-            )
+                )
             record.save()
+            print("Record: ", record)
 
             # Return success response
             return JsonResponse({'message': 'Record added successfully', 'id': record.id}, status=201)
