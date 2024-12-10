@@ -66,8 +66,3 @@ class QuarterStep:
             return step.step_to_dict()  # Use the step's method to convert to a dictionary
         # else:
         #     raise TypeError(f"Unexpected step type: {type(step)}")  # Handle unexpected types
-
-
-
-
-        

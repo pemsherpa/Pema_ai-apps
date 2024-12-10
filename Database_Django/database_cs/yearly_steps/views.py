@@ -9,143 +9,140 @@ from django.apps import apps
 from django.db import models, connection
 
 
-@csrf_exempt
-def load_json_data(request):
-    if request.method == 'POST':
-        try:
-            # Update the path to match where your JSON file is located
-            json_file_path = os.path.join('/Users/rakesh/Desktop/BTech_3/CarbonSustain/CarbonSustainScopes', 'yearly_quarterly_steps.json')
+# @csrf_exempt
+# def load_json_data(request):
+#     if request.method == 'POST':
+#         try:
+#             # Update the path to match where your JSON file is located
+#             json_path = os.path.join('/Users/rakesh/Desktop/CarbonSustain/ai-apps/decarbFrontEnd/src/assets', 'yearly_quarterly_steps.json')
 
-            # Load JSON data from the file
-            with open(json_file_path, 'r') as file:
-                data = json.load(file)
+#             with open(json_path, 'r') as json_file:
+#                 data = json.load(json_file)
+#             print("Data: ",data.type())
+#             for yearly_step_data in data:
+#                 year = yearly_step_data["year"]
+#                 quarter = yearly_step_data["quarter"]
 
-            # Parse the company and scope_total
-            cs_backend_data = data['cs_backend_data']
-            company = Company.objects.create(company_id=cs_backend_data['company_id'])
+#                 # Iterate through all scope types
+#                 for scope_type in ["scope1_steps", "scope2_steps", "scope3_steps"]:
+#                     for scope_step in yearly_step_data.get(scope_type, []):
+#                         description = scope_step["description"]
+#                         difficulty = scope_step["difficulty"]
+#                         savings = scope_step["savings"]
+#                         emissions_savings = scope_step["emissions_savings"]
 
-            scope_total = cs_backend_data['scope_total']
-            ScopeTotal.objects.create(
-                company=company,
-                scope_1_total=scope_total['scope_1_total'],
-                scope_2_total=scope_total['scope_2_total'],
-                scope_3_total=scope_total['scope_3_total'],
-                scope_total=scope_total['scope_total'],
-                scope_1_target=scope_total['scope_1_target'],
-                scope_2_target=scope_total['scope_2_target'],
-                scope_3_target=scope_total['scope_3_target'],
-                target_timeframe=scope_total['target_timeframe']
-            )
+#                         # Save ScopeStep
+#                         scope_step_obj = ScopeSteps.objects.create(
+#                             year=year,
+#                             quarter=quarter,
+#                             scope_type=scope_type.replace("_steps", ""),  # Converts to 'scope1', 'scope2', 'scope3'
+#                             description=description,
+#                             difficulty=difficulty,
+#                             savings=savings,
+#                             emissions_savings=emissions_savings,
+#                         )
 
-            # Parse yearly_steps
-            for yearly_step in data['yearly_steps']:
-                year_step = YearlyStep.objects.create(
-                    year=yearly_step['year'],
-                    quarter=yearly_step['quarter'],
-                    company=company
-                )
+#                         # Save Recommendations
+#                         recommendation_data = scope_step.get("recommendation", {})
+#                         rec = Recommendations.objects.create(
+#                             scope_step=scope_step_obj,
+#                             recommended_plan=recommendation_data.get("recommended_plan"),
+#                             message=recommendation_data.get("message"),
+#                             carbon_emission_savings=recommendation_data.get("carbon_emission_savings"),
+#                             cost_savings=recommendation_data.get("cost_savings"),
+#                         )
 
-                # Parse scope1_steps, scope2_steps, etc.
-                for scope_type in ['scope1_steps', 'scope2_steps', 'scope3_steps']:
-                    for step in yearly_step[scope_type]:
-                        scope_step = ScopeStep.objects.create(
-                            yearly_step=year_step,
-                            scope_type=scope_type,
-                            description=step['description'],
-                            difficulty=step['difficulty'],
-                            savings=step['savings'],
-                            emissions_savings=step['emissions_savings']
-                        )
+#                         # Save ProviderInfo
+#                         for provider_info_data in recommendation_data.get("provider_info", []):
+#                             ProviderInfo.objects.create(
+#                                 recommendation=rec,
+#                                 company=provider_info_data["company"],
+#                                 renewable_percent_provided=provider_info_data.get("renewable percent provided"),
+#                                 phone_number=provider_info_data.get("phone_number"),
+#                                 website_link=provider_info_data.get("website_link"),
+#                                 description_of_company=provider_info_data.get("description of the company"),
+#                                 location=provider_info_data.get("location"),
+#                                 carbon_savings=provider_info_data.get("Carbon savings"),
+#                                 cost_savings=provider_info_data.get("Cost savings"),
+#                                 peak_cost=provider_info_data.get("Peak Cost"),
+#                                 off_peak_cost=provider_info_data.get("Off-Peak Cost"),
+#                                 total_cost=provider_info_data.get("Total-Cost"),
+#                             )
 
-                        # Parse recommendations
-                        if 'recommendation' in step:
-                            rec = step['recommendation']
+#         # Usage example:
+#         # parse_json_and_save_from_path('/path/to/your/json/file.json')
+#             return JsonResponse({'message': 'Data loaded successfully'}, status=201)
 
-                            # Check if 'provider_info' exists and is a list
-                            if 'provider_info' in rec and isinstance(rec['provider_info'], list):
-                                for provider in rec['provider_info']:  # Loop through all providers in provider_info
-                                    Recommendation.objects.create(
-                                        scope_step=scope_step,
-                                        recommended_plan=rec.get('recommended_plan', ''),
-                                        message=rec.get('message', ''),
-                                        carbon_emission_savings=float(provider.get('Carbon savings', 0)),
-                                        cost_savings=float(provider.get('Cost savings', 0)),
-                                        peak_cost=float(provider.get('Peak Cost', 0)),
-                                        off_peak_cost=float(provider.get('Off-Peak Cost', 0))
-                                    )
+#         except Exception as e:
+#             return JsonResponse({'error': str(e)}, status=400)
 
-            return JsonResponse({'message': 'Data loaded successfully'}, status=201)
+#     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=400)
+# def process_scopes_and_store_vectors_from_db():
+#     try:
+#         # Fetch all yearly steps
+#         yearly_steps = YearlyStep.objects.all()
 
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-def process_scopes_and_store_vectors_from_db():
-    try:
-        # Fetch all yearly steps
-        yearly_steps = YearlyStep.objects.all()
-
-        for yearly_step in yearly_steps:
-            year = yearly_step.year
-            quarter = yearly_step.quarter
+#         for yearly_step in yearly_steps:
+#             year = yearly_step.year
+#             quarter = yearly_step.quarter
             
-            # Fetch associated scope steps
-            scope_steps = ScopeStep.objects.filter(yearly_step=yearly_step)
+#             # Fetch associated scope steps
+#             scope_steps = ScopeStep.objects.filter(yearly_step=yearly_step)
 
-            for scope_step in scope_steps:
-                scope_name = scope_step.scope_type  # 'scope1', 'scope2', or 'scope3'
+#             for scope_step in scope_steps:
+#                 scope_name = scope_step.scope_type  # 'scope1', 'scope2', or 'scope3'
 
-                # Extract savings and emissions savings
-                savings = scope_step.savings or 0.0
-                emissions_savings = scope_step.emissions_savings or 0.0
+#                 # Extract savings and emissions savings
+#                 savings = scope_step.savings or 0.0
+#                 emissions_savings = scope_step.emissions_savings or 0.0
 
-                # Fetch associated recommendations
-                recommendation = Recommendation.objects.filter(scope_step=scope_step).first()
+#                 # Fetch associated recommendations
+#                 recommendation = Recommendation.objects.filter(scope_step=scope_step).first()
 
-                # Handle cases where no recommendation exists
-                if recommendation:
-                    carbon_savings = recommendation.carbon_emission_savings or 0.0
-                    cost_savings = recommendation.cost_savings or 0.0
-                    peak_cost = recommendation.peak_cost or 0.0
-                    off_peak_cost = recommendation.off_peak_cost or 0.0
-                else:
-                    # Default values when no recommendation exists
-                    carbon_savings = 0.0
-                    cost_savings = 0.0
-                    peak_cost = 0.0
-                    off_peak_cost = 0.0
+#                 # Handle cases where no recommendation exists
+#                 if recommendation:
+#                     carbon_savings = recommendation.carbon_emission_savings or 0.0
+#                     cost_savings = recommendation.cost_savings or 0.0
+#                     peak_cost = recommendation.peak_cost or 0.0
+#                     off_peak_cost = recommendation.off_peak_cost or 0.0
+#                 else:
+#                     # Default values when no recommendation exists
+#                     carbon_savings = 0.0
+#                     cost_savings = 0.0
+#                     peak_cost = 0.0
+#                     off_peak_cost = 0.0
 
-                # Create the 6-dimensional vector
-                vector = [savings, emissions_savings, carbon_savings, cost_savings, peak_cost, off_peak_cost]
+#                 # Create the 6-dimensional vector
+#                 vector = [savings, emissions_savings, carbon_savings, cost_savings, peak_cost, off_peak_cost]
 
-                # Save the vector to the database
-                ScopeVector.objects.create(
-                    year=year,
-                    quarter=quarter,
-                    scope_name=scope_name,
-                    vector=vector
-                )
+#                 # Save the vector to the database
+#                 ScopeVector.objects.create(
+#                     year=year,
+#                     quarter=quarter,
+#                     scope_name=scope_name,
+#                     vector=vector
+#                 )
 
-        return JsonResponse({"status": "success", "message": "Data processed and stored successfully."}, status=201)
+#         return JsonResponse({"status": "success", "message": "Data processed and stored successfully."}, status=201)
 
-    except Exception as e:
-        return JsonResponse({"status": "error", "message": str(e)}, status=400)
+#     except Exception as e:
+#         return JsonResponse({"status": "error", "message": str(e)}, status=400)
 
-@csrf_exempt  # For testing in Postman; remove in production
-def trigger_vector_processing(request):
-    if request.method == 'POST':
-        return process_scopes_and_store_vectors_from_db()
-    return JsonResponse({"status": "error", "message": "Invalid request method. Only POST is allowed."}, status=405)
+# @csrf_exempt  # For testing in Postman; remove in production
+# def trigger_vector_processing(request):
+#     if request.method == 'POST':
+#         return process_scopes_and_store_vectors_from_db()
+#     return JsonResponse({"status": "error", "message": "Invalid request method. Only POST is allowed."}, status=405)
 
 
 # Vector table
 
-from django.http import JsonResponse
-from django.apps import apps
-from django.db import models, connection
-from django.views.decorators.csrf import csrf_exempt
-from pgvector.django import VectorField
+# from django.http import JsonResponse
+# from django.apps import apps
+# from django.db import models, connection
+# from django.views.decorators.csrf import csrf_exempt
+# from pgvector.django import VectorField
 
 
 # @csrf_exempt
@@ -253,18 +250,22 @@ def add_shopping_cart(request):
             print("Add to shopping cart")
             # Parse JSON data
             data = json.loads(request.body)
-            
+            print("Extracted JSON input successfully.....")
+            print("Decoded JSON:", data)
             # Extract fields from JSON
             company_id = data.get('company_id')
-            name=data.get('name')
+            name=data.get('title')
             costSavings = data.get('costSavings')
-            co2savings = data.get('co2savings')
+            co2savings = data.get('co2Savings')
             transition = data.get('transition')
+            print("Extracted JSON input2 successfully.....")
+
+            print("Fields",company_id, name, costSavings, co2savings, transition)
             
             # Validate required fields
             if not all([company_id, transition]):
                 return JsonResponse({'error': 'Missing required fields'}, status=400)
-            
+            print("Extracted JSON input3 successfully.....")
             # Create and save the record
             record = ShoppingCartContent(
                 company_id=company_id,
@@ -273,8 +274,10 @@ def add_shopping_cart(request):
                 co2savings=co2savings,
                 transition=transition,
                 )
+            print("Extracted JSON input4 successfully.....")
             record.save()
             print("Record: ", record)
+            
 
             # Return success response
             return JsonResponse({'message': 'Record added successfully', 'id': record.id}, status=201)

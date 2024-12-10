@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Scope1StepsComponent } from '../quartile-steps/scope1-steps/scope1-steps.component';
 import { Scope2StepsComponent } from '../quartile-steps/scope2-steps/scope2-steps.component';
 import { Scope3StepsComponent } from '../quartile-steps/scope3-steps/scope3-steps.component';
+import {CartItem} from '../../cart-item.model';
 
 @Component({
   selector: 'cs-decarb-quartile-section',
@@ -23,13 +24,25 @@ export class DecarbQuartileSectionComponent implements OnInit {
   @Output() yearsUpdated = new EventEmitter<{ [year: number]: boolean }>();
 
   @Output() itemChecked = new EventEmitter<{
+<<<<<<< HEAD
     company_id: number; // Fixed property name
+=======
+    company_id: number;
+>>>>>>> 6653f62 (anomaly detection)
     name: string;
     costSavings: number;
     co2Savings: number;
     transition: number;
     providerInfo: any[];
     isChecked: boolean;
+  }>();
+  @Output() itemCart= new EventEmitter<{
+    company_id:number;
+    name:string;
+    costSavings:number;
+    co2Savings:number;
+    transition:number;
+
   }>();
   @Output() makeSwitchClicked = new EventEmitter<string>();
 
@@ -104,7 +117,11 @@ export class DecarbQuartileSectionComponent implements OnInit {
         quarter: quarter,
       })),
       ...yearData.scope2_steps.map((step: any) => ({
+<<<<<<< HEAD
         company_id: step.company_id, // Use the correct property name
+=======
+        company_id: yearData.company_id,
+>>>>>>> 6653f62 (anomaly detection)
         title: step.recommendation?.message,
         description: step.description,
         costSavings: step.savings,
@@ -125,7 +142,11 @@ export class DecarbQuartileSectionComponent implements OnInit {
         quarter: quarter,
       })),
       ...yearData.scope3_steps.map((step: any) => ({
+<<<<<<< HEAD
         company_id: step.company_id, // Use the correct property name
+=======
+        company_id: yearData.company_id,
+>>>>>>> 6653f62 (anomaly detection)
         title: step.description,
         costSavings: step.savings,
         co2Savings: step.emissions_savings,
@@ -155,6 +176,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
   fetchQuartileData(): Observable<any> {
     return this.http.get<any>('../../assets/yearly_quarterly_steps.json');
   }
+<<<<<<< HEAD
   emitYears(): void {
     this.yearsUpdated.emit(this.selectedYears);
     
@@ -162,12 +184,57 @@ export class DecarbQuartileSectionComponent implements OnInit {
   onStepToggled(step: any): void {
     this.itemChecked.emit({
       company_id: step.company_id, // Fixed property name
+=======
+  onItemChecked(CartItem: CartItem): void {
+    console.log(CartItem)
+    this.addItem(CartItem);
+  }
+  
+  addItem(cartItem: CartItem): void {
+    console.log("I am gettting called")
+    // Perform the API call here
+    console.log(cartItem)
+    this.http.post('http://127.0.0.1:8000/yearly_steps/add-shopping-cart/', cartItem).subscribe({
+      next: (response) => console.log('Item added to cart:', response),
+      error: (error) => console.error('Error adding item to cart:', error),
+    });
+  }
+  
+
+  onStepToggled(step: any): void {
+   const cartItem = {
+      company_id: step.company_id,
+>>>>>>> 6653f62 (anomaly detection)
       name: step.title,
       costSavings: step.costSavings,
-      co2Savings: -step.co2Savings,
+     co2Savings: -step.co2Savings,
       transition: step.transition,
       providerInfo: step.providerInfo,
       isChecked: step.isCompleted,
-    });
+     };
+  
+  //   // Emit the cart item to the parent
+    this.itemChecked.emit(cartItem);
+  
+  //   // The API call is no longer triggered here
+    console.log('Cart item emitted:', cartItem);
+   }
+  onStepToggling(step:any):void{
+    const item:CartItem={
+      company_id:step.company_id,
+      name:step.title,
+      costSavings:step.costSavings,
+      co2Savings:step.co2Savings,
+      transition:step.transition
+};
+console.log("Step",item.company_id)
+console.log("I am correct",item)
+this.itemCart.emit(item);
   }
+  }
+<<<<<<< HEAD
 }
+=======
+
+
+>>>>>>> 6653f62 (anomaly detection)

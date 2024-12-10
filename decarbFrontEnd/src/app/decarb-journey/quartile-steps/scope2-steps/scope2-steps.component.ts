@@ -23,7 +23,7 @@ export class Scope2StepsComponent {
 
   @Input() totalSteps=4;
 
-  @Output() stepToggled = new EventEmitter<void>();
+  @Output() stepToggled = new EventEmitter<any>();
   @Output() makeSwitchClicked = new EventEmitter<string>();
   constructor(private router: Router) {}
   isExpanded = false;
@@ -35,9 +35,9 @@ export class Scope2StepsComponent {
     console.log("I am here",this.stepData.transition)
   }
 
-  toggleCompletion(): void {
+  toggleCompletion():void{
     this.stepData.isCompleted = !this.stepData.isCompleted;
-    this.stepToggled.emit();
+    this.stepToggled.emit(this.stepData);
     console.log('Step completion toggled:', this.stepData.isCompleted);
   }
 

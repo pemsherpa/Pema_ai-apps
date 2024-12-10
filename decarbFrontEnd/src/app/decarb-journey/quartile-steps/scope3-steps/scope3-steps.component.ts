@@ -16,14 +16,15 @@ export class Scope3StepsComponent {
     costSavings: number; 
     co2Savings: number; 
     transition: number; 
-    difficulty: number;
+    difficulty:number;
     isCompleted: boolean; 
     providerInfo: any[]; 
   };
 
   @Input() totalSteps=4;
 
-  @Output() stepToggled = new EventEmitter<void>();
+  @Output() stepToggled = new EventEmitter<any>();
+  @Output() makeSwitchClicked = new EventEmitter<string>();
   constructor(private router: Router) {}
   isExpanded = false;
 
@@ -31,11 +32,12 @@ export class Scope3StepsComponent {
     console.log('Step clicked, toggling completion and expansion...');
     this.toggleCompletion();
     this.toggleExpansion();
+    console.log("I am here",this.stepData.transition)
   }
 
-  toggleCompletion(): void {
+  toggleCompletion():void{
     this.stepData.isCompleted = !this.stepData.isCompleted;
-    this.stepToggled.emit();
+    this.stepToggled.emit(this.stepData);
     console.log('Step completion toggled:', this.stepData.isCompleted);
   }
 
@@ -53,11 +55,11 @@ export class Scope3StepsComponent {
 
   calculateDynamicHeight(): number {
     // Base height for the dropdown (e.g., padding, borders)
-    const baseHeight = 140;
-    const new_scope_height=90;
+    const baseHeight = 100;
+    const new_scope_height=70;
 
     // Additional height based on content, e.g., 100px per provider item
-    const providerHeight = this.stepData.providerInfo?.length * 130 || 0;
+    const providerHeight = this.stepData.providerInfo?.length * 215 || 0;
     console.log("NUmber of steps",this.stepData.providerInfo?.length)
     console.log(providerHeight)
 

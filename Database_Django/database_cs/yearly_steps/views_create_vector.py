@@ -97,6 +97,6 @@ def append_model_to_file(model_code):
     """
     Appends the generated model code to the models.py file.
     """
-    models_file = '/Users/rakesh/Desktop/CarbonSustain/ai-apps/Database_Django/database_cs/yearly_steps/models.py'  # Update to your actual models.py file path
+    models_file = '/Users/rakesh/Desktop/CarbonSustain/ai-apps/Database_Django/database_cs/yearly_steps/models.py' 
     with open(models_file, 'a') as f:
         f.write("\n" + model_code)

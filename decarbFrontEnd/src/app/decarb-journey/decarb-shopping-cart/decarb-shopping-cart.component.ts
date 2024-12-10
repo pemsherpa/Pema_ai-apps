@@ -8,7 +8,7 @@ interface CartItem {
   costSavings: number;
   co2Savings: number;
   transition: number; // percentage of transition
-}
+};
 
 interface ScopeData {
   scope_1_total: number;
@@ -113,26 +113,19 @@ export class DecarbShoppingCartComponent implements OnInit {
   }
 
   addItem(item: CartItem) {
-    const existingItem = this.cartItems.find(cartItem => cartItem.name === item.name);
+    const existingItem = this.cartItems.find(cartItem => cartItem.company_id === item.company_id);
     if (!existingItem) {
       this.cartItems.push(item);
-      console.log("Items: "+item)
-      this.http.post('http://127.0.0.1:8000/yearly_steps/add-shopping-cart/', item).subscribe({
-        next: (response) => {
-          console.log('Item successfully saved to the database:', response);
-        },
-        error: (err) => {
-          console.error('Error saving item to the database:', err);
-        }
-      });
+      //this.saveItemToDatabase(item);
+      console.log("I'm adding..... ")
     }
   }
 
   removeItemByName(itemName: string) {
     this.cartItems = this.cartItems.filter(item => item.name !== itemName);
   }
-   saveItemToDatabase(item: CartItem): void {
-    const apiUrl = 'https://your-backend-api.com/api/cart'; // Replace with actual API URL
+  saveItemToDatabase(item: CartItem): void {
+    const apiUrl = 'http://127.0.0.1:8000/yearly_steps/add-shopping-cart/'; // Replace with actual API URL
     this.http.post(apiUrl, item).subscribe({
       next: () => console.log('Item saved to database successfully!'),
       error: (err) => console.error('Error saving item to database:', err),
@@ -144,4 +137,3 @@ export class DecarbShoppingCartComponent implements OnInit {
     this.getProgressPercentage();
   }
 }
-

@@ -9,7 +9,7 @@ Original file is located at
 import math
 import datetime
 import json
-import requests
+#import requests
 from decarb_customer_goals import DecarbCustomerGoals
 import numpy as np
 from components.biz_commute_analyzer import BusinessCommutingAnalyzer
@@ -195,8 +195,8 @@ class DecarbEngine:
     def run_flight_analyzer(decarb_engine):
         origin = "LAX"
         destination = "JFK"
-        departure_date = "2024-12-08"
-        return_date = "2024-12-12"
+        departure_date = "2024-12-20"
+        return_date = "2024-12-25"
         decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
         decarb_engine.run_return_flight_step()
 
@@ -494,9 +494,11 @@ class DecarbEngine:
         dict_zscore["avg-zscore"] = total_zscore / num_steps if num_steps > 0 else 0
         return dict_zscore
 
+
     def output_json_to_file(self, output_data,yearly_steps_array, output_file):
         company_id = output_data["company_id"]
          # Convert data to JSON-serializable format
+        company_id = output_data["company_id"]
         json_data = [quarter_step.to_dict(company_id) for quarter_step in yearly_steps_array]
         json_data_serializable = self.convert_to_json_serializable(json_data)  
         output_data = {

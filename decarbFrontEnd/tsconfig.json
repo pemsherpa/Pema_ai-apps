@@ -22,7 +22,9 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+
+    "resolveJsonModule": true, /* added by Jihan */
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
