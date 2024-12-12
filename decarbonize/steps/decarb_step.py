@@ -35,8 +35,10 @@ class DecarbStep:
         return {
             "description": self.generate_step_description(),
             "difficulty": self.difficulty,
-            "savings": self.compute_savings(),
-            "emissions_savings": self.compute_emissions_savings(),
+            "cost_savings": self.compute_savings(),
+            "co2_savings": self.compute_emissions_savings(),
+            "total_cost":self.new_cost,
+            "total_emissions":self.new_emissions,
             "transition_percentage":self.generate_transiton_percentage()
         }
 

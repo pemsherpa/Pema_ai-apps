@@ -48,7 +48,7 @@ class ProviderInfo:
             "Cost savings": self.cost_savings,
             "Peak Cost": self.peak,
             "Off-Peak Cost": self.off_peak,
-            "Total-Cost":self.total_cost
+            "Total-Cost_with_peak_and_off-peak":self.total_cost
         }
     
     def get_peak_off_peak_prices(self, plan_name):
