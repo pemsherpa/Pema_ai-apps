@@ -113,6 +113,4 @@ class CRU_Recommendations:
 
     def to_dict(self):
         # Converts recommendations to a dictionary format
-        return {
-            "recommendations": [rec.to_json() for rec in self.recommendations]
-        }
+        return [rec.to_json() for rec in self.recommendations]

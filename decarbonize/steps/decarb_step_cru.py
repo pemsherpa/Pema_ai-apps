@@ -8,9 +8,9 @@ class CRUDecarbStep(DecarbStep):
 
     def step_to_dict(self):
         dict = super().step_to_dict()
-        dict['recommendations'] = {
-            'CRU_amount': self.CRU_amount
-        }
+        # dict['recommendation'] = {
+        #     'CRU_amount': self.CRU_amount
+        # }
 
         return dict
 

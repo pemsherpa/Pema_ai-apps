@@ -233,7 +233,7 @@ class Electric_Recommendations:
         # Converts recommendations to a dictionary format
         return {
             "current_provider": self.current_provider,
-            "recommendations": [rec.to_json() for rec in self.recommendations]
+            "recommendations": [rec.to_json() for rec in self.recommendations],
         }
 
 
