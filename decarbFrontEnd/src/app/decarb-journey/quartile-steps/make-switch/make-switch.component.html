@@ -26,7 +26,15 @@
     <div *ngIf="!stepData">
       <p>No data available to display.</p>
     </div>
-
+    <div class="card" *ngIf="currentDetails">
+      <h2 class="card-header">Current Provider and Plan</h2>
+      <div class="card-body">
+        <p><strong>Current Provider:</strong> {{ currentDetails.currentProvider }}</p>
+        <p><strong>Current Plan:</strong> {{ currentDetails.currentPlan }}</p>
+        <p><strong>Current Cost:</strong> ${{ currentDetails.currentCost }}</p>
+        <p><strong>Current Emissions:</strong> {{ currentDetails.currentEmissions }} kCO₂</p>
+      </div>
+    </div>
     <div class="user-details-card">
         <h2 class="card-title">Enter Your Details</h2>
         <form (ngSubmit)="onSubmit()">
@@ -72,35 +80,6 @@
               [(ngModel)]="userDetails.phone" 
               required>
           </div>
-          <div class="form-group">
-            <label for="currentProvider">Current Provider</label>
-            <input type="text" id="currentProvider" [(ngModel)]="userDetails.currentProvider" name="currentProvider" />
-          </div>
-          <!-- Current Plan -->
-          <div class="form-group">
-            <label for="Company">Company</label>
-            <input type="text" id="Company" [(ngModel)]="userDetails.company" name="Company" />
-          </div>
-    
-          <!-- Current Plan -->
-          <div class="form-group">
-            <label for="currentPlan">Current Plan</label>
-            <input type="text" id="currentPlan" [(ngModel)]="userDetails.currentPlan" name="currentPlan" />
-          </div>
-    
-          <!-- Current Cost -->
-          <div class="form-group">
-            <label for="currentCost">Current Cost</label>
-            <input type="text" id="currentCost" [(ngModel)]="userDetails.currentCost" name="currentCost" />
-          </div>
-    
-          <!-- Current Emissions -->
-          <div class="form-group">
-            <label for="currentEmissions">Current Emissions</label>
-            <input type="text" id="currentEmissions" [(ngModel)]="userDetails.currentEmissions" name="currentEmissions" />
-          </div>
-    
-      
           <div class="form-group checkbox">
             <label>
               <input 

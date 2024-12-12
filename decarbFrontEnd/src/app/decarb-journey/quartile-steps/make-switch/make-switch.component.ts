@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-make-switch',
@@ -17,20 +18,34 @@ export class MakeSwitchComponent implements OnInit {
     dob: '',
     phone: '',
     isInterested: false,
-    company:'',
+  };
+  currentDetails = {
     currentProvider: '',
     currentPlan: '',
     currentCost: '',
     currentEmissions: ''
   };
-
-  constructor(public location: Location) {}
+  constructor(private http: HttpClient,public location: Location) {}
 
   ngOnInit(): void {
     // Retrieve the passed data from navigation state
     const state = history.state;
     this.stepData = state.data || null;
-  }
+
+    this.http.get<any>('assets/yearly_quarterly_steps.json').subscribe(data => {
+      // Assign the current details from the fetched data
+      if (data && data.cs_backend_data.current_details) {
+        this.currentDetails = {
+          currentProvider: data.cs_backend_data.current_details.current_provider,
+          currentPlan: data.cs_backend_data.current_details.current_plan,
+          currentCost: data.cs_backend_data.current_details.current_cost,
+          currentEmissions: data.cs_backend_data.current_details.current_emissions
+        };
+        
+      }
+    });
+}
+
 
   onSubmit() {
     console.log('User Details Submitted:', this.userDetails);

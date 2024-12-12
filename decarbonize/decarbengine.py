@@ -316,6 +316,12 @@ class DecarbEngine:
     #Hardcoded data for now
         json_data = {
             "company_id": company_id,
+            "current_details":{
+              "current_provider":"ABC",
+              "current_plan":"PLAN-A",
+              "current_cost":2000,
+              "current_emissions":20000
+            },
             "scope_total": {
             "scope_1_total": 100,
             "scope_2_total": 50,
