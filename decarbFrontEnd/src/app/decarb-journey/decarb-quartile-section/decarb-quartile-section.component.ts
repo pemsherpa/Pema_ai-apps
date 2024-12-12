@@ -24,11 +24,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
   @Output() yearsUpdated = new EventEmitter<{ [year: number]: boolean }>();
 
   @Output() itemChecked = new EventEmitter<{
-<<<<<<< HEAD
-    company_id: number; // Fixed property name
-=======
     company_id: number;
->>>>>>> 6653f62 (anomaly detection)
     name: string;
     costSavings: number;
     co2Savings: number;
@@ -62,13 +58,12 @@ export class DecarbQuartileSectionComponent implements OnInit {
       this.availableYears.forEach((year) => (this.selectedYears[year] = true));
     }
 
-    this.emitYears();
+
   }
 
   toggleYearSelection(year: number): void {
     this.selectedYears[year] = !this.selectedYears[year];
     this.loadDataForYearAndQuarter();
-    this.emitYears();
   }
 
   toggleQuarterSelection(quarter: number): void {
@@ -117,11 +112,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
         quarter: quarter,
       })),
       ...yearData.scope2_steps.map((step: any) => ({
-<<<<<<< HEAD
-        company_id: step.company_id, // Use the correct property name
-=======
         company_id: yearData.company_id,
->>>>>>> 6653f62 (anomaly detection)
         title: step.recommendation?.message,
         description: step.description,
         costSavings: step.savings,
@@ -142,11 +133,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
         quarter: quarter,
       })),
       ...yearData.scope3_steps.map((step: any) => ({
-<<<<<<< HEAD
-        company_id: step.company_id, // Use the correct property name
-=======
         company_id: yearData.company_id,
->>>>>>> 6653f62 (anomaly detection)
         title: step.description,
         costSavings: step.savings,
         co2Savings: step.emissions_savings,
@@ -176,15 +163,6 @@ export class DecarbQuartileSectionComponent implements OnInit {
   fetchQuartileData(): Observable<any> {
     return this.http.get<any>('../../assets/yearly_quarterly_steps.json');
   }
-<<<<<<< HEAD
-  emitYears(): void {
-    this.yearsUpdated.emit(this.selectedYears);
-    
-  }
-  onStepToggled(step: any): void {
-    this.itemChecked.emit({
-      company_id: step.company_id, // Fixed property name
-=======
   onItemChecked(CartItem: CartItem): void {
     console.log(CartItem)
     this.addItem(CartItem);
@@ -204,7 +182,6 @@ export class DecarbQuartileSectionComponent implements OnInit {
   onStepToggled(step: any): void {
    const cartItem = {
       company_id: step.company_id,
->>>>>>> 6653f62 (anomaly detection)
       name: step.title,
       costSavings: step.costSavings,
      co2Savings: -step.co2Savings,
@@ -232,9 +209,5 @@ console.log("I am correct",item)
 this.itemCart.emit(item);
   }
   }
-<<<<<<< HEAD
-}
-=======
 
 
->>>>>>> 6653f62 (anomaly detection)

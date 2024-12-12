@@ -41,29 +41,13 @@ export class DecarbJourneyComponent implements AfterViewInit {
     }
   }
 
-<<<<<<< HEAD
-  onYearsUpdated(years: { [year: number]: boolean }): void {
-    // Save updated years in sessionStorage
-    sessionStorage.setItem('selectedYears', JSON.stringify(years));
-    console.log('Years updated and saved to sessionStorage:', years);
-  }
-
-  onItemChecked(event: { company_id: number; name: string; costSavings: number; co2Savings: number; transition: number; isChecked: boolean }): void {
-    const { company_id, name, costSavings, co2Savings, isChecked } = event;
-=======
   onItemChecked(event: {company_id:number, name: string; costSavings: number; co2Savings: number; transition: number; isChecked: boolean }) {
     const {company_id, name, costSavings, co2Savings, isChecked } = event;
->>>>>>> 6653f62 (anomaly detection)
     const transition = event.transition || 0;
 
     if (isChecked) {
-<<<<<<< HEAD
-      // Add item to cart
-      this.shoppingcartComponent.cartItems.push({ company_id, name, costSavings, co2Savings, transition });
-=======
       this.shoppingcartComponent.cartItems.push({ company_id, name, costSavings, co2Savings, transition });
       this.shoppingcartComponent.updateProgress();
->>>>>>> 6653f62 (anomaly detection)
     } else {
       // Remove item from cart
       const index = this.shoppingcartComponent.cartItems.findIndex(item => item.name === name);
