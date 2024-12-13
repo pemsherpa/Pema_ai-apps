@@ -13,45 +13,44 @@ def create_and_update_vector_table(request):
     and updates the vector table with data from Total_CO2e.
     """
     try:
-
         Total_CO2e = apps.get_model('yearly_steps', 'Total_CO2e')
         all_fields = Total_CO2e._meta.get_fields()
 
-        # FIELDS
-        EXCLUDED_FIELDS = ['id', 'comp', 'year', 'scope', 'subcategory'] # do included fields not exluded 
+        # Specify fields to include
+        INCLUDED_FIELDS = ['gas1', 'gas2', 'gas3']  # Replace with actual field names to include
 
-        # Extracting records : float and integer 
+        # Extract records only for the included fields (must be FloatField or IntegerField)
         included_fields = [
             field.name for field in all_fields
-            if isinstance(field, (models.FloatField, models.IntegerField)) and field.name not in EXCLUDED_FIELDS
+            if isinstance(field, (models.FloatField, models.IntegerField)) and field.name in INCLUDED_FIELDS
         ]
 
-        # Naming 
+        # Naming
         vector_dim = len(included_fields)
-        table_name = 'vector_total_co2e' 
+        table_name = 'vector_total_co2e'
         class_name = 'VectorTotalCO2e'
 
-        # dynamically
+        # Define the dynamic vector model
         class DynamicVectorModel(models.Model):
             co2e_vector = VectorField()
-            total_co2e = models.ForeignKey(Total_CO2e, on_delete=models.CASCADE, db_column="parent_id") # creates a column in PostgresSQl called parent_id, Through Django we can acessing through total_co2e_id name.
+            total_co2e = models.ForeignKey(Total_CO2e, on_delete=models.CASCADE, db_column="parent_id")  # Creates a column in PostgreSQL called parent_id; accessible through total_co2e_id.
 
             class Meta:
                 managed = True
                 db_table = table_name
 
-
+        # Register the model dynamically
         apps.register_model("yearly_steps", DynamicVectorModel)
 
-
+        # Create the table in the database
         with connection.schema_editor() as schema_editor:
             schema_editor.create_model(DynamicVectorModel)
 
-        # Generate the model code, calls generate_model_code which then uses append_model_to_file to append to model.py
+        # Generate the model code and append it to the models.py file
         model_code = generate_model_code(class_name, included_fields, table_name, vector_dim)
         append_model_to_file(model_code)
 
-        # Updating vector table 
+        # Updating the vector table with data from Total_CO2e
         total_co2e_records = Total_CO2e.objects.all()
 
         vector_data = []
@@ -97,6 +96,6 @@ def append_model_to_file(model_code):
     """
     Appends the generated model code to the models.py file.
     """
-    models_file = '/Users/rakesh/Desktop/CarbonSustain/ai-apps/Database_Django/database_cs/yearly_steps/models.py' 
+    models_file = '/Users/rakesh/Desktop/CarbonSustain/ai-apps/Database_Django/database_cs/yearly_steps/models.py'
     with open(models_file, 'a') as f:
         f.write("\n" + model_code)

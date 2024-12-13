@@ -14,4 +14,5 @@ urlpatterns = [
     path('detect_anomalies/', detect_anomalies, name='detect_anomalies'),
     path('', lambda request: render(request, 'yearly_steps/index.html'), name='home'),
     path('add-shopping-cart/', add_shopping_cart, name='add_shopping_cart'),
+    path('add-to-cart/', add_to_cart, name='add_to_cart'),
 ]

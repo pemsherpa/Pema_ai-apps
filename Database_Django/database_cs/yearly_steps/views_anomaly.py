@@ -65,7 +65,7 @@ def detect_anomalies(request):
         if not vector_data:
             return JsonResponse({"status": "error", "message": "No vectors found for the given records."})
 
-        # Map vectors to their IDs
+        # Map vectors to their IDs to avoid them mixing up 
         parent_to_vector_map = {}
         for total_co2e_id, co2e_vector in vector_data:
             parent_to_vector_map[total_co2e_id] = np.array(co2e_vector, dtype=float)
@@ -81,8 +81,8 @@ def detect_anomalies(request):
         # Detect IQR anomalies
         iqr_anomalies = []
         for parent_id, vector in parent_to_vector_map.items():
-            for idx, value in enumerate(vector):
-                is_anomalous = value < lower_bound[idx] or value > upper_bound[idx]
+            for gas, value in enumerate(vector):
+                is_anomalous = value < lower_bound[gas] or value > upper_bound[gas]
                 if is_anomalous:
                     anomaly = {
                         "parent_id": parent_id,
@@ -91,6 +91,7 @@ def detect_anomalies(request):
                         "scope": parent_metadata[parent_id]["scope"],
                         "subcategory": parent_metadata[parent_id]["subcategory"],
                         "anomalous_value": value,
+                        "gas":gas,
                         "vector_value": vector.tolist()
                     }
                     iqr_anomalies.append(anomaly)

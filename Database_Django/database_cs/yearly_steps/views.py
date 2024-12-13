@@ -290,3 +290,38 @@ def add_shopping_cart(request):
     
     else:
         return JsonResponse({'error': 'Invalid HTTP method. Use POST.'}, status=405)
+    
+
+
+@csrf_exempt
+def add_to_cart(request):
+    if request.method == "POST":
+        try:
+
+            data = json.loads(request.body)
+
+
+            provider_id = data.get('provider_id')
+            company_id = data.get('company_id', 1)  # Default to company_id = 1 if not provided
+
+            if not provider_id:
+                return JsonResponse({"success": False, "message": "provider_id is required."}, status=400)
+
+
+            provider = ProviderInfo.objects.get(id=provider_id)
+
+            ShoppingCartContent.objects.create(
+                company_id=company_id,
+                provider=provider  
+            )
+
+            return JsonResponse({"success": True, "message": "Provider added to the shopping cart successfully."})
+
+        except json.JSONDecodeError:
+            return JsonResponse({"success": False, "message": "Invalid JSON data."}, status=400)
+        except ProviderInfo.DoesNotExist:
+            return JsonResponse({"success": False, "message": "Provider not found."}, status=404)
+        except Exception as e:
+            return JsonResponse({"success": False, "message": f"An error occurred: {str(e)}"}, status=500)
+
+    return JsonResponse({"success": False, "message": "Invalid request method. Use POST."}, status=405)
