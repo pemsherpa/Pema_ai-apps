@@ -65,30 +65,50 @@ def load_json_data(request):
                                 return JsonResponse({"error": "Provider info missing in recommendation."}, status=400)
 
                             providers = []
+                            plans=[]
                             for provider_data in recommendation_data['provider_info']:
-                                provider = ProviderInfo.objects.create(
+                                provider = Providers.objects.create(
                                     company=provider_data.get('company', ''),
-                                    plan_name=provider_data.get('plan_name', ''),
                                     renewable_percent_provided=provider_data.get('renewable percent provided', 0),
                                     phone_number=provider_data.get('phone_number', ''),
                                     website_link=provider_data.get('website_link', ''),
                                     description_of_company=provider_data.get('description of the company', ''),
                                     location=provider_data.get('location', ''),
+                                )
+                                providers.append(provider)
+
+                                plan=Plans.objects.create(
+                                    plan_name=provider_data.get('plan_name', ''),
                                     carbon_savings=provider_data.get('Carbon savings', 0.0),
                                     cost_savings=provider_data.get('Cost savings', 0.0),
                                     peak_cost=provider_data.get('Peak Cost', 0.0),
                                     off_peak_cost=provider_data.get('Off-Peak Cost', 0.0),
                                     total_cost=provider_data.get('Total-Cost_with_peak_and_off-peak', 0.0)
                                 )
-                                providers.append(provider)
-
+                                plans.append(plan)
+                            for recommendation in recommendation_data['our recommendation']:
                             # Create the recommendation entry and add all providers
-                            recommendation = Recommendations.objects.create(
+                                recommended_plan = recommendation_data.get('recommended_plan', '')
+                                message = recommendation_data.get('message', '')
+
+                                recommendation_obj = Recommendations.objects.create(
                                 scope_step=scope_step,
-                                recommended_plan=recommendation_data.get('recommended_plan', ''),
-                                message=recommendation_data.get('message', '')
+                                recommended_plan=recommended_plan,
+                                message=message,
+                                plan_name=provider_data.get('plan_name', ''),
+                                company=provider_data.get('company', ''),
+                                phone_number=provider_data.get('phone_number', ''),
+                                website_link=provider_data.get('website_link', ''),
+                                description_of_company=provider_data.get('description of the company', ''),
+                                location=provider_data.get('location', ''),
+                                carbon_savings=provider_data.get('Carbon savings', 0.0),
+                                cost_savings=provider_data.get('Cost savings', 0.0),
+                                peak_cost=provider_data.get('Peak Cost', 0.0),
+                                off_peak_cost=provider_data.get('Off-Peak Cost', 0.0),
+                                total_cost=provider_data.get('Total-Cost_with_peak_and_off-peak', 0.0)
+
                             )
-                            recommendation.providers.set(providers)  # Link all providers
+                            recommendation_obj.plans.set(plans)  # Link all providers
         return JsonResponse({"message": "Data successfully loaded"}, status=200)
 
 

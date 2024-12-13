@@ -308,7 +308,7 @@ def add_to_cart(request):
                 return JsonResponse({"success": False, "message": "provider_id is required."}, status=400)
 
 
-            provider = ProviderInfo.objects.get(id=provider_id)
+            provider = Providers.objects.get(id=provider_id)
 
             ShoppingCartContent.objects.create(
                 company_id=company_id,
@@ -319,7 +319,7 @@ def add_to_cart(request):
 
         except json.JSONDecodeError:
             return JsonResponse({"success": False, "message": "Invalid JSON data."}, status=400)
-        except ProviderInfo.DoesNotExist:
+        except Providers.DoesNotExist:
             return JsonResponse({"success": False, "message": "Provider not found."}, status=404)
         except Exception as e:
             return JsonResponse({"success": False, "message": f"An error occurred: {str(e)}"}, status=500)

@@ -31,27 +31,41 @@ class ScopeSteps(models.Model):
     total_emissions = models.FloatField()
     transition_percentage = models.IntegerField()
 
-# ProviderInfo model
-class ProviderInfo(models.Model):
-    company = models.CharField(max_length=255)
-    plan_name = models.CharField(max_length=255, blank=True, null=True)
-    renewable_percent_provided = models.FloatField(blank=True, null=True)
-    phone_number = models.CharField(max_length=255)
+# Providers model
+class Providers(models.Model):
+    company_name = models.CharField(max_length=255, unique=True)  # Company name
+    renewable_percent = models.FloatField()
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
     website_link = models.URLField(blank=True, null=True)
-    description_of_company = models.TextField(blank=True, null=True)
-    location = models.CharField(max_length=255, blank=True, null=True)
-    carbon_savings = models.FloatField(blank=True, null=True)
-    cost_savings = models.FloatField(blank=True, null=True)
-    peak_cost = models.FloatField(blank=True, null=True)
-    off_peak_cost = models.FloatField(blank=True, null=True)
-    total_cost = models.FloatField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+
+class Plans(models.Model):
+    plan_name = models.CharField(max_length=100)
+    carbon_savings = models.FloatField()
+    cost_savings = models.FloatField()
+    peak_cost = models.FloatField()
+    off_peak_cost = models.FloatField()
+    total_cost = models.FloatField()
+    company = models.ForeignKey(Providers, on_delete=models.CASCADE, related_name="plans")  # Foreign key relationship
 
 # Recommendations model
 class Recommendations(models.Model):
     scope_step = models.ForeignKey(ScopeSteps, on_delete=models.CASCADE)
     recommended_plan = models.TextField(blank=True, null=True)
     message = models.TextField(blank=True, null=True)
-    providers = models.ManyToManyField(ProviderInfo)
+    plan_name = models.TextField(blank=True, null=True)
+    company = models.TextField(blank=True, null=True)
+    renewable_percent_provided = models.FloatField(blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    website_link = models.URLField(blank=True, null=True)
+    description_of_company = models.TextField(blank=True, null=True)
+    carbon_savings = models.FloatField(blank=True, null=True)
+    cost_savings = models.FloatField(blank=True, null=True)
+    peak_cost = models.FloatField(blank=True, null=True)
+    off_peak_cost = models.FloatField(blank=True, null=True)
+    total_cost_with_peak_and_off_peak = models.FloatField(blank=True, null=True)
+    plan= models.ForeignKey(Plans, on_delete=models.CASCADE, null=True, blank=True)
+    
     #carbon_emission_savings = models.FloatField(blank=True, null=True)
     #cost_savings = models.FloatField(blank=True, null=True)
 
@@ -63,7 +77,8 @@ class ShoppingCartContent(models.Model):
     # transition= models.FloatField()
     # costSavings = models.FloatField()
     # co2savings = models.FloatField()
-    provider = models.ForeignKey(ProviderInfo, on_delete=models.CASCADE, null=True, blank=True)  # Foreign key reference to ProviderInfo
+    providers=models.ForeignKey(Providers, on_delete=models.CASCADE, null=True, blank=True)
+    plan= models.ForeignKey(Plans, on_delete=models.CASCADE, null=True, blank=True)  # Foreign key reference to Plans
 
     class Meta:
         # unique_together = ('company_id', 'provider') # yet to implement (10.11.2024)
