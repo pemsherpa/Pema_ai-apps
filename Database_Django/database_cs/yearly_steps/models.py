@@ -50,22 +50,24 @@ class Plans(models.Model):
 
 # Recommendations model
 class Recommendations(models.Model):
-    scope_step = models.ForeignKey(ScopeSteps, on_delete=models.CASCADE)
-    recommended_plan = models.TextField(blank=True, null=True)
+    scope_step = models.ForeignKey(ScopeSteps, on_delete=models.CASCADE, null=True, blank=True)
+    plan = models.ForeignKey(Plans, on_delete=models.CASCADE, null=True, blank=True)
     message = models.TextField(blank=True, null=True)
-    plan_name = models.TextField(blank=True, null=True)
-    company = models.TextField(blank=True, null=True)
-    renewable_percent_provided = models.FloatField(blank=True, null=True)
+
+    # Fields for "Our Recommendation" (independent of Plans and Providers tables)
+    provider_name = models.TextField(blank=True, null=True)
+    company=models.TextField(blank=True,null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     website_link = models.URLField(blank=True, null=True)
-    description_of_company = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    plan_name = models.TextField(blank=True, null=True)
     carbon_savings = models.FloatField(blank=True, null=True)
     cost_savings = models.FloatField(blank=True, null=True)
     peak_cost = models.FloatField(blank=True, null=True)
     off_peak_cost = models.FloatField(blank=True, null=True)
-    total_cost_with_peak_and_off_peak = models.FloatField(blank=True, null=True)
-    plan= models.ForeignKey(Plans, on_delete=models.CASCADE, null=True, blank=True)
+    total_cost = models.FloatField(blank=True, null=True)
     
+
     #carbon_emission_savings = models.FloatField(blank=True, null=True)
     #cost_savings = models.FloatField(blank=True, null=True)
 
@@ -81,7 +83,7 @@ class ShoppingCartContent(models.Model):
     plan= models.ForeignKey(Plans, on_delete=models.CASCADE, null=True, blank=True)  # Foreign key reference to Plans
 
     class Meta:
-        # unique_together = ('company_id', 'provider') # yet to implement (10.11.2024)
+        unique_together = ('company_id', 'providers') # yet to implement (10.11.2024)
         managed = True
         db_table = 'shopping_cart_content'
 

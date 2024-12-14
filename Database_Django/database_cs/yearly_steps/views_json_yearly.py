@@ -12,7 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def load_json_data(request):
     if request.method == "POST":
-        json_path = '/Users/rakesh/Desktop/CarbonSustain/ai-apps/decarbFrontEnd/src/assets/yearly_quarterly_steps.json'
+        json_path = '../../decarbFrontEnd/src/assets/yearly_quarterly_steps.json'
+
         with open(json_path, 'r') as file:
             data = json.load(file)
 
@@ -59,23 +60,46 @@ def load_json_data(request):
                         
                         if 'recommendation' in step and steps != 3:  # Recommendations for Scope 1 and 2 only
                             recommendation_data = step['recommendation']
+                            provider_info = recommendation_data['provider_info']
+
 
                             # Ensure recommendation data is valid
                             if 'provider_info' not in recommendation_data:
                                 return JsonResponse({"error": "Provider info missing in recommendation."}, status=400)
-
-                            providers = []
-                            plans=[]
-                            for provider_data in recommendation_data['provider_info']:
-                                provider = Providers.objects.create(
-                                    company=provider_data.get('company', ''),
-                                    renewable_percent_provided=provider_data.get('renewable percent provided', 0),
-                                    phone_number=provider_data.get('phone_number', ''),
-                                    website_link=provider_data.get('website_link', ''),
-                                    description_of_company=provider_data.get('description of the company', ''),
-                                    location=provider_data.get('location', ''),
+                            
+                            if provider_info:
+                                first_provider=provider_info[0]
+                                Recommendations.objects.create(
+                                scope_step=scope_step,
+                                recommended_plan = recommendation_data.get('recommended_plan', ''),
+                                message=recommendation_data.get('message', ''),
+                                plan_name=first_provider.get('plan_name', ''),
+                                company=first_provider.get('company', ''),
+                                phone_number=first_provider.get('phone_number', ''),
+                                website_link=first_provider.get('website_link', ''),
+                                description_of_company=first_provider.get('description of the company', ''),
+                                location=first_provider.get('location', ''),
+                                carbon_savings=first_provider.get('Carbon savings', 0.0),
+                                cost_savings=first_provider.get('Cost savings', 0.0),
+                                peak_cost=first_provider.get('Peak Cost', 0.0),
+                                off_peak_cost=first_provider.get('Off-Peak Cost', 0.0),
+                                total_cost=first_provider.get('Total-Cost_with_peak_and_off-peak', 0.0),
                                 )
-                                providers.append(provider)
+                            
+                            for provider_data in provider_info:
+                                provider,_ = Providers.objects.get_or_create(
+                                    company=provider_data.get('company', ''),
+                                    defaults={
+                                        'renewable_percent_provided':provider_data.get('renewable percent provided', 0),
+                                        'phone_number': provider_data.get('phone_number', ''),
+                                        'website_link': provider_data.get('website_link', ''),
+                                        'description': provider_data.get('description of the company', ''),
+                                        'location':provider_data.get('location', '')
+                                        }
+                                        
+                                    )
+                                    
+                                
 
                                 plan=Plans.objects.create(
                                     plan_name=provider_data.get('plan_name', ''),
@@ -85,30 +109,14 @@ def load_json_data(request):
                                     off_peak_cost=provider_data.get('Off-Peak Cost', 0.0),
                                     total_cost=provider_data.get('Total-Cost_with_peak_and_off-peak', 0.0)
                                 )
-                                plans.append(plan)
-                            for recommendation in recommendation_data['our recommendation']:
-                            # Create the recommendation entry and add all providers
-                                recommended_plan = recommendation_data.get('recommended_plan', '')
-                                message = recommendation_data.get('message', '')
-
-                                recommendation_obj = Recommendations.objects.create(
-                                scope_step=scope_step,
-                                recommended_plan=recommended_plan,
-                                message=message,
-                                plan_name=provider_data.get('plan_name', ''),
-                                company=provider_data.get('company', ''),
-                                phone_number=provider_data.get('phone_number', ''),
-                                website_link=provider_data.get('website_link', ''),
-                                description_of_company=provider_data.get('description of the company', ''),
-                                location=provider_data.get('location', ''),
-                                carbon_savings=provider_data.get('Carbon savings', 0.0),
-                                cost_savings=provider_data.get('Cost savings', 0.0),
-                                peak_cost=provider_data.get('Peak Cost', 0.0),
-                                off_peak_cost=provider_data.get('Off-Peak Cost', 0.0),
-                                total_cost=provider_data.get('Total-Cost_with_peak_and_off-peak', 0.0)
-
-                            )
-                            recommendation_obj.plans.set(plans)  # Link all providers
+                                if provider_data['plan_name'] != first_provider.get('plan_name', ''):
+                                    Recommendations.objects.create(
+                                        scope_step=scope_step,
+                                        plan=plan,
+                                        message=recommendation_data.get('message', '')
+                                    )
+                                
+                            
         return JsonResponse({"message": "Data successfully loaded"}, status=200)
 
 
