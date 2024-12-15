@@ -13,8 +13,8 @@ export class Scope1StepsComponent {
   @Input() stepData!: { 
     title: string; 
     description: string; 
-    costSavings: number; 
-    co2Savings: number; 
+    cost_savings: number; 
+    co2_savings: number; 
     transition: number; 
     isCompleted: boolean; 
     providerInfo: any[] 

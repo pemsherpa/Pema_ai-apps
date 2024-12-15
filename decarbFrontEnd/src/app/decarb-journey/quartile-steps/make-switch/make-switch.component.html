@@ -2,13 +2,23 @@
 <h2 ><span class="switch">Switch</span> <span class="now">now !!</span></h2>
 <p class="content">You are just a few steps away from saving money and reducing your carbon footprint!</p>
 <div class="container">
+
+  <div class="card" *ngIf="currentDetails">
+    <h2 class="card-header">Current Provider and Plan</h2>
+    <div class="card-body">
+      <p><strong>Current Provider:</strong> {{ currentDetails.currentProvider }}</p>
+      <p><strong>Current Plan:</strong> {{ currentDetails.currentPlan }}</p>
+      <p><strong>Current Cost:</strong> ${{ currentDetails.currentCost }}</p>
+      <p><strong>Current Emissions:</strong> {{ currentDetails.currentEmissions }} kCO₂</p>
+    </div>
+  </div>
    
     <div class="card" *ngIf="stepData">
       <h2 class="card-header">{{ stepData.title }}</h2>
       <div class="card-body">
         <p><strong>Details:</strong> {{ stepData.details }}</p>
-        <p *ngIf="stepData.costSavings"><strong>Cost Savings: </strong>$ {{ stepData.costSavings }}</p>
-        <p *ngIf="stepData.co2Savings"><strong>CO₂ Savings:</strong> {{ stepData.co2Savings }}kCO2</p>
+        <p *ngIf="stepData.cost_savings"><strong>Cost Savings: </strong>$ {{ stepData.cost_savings }}</p>
+        <p *ngIf="stepData.co2_savings"><strong>CO₂ Savings:</strong> {{ stepData.co2_savings }}kCO2</p>
         <ul *ngIf="stepData?.providerInfo?.length">
           <li *ngFor="let provider of stepData.providerInfo">
             <strong>{{ provider.name }}</strong> - {{ provider.details }}
@@ -26,74 +36,8 @@
     <div *ngIf="!stepData">
       <p>No data available to display.</p>
     </div>
-    <div class="card" *ngIf="currentDetails">
-      <h2 class="card-header">Current Provider and Plan</h2>
-      <div class="card-body">
-        <p><strong>Current Provider:</strong> {{ currentDetails.currentProvider }}</p>
-        <p><strong>Current Plan:</strong> {{ currentDetails.currentPlan }}</p>
-        <p><strong>Current Cost:</strong> ${{ currentDetails.currentCost }}</p>
-        <p><strong>Current Emissions:</strong> {{ currentDetails.currentEmissions }} kCO₂</p>
-      </div>
-    </div>
-    <div class="user-details-card">
-        <h2 class="card-title">Enter Your Details</h2>
-        <form (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label for="name">Name:</label>
-            <input 
-              type="text" 
-              id="name" 
-              name="name" 
-              placeholder="Enter your name" 
-              [(ngModel)]="userDetails.name" 
-              required>
-          </div>
-      
-          <div class="form-group">
-            <label for="email">Email ID:</label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
-              placeholder="Enter your email ID" 
-              [(ngModel)]="userDetails.email" 
-              required>
-          </div>
-      
-          <div class="form-group">
-            <label for="dob">Date of Birth:</label>
-            <input 
-              type="date" 
-              id="dob" 
-              name="dob" 
-              [(ngModel)]="userDetails.dob" 
-              required>
-          </div>
-      
-          <div class="form-group">
-            <label for="phone">Phone Number:</label>
-            <input 
-              type="tel" 
-              id="phone" 
-              name="phone" 
-              placeholder="Enter your phone number" 
-              [(ngModel)]="userDetails.phone" 
-              required>
-          </div>
-          <div class="form-group checkbox">
-            <label>
-              <input 
-                type="checkbox" 
-                [(ngModel)]="userDetails.isInterested" 
-                name="isInterested"> 
-              Do you want to buy this for this quartile?
-            </label>
-          </div>
-      
-          <button type="submit" class="submit-button">Submit</button>
-        </form>
-      </div>
-      
+    
+    
   
     
   </div>

@@ -26,8 +26,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
   @Output() itemChecked = new EventEmitter<{
     company_id: number;
     name: string;
-    costSavings: number;
-    co2Savings: number;
+    cost_savings: number;
+    co2_savings: number;
     transition: number;
     providerInfo: any[];
     isChecked: boolean;
@@ -35,8 +35,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
   @Output() itemCart= new EventEmitter<{
     company_id:number;
     name:string;
-    costSavings:number;
-    co2Savings:number;
+    cost_savings:number;
+    co2_savings:number;
     transition:number;
 
   }>();
@@ -115,8 +115,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
         company_id: yearData.company_id,
         title: step.recommendation?.message,
         description: step.description,
-        costSavings: step.savings,
-        co2Savings: step.emissions_savings,
+        cost_savings: step.cost_savings,
+        co2_savings: step.co2_savings,
         transition: step.transition_percentage,
         difficulty: step.difficulty,
         isCompleted: false,
@@ -135,8 +135,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
       ...yearData.scope3_steps.map((step: any) => ({
         company_id: yearData.company_id,
         title: step.description,
-        costSavings: step.savings,
-        co2Savings: step.emissions_savings,
+        cost_savings: step.cost_savings,
+        co2_savings: step.co2_emissions_savings,
         transition: step.transition_percentage,
         difficulty: step.difficulty,
         isCompleted: false,
@@ -148,7 +148,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
               type: provider.type,
               location: provider.location,
               carbonSavings: -provider.carbon_savings,
-              costSavings: provider.cost_savings,
+              cost_savings: provider.cost_savings,
               phone: provider.phone_number,
               website: provider.website_link,
             }))
@@ -183,8 +183,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
    const cartItem = {
       company_id: step.company_id,
       name: step.title,
-      costSavings: step.costSavings,
-     co2Savings: -step.co2Savings,
+      cost_savings: step.cost_savings,
+     co2_savings: -step.co2_savings,
       transition: step.transition,
       providerInfo: step.providerInfo,
       isChecked: step.isCompleted,
@@ -200,8 +200,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
     const item:CartItem={
       company_id:step.company_id,
       name:step.title,
-      costSavings:step.costSavings,
-      co2Savings:step.co2Savings,
+      cost_savings:step.cost_savings,
+      co2_savings:step.co2_savings,
       transition:step.transition
 };
 console.log("Step",item.company_id)

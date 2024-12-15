@@ -41,12 +41,12 @@ export class DecarbJourneyComponent implements AfterViewInit {
     }
   }
 
-  onItemChecked(event: {company_id:number, name: string; costSavings: number; co2Savings: number; transition: number; isChecked: boolean }) {
-    const {company_id, name, costSavings, co2Savings, isChecked } = event;
+  onItemChecked(event: {company_id:number, name: string; cost_savings: number; co2_savings: number; transition: number; isChecked: boolean }) {
+    const {company_id, name, cost_savings, co2_savings, isChecked } = event;
     const transition = event.transition || 0;
 
     if (isChecked) {
-      this.shoppingcartComponent.cartItems.push({ company_id, name, costSavings, co2Savings, transition });
+      this.shoppingcartComponent.cartItems.push({ company_id, name, cost_savings, co2_savings, transition });
       this.shoppingcartComponent.updateProgress();
     } else {
       // Remove item from cart

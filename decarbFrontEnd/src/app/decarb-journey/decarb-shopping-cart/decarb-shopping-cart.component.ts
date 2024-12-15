@@ -5,8 +5,8 @@ import { HttpClient } from '@angular/common/http';
 interface CartItem {
   company_id: number;
   name: string;
-  costSavings: number;
-  co2Savings: number;
+  cost_savings: number;
+  co2_savings: number;
   transition: number; // percentage of transition
 };
 
@@ -56,7 +56,7 @@ export class DecarbShoppingCartComponent implements OnInit {
   }
 
   getTotalCostSavings(): number {
-    return this.cartItems.reduce((total, item) => total + item.costSavings, 0);
+    return this.cartItems.reduce((total, item) => total + item.cost_savings, 0);
   }
   getFormattedTotalCostSavings(): string {
     const totalSavingsInK = this.getTotalCostSavings() / 1000;
@@ -70,7 +70,7 @@ export class DecarbShoppingCartComponent implements OnInit {
   
 
   getTotalCO2Savings(): number {
-    return this.cartItems.reduce((total, item) => total + item.co2Savings, 0);
+    return this.cartItems.reduce((total, item) => total + item.co2_savings, 0);
   }
   formatCostSavings(value: number): string {
     return new Intl.NumberFormat('en-US', {

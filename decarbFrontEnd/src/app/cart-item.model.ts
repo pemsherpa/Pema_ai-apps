@@ -1,7 +1,7 @@
 export interface CartItem {
     company_id: number;
     name: string;
-    costSavings: number;
-    co2Savings: number;
+    cost_savings: number;
+    co2_savings: number;
     transition: number; // percentage of transition
   };

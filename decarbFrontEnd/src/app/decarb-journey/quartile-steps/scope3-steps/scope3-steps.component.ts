@@ -13,8 +13,8 @@ export class Scope3StepsComponent {
   @Input() stepData!: { 
     title: string; 
     description: string; 
-    costSavings: number; 
-    co2Savings: number; 
+    cost_savings: number; 
+    co2_savings: number; 
     transition: number; 
     difficulty:number;
     isCompleted: boolean; 
@@ -64,7 +64,7 @@ export class Scope3StepsComponent {
     console.log(providerHeight)
 
     // Additional height for static sections like cost/CO2 savings
-    const additionalHeight = this.stepData.costSavings || this.stepData.co2Savings ? 75 : 0;
+    const additionalHeight = this.stepData.cost_savings || this.stepData.co2_savings ? 75 : 0;
     console.log("Adiidtin",additionalHeight)
 
     return baseHeight + providerHeight + additionalHeight+new_scope_height;
