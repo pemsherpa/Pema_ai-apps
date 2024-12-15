@@ -56,7 +56,7 @@ class Recommendations(models.Model):
 
     # Fields for "Our Recommendation" (independent of Plans and Providers tables)
     provider_name = models.TextField(blank=True, null=True)
-    company=models.TextField(blank=True,null=True)
+    company = models.TextField(blank=True,null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     website_link = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
