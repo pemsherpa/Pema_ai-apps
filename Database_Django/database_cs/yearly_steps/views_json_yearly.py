@@ -79,33 +79,39 @@ def load_json_data(request):
                                         'description': provider_data.get('description of the company', ''),
                                     },
                                 )
-                                plan = Plans.objects.create(
+                                plan = Plans.objects.get_or_create(
                                     plan_name=provider_data.get('plan_name', ''),
                                     company=provider,
-                                    carbon_savings=provider_data.get('Carbon savings', 0.0),
-                                    cost_savings=provider_data.get('Cost savings', 0.0),
-                                    peak_cost=provider_data.get('Peak Cost', 0.0),
-                                    off_peak_cost=provider_data.get('Off-Peak Cost', 0.0),
-                                    total_cost=provider_data.get('Total-Cost_with_peak_and_off-peak', 0.0),
+                                    defaults={
+                                        'carbon_savings': provider_data.get('Carbon savings', 0.0),
+                                        'cost_savings': provider_data.get('Cost savings', 0.0),
+                                        'peak_cost': provider_data.get('Peak Cost', 0.0),
+                                        'off_peak_cost': provider_data.get('Off-Peak Cost', 0.0),
+                                        'total_cost': provider_data.get('Total-Cost_with_peak_and_off-peak', 0.0),
+                                    },
                                 )
-                                if provider_info:
+
+                            if provider_info:
                                     first_provider=provider_info[0]
-                                    print(first_provider)
-                                    Recommendations.objects.create(
-                                    scope_step=scope_step,
-                                    provider_name = recommendation_data.get('recommended_plan', ''),
-                                    message=recommendation_data.get('message', ''),
-                                    plan_name=first_provider.get('plan_name', ''),
-                                    company=first_provider.get('company', ''),
-                                    phone_number=first_provider.get('phone_number', ''),
-                                    website_link=first_provider.get('website_link', ''),
-                                    description=first_provider.get('description of the company', ''),
-                                    #location=first_provider.get('location', ''),
-                                    carbon_savings=first_provider.get('Carbon savings', 0.0),
-                                    cost_savings=first_provider.get('Cost savings', 0.0),
-                                    peak_cost=first_provider.get('Peak Cost', 0.0),
-                                    off_peak_cost=first_provider.get('Off-Peak Cost', 0.0),
-                                    total_cost=first_provider.get('Total-Cost_with_peak_and_off-peak', 0.0),
+                                    plans=Plans.objects.filter(plan_name=first_provider.get('plan_name',''))
+                                    if plans.exists():
+                                        plan=plans.filter(company=provider).first()
+                                        Recommendations.objects.create(
+                                        scope_step=scope_step,
+                                        plan=plan,
+                                        provider_name = recommendation_data.get('recommended_plan', ''),
+                                        message=recommendation_data.get('message', ''),
+                                        plan_name=first_provider.get('plan_name', ''),
+                                        company=first_provider.get('company', ''),
+                                        phone_number=first_provider.get('phone_number', ''),
+                                        website_link=first_provider.get('website_link', ''),
+                                        description=first_provider.get('description of the company', ''),
+                                        #location=first_provider.get('location', ''),
+                                        carbon_savings=first_provider.get('Carbon savings', 0.0),
+                                        cost_savings=first_provider.get('Cost savings', 0.0),
+                                        peak_cost=first_provider.get('Peak Cost', 0.0),
+                                        off_peak_cost=first_provider.get('Off-Peak Cost', 0.0),
+                                        total_cost=first_provider.get('Total-Cost_with_peak_and_off-peak', 0.0),
                                 )
 
         return JsonResponse({"message": "Data successfully loaded."}, status=200)

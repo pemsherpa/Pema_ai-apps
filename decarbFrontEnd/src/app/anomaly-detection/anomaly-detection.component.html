@@ -2,102 +2,99 @@
 
 <div class="search-container">
    <div class="firstrow">
-  <label for="CompanyQuery">Company ID:</label>
-  <input
-    id="CompanyQuery"
-    type="text"
-    placeholder="Enter Company ID"
-    [(ngModel)]="CompanyQuery"
-  />
-
-  <!-- Input for Filter -->
-  <label for="YearQuery">Year :</label>
-  <input
-    id="YearQuery"
-    type="text"
-    placeholder="Enter Year"
-    [(ngModel)]="YearQuery"
-  />
-</div>
-<div class="secondrow">
-    <!-- Input for Filter -->
-    <label for="ScopeQuery">Scope :</label>
-    <input
-      id="ScopeQuery"
-      type="text"
-      placeholder="Enter Scope"
-      [(ngModel)]="ScopeQuery"
-    />
+      <label for="CompanyQuery">Company ID:</label>
+      <input
+        id="CompanyQuery"
+        type="text"
+        placeholder="Enter Company ID"
+        [(ngModel)]="CompanyQuery"
+      />
 
       <!-- Input for Filter -->
-  <label for="SubCatQuery">Sub-Category :</label>
-  <input
-    id="SubCatQuery"
-    type="text"
-    placeholder="Enter Sub-Category"
-    [(ngModel)]="SubCatQuery"
-  />
-</div>
-  <!-- Button to Send GET Request -->
-  <div class="buttons">
-  <button (click)="sendRequestVector()">Create Vector</button>
+      <label for="YearQuery">Year :</label>
+      <input
+        id="YearQuery"
+        type="text"
+        placeholder="Enter Year"
+        [(ngModel)]="YearQuery"
+      />
+   </div>
+   
+   <div class="secondrow">
+      <!-- Input for Filter -->
+      <label for="ScopeQuery">Scope :</label>
+      <input
+        id="ScopeQuery"
+        type="text"
+        placeholder="Enter Scope"
+        [(ngModel)]="ScopeQuery"
+      />
 
-  <!-- Button to Send GET Request -->
-  <button (click)="sendRequestAnomaly()">Get Anomalies</button>
+      <!-- Input for Filter -->
+      <label for="SubCatQuery">Sub-Category :</label>
+      <input
+        id="SubCatQuery"
+        type="text"
+        placeholder="Enter Sub-Category"
+        [(ngModel)]="SubCatQuery"
+      />
+
+      <div class="buttons">
+        <button (click)="sendRequestIQR()">Get IQR Anomalies</button>
+        <button (click)="sendRequestCosine()">Get Cosine Anomalies</button>
+        <button (click)="sendRequestVector()">Get Vector Table</button>
+      </div>
+   </div>
 </div>
-<div class="response-container">
-  <div *ngIf="ResponseData">
-      <h3>Response:</h3>
-      <!-- Displaying the response in a readable format -->
-      <div *ngIf="ResponseData.error">
-        <p class="error-message">{{ ResponseData.error }}</p>
-      </div>
-  
-      <!-- Display structured response -->
-      <div *ngIf="!ResponseData.error">
-        <ul class="response-list">
-          <li *ngFor="let key of objectKeys(ResponseData)">
-            <strong>{{ key }}:</strong>
-            <!-- Special handling for 'anomalies' -->
-            <ng-container *ngIf="key === 'anomalies'; else otherFields">
-              <div class="anomalies-list">
-                <ul>
-                  <li *ngFor="let anomaly of ResponseData.anomalies">
-                    <p><strong>Parent ID:</strong> {{ anomaly.parent_id }}</p>
-                    <p><strong>Company:</strong> {{ anomaly.comp }}</p>
-                    <p><strong>Year:</strong> {{ anomaly.year }}</p>
-                    <p><strong>Scope:</strong> {{ anomaly.scope }}</p>
-                    <p><strong>Subcategory:</strong> {{ anomaly.subcategory }}</p>
-                    <p><strong>Anomalous Value:</strong> {{ anomaly.anomalous_value }}</p>
-                  </li>
-                </ul>
-              </div>
-            </ng-container>
-            <!-- Handle other keys -->
-            <ng-template #otherFields>
-              <span>{{ ResponseData[key] }}</span>
-            </ng-template>
-          </li>
-        </ul>
-      </div>
-    </div>
+
+<div class="response-container" *ngIf="ResponseDataIQR">
+  <h3>IQR Anomalies:</h3>
+  <div *ngIf="ResponseDataIQR.length">
+    <ul class="response-list">
+      <li *ngFor="let anomaly of ResponseDataIQR">
+        <p><strong>Parent ID:</strong> {{ anomaly.parent_id }}</p>
+        <p><strong>Company:</strong> {{ anomaly.comp }}</p>
+        <p><strong>Year:</strong> {{ anomaly.year }}</p>
+        <p><strong>Scope:</strong> {{ anomaly.scope }}</p>
+        <p><strong>Sub-Category:</strong> {{ anomaly.subcategory }}</p>
+        <p><strong>Anomalous Value:</strong> {{ anomaly.anomalous_value }}</p>
+        <p><strong>Gas:</strong> {{ anomaly.gas }}</p>
+        <p><strong>Vector Values:</strong> {{ anomaly.vector_value.join(', ') }}</p>
+      </li>
+    </ul>
   </div>
-
-  <div class="response-container">
-    <div *ngIf="ResponseVector">
-      <h3>Response Vector:</h3>
-      <!-- Check if there is an error -->
-      <div *ngIf="ResponseVector.error">
-        <p class="error-message">{{ ResponseVector.message }}</p>
-      </div>
-    
-      <!-- Display structured response -->
-      <div *ngIf="!ResponseVector.error">
-        <ul class="response-list">
-          <li *ngFor="let key of objectKeys(ResponseVector)">
-            <strong>{{ key }}:</strong> {{ ResponseVector[key] }}
-          </li>
-        </ul>
-      </div>
-
+  <div *ngIf="ResponseDataIQR.error" class="error-message">
+    <p>{{ ResponseDataIQR.error }}</p>
+  </div>
 </div>
+
+<div class="response-container" *ngIf="ResponseDataCosine">
+  <h3>Cosine Anomalies:</h3>
+  <div *ngIf="ResponseDataCosine.length">
+    <ul class="response-list">
+      <li *ngFor="let anomaly of ResponseDataCosine">
+        <p><strong>Parent ID:</strong> {{ anomaly.parent_id }}</p>
+        <p><strong>Company:</strong> {{ anomaly.comp }}</p>
+        <p><strong>Year:</strong> {{ anomaly.year }}</p>
+        <p><strong>Scope:</strong> {{ anomaly.scope }}</p>
+        <p><strong>Sub-Category:</strong> {{ anomaly.subcategory }}</p>
+        <p><strong>Cosine Similarity:</strong> {{ anomaly.cosine_similarity }}</p>
+        <p><strong>Vector Values:</strong> {{ anomaly.vector_value.join(', ') }}</p>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="ResponseDataCosine.error" class="error-message">
+    <p>{{ ResponseDataCosine.error }}</p>
+  </div>
+</div>
+
+<div class="response-container" *ngIf="ResponseVector">
+  <h3>Vector:</h3>
+  <div *ngIf="ResponseVector.length">
+    <!-- Vector data display logic here -->
+  </div>
+  <div *ngIf="ResponseVector.error" class="error-message">
+    <p>{{ ResponseVector.error }}</p>
+  </div>
+</div>
+

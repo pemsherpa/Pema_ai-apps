@@ -110,3 +110,12 @@ class Total_CO2e(models.Model):
 #         db_table = 'vector_total_co2e'
 
 
+
+
+class VectorTotalCO2e(models.Model):
+    co2e_vector = VectorField(dimensions=3)
+    total_co2e = models.ForeignKey('yearly_steps.Total_CO2e', on_delete=models.CASCADE, db_column='parent_id')
+
+    class Meta:
+        managed = True
+        db_table = 'vector_total_co2e'

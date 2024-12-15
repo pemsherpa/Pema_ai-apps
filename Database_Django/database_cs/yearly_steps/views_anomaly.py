@@ -10,65 +10,212 @@ from django.db import models, connection
 from scipy.spatial.distance import cosine
 
 
+# @csrf_exempt
+# def detect_anomalies(request):
+#     try:
+#         # Default values if inputs are not provided
+#         default_companies = [1, 2, 3, 4, 5]  
+#         default_years = [2020, 2021, 2022, 2023]  
+#         default_scopes = [1, 2, 3]  
+#         default_subcategories = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]  
+
+#         def parse_input(input_str, default_values):
+#             if input_str:
+#                 return [int(value.strip()) for value in input_str.split(',')]
+#             return default_values
+
+#         companies = parse_input(request.GET.get("comp"), default_companies)
+#         years = parse_input(request.GET.get("year"), default_years)
+#         scopes = parse_input(request.GET.get("scope"), default_scopes)
+#         subcategories = parse_input(request.GET.get("subcategory"), default_subcategories)
+
+#         # Read the models
+#         Total_CO2e = apps.get_model('yearly_steps', 'Total_CO2e')
+#         Total_CO2eVector = apps.get_model('yearly_steps', 'VectorTotalCO2e')
+
+#         # Query the parent data
+#         query = Total_CO2e.objects.filter(
+#             comp__in=companies,
+#             year__in=years,
+#             scope__in=scopes,
+#             subcategory__in=subcategories
+#         )
+#         parent_records = query.values('id', 'comp', 'year', 'scope', 'subcategory')
+
+#         # If no records are found, return an error
+#         if not parent_records.exists():
+#             return JsonResponse({"status": "error", "message": "No records found for the given filters."})
+
+#         # Map parent data to metadata
+#         parent_metadata = {}
+#         for record in parent_records:
+#             parent_metadata[record['id']] = {
+#                 "comp": record['comp'],
+#                 "year": record['year'],
+#                 "scope": record['scope'],
+#                 "subcategory": record['subcategory']
+#             }
+#         parent_ids = list(parent_metadata.keys())
+
+#         # Query the vector data for anomalies
+#         vector_query = Total_CO2eVector.objects.filter(total_co2e_id__in=parent_ids)
+#         vector_data = vector_query.values_list('total_co2e_id', 'co2e_vector')
+
+#         # If no vectors are found, return an error
+#         if not vector_data:
+#             return JsonResponse({"status": "error", "message": "No vectors found for the given records."})
+
+#         # Map vectors to their IDs to avoid them mixing up 
+#         parent_to_vector_map = {}
+#         for total_co2e_id, co2e_vector in vector_data:
+#             parent_to_vector_map[total_co2e_id] = np.array(co2e_vector, dtype=float)
+
+#         # IQR anomaly detection
+#         vector_values = np.array(list(parent_to_vector_map.values()), dtype=float)
+#         q1 = np.percentile(vector_values, 25, axis=0)
+#         q3 = np.percentile(vector_values, 75, axis=0)
+#         iqr = q3 - q1
+#         lower_bound = q1 - 1.5 * iqr
+#         upper_bound = q3 + 1.5 * iqr
+
+#         # Detect IQR anomalies
+#         iqr_anomalies = []
+#         for parent_id, vector in parent_to_vector_map.items():
+#             for gas, value in enumerate(vector):
+#                 is_anomalous = value < lower_bound[gas] or value > upper_bound[gas]
+#                 if is_anomalous:
+#                     anomaly = {
+#                         "parent_id": parent_id,
+#                         "comp": parent_metadata[parent_id]["comp"],
+#                         "year": parent_metadata[parent_id]["year"],
+#                         "scope": parent_metadata[parent_id]["scope"],
+#                         "subcategory": parent_metadata[parent_id]["subcategory"],
+#                         "anomalous_value": value,
+#                         "gas":gas,
+#                         "vector_value": vector.tolist()
+#                     }
+#                     iqr_anomalies.append(anomaly)
+
+#         # Cosine similarity anomaly detection
+#         # Calculate mean vector
+#         mean_vector = np.mean(vector_values, axis=0)
+
+#         # Calculate cosine similarity and detect anomalies
+#         cosine_anomalies = []
+#         for parent_id, vector in parent_to_vector_map.items():
+#             # Cosine similarity
+#             print(vector)
+#             similarity = 1 - cosine(vector, mean_vector) if np.linalg.norm(vector) and np.linalg.norm(mean_vector) else 0
+#             # Flag as anomaly if similarity is too far from the expected range
+#             if similarity < 0.95:  # Threshold set for detecting deviations
+#                 anomaly = {
+#                     "parent_id": parent_id,
+#                     "comp": parent_metadata[parent_id]["comp"],
+#                     "year": parent_metadata[parent_id]["year"],
+#                     "scope": parent_metadata[parent_id]["scope"],
+#                     "subcategory": parent_metadata[parent_id]["subcategory"],
+#                     "cosine_similarity": similarity,
+#                     "vector_value": vector.tolist()
+#                 }
+#                 cosine_anomalies.append(anomaly)
+
+#         # Return JSON response
+#         return JsonResponse({
+#             "status": "success",
+#             "iqr_anomalies": iqr_anomalies,
+#             "cosine_anomalies": cosine_anomalies
+#         })
+
+#     except Exception as e:
+#         # Handle unexpected errors and return as JSON
+#         return JsonResponse({
+#             "status": "error",
+#             "message": str(e)
+#         })
+
+
 @csrf_exempt
-def detect_anomalies(request):
+def detect_anomalies_helper(request):
     try:
-        # Default values if inputs are not provided
-        default_companies = [1, 2, 3, 4, 5]  
-        default_years = [2020, 2021, 2022, 2023]  
-        default_scopes = [1, 2, 3]  
-        default_subcategories = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]  
+        def parse_and_fetch_data(request):
+            # Default values if inputs are not provided
+            default_companies = [1, 2, 3, 4, 5]
+            default_years = [2020, 2021, 2022, 2023]
+            default_scopes = [1, 2, 3]
+            default_subcategories = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
-        def parse_input(input_str, default_values):
-            if input_str:
-                return [int(value.strip()) for value in input_str.split(',')]
-            return default_values
+            def parse_input(input_str, default_values):
+                if input_str:
+                    return [int(value.strip()) for value in input_str.split(',')]
+                return default_values
 
-        companies = parse_input(request.GET.get("comp"), default_companies)
-        years = parse_input(request.GET.get("year"), default_years)
-        scopes = parse_input(request.GET.get("scope"), default_scopes)
-        subcategories = parse_input(request.GET.get("subcategory"), default_subcategories)
+            companies = parse_input(request.GET.get("comp"), default_companies)
+            years = parse_input(request.GET.get("year"), default_years)
+            scopes = parse_input(request.GET.get("scope"), default_scopes)
+            subcategories = parse_input(request.GET.get("subcategory"), default_subcategories)
 
-        # Read the models
-        Total_CO2e = apps.get_model('yearly_steps', 'Total_CO2e')
-        Total_CO2eVector = apps.get_model('yearly_steps', 'VectorTotalCO2e')
+            # Read the models
+            Total_CO2e = apps.get_model('yearly_steps', 'Total_CO2e')
+            Total_CO2eVector = apps.get_model('yearly_steps', 'VectorTotalCO2e')
 
-        # Query the parent data
-        query = Total_CO2e.objects.filter(
-            comp__in=companies,
-            year__in=years,
-            scope__in=scopes,
-            subcategory__in=subcategories
-        )
-        parent_records = query.values('id', 'comp', 'year', 'scope', 'subcategory')
+            # Query the parent data
+            query = Total_CO2e.objects.filter(
+                comp__in=companies,
+                year__in=years,
+                scope__in=scopes,
+                subcategory__in=subcategories
+            )
+            parent_records = query.values('id', 'comp', 'year', 'scope', 'subcategory')
 
-        # If no records are found, return an error
-        if not parent_records.exists():
-            return JsonResponse({"status": "error", "message": "No records found for the given filters."})
+            # If no records are found, return an error
+            if not parent_records.exists():
+                return None, None, JsonResponse({"status": "error", "message": "No records found for the given filters."})
 
-        # Map parent data to metadata
-        parent_metadata = {}
-        for record in parent_records:
-            parent_metadata[record['id']] = {
-                "comp": record['comp'],
-                "year": record['year'],
-                "scope": record['scope'],
-                "subcategory": record['subcategory']
-            }
-        parent_ids = list(parent_metadata.keys())
+            # Map parent data to metadata
+            parent_metadata = {}
+            for record in parent_records:
+                parent_metadata[record['id']] = {
+                    "comp": record['comp'],
+                    "year": record['year'],
+                    "scope": record['scope'],
+                    "subcategory": record['subcategory']
+                }
+            parent_ids = list(parent_metadata.keys())
 
-        # Query the vector data for anomalies
-        vector_query = Total_CO2eVector.objects.filter(total_co2e_id__in=parent_ids)
-        vector_data = vector_query.values_list('total_co2e_id', 'co2e_vector')
+            # Query the vector data for anomalies
+            vector_query = Total_CO2eVector.objects.filter(total_co2e_id__in=parent_ids)
+            vector_data = vector_query.values_list('total_co2e_id', 'co2e_vector')
 
-        # If no vectors are found, return an error
-        if not vector_data:
-            return JsonResponse({"status": "error", "message": "No vectors found for the given records."})
+            # If no vectors are found, return an error
+            if not vector_data:
+                return None, None, JsonResponse({"status": "error", "message": "No vectors found for the given records."})
 
-        # Map vectors to their IDs to avoid them mixing up 
-        parent_to_vector_map = {}
-        for total_co2e_id, co2e_vector in vector_data:
-            parent_to_vector_map[total_co2e_id] = np.array(co2e_vector, dtype=float)
+            # Map vectors to their IDs to avoid them mixing up
+            parent_to_vector_map = {}
+            for total_co2e_id, co2e_vector in vector_data:
+                parent_to_vector_map[total_co2e_id] = np.array(co2e_vector, dtype=float)
+
+            return parent_metadata, parent_to_vector_map, None
+
+        parent_metadata, parent_to_vector_map, error_response = parse_and_fetch_data(request)
+        if error_response:
+            return error_response
+
+        return parent_metadata, parent_to_vector_map
+
+    except Exception as e:
+        # Handle unexpected errors and return as JSON
+        return JsonResponse({
+            "status": "error",
+            "message": str(e)
+        })
+
+@csrf_exempt
+def detect_iqr_anomalies(request):
+    try:
+        parent_metadata, parent_to_vector_map = detect_anomalies_helper(request)
+        if isinstance(parent_metadata, JsonResponse):
+            return parent_metadata
 
         # IQR anomaly detection
         vector_values = np.array(list(parent_to_vector_map.values()), dtype=float)
@@ -91,20 +238,38 @@ def detect_anomalies(request):
                         "scope": parent_metadata[parent_id]["scope"],
                         "subcategory": parent_metadata[parent_id]["subcategory"],
                         "anomalous_value": value,
-                        "gas":gas,
+                        "gas": gas,
                         "vector_value": vector.tolist()
                     }
                     iqr_anomalies.append(anomaly)
 
+        # Return JSON response
+        return JsonResponse({
+            "status": "success",
+            "iqr_anomalies": iqr_anomalies
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            "status": "error",
+            "message": str(e)
+        })
+
+@csrf_exempt
+def detect_cosine_anomalies(request):
+    try:
+        parent_metadata, parent_to_vector_map = detect_anomalies_helper(request)
+        if isinstance(parent_metadata, JsonResponse):
+            return parent_metadata
+
         # Cosine similarity anomaly detection
-        # Calculate mean vector
+        vector_values = np.array(list(parent_to_vector_map.values()), dtype=float)
         mean_vector = np.mean(vector_values, axis=0)
 
         # Calculate cosine similarity and detect anomalies
         cosine_anomalies = []
         for parent_id, vector in parent_to_vector_map.items():
             # Cosine similarity
-            print(vector)
             similarity = 1 - cosine(vector, mean_vector) if np.linalg.norm(vector) and np.linalg.norm(mean_vector) else 0
             # Flag as anomaly if similarity is too far from the expected range
             if similarity < 0.95:  # Threshold set for detecting deviations
@@ -122,12 +287,10 @@ def detect_anomalies(request):
         # Return JSON response
         return JsonResponse({
             "status": "success",
-            "iqr_anomalies": iqr_anomalies,
             "cosine_anomalies": cosine_anomalies
         })
 
     except Exception as e:
-        # Handle unexpected errors and return as JSON
         return JsonResponse({
             "status": "error",
             "message": str(e)

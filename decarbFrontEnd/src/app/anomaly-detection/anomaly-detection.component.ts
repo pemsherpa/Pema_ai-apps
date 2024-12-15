@@ -19,50 +19,89 @@ export class AnomalyDetectionComponent {
   YearQuery:number = 0;
   ScopeQuery:number = 0;
   SubCatQuery:number = 0.0;
-  ResponseData:any;
-  ResponseVector:any;
+  //GasQuery:number =0.0
+  ResponseDataIQR: any;
+  ResponseDataCosine: any;
+  ResponseVector: any;
 
-  objectKeys(obj: any): string[] {
-    return Object.keys(obj);
+
+
+  constructor(private httpClient: HttpClient) {}
+
+  sendRequestIQR() {
+    this.httpClient.get('http://127.0.0.1:8000/yearly_steps/detect-iqr-anomalies/', {
+      params: {
+        company: this.CompanyQuery,
+        year: this.YearQuery,
+        scope: this.ScopeQuery,
+        subcategory: this.SubCatQuery
+      }
+    }).subscribe((response: any) => {
+      if (response.status === 'success') {
+        this.ResponseDataIQR = response.iqr_anomalies;
+        console.log('IQR anomalies:', this.ResponseDataIQR);
+      } else {
+        console.error('Error fetching IQR anomalies:', response.message);
+      }
+    });
   }
 
-  constructor(private http: HttpClient) {}
-
-  sendRequestAnomaly(): void {
-    const params = {
-      comp: this.CompanyQuery,
+ // Send request for Cosine anomalies
+ sendRequestCosine() {
+  this.httpClient.get('http://127.0.0.1:8000/yearly_steps/detect-cosine-anomalies/', {
+    params: {
+      company: this.CompanyQuery,
       year: this.YearQuery,
       scope: this.ScopeQuery,
-      subcat: this.SubCatQuery,
-    };
-    
-    this.http
-    .get('http://localhost:8000/yearly_steps/detect_anomalies/', { params })
-    .pipe(
-      tap((response) => {console.log('Response:', response);
-      this.ResponseData=response;}),
-      catchError((error) => {
-        console.error('Error:', error);
-        return of({ error: 'Request failed' }); // Return fallback or default response
-      })
-    )
-    .subscribe();
+      subcategory: this.SubCatQuery
+    }
+  }).subscribe((response: any) => {
+    if (response.status === 'success') {
+      this.ResponseDataCosine = response.cosine_anomalies;
+      console.log('Cosine anomalies:', this.ResponseDataCosine);
+    } else {
+      console.error('Error fetching Cosine anomalies:', response.message);
+    }
+  });
+}
+
+sendRequestVector() {
+  this.httpClient.get('http://127.0.0.1:8000/yearly_steps/create-vector-table/', {})
+    .subscribe(
+      (response: any) => {
+        if (response.status === 'success') {
+          this.ResponseVector = response;
+          console.log('Vector table response:', this.ResponseVector);
+        } else {
+          this.ResponseVector = { error: 'Failed to fetch vector table: ' + response.message };
+        }
+      },
+      (error) => {
+        // Handle the error when the request fails
+        this.ResponseVector = { error: 'An error occurred while fetching the vector table.' };
+        console.error('Error fetching vector table:', error);
+      }
+    );
+}
 
 }
-sendRequestVector(): void {
+
+
+
+// sendRequestVector(): void {
  
-  this.http
-  .get('http://127.0.0.1:8000/yearly_steps/create-vector-table/')
-  .pipe(
-    tap((response) => {console.log('Response:', response);
-    this.ResponseVector=response;}),
-    catchError((error) => {
-      console.error('Error:', error);
-      return of({ error: 'Request failed' }); // Return fallback or default response
-    })
-  )
-  .subscribe();
+//   this.httpClient
+//   .get('http://127.0.0.1:8000/yearly_steps/create-vector-table/')
+//   .pipe(
+//     tap((response) => {console.log('Response:', response);
+//     this.ResponseVector=response;}),
+//     catchError((error) => {
+//       console.error('Error:', error);
+//       return of({ error: 'Request failed' }); // Return fallback or default response
+//     })
+//   )
+//   .subscribe();
 
-}
+// }
 
-}
+// }
