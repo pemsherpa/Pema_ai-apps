@@ -22,7 +22,7 @@
         {
             "company_id": 10,
             "year": 2024,
-            "quarter": 4,
+            "quarter": 1,
             "scope1_steps": [],
             "scope2_steps": [
                 {
@@ -67,6 +67,246 @@
                     }
                 }
             ],
+            "scope3_steps": []
+        },
+        {
+            "company_id": 10,
+            "year": 2024,
+            "quarter": 2,
+            "scope1_steps": [],
+            "scope2_steps": [],
+            "scope3_steps": []
+        },
+        {
+            "company_id": 10,
+            "year": 2024,
+            "quarter": 3,
+            "scope1_steps": [],
+            "scope2_steps": [],
+            "scope3_steps": [
+                {
+                    "description": "Reduction in emissions of flights",
+                    "difficulty": 5,
+                    "cost_savings": 0,
+                    "co2_savings": 1213.6,
+                    "total_cost": 1700,
+                    "total_emissions": 1899.6,
+                    "transition_percentage": 0,
+                    "data": {
+                        "stops": 2
+                    }
+                },
+                {
+                    "description": "Analyze commuting costs and emissions for carpool",
+                    "difficulty": 3,
+                    "cost_savings": 11.26982989576824,
+                    "co2_savings": 118.29520106515088,
+                    "total_cost": 103.41720692446467,
+                    "total_emissions": 35.34718452013363,
+                    "transition_percentage": 25,
+                    "commute_step_recommendations": [
+                        {
+                            "group": 0,
+                            "members": [
+                                {
+                                    "ID": 2,
+                                    "method": "car",
+                                    "locations": "2010 Fifth St, Berkeley, CA",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8670424,
+                                        -122.2989207
+                                    ],
+                                    "distance": 2.8210897363737595,
+                                    "emission": 16.926538418242558,
+                                    "distance_from_firm": 2.8210897363737595,
+                                    "cost": 5.396729931605267,
+                                    "carpool_group": 0
+                                },
+                                {
+                                    "ID": 5,
+                                    "method": "car",
+                                    "locations": "2010 Fifth St, Berkeley, CA",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8670424,
+                                        -122.2989207
+                                    ],
+                                    "distance": 2.8210897363737595,
+                                    "emission": 16.926538418242558,
+                                    "distance_from_firm": 2.8210897363737595,
+                                    "cost": 5.396729931605267,
+                                    "carpool_group": 0
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 11.269829895768233,
+                            "emission_saving": 35.34718452013363,
+                            "distance_saving": 2.490179472747519
+                        },
+                        {
+                            "group": 2,
+                            "members": [
+                                {
+                                    "ID": 1,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                },
+                                {
+                                    "ID": 4,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                },
+                                {
+                                    "ID": 7,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 18.059007837970782,
+                            "emission_saving": 56.641057425275264,
+                            "distance_saving": 2.5016128569040053
+                        },
+                        {
+                            "group": 3,
+                            "members": [
+                                {
+                                    "ID": 3,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                },
+                                {
+                                    "ID": 6,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                },
+                                {
+                                    "ID": 9,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 19.645395733391666,
+                            "emission_saving": 61.61667339983438,
+                            "distance_saving": 2.952234508757403
+                        },
+                        {
+                            "group": 4,
+                            "members": [
+                                {
+                                    "ID": 10,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 16.623703526272205,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 5.300176337158015,
+                                    "carpool_group": 4
+                                }
+                            ],
+                            "message": "Solo rider - no savings possible.",
+                            "money_saving": 0,
+                            "emission_saving": 0,
+                            "distance_saving": 0
+                        }
+                    ]
+                },
+                {
+                    "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                    "difficulty": 3,
+                    "cost_savings": 645,
+                    "co2_savings": 27900.0,
+                    "total_cost": 155,
+                    "total_emissions": 279000,
+                    "transition_percentage": 50,
+                    "data": {
+                        "stops": 1
+                    }
+                }
+            ]
+        },
+        {
+            "company_id": 10,
+            "year": 2024,
+            "quarter": 4,
+            "scope1_steps": [],
+            "scope2_steps": [],
             "scope3_steps": [
                 {
                     "description": "Analyze CRU costs and emissions",
@@ -136,43 +376,6 @@
             "year": 2025,
             "quarter": 1,
             "scope1_steps": [],
-            "scope2_steps": [],
-            "scope3_steps": []
-        },
-        {
-            "company_id": 10,
-            "year": 2025,
-            "quarter": 2,
-            "scope1_steps": [],
-            "scope2_steps": [],
-            "scope3_steps": []
-        },
-        {
-            "company_id": 10,
-            "year": 2025,
-            "quarter": 3,
-            "scope1_steps": [],
-            "scope2_steps": [],
-            "scope3_steps": [
-                {
-                    "description": "Reduction in emissions of flights",
-                    "difficulty": 5,
-                    "cost_savings": 0,
-                    "co2_savings": 1213.6,
-                    "total_cost": 1700,
-                    "total_emissions": 1899.6,
-                    "transition_percentage": 0,
-                    "data": {
-                        "stops": 2
-                    }
-                }
-            ]
-        },
-        {
-            "company_id": 10,
-            "year": 2025,
-            "quarter": 4,
-            "scope1_steps": [],
             "scope2_steps": [
                 {
                     "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
@@ -188,11 +391,11 @@
                         "provider_info": [
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "SJCE_GreenSource(60%Renewable)",
-                                "renewable percent provided": 60.0,
-                                "phone_number": "1-833-432-2454",
-                                "website_link": "https://sanjosecleanenergy.org/",
-                                "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                                "company": "Ava Bright Choice",
+                                "renewable percent provided": 50.0,
+                                "phone_number": "1-833-699-3223",
+                                "website_link": "https://avaenergy.org/change-my-plan/",
+                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -201,11 +404,11 @@
                             },
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "Ava Bright Choice",
-                                "renewable percent provided": 50.0,
-                                "phone_number": "1-833-699-3223",
-                                "website_link": "https://avaenergy.org/change-my-plan/",
-                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                                "company": "SJCE_GreenSource(60%Renewable)",
+                                "renewable percent provided": 60.0,
+                                "phone_number": "1-833-432-2454",
+                                "website_link": "https://sanjosecleanenergy.org/",
+                                "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -228,11 +431,11 @@
                         ],
                         "our recommendation": {
                             "plan_name": "B-19_PV",
-                            "company": "SJCE_GreenSource(60%Renewable)",
-                            "renewable percent provided": 60.0,
-                            "phone_number": "1-833-432-2454",
-                            "website_link": "https://sanjosecleanenergy.org/",
-                            "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                            "company": "Ava Bright Choice",
+                            "renewable percent provided": 50.0,
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/",
+                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                             "Carbon savings": 90.0,
                             "Cost savings": 5.95,
                             "Peak Cost": 92.11,
@@ -242,6 +445,246 @@
                     }
                 }
             ],
+            "scope3_steps": []
+        },
+        {
+            "company_id": 10,
+            "year": 2025,
+            "quarter": 2,
+            "scope1_steps": [],
+            "scope2_steps": [],
+            "scope3_steps": []
+        },
+        {
+            "company_id": 10,
+            "year": 2025,
+            "quarter": 3,
+            "scope1_steps": [],
+            "scope2_steps": [],
+            "scope3_steps": [
+                {
+                    "description": "Reduction in emissions of flights",
+                    "difficulty": 5,
+                    "cost_savings": 0,
+                    "co2_savings": 1213.6,
+                    "total_cost": 1700,
+                    "total_emissions": 1899.6,
+                    "transition_percentage": 0,
+                    "data": {
+                        "stops": 2
+                    }
+                },
+                {
+                    "description": "Analyze commuting costs and emissions for carpool",
+                    "difficulty": 3,
+                    "cost_savings": 11.26982989576824,
+                    "co2_savings": 118.29520106515088,
+                    "total_cost": 103.41720692446467,
+                    "total_emissions": 35.34718452013363,
+                    "transition_percentage": 25,
+                    "commute_step_recommendations": [
+                        {
+                            "group": 0,
+                            "members": [
+                                {
+                                    "ID": 2,
+                                    "method": "car",
+                                    "locations": "2010 Fifth St, Berkeley, CA",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8670424,
+                                        -122.2989207
+                                    ],
+                                    "distance": 2.8210897363737595,
+                                    "emission": 16.926538418242558,
+                                    "distance_from_firm": 2.8210897363737595,
+                                    "cost": 5.396729931605267,
+                                    "carpool_group": 0
+                                },
+                                {
+                                    "ID": 5,
+                                    "method": "car",
+                                    "locations": "2010 Fifth St, Berkeley, CA",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8670424,
+                                        -122.2989207
+                                    ],
+                                    "distance": 2.8210897363737595,
+                                    "emission": 16.926538418242558,
+                                    "distance_from_firm": 2.8210897363737595,
+                                    "cost": 5.396729931605267,
+                                    "carpool_group": 0
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 11.269829895768233,
+                            "emission_saving": 35.34718452013363,
+                            "distance_saving": 2.490179472747519
+                        },
+                        {
+                            "group": 2,
+                            "members": [
+                                {
+                                    "ID": 1,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                },
+                                {
+                                    "ID": 4,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                },
+                                {
+                                    "ID": 7,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 18.059007837970782,
+                            "emission_saving": 56.641057425275264,
+                            "distance_saving": 2.5016128569040053
+                        },
+                        {
+                            "group": 3,
+                            "members": [
+                                {
+                                    "ID": 3,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                },
+                                {
+                                    "ID": 6,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                },
+                                {
+                                    "ID": 9,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 19.645395733391666,
+                            "emission_saving": 61.61667339983438,
+                            "distance_saving": 2.952234508757403
+                        },
+                        {
+                            "group": 4,
+                            "members": [
+                                {
+                                    "ID": 10,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 16.623703526272205,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 5.300176337158015,
+                                    "carpool_group": 4
+                                }
+                            ],
+                            "message": "Solo rider - no savings possible.",
+                            "money_saving": 0,
+                            "emission_saving": 0,
+                            "distance_saving": 0
+                        }
+                    ]
+                },
+                {
+                    "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                    "difficulty": 3,
+                    "cost_savings": 645,
+                    "co2_savings": 27900.0,
+                    "total_cost": 155,
+                    "total_emissions": 279000,
+                    "transition_percentage": 50,
+                    "data": {
+                        "stops": 1
+                    }
+                }
+            ]
+        },
+        {
+            "company_id": 10,
+            "year": 2025,
+            "quarter": 4,
+            "scope1_steps": [],
+            "scope2_steps": [],
             "scope3_steps": [
                 {
                     "description": "Analyze CRU costs and emissions",
@@ -310,43 +753,6 @@
             "company_id": 10,
             "year": 2026,
             "quarter": 1,
-            "scope1_steps": [],
-            "scope2_steps": [],
-            "scope3_steps": []
-        },
-        {
-            "company_id": 10,
-            "year": 2026,
-            "quarter": 2,
-            "scope1_steps": [],
-            "scope2_steps": [],
-            "scope3_steps": []
-        },
-        {
-            "company_id": 10,
-            "year": 2026,
-            "quarter": 3,
-            "scope1_steps": [],
-            "scope2_steps": [],
-            "scope3_steps": [
-                {
-                    "description": "Reduction in emissions of flights",
-                    "difficulty": 5,
-                    "cost_savings": 0,
-                    "co2_savings": 1213.6,
-                    "total_cost": 1700,
-                    "total_emissions": 1899.6,
-                    "transition_percentage": 0,
-                    "data": {
-                        "stops": 2
-                    }
-                }
-            ]
-        },
-        {
-            "company_id": 10,
-            "year": 2026,
-            "quarter": 4,
             "scope1_steps": [],
             "scope2_steps": [
                 {
@@ -363,11 +769,11 @@
                         "provider_info": [
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "Ava Renewable 100",
+                                "company": "MCE_Deep_Green(100%Renewable)",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-833-699-3223",
-                                "website_link": "https://avaenergy.org/change-my-plan/",
-                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                                "phone_number": "1-888-632-3674",
+                                "website_link": "https://mcecleanenergy.org/home-electrification/",
+                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -389,11 +795,11 @@
                             },
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "MCE_Deep_Green(100%Renewable)",
+                                "company": "Ava Renewable 100",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-888-632-3674",
-                                "website_link": "https://mcecleanenergy.org/home-electrification/",
-                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                                "phone_number": "1-833-699-3223",
+                                "website_link": "https://avaenergy.org/change-my-plan/",
+                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -403,11 +809,11 @@
                         ],
                         "our recommendation": {
                             "plan_name": "B-19_PV",
-                            "company": "Ava Renewable 100",
+                            "company": "MCE_Deep_Green(100%Renewable)",
                             "renewable percent provided": 100.0,
-                            "phone_number": "1-833-699-3223",
-                            "website_link": "https://avaenergy.org/change-my-plan/",
-                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/",
+                            "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
                             "Carbon savings": 90.0,
                             "Cost savings": 5.95,
                             "Peak Cost": 92.11,
@@ -417,6 +823,246 @@
                     }
                 }
             ],
+            "scope3_steps": []
+        },
+        {
+            "company_id": 10,
+            "year": 2026,
+            "quarter": 2,
+            "scope1_steps": [],
+            "scope2_steps": [],
+            "scope3_steps": []
+        },
+        {
+            "company_id": 10,
+            "year": 2026,
+            "quarter": 3,
+            "scope1_steps": [],
+            "scope2_steps": [],
+            "scope3_steps": [
+                {
+                    "description": "Reduction in emissions of flights",
+                    "difficulty": 5,
+                    "cost_savings": 0,
+                    "co2_savings": 1213.6,
+                    "total_cost": 1700,
+                    "total_emissions": 1899.6,
+                    "transition_percentage": 0,
+                    "data": {
+                        "stops": 2
+                    }
+                },
+                {
+                    "description": "Analyze commuting costs and emissions for carpool",
+                    "difficulty": 3,
+                    "cost_savings": 11.26982989576824,
+                    "co2_savings": 118.29520106515088,
+                    "total_cost": 103.41720692446467,
+                    "total_emissions": 35.34718452013363,
+                    "transition_percentage": 25,
+                    "commute_step_recommendations": [
+                        {
+                            "group": 0,
+                            "members": [
+                                {
+                                    "ID": 2,
+                                    "method": "car",
+                                    "locations": "2010 Fifth St, Berkeley, CA",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8670424,
+                                        -122.2989207
+                                    ],
+                                    "distance": 2.8210897363737595,
+                                    "emission": 16.926538418242558,
+                                    "distance_from_firm": 2.8210897363737595,
+                                    "cost": 5.396729931605267,
+                                    "carpool_group": 0
+                                },
+                                {
+                                    "ID": 5,
+                                    "method": "car",
+                                    "locations": "2010 Fifth St, Berkeley, CA",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8670424,
+                                        -122.2989207
+                                    ],
+                                    "distance": 2.8210897363737595,
+                                    "emission": 16.926538418242558,
+                                    "distance_from_firm": 2.8210897363737595,
+                                    "cost": 5.396729931605267,
+                                    "carpool_group": 0
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 11.269829895768233,
+                            "emission_saving": 35.34718452013363,
+                            "distance_saving": 2.490179472747519
+                        },
+                        {
+                            "group": 2,
+                            "members": [
+                                {
+                                    "ID": 1,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                },
+                                {
+                                    "ID": 4,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                },
+                                {
+                                    "ID": 7,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 18.059007837970782,
+                            "emission_saving": 56.641057425275264,
+                            "distance_saving": 2.5016128569040053
+                        },
+                        {
+                            "group": 3,
+                            "members": [
+                                {
+                                    "ID": 3,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                },
+                                {
+                                    "ID": 6,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                },
+                                {
+                                    "ID": 9,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 19.645395733391666,
+                            "emission_saving": 61.61667339983438,
+                            "distance_saving": 2.952234508757403
+                        },
+                        {
+                            "group": 4,
+                            "members": [
+                                {
+                                    "ID": 10,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 16.623703526272205,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 5.300176337158015,
+                                    "carpool_group": 4
+                                }
+                            ],
+                            "message": "Solo rider - no savings possible.",
+                            "money_saving": 0,
+                            "emission_saving": 0,
+                            "distance_saving": 0
+                        }
+                    ]
+                },
+                {
+                    "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                    "difficulty": 3,
+                    "cost_savings": 645,
+                    "co2_savings": 27900.0,
+                    "total_cost": 155,
+                    "total_emissions": 279000,
+                    "transition_percentage": 50,
+                    "data": {
+                        "stops": 1
+                    }
+                }
+            ]
+        },
+        {
+            "company_id": 10,
+            "year": 2026,
+            "quarter": 4,
+            "scope1_steps": [],
+            "scope2_steps": [],
             "scope3_steps": [
                 {
                     "description": "Analyze CRU costs and emissions",
@@ -486,7 +1132,75 @@
             "year": 2027,
             "quarter": 1,
             "scope1_steps": [],
-            "scope2_steps": [],
+            "scope2_steps": [
+                {
+                    "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
+                    "difficulty": 2,
+                    "cost_savings": 99973.41,
+                    "co2_savings": 90.0,
+                    "total_cost": 26.59,
+                    "total_emissions": 60.0,
+                    "transition_percentage": 25,
+                    "recommendation": {
+                        "recommended_plan": 100,
+                        "message": "Continue using 100% renewable energy.",
+                        "provider_info": [
+                            {
+                                "plan_name": "B-19_PV",
+                                "company": "MCE_Deep_Green(100%Renewable)",
+                                "renewable percent provided": 100.0,
+                                "phone_number": "1-888-632-3674",
+                                "website_link": "https://mcecleanenergy.org/home-electrification/",
+                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                                "Carbon savings": 90.0,
+                                "Cost savings": 5.95,
+                                "Peak Cost": 92.11,
+                                "Off-Peak Cost": 92.11,
+                                "Total-Cost_with_peak_and_off-peak": 210.81
+                            },
+                            {
+                                "plan_name": "B-19_PV",
+                                "company": "SJCE_TotalGreen(100%Renewable)",
+                                "renewable percent provided": 100.0,
+                                "phone_number": "1-833-432-2454",
+                                "website_link": "https://sanjosecleanenergy.org/",
+                                "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                                "Carbon savings": 90.0,
+                                "Cost savings": 5.95,
+                                "Peak Cost": 92.11,
+                                "Off-Peak Cost": 92.11,
+                                "Total-Cost_with_peak_and_off-peak": 210.81
+                            },
+                            {
+                                "plan_name": "B-19_PV",
+                                "company": "Ava Renewable 100",
+                                "renewable percent provided": 100.0,
+                                "phone_number": "1-833-699-3223",
+                                "website_link": "https://avaenergy.org/change-my-plan/",
+                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                                "Carbon savings": 90.0,
+                                "Cost savings": 5.95,
+                                "Peak Cost": 92.11,
+                                "Off-Peak Cost": 92.11,
+                                "Total-Cost_with_peak_and_off-peak": 210.81
+                            }
+                        ],
+                        "our recommendation": {
+                            "plan_name": "B-19_PV",
+                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "renewable percent provided": 100.0,
+                            "phone_number": "1-888-632-3674",
+                            "website_link": "https://mcecleanenergy.org/home-electrification/",
+                            "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                            "Carbon savings": 90.0,
+                            "Cost savings": 5.95,
+                            "Peak Cost": 92.11,
+                            "Off-Peak Cost": 92.11,
+                            "Total-Cost_with_peak_and_off-peak": 210.81
+                        }
+                    }
+                }
+            ],
             "scope3_steps": []
         },
         {
@@ -515,6 +1229,209 @@
                     "data": {
                         "stops": 2
                     }
+                },
+                {
+                    "description": "Analyze commuting costs and emissions for carpool",
+                    "difficulty": 3,
+                    "cost_savings": 11.26982989576824,
+                    "co2_savings": 118.29520106515088,
+                    "total_cost": 103.41720692446467,
+                    "total_emissions": 35.34718452013363,
+                    "transition_percentage": 25,
+                    "commute_step_recommendations": [
+                        {
+                            "group": 0,
+                            "members": [
+                                {
+                                    "ID": 2,
+                                    "method": "car",
+                                    "locations": "2010 Fifth St, Berkeley, CA",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8670424,
+                                        -122.2989207
+                                    ],
+                                    "distance": 2.8210897363737595,
+                                    "emission": 16.926538418242558,
+                                    "distance_from_firm": 2.8210897363737595,
+                                    "cost": 5.396729931605267,
+                                    "carpool_group": 0
+                                },
+                                {
+                                    "ID": 5,
+                                    "method": "car",
+                                    "locations": "2010 Fifth St, Berkeley, CA",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8670424,
+                                        -122.2989207
+                                    ],
+                                    "distance": 2.8210897363737595,
+                                    "emission": 16.926538418242558,
+                                    "distance_from_firm": 2.8210897363737595,
+                                    "cost": 5.396729931605267,
+                                    "carpool_group": 0
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 11.269829895768233,
+                            "emission_saving": 35.34718452013363,
+                            "distance_saving": 2.490179472747519
+                        },
+                        {
+                            "group": 2,
+                            "members": [
+                                {
+                                    "ID": 1,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                },
+                                {
+                                    "ID": 4,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                },
+                                {
+                                    "ID": 7,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 18.059007837970782,
+                            "emission_saving": 56.641057425275264,
+                            "distance_saving": 2.5016128569040053
+                        },
+                        {
+                            "group": 3,
+                            "members": [
+                                {
+                                    "ID": 3,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                },
+                                {
+                                    "ID": 6,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                },
+                                {
+                                    "ID": 9,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 19.645395733391666,
+                            "emission_saving": 61.61667339983438,
+                            "distance_saving": 2.952234508757403
+                        },
+                        {
+                            "group": 4,
+                            "members": [
+                                {
+                                    "ID": 10,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 16.623703526272205,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 5.300176337158015,
+                                    "carpool_group": 4
+                                }
+                            ],
+                            "message": "Solo rider - no savings possible.",
+                            "money_saving": 0,
+                            "emission_saving": 0,
+                            "distance_saving": 0
+                        }
+                    ]
+                },
+                {
+                    "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                    "difficulty": 3,
+                    "cost_savings": 645,
+                    "co2_savings": 27900.0,
+                    "total_cost": 155,
+                    "total_emissions": 279000,
+                    "transition_percentage": 50,
+                    "data": {
+                        "stops": 1
+                    }
                 }
             ]
         },
@@ -522,6 +1439,76 @@
             "company_id": 10,
             "year": 2027,
             "quarter": 4,
+            "scope1_steps": [],
+            "scope2_steps": [],
+            "scope3_steps": [
+                {
+                    "description": "Analyze CRU costs and emissions",
+                    "difficulty": 1,
+                    "cost_savings": -45000.0,
+                    "co2_savings": 2000.0,
+                    "total_cost": 45000.0,
+                    "total_emissions": 18000.0,
+                    "transition_percentage": 35,
+                    "recommendation": [
+                        {
+                            "recommended_plan": "Switch to the optimized plan for carbon removal.",
+                            "message": "Welcome to Carbon Savings",
+                            "carbon_emission_savings": 2000.0,
+                            "cost_savings": -45000.0,
+                            "provider_info": [
+                                {
+                                    "plan_name": null,
+                                    "company": "Climeworks",
+                                    "renewable percent provided": null,
+                                    "phone_number": " +41 44 533 29 99",
+                                    "website_link": " https://climeworks.com ",
+                                    "description of the company": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                    "location": "Zurich, Switzerland",
+                                    "Carbon savings": 2000.0,
+                                    "Cost savings": -45000.0,
+                                    "Peak Cost": null,
+                                    "Off-Peak Cost": null,
+                                    "Total-Cost": 45000.0
+                                },
+                                {
+                                    "plan_name": null,
+                                    "company": "Carbon Engineering",
+                                    "renewable percent provided": null,
+                                    "phone_number": "+1 604-416-0056",
+                                    "website_link": "https://carbonengineering.com/",
+                                    "description of the company": "Carbon Engineering develops DAC technology to capture CO\u2082 from the atmosphere for large-scale removal or utilization.",
+                                    "location": "Squamish, British Columbia, Canada",
+                                    "Carbon savings": 2000.0,
+                                    "Cost savings": -45000.0,
+                                    "Peak Cost": null,
+                                    "Off-Peak Cost": null,
+                                    "Total-Cost": 45000.0
+                                }
+                            ],
+                            "our_recommendation": {
+                                "plan_name": null,
+                                "company": "Climeworks",
+                                "renewable percent provided": null,
+                                "phone_number": " +41 44 533 29 99",
+                                "website_link": " https://climeworks.com ",
+                                "description of the company": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
+                                "location": "Zurich, Switzerland",
+                                "Carbon savings": 2000.0,
+                                "Cost savings": -45000.0,
+                                "Peak Cost": null,
+                                "Off-Peak Cost": null,
+                                "Total-Cost": 45000.0
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "company_id": 10,
+            "year": 2028,
+            "quarter": 1,
             "scope1_steps": [],
             "scope2_steps": [
                 {
@@ -592,76 +1579,6 @@
                     }
                 }
             ],
-            "scope3_steps": [
-                {
-                    "description": "Analyze CRU costs and emissions",
-                    "difficulty": 1,
-                    "cost_savings": -45000.0,
-                    "co2_savings": 2000.0,
-                    "total_cost": 45000.0,
-                    "total_emissions": 18000.0,
-                    "transition_percentage": 35,
-                    "recommendation": [
-                        {
-                            "recommended_plan": "Switch to the optimized plan for carbon removal.",
-                            "message": "Welcome to Carbon Savings",
-                            "carbon_emission_savings": 2000.0,
-                            "cost_savings": -45000.0,
-                            "provider_info": [
-                                {
-                                    "plan_name": null,
-                                    "company": "Climeworks",
-                                    "renewable percent provided": null,
-                                    "phone_number": " +41 44 533 29 99",
-                                    "website_link": " https://climeworks.com ",
-                                    "description of the company": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
-                                    "location": "Zurich, Switzerland",
-                                    "Carbon savings": 2000.0,
-                                    "Cost savings": -45000.0,
-                                    "Peak Cost": null,
-                                    "Off-Peak Cost": null,
-                                    "Total-Cost": 45000.0
-                                },
-                                {
-                                    "plan_name": null,
-                                    "company": "Carbon Engineering",
-                                    "renewable percent provided": null,
-                                    "phone_number": "+1 604-416-0056",
-                                    "website_link": "https://carbonengineering.com/",
-                                    "description of the company": "Carbon Engineering develops DAC technology to capture CO\u2082 from the atmosphere for large-scale removal or utilization.",
-                                    "location": "Squamish, British Columbia, Canada",
-                                    "Carbon savings": 2000.0,
-                                    "Cost savings": -45000.0,
-                                    "Peak Cost": null,
-                                    "Off-Peak Cost": null,
-                                    "Total-Cost": 45000.0
-                                }
-                            ],
-                            "our_recommendation": {
-                                "plan_name": null,
-                                "company": "Climeworks",
-                                "renewable percent provided": null,
-                                "phone_number": " +41 44 533 29 99",
-                                "website_link": " https://climeworks.com ",
-                                "description of the company": "Climeworks captures CO\u2082 directly from the air using DAC technology, then stores or uses it to fight climate change.",
-                                "location": "Zurich, Switzerland",
-                                "Carbon savings": 2000.0,
-                                "Cost savings": -45000.0,
-                                "Peak Cost": null,
-                                "Off-Peak Cost": null,
-                                "Total-Cost": 45000.0
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "company_id": 10,
-            "year": 2028,
-            "quarter": 1,
-            "scope1_steps": [],
-            "scope2_steps": [],
             "scope3_steps": []
         },
         {
@@ -690,6 +1607,209 @@
                     "data": {
                         "stops": 2
                     }
+                },
+                {
+                    "description": "Analyze commuting costs and emissions for carpool",
+                    "difficulty": 3,
+                    "cost_savings": 11.26982989576824,
+                    "co2_savings": 118.29520106515088,
+                    "total_cost": 103.41720692446467,
+                    "total_emissions": 35.34718452013363,
+                    "transition_percentage": 25,
+                    "commute_step_recommendations": [
+                        {
+                            "group": 0,
+                            "members": [
+                                {
+                                    "ID": 2,
+                                    "method": "car",
+                                    "locations": "2010 Fifth St, Berkeley, CA",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8670424,
+                                        -122.2989207
+                                    ],
+                                    "distance": 2.8210897363737595,
+                                    "emission": 16.926538418242558,
+                                    "distance_from_firm": 2.8210897363737595,
+                                    "cost": 5.396729931605267,
+                                    "carpool_group": 0
+                                },
+                                {
+                                    "ID": 5,
+                                    "method": "car",
+                                    "locations": "2010 Fifth St, Berkeley, CA",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8670424,
+                                        -122.2989207
+                                    ],
+                                    "distance": 2.8210897363737595,
+                                    "emission": 16.926538418242558,
+                                    "distance_from_firm": 2.8210897363737595,
+                                    "cost": 5.396729931605267,
+                                    "carpool_group": 0
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 11.269829895768233,
+                            "emission_saving": 35.34718452013363,
+                            "distance_saving": 2.490179472747519
+                        },
+                        {
+                            "group": 2,
+                            "members": [
+                                {
+                                    "ID": 1,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                },
+                                {
+                                    "ID": 4,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                },
+                                {
+                                    "ID": 7,
+                                    "method": "car",
+                                    "locations": "1122 University Ave, Berkeley, CA",
+                                    "frequency": 22,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8690804,
+                                        -122.2908889
+                                    ],
+                                    "distance": 2.088639761785336,
+                                    "emission": 13.785022427783217,
+                                    "distance_from_firm": 2.088639761785336,
+                                    "cost": 4.395112651248852,
+                                    "carpool_group": 2
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 18.059007837970782,
+                            "emission_saving": 56.641057425275264,
+                            "distance_saving": 2.5016128569040053
+                        },
+                        {
+                            "group": 3,
+                            "members": [
+                                {
+                                    "ID": 3,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                },
+                                {
+                                    "ID": 6,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                },
+                                {
+                                    "ID": 9,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 18,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.770158703442214,
+                                    "carpool_group": 3
+                                }
+                            ],
+                            "message": null,
+                            "money_saving": 19.645395733391666,
+                            "emission_saving": 61.61667339983438,
+                            "distance_saving": 2.952234508757403
+                        },
+                        {
+                            "group": 4,
+                            "members": [
+                                {
+                                    "ID": 10,
+                                    "method": "car",
+                                    "locations": "3006 San Pablo Ave, Berkeley, CA ",
+                                    "frequency": 20,
+                                    "cost_per_km": 0.09564973885840028,
+                                    "coords": [
+                                        37.8518374,
+                                        -122.2869208
+                                    ],
+                                    "distance": 2.7706172543787013,
+                                    "emission": 16.623703526272205,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 5.300176337158015,
+                                    "carpool_group": 4
+                                }
+                            ],
+                            "message": "Solo rider - no savings possible.",
+                            "money_saving": 0,
+                            "emission_saving": 0,
+                            "distance_saving": 0
+                        }
+                    ]
+                },
+                {
+                    "description": "Analyze flight costs and emissions, with 1 stop(s)",
+                    "difficulty": 3,
+                    "cost_savings": 645,
+                    "co2_savings": 27900.0,
+                    "total_cost": 155,
+                    "total_emissions": 279000,
+                    "transition_percentage": 50,
+                    "data": {
+                        "stops": 1
+                    }
                 }
             ]
         },
@@ -698,75 +1818,7 @@
             "year": 2028,
             "quarter": 4,
             "scope1_steps": [],
-            "scope2_steps": [
-                {
-                    "description": "zipcode: 94706 cur_cost: 32.54 self.new_cost: 26.59",
-                    "difficulty": 2,
-                    "cost_savings": 99973.41,
-                    "co2_savings": 90.0,
-                    "total_cost": 26.59,
-                    "total_emissions": 60.0,
-                    "transition_percentage": 25,
-                    "recommendation": {
-                        "recommended_plan": 100,
-                        "message": "Continue using 100% renewable energy.",
-                        "provider_info": [
-                            {
-                                "plan_name": "B-19_PV",
-                                "company": "Ava Renewable 100",
-                                "renewable percent provided": 100.0,
-                                "phone_number": "1-833-699-3223",
-                                "website_link": "https://avaenergy.org/change-my-plan/",
-                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
-                                "Carbon savings": 90.0,
-                                "Cost savings": 5.95,
-                                "Peak Cost": 92.11,
-                                "Off-Peak Cost": 92.11,
-                                "Total-Cost_with_peak_and_off-peak": 210.81
-                            },
-                            {
-                                "plan_name": "B-19_PV",
-                                "company": "SJCE_TotalGreen(100%Renewable)",
-                                "renewable percent provided": 100.0,
-                                "phone_number": "1-833-432-2454",
-                                "website_link": "https://sanjosecleanenergy.org/",
-                                "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
-                                "Carbon savings": 90.0,
-                                "Cost savings": 5.95,
-                                "Peak Cost": 92.11,
-                                "Off-Peak Cost": 92.11,
-                                "Total-Cost_with_peak_and_off-peak": 210.81
-                            },
-                            {
-                                "plan_name": "B-19_PV",
-                                "company": "MCE_Deep_Green(100%Renewable)",
-                                "renewable percent provided": 100.0,
-                                "phone_number": "1-888-632-3674",
-                                "website_link": "https://mcecleanenergy.org/home-electrification/",
-                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
-                                "Carbon savings": 90.0,
-                                "Cost savings": 5.95,
-                                "Peak Cost": 92.11,
-                                "Off-Peak Cost": 92.11,
-                                "Total-Cost_with_peak_and_off-peak": 210.81
-                            }
-                        ],
-                        "our recommendation": {
-                            "plan_name": "B-19_PV",
-                            "company": "Ava Renewable 100",
-                            "renewable percent provided": 100.0,
-                            "phone_number": "1-833-699-3223",
-                            "website_link": "https://avaenergy.org/change-my-plan/",
-                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
-                            "Carbon savings": 90.0,
-                            "Cost savings": 5.95,
-                            "Peak Cost": 92.11,
-                            "Off-Peak Cost": 92.11,
-                            "Total-Cost_with_peak_and_off-peak": 210.81
-                        }
-                    }
-                }
-            ],
+            "scope2_steps": [],
             "scope3_steps": [
                 {
                     "description": "Analyze CRU costs and emissions",

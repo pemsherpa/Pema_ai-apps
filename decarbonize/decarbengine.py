@@ -34,6 +34,7 @@ from steps.decarb_emissions_step import FlightOptimizerDecarbStep
 from steps.quarterly_step import QuarterStep
 from steps.provider_info import ProviderInfo
 from steps.provider_info_cru import ProviderInfoCru
+from steps.decarb_commute_step import DecarbCommuteStep
 
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
@@ -96,40 +97,40 @@ class DecarbEngine:
     def analyze_commuting_costs(self):
         return self.commuting_analyzer.calculate_current_costs_and_emissions()
     
-    # def run_commuting_step(self):
-    #     # commuting costs and emissions for individual
-    #     commuting_costs, commuting_emissions = self.analyze_commuting_costs()
-    #     commuting_step = DecarbStep(
-    #         step_type=DecarbStepType.COMMUTING_INDIVIDUAL,
-    #         cur_cost=commuting_costs,
-    #         new_cost=self.commuting_analyzer.stipent_individual(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, 1, 50, 2,30)[2],
-    #         cur_emissions=commuting_emissions,
-    #         new_emissions=commuting_emissions * 0.9,  # fake num
-    #         description="Analyze commuting costs and emissions for individual",
-    #         difficulty=1
-    #     )
-    #     self.steps.append(commuting_step)
+    def run_commuting_step(self):
+        # commuting costs and emissions for individual
+     commuting_costs, commuting_emissions = self.analyze_commuting_costs()
+     commuting_step = DecarbStep(
+       step_type=DecarbStepType.COMMUTING_INDIVIDUAL,
+          cur_cost=commuting_costs,
+          new_cost=self.commuting_analyzer.stipent_individual(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location, 1, 50, 2,30)[2],
+         cur_emissions=commuting_emissions,
+          new_emissions=commuting_emissions * 0.9,  # fake num
+           description="Analyze commuting costs and emissions for individual",
+           difficulty=1, transition_percentage=25
+       )
+     self.steps.append(commuting_step)
     
-    # def run_carpool_step(self):
-    #     # commuting cost for carpool
-    #     commuting_costs, commuting_emissions = self.analyze_commuting_costs()
-    #     carpool_savings,carpool_saving_emission = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,2,30)
-    #     print(f'init commuting_costs is {commuting_costs}')
-    #     print(f'init commuting_emi is {commuting_emissions}')
-    #     print(f'init carpool commuting savings is {carpool_savings}')
-    #     print(f'new carpool commuting savings is {carpool_saving_emission}')
+    def run_carpool_step(self):
+       # commuting cost for carpool
+        commuting_costs, commuting_emissions = self.analyze_commuting_costs()
+        carpool_savings,carpool_saving_emission = self.commuting_analyzer.carpool_savings(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,2,30)
+        commute_steps = self.commuting_analyzer.carpool_savings_details(self.commuting_analyzer.commuting_data,self.commuting_analyzer.firm_location,2,30)
+        print(f'init commuting_costs is {commuting_costs}')
+        print(f'init commuting_emi is {commuting_emissions}')
+        print(f'init carpool commuting savings is {carpool_savings}')
+        print(f'new carpool commuting savings is {carpool_saving_emission}')
 
-    #     commuting_step = DecarbStep(
-    #         step_type=DecarbStepType.COMMUTING_CARPOOL,
-    #         cur_cost=commuting_costs,
-    #         new_cost = commuting_costs-carpool_savings,
-    #         new_emissions = carpool_saving_emission,
-    #         cur_emissions=commuting_emissions,
-    #         description="Analyze commuting costs and emissions for carpool", 
-    #         difficulty= 3
-    #     )
-        
-    #     self.steps.append(commuting_step)
+        commuting_step = DecarbCommuteStep(
+        step_type=DecarbStepType.COMMUTING_CARPOOL,
+        cur_cost=commuting_costs,
+        new_cost = commuting_costs-carpool_savings,
+        new_emissions = carpool_saving_emission,
+        cur_emissions=commuting_emissions,
+        description="Analyze commuting costs and emissions for carpool", 
+        difficulty= 3,transition_percentage=25,commute_steps=commute_steps
+     )
+        self.steps.append(commuting_step)
 
     def init_flight_analyzer(self, origin, destination, departure_date, return_date):
         self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
@@ -184,8 +185,8 @@ class DecarbEngine:
         return savings
     
     def run_decarb_engine(self):
-        #self.run_commuting_step()
-        #self.run_carpool_step()
+        self.run_commuting_step()
+        self.run_carpool_step()
         self.run_electric_step()
         self.run_flight_optimizer_step()
         self.run_CRU_step()
@@ -195,8 +196,8 @@ class DecarbEngine:
     def run_flight_analyzer(decarb_engine):
         origin = "LAX"
         destination = "JFK"
-        departure_date = "2024-12-20"
-        return_date = "2024-12-25"
+        departure_date = "2025-01-20"
+        return_date = "2025-01-25"
         decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
         decarb_engine.run_return_flight_step()
 
@@ -299,6 +300,9 @@ class DecarbEngine:
             return data.to_dict()
         elif isinstance(data, set):
             return list(data)
+        elif isinstance(data, pd.DataFrame):
+        # Convert DataFrame to a list of dictionaries (JSON serializable format)
+            return data.to_dict(orient='records')
         else:
             return data
         
@@ -341,14 +345,14 @@ class DecarbEngine:
      firm = '2107 Addison St, Berkeley, CA'
      commuting_data = DecarbEngine.create_commuting_test_df()
      df_dynamic = DecarbEngine.create_dynamic_test_df()
-    
+     
      weights = DecarbWeight(0.4, 0.3, 0.2, 0.1)
      pre_cost = 800
      decarb_engine = DecarbEngine(commuting_data, df_dynamic, firm, weights, pre_cost, decarb_goals)
      decarb_steps = decarb_engine.run_decarb_engine()
      decarb_engine.run_flight_analyzer()
      dict_zscore = decarb_engine.get_dict_zscore(decarb_steps)
-
+     print("DECARB",decarb_steps)
      #data such as facilities--> For calcualtion of transition percentage
      current_quarter = decarb_engine.get_cur_quadrant() 
      current_year = int(decarb_goals.year)
@@ -359,6 +363,9 @@ class DecarbEngine:
      electric_step = None
      cru_step=None
      flight_optimizer= None
+     flight_step=None
+     
+     commute_step=None
      for goal_yr in range(decarb_goals.timeframe):
       cur_goal_yr = current_year + goal_yr
       cur_goal_quarter = current_quarter
@@ -384,14 +391,18 @@ class DecarbEngine:
                 for step in decarb_steps:
                     if isinstance(step, CRUDecarbStep):
                         cru_step = step
+                    elif isinstance(step,FlightDecarbStep):
+                        flight_step=step
                     elif isinstance(step,FlightOptimizerDecarbStep):
                         flight_optimizer=step
+                    elif isinstance(step,DecarbCommuteStep):
+                        commute_step=step
                     else: 
                         quarter_step.add_step(step)
 
                 if quarter_step not in yearly_steps:
                     yearly_steps.append(quarter_step)
-     
+      
      # Add Electric Steps as Quarter Steps, once per Year
      cur_e_year = current_year
      for goal_yr in range(decarb_goals.timeframe):
@@ -409,13 +420,15 @@ class DecarbEngine:
             if quarter_step.year == cur_e_year and quarter_step.quarter == 4:
               print("Adding the CRU rec once a year")
               print(cru_step)
-              quarter_step.add_cru_step(cru_rec,cru_step)  # Ensure this is being executed 
+              quarter_step.add_cru_step(cru_rec,cru_step)  
         for quarter_step in yearly_steps_orig:
             if quarter_step.year == cur_e_year and quarter_step.quarter == 3:
               print("Adding the optimiser rec once a year")
               print(flight_optimizer)
-              quarter_step.add_flight_step(flight_optimizer)  # Ensure this is being executed 
-         
+              print("commute",commute_step)
+              quarter_step.add_flight_step(flight_optimizer)  
+              quarter_step.add_commute_step(commute_step)
+              quarter_step.add_flight_step(flight_step)  
     # Step 5: Ensure CRU is only purchased once a year
      decarb_engine.add_cru_steps(yearly_steps)
      output_data=decarb_engine.query_cs_backend_api(10)

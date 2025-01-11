@@ -33,6 +33,12 @@ class QuarterStep:
     def add_flight_step(self,flight_step):
         self.scope3_steps.append(flight_step)
 
+    def add_commute_step(self,commute_step):
+        self.scope3_steps.append(commute_step)
+
+    def add_flight_step(self,flight_step):
+        self.scope3_steps.append(flight_step)
+
     def add_rec_to_scope2(self, e_step, rec):
         if not (type(e_step) is ElectricDecarbStep):
             raise TypeError(f"add_rec_to_scope2: Unexpected step type: {type(e_step)}")  

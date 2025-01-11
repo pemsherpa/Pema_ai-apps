@@ -5,7 +5,8 @@ from itertools import permutations
 from sklearn.cluster import KMeans
 import numpy as np
 import pandas as pd
-
+import json
+from steps.decarb_commute_groups import CommuteStep
 class BusinessCommutingAnalyzer:
     def __init__(self, commuting_data,google_api,oil_price_api,firm_location,df_dynamic):
         self.commuting_data = commuting_data
@@ -205,7 +206,7 @@ class BusinessCommutingAnalyzer:
 
 
 
-    def carpool_savings(self, df_survey, firm_location, num_carpool_days, mpg):
+    def carpool_savings_details(self, df_survey, firm_location, num_carpool_days, mpg):
 
     # Get the current details of each person
         firm_coords = self.geocode_location(firm_location)
@@ -249,6 +250,7 @@ class BusinessCommutingAnalyzer:
         total_savings = 0
         total_savings_emission = 0
         
+        results=[]
         for group, members in carpool_groups:
             locations = members['locations'].tolist()
             
@@ -281,12 +283,96 @@ class BusinessCommutingAnalyzer:
                 print(f"For the group {group}, the members are {members}. Money saving is 0, emission saving is 0, distance saving is 0(solo rider)")
             else:
                 print(f"For the group {group}, the members are {members}. Money saving is {savings}, emission saving is {savings_emission}, distance saving is {saving_distance}.")
+
+            results.append(CommuteStep(group, members, savings, savings_emission, saving_distance))
+    
+        return results
+
+      
+    
+    def carpool_savings (self, df_survey, firm_location, num_carpool_days, mpg):
+    
+      # Get the current details of each person
+        firm_coords = self.geocode_location(firm_location)
+        cur_people = df_survey[df_survey['method'] == 'car']
+        
+        cur_people['coords'] = cur_people['locations'].apply(self.geocode_location)
+        if cur_people['coords'].isnull().any():
+            print("Failed to geocode all locations.")
+            return None
+        
+        # Calculate distances
+        cur_people['distance_from_firm'] = cur_people['coords'].apply(lambda coord: geodesic(firm_coords, coord).kilometers)
+        
+        state_code = self.get_state_code(self.geocode_location(cur_people['locations'].iloc[0]))
+        if state_code is None:
+            print("Failed to determine the state code.")
+            return None
+        
+        cur_people['cost_per_km'] = (self.get_local_gas_price(state_code) / mpg) / 1.609344
+        cur_people['cost'] = cur_people.apply(lambda row: row['distance_from_firm'] * row['frequency'] * row['cost_per_km'], axis=1)
+        cur_people['emission'] = cur_people['distance_from_firm'] * 0.3 * cur_people['frequency']
+        
+        coords_list = np.array(cur_people['coords'].tolist())
+        n_clusters = len(coords_list) // 2
+        
+        kmeans = KMeans(n_clusters=n_clusters, random_state=0).fit(coords_list)
+        cur_people['carpool_group'] = kmeans.labels_
+        
+        # Reassign groups larger than max_group_size
+        max_group_size = 3
+        new_group_id = max(cur_people['carpool_group']) + 1
+        for group, size in cur_people['carpool_group'].value_counts().items():
+            if size > max_group_size:
+                indices = cur_people[cur_people['carpool_group'] == group].index
+                for i in range(0, len(indices), max_group_size):
+                    cur_people.loc[indices[i:i+max_group_size], 'carpool_group'] = new_group_id
+                    new_group_id += 1
+        
+        carpool_groups = cur_people.groupby('carpool_group')
+        
+        total_savings = 0
+        total_savings_emission = 0
+        
+        results=[]
+        for group, members in carpool_groups:
+            locations = members['locations'].tolist()
             
+            
+            optimal_route_evening = self.find_optimal_route(firm_location, locations)
+            optimal_route_morning = self.find_optimal_route_morning(locations)
+            optimal_distance_evening = optimal_route_evening['total_distance_km']
+            optimal_distance_morning = optimal_route_morning['total_distance_km']
+            optimal_distance = optimal_distance_evening + optimal_distance_morning
+            carpool_cost_per_km = min(members['cost_per_km'])
+            
+            new_cost_carpool_days = optimal_distance * num_carpool_days * carpool_cost_per_km
+            new_cost_original_days = members.apply(lambda row: row['distance_from_firm'] * row['cost_per_km'] * (row['frequency'] - num_carpool_days), axis=1).sum() * 2
+            new_cost_total = (new_cost_carpool_days + new_cost_original_days)/len(members)
+            
+            new_emission_carpool_days = optimal_distance * 0.3 * num_carpool_days
+            new_emission_original_days = members.apply(lambda row: row['distance_from_firm'] * 0.3 * (row['frequency'] - num_carpool_days), axis=1).sum() * 2
+            new_emission_total = (new_emission_carpool_days + new_emission_original_days)/len(members)
+            
+            total_cur_costs = members.apply(lambda row: row['distance_from_firm'] * row['cost_per_km'] * row['frequency'], axis=1).sum() * 2
+            total_cur_emission = members.apply(lambda row: row['distance_from_firm'] * 0.3 * row['frequency'], axis=1).sum() * 2
+            total_cur_distance = members['distance_from_firm'].sum() * 2
+            
+            savings = total_cur_costs - new_cost_total
+            savings_emission = total_cur_emission - new_emission_total
+            saving_distance = (total_cur_distance - optimal_distance)/len(members)
+            print(111)
+            
+            if (len(members))==1:
+                print(f"For the group {group}, the members are {members}. Money saving is 0, emission saving is 0, distance saving is 0(solo rider)")
+            else:
+                print(f"For the group {group}, the members are {members}. Money saving is {savings}, emission saving is {savings_emission}, distance saving is {saving_distance}.")
+
             total_savings += savings
             total_savings_emission += savings_emission
-        
-        return total_savings, total_savings_emission
 
-    
+            return total_savings, total_savings_emission
+
+   
 
 

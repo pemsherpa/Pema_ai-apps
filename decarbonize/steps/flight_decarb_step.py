@@ -18,3 +18,5 @@ class FlightDecarbStep(DecarbStep):
     def generate_step_description(self):
         base_description = super().generate_step_description()
         return f"{base_description}, with {self.num_stops} stop(s)"
+    
+    
