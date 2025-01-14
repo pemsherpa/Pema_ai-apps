@@ -19,7 +19,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
   quartileData: any[] = [];
   availableYears: number[] = [];
   selectedYears: { [year: number]: boolean } = {};
-  selectedQuarters: { [quarter: number]: boolean } = { 3: true, 4: true }; // Default selected quarters: 3 and 4
+  selectedQuarters: { [quarter: number]: boolean } = { 1: true,3: true, 4: true }; // Default selected quarters: 3 and 4
 
   @Output() yearsUpdated = new EventEmitter<{ [year: number]: boolean }>();
 
@@ -119,6 +119,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
         co2_savings: step.co2_savings,
         transition: step.transition_percentage,
         difficulty: step.difficulty,
+        our_recommendation: step.ourrecommendation,
         isCompleted: false,
         providerInfo:
           step.recommendation?.provider_info.map((provider: any) => ({
@@ -128,6 +129,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
             phone: provider.phone_number,
             website: provider.website_link,
           })) || [],
+        
+        
         scope: 'Scope2',
         year: year, // Add year
         quarter: quarter,
@@ -136,7 +139,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
         company_id: yearData.company_id,
         title: step.description,
         cost_savings: step.cost_savings,
-        co2_savings: step.co2_emissions_savings,
+        co2_savings: step.co2_savings,
         transition: step.transition_percentage,
         difficulty: step.difficulty,
         isCompleted: false,

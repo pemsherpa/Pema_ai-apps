@@ -246,7 +246,7 @@ class DecarbEngine:
         
     def create_customer_decarb_goals():
         customer_id = 10 
-        year = 2024 
+        year = 2025
         scope1_emissions = 1000 
         scope2_emissions = 1500.5 
         scope3_emissions= 5000.2 
@@ -417,18 +417,20 @@ class DecarbEngine:
               print(e_rec)
               quarter_step.add_electric_step(e_rec, electric_step) 
         for quarter_step in yearly_steps_orig:
-            if quarter_step.year == cur_e_year and quarter_step.quarter == 4:
-              print("Adding the CRU rec once a year")
-              print(cru_step)
-              quarter_step.add_cru_step(cru_rec,cru_step)  
-        for quarter_step in yearly_steps_orig:
             if quarter_step.year == cur_e_year and quarter_step.quarter == 3:
               print("Adding the optimiser rec once a year")
               print(flight_optimizer)
               print("commute",commute_step)
+              quarter_step.add_flight_step(flight_step)
               quarter_step.add_flight_step(flight_optimizer)  
               quarter_step.add_commute_step(commute_step)
-              quarter_step.add_flight_step(flight_step)  
+              
+        for quarter_step in yearly_steps_orig:
+            if quarter_step.year == cur_e_year and quarter_step.quarter == 4:
+              print("Adding the CRU rec once a year")
+              print(cru_step)
+              quarter_step.add_cru_step(cru_rec,cru_step)  
+          
     # Step 5: Ensure CRU is only purchased once a year
      decarb_engine.add_cru_steps(yearly_steps)
      output_data=decarb_engine.query_cs_backend_api(10)
