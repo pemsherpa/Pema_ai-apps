@@ -4,6 +4,7 @@ from yearly_steps.views import *
 from yearly_steps.views_anomaly import *
 from yearly_steps.views_create_vector import *
 from yearly_steps.views_json_yearly import *
+from yearly_steps.views_query import *
 
 urlpatterns = [
     # Other URLs
@@ -16,5 +17,6 @@ urlpatterns = [
     path('add-shopping-cart/', add_shopping_cart, name='add_shopping_cart'),
     path('add-to-cart/', add_to_cart, name='add_to_cart'),
     path('detect-iqr-anomalies/', detect_iqr_anomalies, name='detect_iqr_anomalies'),
-    path('detect-cosine-anomalies/', detect_cosine_anomalies, name='detect_cosine_anomalies'),
+    path('detect-cosine-anomalies/', detect_cosine_anomalies, name='detect_cosine_anomalies'),\
+    path('<str:table_name>/', get_table_records, name='get_table_records'),
 ]
