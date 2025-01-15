@@ -120,6 +120,8 @@ export class ClassifymapComponent implements OnInit, AfterViewInit {
     }
   }
 
+  
+
   map!: google.maps.Map;
 
   ngAfterViewInit(): void {

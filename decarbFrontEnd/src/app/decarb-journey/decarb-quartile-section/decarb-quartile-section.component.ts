@@ -19,7 +19,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
   quartileData: any[] = [];
   availableYears: number[] = [];
   selectedYears: { [year: number]: boolean } = {};
-  selectedQuarters: { [quarter: number]: boolean } = { 1: true,3: true, 4: true }; // Default selected quarters: 3 and 4
+  selectedQuarters: { [quarter: number]: boolean } = { 1: true, 2: true, 3: true, 4: true }; // Default selected quarters: 3 and 4
 
   @Output() yearsUpdated = new EventEmitter<{ [year: number]: boolean }>();
 
@@ -108,7 +108,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
         title: step.recommendation?.message,
         ...step,
         scope: 'Scope1',
-        year: year, // Add year
+        year: year,
         quarter: quarter,
       })),
       ...yearData.scope2_steps.map((step: any) => ({
@@ -117,7 +117,6 @@ export class DecarbQuartileSectionComponent implements OnInit {
         description: step.description,
         cost_savings: step.cost_savings,
         co2_savings: step.co2_savings,
-        transition: step.transition_percentage,
         difficulty: step.difficulty,
         our_recommendation: step.ourrecommendation,
         isCompleted: false,
@@ -129,37 +128,101 @@ export class DecarbQuartileSectionComponent implements OnInit {
             phone: provider.phone_number,
             website: provider.website_link,
           })) || [],
-        
-        
-        scope: 'Scope2',
-        year: year, // Add year
-        quarter: quarter,
-      })),
-      ...yearData.scope3_steps.map((step: any) => ({
-        company_id: yearData.company_id,
-        title: step.description,
-        cost_savings: step.cost_savings,
-        co2_savings: step.co2_savings,
         transition: step.transition_percentage,
-        difficulty: step.difficulty,
-        isCompleted: false,
-        providerInfo:
-          step.recommendation?.recommendations?.flatMap((rec: any) =>
-            rec.provider_info?.map((provider: any) => ({
-              name: provider.company,
-              details: provider.company_description,
-              type: provider.type,
-              location: provider.location,
-              carbonSavings: -provider.carbon_savings,
-              cost_savings: provider.cost_savings,
-              phone: provider.phone_number,
-              website: provider.website_link,
-            }))
-          ) || [],
-        scope: 'Scope3',
-        year: year, // Add year
+        scope: 'Scope2',
+        year: year,
         quarter: quarter,
       })),
+      ...yearData.scope3_steps.map((step: any) => {
+        const baseFields = {
+          company_id: yearData.company_id,
+          title: step.description,
+          description: step.description,
+          cost_savings: step.cost_savings,
+          co2_savings: step.co2_savings,
+          total_cost: step.total_cost,
+          total_emissions: step.total_emissions,
+          transition: step.transition_percentage,
+          difficulty: step.difficulty,
+          isCompleted: false,
+          scope: 'Scope3',
+          year: year,
+          quarter: quarter
+        };
+  
+        // Handle flight data with stops
+        if (step.data?.stops !== undefined) {
+          return {
+            ...baseFields,
+            type: 'flight',
+            stops: step.data.stops
+          };
+        }
+  
+        // Handle commute recommendations
+        else if (step.commute_step_recommendations) {
+          return {
+            ...baseFields,
+            type: 'commute',
+            commuteData: step.commute_step_recommendations.map((group: any) => ({
+              group: group.group,
+              members: group.members.map((member: any) => ({
+                id: member.ID,
+                method: member.method,
+                location: member.locations,
+                frequency: member.frequency,
+                costPerKm: member.cost_per_km,
+                coords: member.coords,
+                distance: member.distance,
+                emission: member.emission,
+                distanceFromFirm: member.distance_from_firm,
+                cost: member.cost,
+                carpoolGroup: member.carpool_group
+              })),
+              message: group.message,
+              savings: {
+                money: group.money_saving,
+                emission: group.emission_saving,
+                distance: group.distance_saving
+              }
+            }))
+          };
+        }
+  
+        // Handle provider recommendations
+        else if (step.recommendation) {
+          return {
+            ...baseFields,
+            type: 'recommendation',
+            recommendations: step.recommendation.map((rec: any) => ({
+              plan: rec.recommended_plan,
+              message: rec.message,
+              carbonSavings: rec.carbon_emission_savings,
+              costSavings: rec.cost_savings,
+              providers: rec.provider_info.map((provider: any) => ({
+                name: provider.plan_name,
+                company: provider.company,
+                details: provider['description of the company'],
+                location: provider.location,
+                phone: provider.phone_number,
+                website: provider.website_link,
+                carbonSavings: provider['Carbon savings'],
+                costSavings: provider['Cost savings'],
+                totalCost: provider['Total-Cost'],
+                renewablePercent: provider['renewable percent provided']
+              })),
+              recommendedProvider: rec.our_recommendation
+            }))
+          };
+        }
+  
+        else {
+          console.log("couldn't identify type for scope3")
+        }
+        // Default case
+        console.log("Answer: ", baseFields)
+        return baseFields;
+      })
     ];
   }
 

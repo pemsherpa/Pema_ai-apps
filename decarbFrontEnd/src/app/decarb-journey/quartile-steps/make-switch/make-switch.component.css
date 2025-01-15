@@ -2,6 +2,22 @@
   font-family: 'Karla', sans-serif;
   margin:5px;
 }
+
+.navbar {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 6rem;
+  margin-left: 30px;
+  margin-right: 30px;
+  border-radius: 50px;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  border-bottom: 2px solid #ddd;
+  border-right: 2px solid #ddd;
+  border-left: 2px solid #ddd;
+}
+
 .back{
   display: flex;
   align-items: center;
@@ -14,113 +30,21 @@
   border: none;
   padding:20px;
 }
-.switch {
-  color: teal;
-  font-weight: bold;  
-  font-size: 40px;
+
+.navbar.back {
+  cursor: pointer;
 }
 
-.now {
-  color: black;
-  font-weight: bold; 
-  font-size:40px;
-}
-.content {
-  font-size: 20px;
-  position: relative;  /* Ensure the 'left' property works */
-  left: 5px;  /* Moves the content 20px to the right */
+
+button {
+  all: unset; /* Reset all inherited button styles */
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6739E9;
+  text-decoration: underline;
+  padding: 20px;
+  cursor: pointer;
 }
 
-.container {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 40px;
-  }
-  
-  .card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    background-color: #fff;
-  }
-  
-  .card-header {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #6739E9;
-  }
-  
-  .card-body {
-    font-size: 1rem;
-  }
-  
-  .btn {
-    margin-top: 20px;
-  }
-  .user-details-card {
-    width: 100%;
-    max-width: 95%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 10px;
-  }
-  
-  .card-title {
-    text-align: center;
-    color: teal;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  form {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Create 2 equal columns */
-    gap: 20px;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  .checkbox {
-    grid-column: span 2; /* Makes the checkbox span across both columns */
-  }
-  
-  button.submit-button {
-    grid-column: span 2; /* Makes the button span across both columns */
-    padding: 10px 20px;
-    background-color: teal;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  button.submit-button:hover {
-    background-color: darkcyan;
-  }
-  
-  
-  @media (max-width: 768px) {
-    .user-details-card {
-      padding: 15px;
-    }
-  }
-  

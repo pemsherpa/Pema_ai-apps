@@ -1,0 +1,270 @@
+* {
+    font-family: 'Karla', sans-serif;
+    margin: 5px;
+}
+
+.switch,
+.now {
+    font-weight: bold;
+    font-size: 40px;
+}
+
+
+
+.switch {
+    color: teal;
+}
+
+.now {
+    color: black;
+}
+
+.layout {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: start;
+    gap: 20px;
+}
+
+.current-plan {
+    position: sticky;
+    top: 0.4rem;
+    width: 20%;
+    background-color: rgb(99, 160, 160);
+    color: white;
+    height: 100vh;
+    padding: 40px;
+    box-sizing: border-box;
+    margin: -20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    max-width: 70%;
+    overflow-y: auto;
+    height: auto;
+    margin-bottom: 0;
+}
+
+.carousel-container {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    padding-top: 1%;
+}
+
+.carousel-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width: 100%;
+    min-width: 90%;
+    transition: transform 0.5s ease;
+    opacity: 1;
+    visibility: hidden;
+}
+
+.carousel-card.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.left-side {
+    flex: 1;
+    min-width: 40%;
+    max-width: 55%;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-side {
+    flex: 1;
+    width: 45%;
+}
+
+.provider-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-company {
+    display: flex;
+    align-items: center;
+}
+
+.company-logo {
+    width: 15%;
+    height: 25%;
+    margin-right: 10px;
+}
+
+.company-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6739E9;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    text-align: center;
+    margin-top: 10px;
+
+}
+
+.details {
+    margin: 5px 0;
+}
+
+.details-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.details-item {
+    padding: 20px;
+    width: 48%;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.detail-value {
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: teal;
+}
+
+.detail-label {
+    margin-top: 5px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.description {
+    margin-top: 10px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+.tab {
+    padding: 5px 15px;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 15px;
+    display: inline-block;
+    margin-bottom: 10px;
+    max-width: fit-content;
+}
+
+.tab.recommended {
+    background-color: teal;
+    color: white;
+}
+
+.tab.other {
+    background-color: #ddd;
+    color: black;
+}
+
+.graph-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.cost-graph,
+.co2-graph {
+    width: 100%;
+    height: 150px;
+    background-color: #f1f1f1;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    font-size: 1rem;
+}
+
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    color: #ddd;
+    border: none;
+    cursor: pointer;
+    font-size: 70px;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-button.left {
+    left: -1.4rem;
+}
+
+.nav-button.right {
+    right: 1.1rem;
+}
+
+.carousel-card.recommended {
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 120, 120, 0.5);
+    transition: transform 0.5s ease-in, box-shadow 0.5s ease-in;
+}
+
+.highlight {
+    color: teal;
+    font-weight: bold;
+}
+
+.content {
+    font-size: 20px;
+    position: relative;
+    left: 5px;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 40px;
+    transform: translateY(-7%);
+}
+
+.card-header {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #6739E9;
+}
+
+.card-body {
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .user-details-card {
+        padding: 15px;
+    }
+}

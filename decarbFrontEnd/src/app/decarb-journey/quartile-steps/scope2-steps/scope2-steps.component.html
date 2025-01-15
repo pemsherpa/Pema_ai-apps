@@ -1,19 +1,20 @@
 <div class="step-details" position="relative">
   <div class="scope-header">
     <!-- Check/Uncheck Icon (Moved Outside of Bottom Line) -->
-     <div class="check-box-container">
-    <div class="check-box" (click)="handleClick()">
-      <ng-container *ngIf="stepData.isCompleted; else unchecked">
-        <img src="../../assets/checked.svg" alt="Checked" class="checkbox-icon" />
-      </ng-container>
-      <ng-template #unchecked>
-        <img src="../../assets/add.svg" alt="Unchecked" class="checkbox-icon" />
-      </ng-template>
+    <div class="check-box-container">
+      <div class="check-box" (click)="handleClick()">
+        <ng-container *ngIf="stepData.isCompleted; else unchecked">
+          <img src="../../assets/checked.svg" alt="Checked" class="checkbox-icon" />
+        </ng-container>
+        <ng-template #unchecked>
+          <img src="../../assets/add.svg" alt="Unchecked" class="checkbox-icon" />
+        </ng-template>
+      </div>
+      <div class="vertical-line" 
+        [style.height.px]="calculateLineHeight()"
+        [style.backgroundColor]="stepData.isCompleted ? 'teal' : 'white'">
+      </div>
     </div>
-<div class="vertical-line" 
-    [style.height.px]="calculateLineHeight()" 
-    [style.backgroundColor]="stepData.isCompleted ? 'teal' : 'white'">
-    </div></div>
 
 
     <!-- Step Header with 20px Gap -->
@@ -54,7 +55,7 @@
           </ng-container>
         </div>
         <div class="top-right-link">
-          <a [routerLink]="['/make-switch']" class="switch-link"(click)="onMakeSwitchClick(stepData)">
+          <a [routerLink]="['/make-switch/renewable']" class="switch-link" (click)="onMakeSwitchClick(stepData)">
             <img src="assets/forward.svg" alt="AI Icon"> Make this switch now
           </a>
         </div>
@@ -88,4 +89,3 @@
     </div>
   </div>
 </div>
-

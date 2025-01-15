@@ -1,0 +1,92 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="layout">
+
+    <div class="current-plan" *ngIf="currentDetails">
+        <h2 class="card-header">Current Provider and Plan</h2>
+        <div class="card-body">
+            <p><strong>Current Provider:</strong> {{ currentDetails.currentProvider }}</p>
+            <p><strong>Current Plan:</strong> {{ currentDetails.currentPlan }}</p>
+            <p><strong>Current Cost:</strong> ${{ currentDetails.currentCost }}</p>
+            <p><strong>Current Emissions:</strong> {{ currentDetails.currentEmissions }} kCO₂</p>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <br />
+            <h2><span class="switch">Switch</span> <span class="now">now !!</span></h2>
+            <p class="content">You are just a few steps away from saving money and reducing your carbon footprint!</p>
+
+            <br />
+            <br />
+            <div class="carousel-container">
+                <div class="carousel-card" *ngFor="let provider of stepData.providerInfo; let i = index"
+                    [class.active]="i === activeIndex" [class.recommended]="i === 0"
+                    [ngStyle]="{ transform: 'translateX(' + (-activeIndex * 100) + '%)' }">
+                    <div class="card" *ngIf="stepData">
+                        <h2 class="card-header">{{ stepData.title }}</h2>
+
+                        <div *ngIf="stepData?.providerInfo?.length">
+                            <div class="content-wrapper">
+                                <div class="left-side">
+                                    <div [ngClass]="{'tab': true, 'recommended': i === 0, 'other': i !== 0}">
+                                        {{ i === 0 ? 'Our Recommendation' : 'Other Options' }}
+                                    </div>
+
+                                    <div class="provider-information">
+                                        <div class="logo-company">
+                                            <img *ngIf="provider.name" [src]="getImagePath(provider.name)"
+                                                alt="{{ provider.name }} logo" class="company-logo">
+
+                                            <strong class="company-name">{{ provider.name }}</strong>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="details">
+                                        <div class="details-box">
+                                            <div class="details-item">
+                                                <div class="detail-value" *ngIf="stepData.cost_savings">${{ stepData.cost_savings }}</div>
+                                                <div class="detail-label" *ngIf="stepData.cost_savings">Cost Savings</div>
+                                            </div>
+                                            <div class="details-item">
+                                                <div class="detail-value" *ngIf="stepData.co2_savings">{{ stepData.co2_savings }}kCO2</div>
+                                                <div class="detail-label" *ngIf="stepData.co2_savings">CO2 Savings</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="description">
+                                        {{ provider.details }}
+                                        <br />
+                                        <br />
+                                        Renewable Percentage: {{ provider.renewablePercentage }}% <br />
+                                        <i class="fa fa-phone"></i> {{ provider.phone }} <br />
+                                        <a *ngIf="provider.website" [href]="provider.website" target="_blank">Visit
+                                            Website</a>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="right-side">
+                                    <div class="graph-container" style="border:3px; width: 500px; height: 200px;">
+                                        <h2>Cost <span style="color: teal;">Reduction</span></h2>
+                                        <canvas [id]="'cost-chart-' + i"></canvas>
+                                        <br />
+                                        <h2>CO2 <span style="color: #6739E9;">Reduction</span></h2>
+                                        <canvas [id]="'co2-chart-' + i"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button *ngIf="stepData?.providerInfo?.length>1" class="nav-button left" (click)="previousCard()">&#706;</button>
+            <button *ngIf="stepData?.providerInfo?.length>1" class="nav-button right" (click)="nextCard()">&#707;</button>
+        </div>
+
+    </div>
+</div>
