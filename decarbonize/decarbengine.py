@@ -40,7 +40,9 @@ import os
 import django
 
 # Add the root directory of your project to the Python path
-sys.path.append('/Users/gowrigalgali/Desktop/CarbonSustain/ai-apps/Database_Django/database_cs')
+base_path = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
+relative_path = os.path.join(base_path, '../Database_Django/database_cs')  # Adjust based on your folder structure
+sys.path.append(os.path.normpath(relative_path))
 
 # Set the Django settings module environment variable
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'database_cs.settings')
@@ -57,7 +59,7 @@ class DecarbEngine:
         self.GOOGLE_MAPS_API_KEY = "AIzaSyDNBM20_Bc2on1-q14X8NE-hWTa1imUhH4"
         self.FLIGHT_API_KEY = 'ee2ea83f086accb17e024684db2595936984105987b27487bd78eba53fb2c32c' #Replaced the API Key on 17/01
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
-        self.COORDINATES_API_KEY = "0c608aea6eb74a9da052e7a83df8c693"
+        self.COORDINATES_API_KEY = "7111777279e746248e1eea239d8ed555"   #Replaced the API Key on 17/01
         self.firm = firm
         self.dynamic = dynamic_data
         self.weights = weights
