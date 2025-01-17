@@ -18,5 +18,6 @@ urlpatterns = [
     #path('add-to-cart/', add_to_cart, name='add_to_cart'),
     path('detect-iqr-anomalies/', detect_iqr_anomalies, name='detect_iqr_anomalies'),
     path('detect-cosine-anomalies/', detect_cosine_anomalies, name='detect_cosine_anomalies'),\
+    path('query_scope_steps/', query_scope_steps, name='query_scope_steps'),
     path('<str:table_name>/', get_table_records, name='get_table_records'),
 ]
