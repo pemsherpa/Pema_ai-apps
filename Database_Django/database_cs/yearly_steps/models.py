@@ -31,6 +31,7 @@ class Plans(models.Model):
     total_cost = models.FloatField()
     peak_cost = models.FloatField(null=True, blank=True)
     off_peak_cost = models.FloatField(null=True, blank=True)
+    data=models.TextField(null=True, default="No data is provided")
 
 # ScopeSteps model
 class ScopeSteps(models.Model):

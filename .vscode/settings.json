@@ -1,4 +1,9 @@
 {
     "ecl.targetCluster": {},
-    "ecl.launchConfiguration": "not found"
+    "ecl.launchConfiguration": "not found",
+    "python.analysis.extraPaths": [
+        "./Database_Django/database_cs",
+        "./Database_Django",
+        "./Database_Django"
+    ]
 }

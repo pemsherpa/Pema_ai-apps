@@ -35,11 +35,27 @@ from steps.quarterly_step import QuarterStep
 from steps.provider_info import ProviderInfo
 from steps.provider_info_cru import ProviderInfoCru
 from steps.decarb_commute_step import DecarbCommuteStep
+import sys
+import os
+import django
+
+# Add the root directory of your project to the Python path
+sys.path.append('/Users/gowrigalgali/Desktop/CarbonSustain/ai-apps/Database_Django/database_cs')
+
+# Set the Django settings module environment variable
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'database_cs.settings')
+
+# Setup Django
+django.setup()
+
+from yearly_steps.models import *
+# Import the required module
+from yearly_steps.views_json_yearly import *
 
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyDNBM20_Bc2on1-q14X8NE-hWTa1imUhH4"
-        self.FLIGHT_API_KEY = '7afef474c061eff1d01477d4a67693a2fdb2821437d63642750002ee4350e901' #Replaced the API Key on 26/09
+        self.FLIGHT_API_KEY = 'ee2ea83f086accb17e024684db2595936984105987b27487bd78eba53fb2c32c' #Replaced the API Key on 17/01
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.COORDINATES_API_KEY = "0c608aea6eb74a9da052e7a83df8c693"
         self.firm = firm
@@ -196,8 +212,8 @@ class DecarbEngine:
     def run_flight_analyzer(decarb_engine):
         origin = "LAX"
         destination = "JFK"
-        departure_date = "2025-01-20"
-        return_date = "2025-01-25"
+        departure_date = "2025-01-30"
+        return_date = "2025-01-31"
         decarb_engine.run_flight_step(origin, destination, departure_date, return_date)
         decarb_engine.run_return_flight_step()
 
@@ -435,7 +451,9 @@ class DecarbEngine:
      decarb_engine.add_cru_steps(yearly_steps)
      output_data=decarb_engine.query_cs_backend_api(10)
 
-     decarb_engine.output_json_to_file(output_data,yearly_steps, output_file)
+     data=decarb_engine.output_json_to_file(output_data,yearly_steps, output_file)
+     load_json_data(data,output_data)
+     
 
     
 
@@ -529,6 +547,8 @@ class DecarbEngine:
         # Save the result as a JSON file
         with open(output_file, 'w') as f:
             json.dump(output_data, f, indent=4)
+
+        print(json_data_serializable)
 
         return json_data_serializable
 

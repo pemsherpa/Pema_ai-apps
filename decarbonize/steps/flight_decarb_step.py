@@ -10,11 +10,8 @@ class FlightDecarbStep(DecarbStep):
  
     def step_to_dict(self):
         dict = super().step_to_dict()
-        dict['data'] = {
-            'stops':self.num_stops
-        }
-
         return dict
+    
     def generate_step_description(self):
         base_description = super().generate_step_description()
         return f"{base_description}, with {self.num_stops} stop(s)"
