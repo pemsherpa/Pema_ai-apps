@@ -97,83 +97,89 @@ def load_json_data(data, output_data):
                         )
                     else:
                         return JsonResponse({"error": f"Invalid plan assigned for year {year}, quarter {quarter}."}, status=400)
-            elif scope_id==3 and quarter==4:
+            
+                            
+            elif scope_id == 3 and quarter == 4:
                 print("\nScope: ", scope_id)
                 
                 for step_data in yearly_data.get(scope_type, []):
                     print("\nStep data: ", step_data)
                     recommendation = step_data.get('recommendation', [])
+                    print("Recommendation",recommendation)
                     our_recommendation = []
+                    provider_info_list = []
+                    
                     for item in recommendation:
-                       if isinstance(item, dict):
-                          our_recommendation.append(item.get('our recommendation', {}))
-                       else:
-                          print("Item is not a dictionary:", item)
+                        if isinstance(item, dict):
+                            our_recommendation.append(item.get('our_recommendation', {}))
+                            print("our_rec",our_recommendation)
+                        else:
+                            print("Item is not a dictionary:", item)
+                    
                     for item in recommendation:
-                       if isinstance(item, dict):
-                          provider_info_list.append(item.get('provider_info', []))
-                       else:
-                          print("Item is not a dictionary:", item)
-                    plan = None
+                        if isinstance(item, dict):
+                            provider_info_list.extend(item.get('provider_info', []))
+                        else:
+                            print("Item is not a dictionary:", item)
+                    
                     print("\nStep Data:", step_data)
                     company_name = []  # Initialize as a list
 
                     for item in our_recommendation:
                         if isinstance(item, dict):
-                           company_name.append(item.get('company', ''))
+                            name = item.get('company', 'Not Provided').strip()
+                            if name:
+                                company_name.append(name)
+                                print("company",company_name)
                         else:
-                           print("Unexpected item type in provider_info:", type(item))
+                            print("Unexpected item type in our_recommendation:", type(item))
+                    provider=None
+                    plan=None
+                    company_name=company_name[0]
+                    print(company_name)
+                    if company_name:
                     # Look for plans via 'our_recommendation' first
-                    
-                    provider = Providers.objects.filter(providers_name=company_name).first()
-
+                        provider = Providers.objects.filter(providers_name_first=company_name).first()
+                        print(provider)
                     if provider:
-                        plan = Plans.objects.filter(plan_name=plan_name, provider=provider).first()
+                        plan = Plans.objects.filter(
+                            plan_name=plan.get('plan_name', 'Not Provided'), 
+                            provider=provider
+                        ).first()
+                        print("Plan",plan)
 
                     # Fallback to 'provider_info_list'
                     if not plan:
                         for provider_info in provider_info_list:
-    
-                           if isinstance(provider_info, dict):
-                              provider, _ = Providers.objects.get_or_create(
-                              providers_name=provider_info.get('company', 'Unknown'),
-                              defaults={
-                                'phone_number': provider_info.get('phone_number', ''),
-                                  'website_link': provider_info.get('website_link', ''),
-                                 'description': provider_info.get('description of the company', ''),
-            },
-        )
+                            if isinstance(provider_info, dict):
+                                # Replace null values with 'Not Provided'
+                                provider, _ = Providers.objects.get_or_create(
+                                    providers_name=provider_info.get('company', 'Not Provided'),
+                                    defaults={
+                                        'phone_number': provider_info.get('phone_number', 'Not Provided'),
+                                        'website_link': provider_info.get('website_link', 'Not Provided'),
+                                        'description': provider_info.get('description of the company', 'Not Provided'),
+                                    },
+                                )
 
-        # Safely get or create the plan associated with the provider
-                              plan_name = provider_info.get('plan_name', 'Default Plan')
-                              plan, _ = Plans.objects.get_or_create(
-                              provider=provider,
-                              plan_name=plan_name,
-                              defaults={
-                                    'carbon_cost': provider_info.get('Carbon savings', 0),
-                                    'total_cost': provider_info.get('Total-Cost_with_peak_and_off-peak', 0),
-                                    'peak_cost': provider_info.get('Peak Cost', 0),
-                                    'off_peak_cost': provider_info.get('Off-Peak Cost', 0),
-            },
-        )
-                           else:
+                                # Safely get or create the plan associated with the provider
+                                plan_name = provider_info.get('plan_name', 'Not Provided')
+                                plan, _ = Plans.objects.get_or_create(
+                                    provider=provider,
+                                    plan_name=plan_name,
+                                    defaults={
+                                        'carbon_cost': provider_info.get('Carbon savings', 0),
+                                        'total_cost': provider_info.get('Total-Cost', 0),
+                                        'peak_cost': provider_info.get('Peak Cost', 0),
+                                        'off_peak_cost': provider_info.get('Off-Peak Cost', 0),
+                                    },
+                                )
+                            else:
                                 print(f"Invalid provider_info entry: {provider_info}")
+                    
+                print(f"Final Provider: {provider}")
+                print(f"Final Plan: {plan}")
 
-
-                    if plan and isinstance(plan, Plans):
-                        print("\nEntering ScopeSteps, Plan present............")
-                        ScopeSteps.objects.create(
-                            company=company,
-                            plan=plan,
-                            year=year,
-                            quarter=quarter,
-                            scope_type=scope_id,
-                            description=step_data.get('description', ''),
-                            difficulty=step_data.get('difficulty', 0),
-                            transition_percentage=step_data.get('transition_percentage', 0),
-                        )
-                    else:
-                        return JsonResponse({"error": f"Invalid plan assigned for year {year}, quarter {quarter}."}, status=400)
             elif scope_id==3:
                 print("\nScope: ", scope_id)
                 for step_data in yearly_data.get(scope_type, []):
