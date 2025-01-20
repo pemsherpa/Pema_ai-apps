@@ -99,8 +99,9 @@ def load_json_data(data, output_data):
                         return JsonResponse({"error": f"Invalid plan assigned for year {year}, quarter {quarter}."}, status=400)
             elif scope_id==3 and quarter==4:
                 print("\nScope: ", scope_id)
+                
                 for step_data in yearly_data.get(scope_type, []):
-                    
+                    print("\nStep data: ", step_data)
                     recommendation = step_data.get('recommendation', [])
                     our_recommendation = []
                     for item in recommendation:
