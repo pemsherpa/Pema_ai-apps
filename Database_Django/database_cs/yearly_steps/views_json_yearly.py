@@ -183,8 +183,8 @@ def load_json_data(data, output_data):
                     description = step_data.get('description', 'No description provided')
                     difficulty = step_data.get('difficulty', 0)
                     transition_percentage = step_data.get('transition_percentage', 0.0)
-                    year = step_data.get('year', 2025)  # Default year if missing
-                    quarter = step_data.get('quarter', 1)  # Default quarter if missing
+                    #year = step_data.get('year', 2025)  # Default year if missing
+                    #quarter = step_data.get('quarter', 1)  # Default quarter if missing
                     total_cost = step_data.get('total_cost', 0.0)
                     total_emissions = step_data.get('total_emissions', 0.0)
 

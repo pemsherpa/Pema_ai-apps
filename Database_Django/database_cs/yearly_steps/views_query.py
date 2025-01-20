@@ -50,7 +50,7 @@ def query_scope_steps(request):
     plan_name = request.GET.get('plan_name')
     provider_name = request.GET.get('provider_name')
 
-    # Querying the related tables
+    
     filters = {}
     if year:
         filters['year'] = year
@@ -65,7 +65,7 @@ def query_scope_steps(request):
     if transition_percentage:
         filters['transition_percentage'] = transition_percentage
 
-    # Getting related foreign key objects
+    
     if company_id:
         company = get_object_or_404(Companys, company_id=company_id)
         filters['company'] = company
@@ -86,10 +86,10 @@ def query_scope_steps(request):
         else:
             return JsonResponse({"error": f"No providers found with name '{provider_name}'"}, status=404)
 
-    # Querying ScopeSteps with filters
+    
     scope_steps = ScopeSteps.objects.filter(**filters).select_related('company', 'plan__provider')
 
-    # Formatting results as JSON
+    
     results = [
         {
             "id": step.id,
