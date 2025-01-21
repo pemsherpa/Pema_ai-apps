@@ -1,0 +1,178 @@
+* {
+    font-family: 'Karla', sans-serif;
+}
+.layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    gap: 20px;
+}
+
+.current-plan {
+    position: sticky;
+    top: 0.4rem;
+    width: 20%;
+    background-color: rgb(99, 160, 160);
+    color: white;
+    height: 100vh;
+    padding: 40px;
+    box-sizing: border-box;
+    margin: -20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h2.card-header {
+    font-size: 2rem;
+    font-weight: bolder;
+    margin-bottom: 20px;
+}
+
+
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+}
+
+.highlight {
+    color: teal;
+    font-weight: bold;
+}
+
+.tab {
+    padding: 5px 15px;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 15px;
+    display: inline-block;
+    margin-bottom: 10px;
+    max-width: fit-content;
+}
+
+.tab.recommended {
+    background-color: teal;
+    color: white;
+}
+
+.tab.other {
+    background-color: #ddd;
+    color: black;
+}
+
+button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    color: #6739E9;
+    border: 2px solid #6739E9;
+    border-radius: 50px;
+    cursor: pointer;
+    background-color: transparent;
+}
+button:hover {
+    background-color: #ddd;
+    color: #6739E9;
+}
+
+
+.providers-data {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 35px;
+    justify-content: flex-start;
+}
+
+.provider-card {
+    width: calc(33.33% - 40px);
+    padding: 15px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    text-align: left;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.provider-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 18px;
+}
+
+.modal {
+    position: fixed;
+    width: 110%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    top: 0;
+    left: -10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 10px;
+    width: 60%;
+    max-width: 500px;
+    z-index: 100000;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-text {
+    padding: 20px;
+}
+
+.close {
+    font-size: 30px;
+    color: #000;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 50%;  /* Makes the button circular */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.close.x {
+    top: -100px;
+    text-align: center;
+}
+
+.modal-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    left: -20px;
+    padding: 0;
+}
+
+.btn-website {
+    display: inline-block;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.btn-website:hover {
+    background-color: #45a049;
+}

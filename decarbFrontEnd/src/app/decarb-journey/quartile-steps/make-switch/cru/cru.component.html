@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="layout">
+
+    <div class="current-plan" *ngIf="currentDetails">
+        <h2 class="card-header">Current Provider and Plan</h2>
+        <div class="card-body">
+            <p><strong>Current Provider:</strong> {{ currentDetails.currentProvider }}</p>
+            <p><strong>Current Plan:</strong> {{ currentDetails.currentPlan }}</p>
+            <p><strong>Current Cost:</strong> ${{ currentDetails.currentCost }}</p>
+            <p><strong>Current Emissions:</strong> {{ currentDetails.currentEmissions }} kCO₂</p>
+        </div>
+    </div>
+
+    
+    <div class="main-content">
+        <div *ngFor="let rec of stepData?.recommendations" class="recommendation">
+            <h1>{{ rec.message | slice: 0:10 }} <span class="highlight">{{ rec.message | slice: 10 }}</span></h1>
+            <h2>{{rec.plan}}</h2>
+            <div class="providers-data">
+                <div *ngFor="let provider of rec?.providers; let i = index" class="provider-card">
+                    <img [src]="getImagePath(provider.company)" alt="Nature" class="provider-img">
+                    <h3>{{provider.company}}</h3>
+                    <div [ngClass]="{'tab': true, 'recommended': i === 0, 'other': i !== 0}">
+                        {{ i === 0 ? 'Our Recommendation' : 'Other Options' }}
+                    </div>
+                    <p><i class="fa fa-map-marker" style="margin-right: 8px;"></i>  {{ provider.location }}</p>
+                    <button (click)="openModal(provider)">View Information</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="modal" *ngIf="isModalOpen">
+        <div class="modal-content">
+            <div class="close" (click)="closeModal()">
+                <div class="x">X</div>
+            </div>
+            <img [src]="getImagePath(selectedProvider.company)" alt="Nature" class="modal-image">
+            
+            <div class="modal-text">
+                <h2>{{ selectedProvider?.company }}</h2>
+                <p>{{ selectedProvider?.details }}</p>
+                <p><strong>Cost Savings:</strong> {{ selectedProvider?.costSavings }}</p>
+                <p><strong>Total Savings:</strong> {{ selectedProvider?.totalCost }}</p>
+                <p><strong>Carbon Savings:</strong> {{ selectedProvider?.carbonSavings }}</p>
+
+                <a [href]="trimUrlSpaces(selectedProvider.website)" target="_blank" class="btn-website">View Website</a>
+            </div>
+            
+        </div>
+    </div>
+</div>

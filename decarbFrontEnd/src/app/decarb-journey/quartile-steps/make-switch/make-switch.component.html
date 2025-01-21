@@ -1,48 +1,11 @@
-<button class="back" (click)="location.back()">Back</button>
-<h2 ><span class="switch">Switch</span> <span class="now">now !!</span></h2>
-<p class="content">You are just a few steps away from saving money and reducing your carbon footprint!</p>
-<div class="container">
+<div class="navbar">
+    <img src="assets/icons/back-button.png" alt="back" (click)="location.back()" class="back-button-image">
+    <button class="back" (click)="location.back()">Back</button>
+    <a href="/decarbonization">
+        <button class="home">Home</button>
+    </a>
+</div>
+<router-outlet></router-outlet>
 
-  <div class="card" *ngIf="currentDetails">
-    <h2 class="card-header">Current Provider and Plan</h2>
-    <div class="card-body">
-      <p><strong>Current Provider:</strong> {{ currentDetails.currentProvider }}</p>
-      <p><strong>Current Plan:</strong> {{ currentDetails.currentPlan }}</p>
-      <p><strong>Current Cost:</strong> ${{ currentDetails.currentCost }}</p>
-      <p><strong>Current Emissions:</strong> {{ currentDetails.currentEmissions }} kCO₂</p>
-    </div>
-  </div>
-   
-    <div class="card" *ngIf="stepData">
-      <h2 class="card-header">{{ stepData.title }}</h2>
-      <div class="card-body">
-        <p><strong>Details:</strong> {{ stepData.details }}</p>
-        <p *ngIf="stepData.cost_savings"><strong>Cost Savings: </strong>$ {{ stepData.cost_savings }}</p>
-        <p *ngIf="stepData.co2_savings"><strong>CO₂ Savings:</strong> {{ stepData.co2_savings }}kCO2</p>
-        <ul *ngIf="stepData?.providerInfo?.length">
-          <li *ngFor="let provider of stepData.providerInfo">
-            <strong>{{ provider.name }}</strong> - {{ provider.details }}
-            <br />
-            Renewable Percentage: {{ provider.renewablePercentage }}%
-            <br />
-            Phone: {{ provider.phone }}
-            <br />
-            <a *ngIf="provider.website" [href]="provider.website" target="_blank">Visit Website</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  
-    <div *ngIf="!stepData">
-      <p>No data available to display.</p>
-    </div>
-    
-    
-  
-    
-  </div>
-
-  
-  
 
 

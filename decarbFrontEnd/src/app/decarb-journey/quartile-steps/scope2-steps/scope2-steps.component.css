@@ -4,11 +4,13 @@
   margin-bottom: 16px;
   position: relative; /* Allows absolute positioning of child elements */
 }
+
 .scope-header {
   display: flex;
   align-items: center;
   position: relative;
 }
+
 .check-box-container {
   position: absolute;
   top: 40%; /* Align vertically with the step component */
@@ -18,14 +20,19 @@
   flex-direction: column; /* Align checkbox and line vertically */
   align-items: center;
 }
+
+/* changed vertical line height */
 .vertical-line {
   position: absolute;
-  top: calc(100% + 10px); /* Starts 10px below the checkbox */
-  width: 1px;
-  height: calc(100% - 40px); /* Adjusts to fill remaining space */
+  top: calc(50% + 9px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  min-height: 20px;
   background-color: #ddd;
-  z-index: 0; /* Keeps the line behind other elements */
+  z-index: 0;
 }
+
 .step-header {
   flex: 1; /* Allow the title and dropdown arrow to fill the remaining space */
   display: flex;
@@ -40,10 +47,12 @@
   cursor: pointer;
   margin-bottom: 10px;
 }
-.check-box-icon{
-  height:40px;
-  width:40px;
+
+.check-box-icon {
+  height: 40px;
+  width: 40px;
 }
+
 .title {
   font-size: 20px;
   font-weight: bold;
@@ -71,6 +80,7 @@
   font-weight: 500;
   margin: 8px 0;
 }
+
 .top-right-link {
   display: flex; /* Ensures the container behaves as a flexbox */
   justify-content: flex-end; /* Pushes content to the right */

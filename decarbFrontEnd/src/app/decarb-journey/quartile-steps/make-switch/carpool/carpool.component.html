@@ -1,0 +1,90 @@
+<div class="main">
+    <mat-card class="header-card">
+        <h1>{{ stepData.description }}</h1>
+        <section>Join a carpool to save on travel costs, reduce emissions, and enjoy a more sustainable commute.</section>
+    </mat-card>
+
+    <mat-card class="groups-card">
+        <div class="top-leaders">
+        
+        </div>
+    </mat-card>
+
+    <div class="map-and-table">
+        <mat-card class="map-container">
+            <div class="google-map-container">
+                <google-map #googleMapContainer height="500px" width="100%" [center]="center" [zoom]="zoom">
+                    <map-marker
+                        *ngFor="let marker of markers"
+                        [position]="marker.position"
+                        [icon]="marker.icon"
+                        [title]="marker.title"
+                        #markerRef="mapMarker"
+                        (mapClick)="openInfoWindow(markerRef, marker.groupInfo)">
+                    </map-marker> 
+
+                    <map-info-window *ngIf="selectedGroupMark">
+                        <h3> Group: {{ selectedGroupMark.group }} </h3>
+                        <p>Number of members: {{ selectedGroupMark.members.length }}</p>
+                    </map-info-window>
+                </google-map>
+            </div>
+        </mat-card>
+
+
+        <!-- {{stepData | json }} -->
+
+        <!-- {{dataSource.data|json}} -->
+        <mat-card *ngIf="selectedGroupMark" class="actions-table">
+            <div class="actions-header">
+                <h2>Groups Information</h2>
+            </div>
+
+            <div id="map" class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource.data" matSort class="mat-table">
+                    <ng-container matColumnDef="GroupNo">
+                        <th mat-header-cell *matHeaderCellDef>Group Number</th>
+                        <td mat-cell *matCellDef="let group" (click)="selectGroup(group.group)" style="cursor: pointer; color: teal; text-decoration: underline;">{{ group.group }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Location">
+                        <th mat-header-cell *matHeaderCellDef>Group Address</th>
+                        <td mat-cell *matCellDef="let group" (click)="selectGroup(group.group)" >{{ group.location }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="MembersCount">
+                        <th mat-header-cell *matHeaderCellDef>No. of Members</th>
+                        <td mat-cell *matCellDef="let group" (click)="selectGroup(group.group)" >{{ group.membersCount}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Frequency">
+                        <th mat-header-cell *matHeaderCellDef>Frequency</th>
+                        <td mat-cell *matCellDef="let group" (click)="selectGroup(group.group)" >{{ group.frequency}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Distance">
+                        <th mat-header-cell *matHeaderCellDef>Distance Travelled</th>
+                        <td mat-cell *matCellDef="let group" (click)="selectGroup(group.group)" >{{ group.distance | number:'1.2-2'}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="MilesSaved">
+                        <th mat-header-cell *matHeaderCellDef>Miles Saved</th>
+                        <td mat-cell *matCellDef="let group" (click)="selectGroup(group.group)" >{{ group.milesSaved | number:'1.2-2'}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="MoneySaved">
+                        <th mat-header-cell *matHeaderCellDef>Money Saved</th>
+                        <td mat-cell *matCellDef="let group" (click)="selectGroup(group.group)">{{ group.moneySaved | number:'1.2-2'}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="EmissionsSaved">
+                        <th mat-header-cell *matHeaderCellDef>Emissions Saved</th>
+                        <td mat-cell *matCellDef="let group" (click)="selectGroup(group.group)" >{{ group.emissionSaved | number:'1.2-2'}}</td>
+                    </ng-container>
+
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+
+                <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
+            </div>
+        </mat-card>
+
+        
+    </div>
+</div>

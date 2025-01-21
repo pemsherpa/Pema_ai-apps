@@ -1,19 +1,20 @@
 <div class="step-details" position="relative">
   <div class="scope-header">
     <!-- Check/Uncheck Icon (Moved Outside of Bottom Line) -->
-     <div class="check-box-container">
-    <div class="check-box" (click)="handleClick()">
-      <ng-container *ngIf="stepData.isCompleted; else unchecked">
-        <img src="../../assets/checked.svg" alt="Checked" class="checkbox-icon" />
-      </ng-container>
-      <ng-template #unchecked>
-        <img src="../../assets/add.svg" alt="Unchecked" class="checkbox-icon" />
-      </ng-template>
-    </div>
+    <div class="check-box-container">
+      <div class="check-box" (click)="handleClick()">
+        <ng-container *ngIf="stepData.isCompleted; else unchecked">
+          <img src="../../assets/checked.svg" alt="Checked" class="checkbox-icon" />
+        </ng-container>
+        <ng-template #unchecked>
+          <img src="../../assets/add.svg" alt="Unchecked" class="checkbox-icon" />
+        </ng-template>
+      </div>
 <div class="vertical-line" 
     [style.height.px]="calculateLineHeight()" 
-    [style.backgroundColor]="stepData.isCompleted ? 'teal' : 'white'">
-    </div></div>
+        [style.backgroundColor]="stepData.isCompleted ? 'teal' : 'white'">
+      </div>
+    </div>
 
 
     <!-- Step Header with 20px Gap -->
@@ -35,57 +36,157 @@
       </span>
     </div>
   </div>
+
+
   <!-- Expandable Content -->
   <div *ngIf="isExpanded" class="step-content">
-    <!-- Provider Information Section -->
-    <div class="provider-info">
-      <p><strong>Provider Information:</strong></p>
-      <div class="svg-container">
-        <div class="implement">
-          <!-- Difficulty Level -->
-          <ng-container *ngIf="stepData.difficulty >= 1 && stepData.difficulty < 3">
-            <img src="../../assets/low_imp.svg" alt="Difficulty Level 1-3" />Easy Implementation
-          </ng-container>
-          <ng-container *ngIf="stepData.difficulty >= 3 && stepData.difficulty < 6">
-            <img src="../../assets/meduim_imp.svg" alt="Difficulty Level 3-6" />Medium Implementation
-          </ng-container>
-          <ng-container *ngIf="stepData.difficulty >= 6 && stepData.difficulty <= 9">
-            <img src="../../assets/high_imp.svg" alt="Difficulty Level 6-9" />Difficult Implementation
-          </ng-container>
-        </div>
-        <div class="top-right-link">
-          <a [routerLink]="['/make-switch']" class="switch-link"(click)="onMakeSwitchClick(stepData)">
-            <img src="assets/forward.svg" alt="AI Icon"> Make this switch now
-          </a>
+    <ng-container [ngSwitch]="stepData.type">
+      <!-- Flight Type Content -->
+      <div *ngSwitchCase="'flight'">
+        <div class="provider-info">
+          <p><strong>Flight Information:</strong></p>
+          <div class="svg-container">
+            <div class="implement">
+              <!-- Difficulty Level -->
+              <ng-container *ngIf="stepData.difficulty >= 1 && stepData.difficulty < 3">
+                <img src="../../assets/low_imp.svg" alt="Difficulty Level 1-3" />Easy Implementation
+              </ng-container>
+              <ng-container *ngIf="stepData.difficulty >= 3 && stepData.difficulty < 6">
+                <img src="../../assets/meduim_imp.svg" alt="Difficulty Level 3-6" />Medium Implementation
+              </ng-container>
+              <ng-container *ngIf="stepData.difficulty >= 6 && stepData.difficulty <= 9">
+                <img src="../../assets/high_imp.svg" alt="Difficulty Level 6-9" />Difficult Implementation
+              </ng-container>
+            </div>
+            <div class="top-right-link">
+              <a [routerLink]="['/make-switch/flight']" class="switch-link" (click)="onMakeSwitchClick(stepData)">
+                <img src="assets/forward.svg" alt="AI Icon"> Make this switch now
+              </a>
+            </div>
+          </div>
+
+
+          <!-- Flight Information -->
+          <div class="dropdown-content">
+            <div *ngIf="stepData.type === 'flight'">
+              <div *ngIf="stepData.stops > 0; else noFlights">
+                <p><strong>Number of Stops: </strong>{{ stepData.stops }}</p>
+              </div>
+              <ng-template #noFlights>
+                <p>No Flight Stops Available.</p>
+              </ng-template>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Provider List -->
-      <div class="dropdown-content">
-        <ul *ngIf="stepData?.providerInfo?.length">
-          <li *ngFor="let provider of stepData?.providerInfo" class="provider-item">
-            <strong>{{ provider.name }}</strong> - {{ provider?.details }}
-            <br>
-            Renewable Percentage: {{ provider?.renewablePercentage }}%
-            <br>
-            Phone: {{ provider?.phone }}
-            <br>
-            <a *ngIf="provider?.website" [href]="provider?.website" target="_blank">Visit Website</a>
-          </li>
-        </ul>
+      <!-- Commute Type Content -->
+      <div *ngSwitchCase="'commute'">
+        <div class="provider-info">
+          <p><strong>Commute Groups Money Savings: </strong></p>
+          <div class="svg-container">
+            <div class="implement">
+              <!-- Difficulty Level -->
+              <ng-container *ngIf="stepData.difficulty >= 1 && stepData.difficulty < 3">
+                <img src="../../assets/low_imp.svg" alt="Difficulty Level 1-3" />Easy Implementation
+              </ng-container>
+              <ng-container *ngIf="stepData.difficulty >= 3 && stepData.difficulty < 6">
+                <img src="../../assets/meduim_imp.svg" alt="Difficulty Level 3-6" />Medium Implementation
+              </ng-container>
+              <ng-container *ngIf="stepData.difficulty >= 6 && stepData.difficulty <= 9">
+                <img src="../../assets/high_imp.svg" alt="Difficulty Level 6-9" />Difficult Implementation
+              </ng-container>
+            </div>
+
+            <div class="top-right-link">
+              <a [routerLink]="['/make-switch/carpool']" class="switch-link" (click)="onMakeSwitchClick(stepData)">
+                <img src="assets/forward.svg" alt="AI Icon"> Make this switch now
+              </a>
+            </div>
+          </div>
+
+          <!-- Carpool Information -->
+          <div class="dropdown-content">
+            <div *ngIf="stepData.type === 'commute'">
+              <div *ngIf="stepData.commuteData.length > 0; else noCarpool">
+                <br />
+                <p>Carpool is possible for your company!</p>
+                <br />
+                <p><strong>Number of Carpool Groups:</strong>{{ stepData.commuteData.length }}</p>
+              </div>
+              <ng-template #noCarpool>
+                <br />
+                <p>Sorry, no carpool routes available.</p>
+                <br />
+              </ng-template>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Fallback Message -->
-    <div *ngIf="stepData?.providerInfo?.length === 0">
-      <p>No provider information available.</p>
-    </div>
+      <!-- Switch CRU Information -->
+      <div *ngSwitchCase="'recommendation'">
+        <div class="provider-info">
+          <p><strong>CRU Costs and Emissions: </strong></p>
+          <div class="svg-container">
+            <div class="implement">
+              <!-- Difficulty Level -->
+              <ng-container *ngIf="stepData.difficulty >= 1 && stepData.difficulty < 3">
+                <img src="../../assets/low_imp.svg" alt="Difficulty Level 1-3" />Easy Implementation
+              </ng-container>
+              <ng-container *ngIf="stepData.difficulty >= 3 && stepData.difficulty < 6">
+                <img src="../../assets/meduim_imp.svg" alt="Difficulty Level 3-6" />Medium Implementation
+              </ng-container>
+              <ng-container *ngIf="stepData.difficulty >= 6 && stepData.difficulty <= 9">
+                <img src="../../assets/high_imp.svg" alt="Difficulty Level 6-9" />Difficult Implementation
+              </ng-container>
+            </div>
+            <div class="top-right-link">
+              <a [routerLink]="['/make-switch/recommendation']" class="switch-link" (click)="onMakeSwitchClick(stepData)">
+                <img src="assets/forward.svg" alt="AI Icon"> Make this switch now
+              </a>
+            </div>
+          </div>
 
-    <!-- Savings Information -->
-    <div class="savings-info">
-      <p *ngIf="stepData?.cost_savings"><strong>Cost Savings:</strong> {{ stepData.cost_savings }}</p>
-      <p *ngIf="stepData?.co2_savings"><strong>CO₂ Savings:</strong> {{ stepData.co2_savings }}</p>
-    </div>
+          <!-- CRU Providers Information -->
+          <div class="dropdown-content">
+            <div *ngIf="stepData.type === 'recommendation'">
+              <div *ngIf="stepData?.recommendations?.length; else noProviders">
+                <ul *ngFor="let recommendation of stepData?.recommendations" class="provider-item">
+                  <li *ngFor="let provider of recommendation.providers">
+                    <strong>{{provider.company}}</strong>
+                    - {{provider.details}}
+                    <br>
+                    <b>Cost Savings: </b>{{ provider.costSavings | number: '1.2-2' }}
+                    <br>
+                    <b>Phone Number: </b>{{ provider.phone }}
+                    <br>
+                    <a *ngIf="provider?.website" [href]="provider?.website" target="_blank">Visit Website</a>
+                    <br>
+                    <br />
+                  </li>
+                </ul>
+              </div>
+
+              <ng-template #noProviders>
+                <p>No Provider Information available.</p>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <div class="savings-info">
+          <p *ngIf="stepData?.cost_savings"><strong>Cost Savings: {{ stepData.cost_savings | number: '1.2-2' }}
+            </strong></p>
+          <p *ngIf="stepData?.co2_savings"><strong>CO₂ Savings:</strong> {{ stepData.co2_savings | number: '1.2-2'}}</p>
+        </div>
+      </div>
+
+
+      <!-- fallback -->
+      <div *ngSwitchDefault>
+        <p>No information available.</p>
+      </div>
+    </ng-container>
   </div>
 </div>
-
