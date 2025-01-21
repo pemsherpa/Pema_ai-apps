@@ -139,15 +139,20 @@ def load_json_data(data, output_data):
                     print(company_name)
                     if company_name:
                     # Look for plans via 'our_recommendation' first
-                        provider = Providers.objects.filter(providers_name_first=company_name).first()
-                        print(provider)
-                    if provider:
-                        plan = Plans.objects.filter(
-                            plan_name=plan.get('plan_name', 'Not Provided'), 
-                            provider=provider
-                        ).first()
-                        print("Plan",plan)
-
+                        
+                        
+                        for provider_info in provider_info_list:
+                             if isinstance(provider_info, dict) and 'plan_name' in provider_info:
+                                plan_name = provider_info['plan_name']
+                                provider = Providers.objects.filter(providers_name=provider_info.get('company', 'Not Provided')).first()
+                                print(provider)
+                                if provider:
+                                  plan = Plans.objects.filter(
+                                     plan_name=plan_name, 
+                                     provider=provider
+                                     ).first()
+                                  print("Plan found:", plan)
+                        
                     # Fallback to 'provider_info_list'
                     if not plan:
                         for provider_info in provider_info_list:
@@ -156,7 +161,7 @@ def load_json_data(data, output_data):
                                 provider, _ = Providers.objects.get_or_create(
                                     providers_name=provider_info.get('company', 'Not Provided'),
                                     defaults={
-                                        'phone_number': provider_info.get('phone_number', 'Not Provided'),
+                                        'phone_number': provider_info.get('phone_number', 'Not'),
                                         'website_link': provider_info.get('website_link', 'Not Provided'),
                                         'description': provider_info.get('description of the company', 'Not Provided'),
                                     },
@@ -176,11 +181,24 @@ def load_json_data(data, output_data):
                                 )
                             else:
                                 print(f"Invalid provider_info entry: {provider_info}")
-                    
+                    if plan and isinstance(plan, Plans):
+                        print("\nEntering ScopeSteps, Adding CRU")
+                        ScopeSteps.objects.create(
+                            company=company,
+                            plan=plan,
+                            year=year,
+                            quarter=quarter,
+                            scope_type=scope_id,
+                            description=step_data.get('description', ''),
+                            difficulty=step_data.get('difficulty', 0),
+                            transition_percentage=step_data.get('transition_percentage', 0),
+                        )
+                    else:
+                        return JsonResponse({"error": f"Invalid plan assigned for year {year}, quarter {quarter}."}, status=400)
                 print(f"Final Provider: {provider}")
                 print(f"Final Plan: {plan}")
 
-            elif scope_id==3:
+            elif scope_id == 3:
                 print("\nScope: ", scope_id)
                 for step_data in yearly_data.get(scope_type, []):
                     data = step_data.get('data', {})
@@ -190,34 +208,45 @@ def load_json_data(data, output_data):
                     description = step_data.get('description', 'No description provided')
                     difficulty = step_data.get('difficulty', 0)
                     transition_percentage = step_data.get('transition_percentage', 0.0)
-                    #year = step_data.get('year', 2025)  # Default year if missing
-                    #quarter = step_data.get('quarter', 1)  # Default quarter if missing
                     total_cost = step_data.get('total_cost', 0.0)
                     total_emissions = step_data.get('total_emissions', 0.0)
 
-                    stops = data.get('stops', 0)
+                    stops = step_data.get('stops', 0)
                     commute_step_recommendations = step_data.get('commute_step_recommendations', [])
 
+                    # Determine the type of step and assign appropriate data
+                    
+                    if stops:
+                        data_to_save = stops
+                        plan_name = "Flight Plan"
+                    elif commute_step_recommendations:
+                        data_to_save = commute_step_recommendations
+                        plan_name = f"Commute Plan for the company{company_id}"
+                    else:
+                        data_to_save = {}
+                        plan_name = "Default Plan"
+
                     provider, _ = Providers.objects.get_or_create(
-                    providers_name="Default Provider",
-                    defaults={
-                     "phone_number": "000-000-0000",
-                     "website_link": "http://example.com",
-                     "description": "Default provider for plans"
-            }
-        )
+                        providers_name="Default Provider",
+                        defaults={
+                            "phone_number": "000-000-0000",
+                            "website_link": "http://example.com",
+                            "description": "Default provider for plans"
+                        }
+                    )
 
                     plan, _ = Plans.objects.get_or_create(
-                    provider=provider,
-                    plan_name="Default Plan",
-                    defaults={
-                      "carbon_cost": total_emissions,
-                      "total_cost": total_cost,
-                      'peak_cost': 0,
-                      'off_peak_cost': 0,
-                      "data": stops or commute_step_recommendations
-            }
-        )
+                        provider=provider,
+                        plan_name=plan_name,
+                        defaults={
+                            "carbon_cost": total_emissions,
+                            "total_cost": total_cost,
+                            "peak_cost": 0,
+                            "off_peak_cost": 0,
+                            "data": data_to_save
+                        }
+                    )
+
                     if plan and isinstance(plan, Plans):
                         print("\nEntering ScopeSteps, Plan present for scope 3 steps except cru")
                         ScopeSteps.objects.create(
@@ -232,6 +261,7 @@ def load_json_data(data, output_data):
                         )
                     else:
                         return JsonResponse({"error": f"Invalid plan assigned for year {year}, quarter {quarter}."}, status=400)
+
 
     return JsonResponse({"success": "Data successfully added."}, status=200)
 

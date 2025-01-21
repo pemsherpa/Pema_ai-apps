@@ -20,7 +20,7 @@ class ScopeTotals(models.Model):
 # Providers model
 class Providers(models.Model):
     providers_name = models.CharField(max_length=255, unique=True)
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=255)
     website_link = models.CharField(max_length=255)
     description = models.TextField()
 

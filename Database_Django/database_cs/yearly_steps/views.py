@@ -31,34 +31,48 @@ def add_shopping_cart(request):
 
         # Fetch the company
         company = get_object_or_404(Companys, company_id=company_id)
-        print("Compnay:",company)
+
         # Fetch the provider
         provider = get_object_or_404(Providers, providers_name=provider_name)
-        print("Provider: ", provider)
+
         # Fetch the plan
         plan = get_object_or_404(Plans, provider=provider, plan_name=plan_name)
-        print("Plan: ", plan)
-        # Fetch the corresponding scope step
-        scope_step = get_object_or_404(ScopeSteps, company=company, plan=plan)
 
-        # Add the scope step to the shopping cart
-        shopping_cart_entry, created = ShoppingCartContent.objects.get_or_create(
-            company=company, scope_step=scope_step
-        )
+        # Fetch the corresponding scope steps
+        scope_steps = ScopeSteps.objects.filter(company=company, plan=plan)
 
-        if created:
-            message = "Scope step successfully added to the shopping cart."
-        else:
-            message = "Scope step already exists in the shopping cart."
+        if not scope_steps.exists():
+            return JsonResponse(
+                {"error": "No scope steps found for the specified company and plan."},
+                status=404
+            )
 
-        return JsonResponse({"message": message}, status=200)
+        # Add each scope step to the shopping cart
+        added_steps = []
+        already_in_cart = []
+
+        for scope_step in scope_steps:
+            shopping_cart_entry, created = ShoppingCartContent.objects.get_or_create(
+                company=company, scope_step=scope_step
+            )
+            if created:
+                added_steps.append(scope_step.id)  # Use scope_step.id for unique identification
+            else:
+                already_in_cart.append(scope_step.id)
+
+        response_data = {
+            "message": "Shopping cart updated successfully.",
+            "added_steps": added_steps,
+            "already_in_cart": already_in_cart,
+        }
+
+        return JsonResponse(response_data, status=200)
 
     except json.JSONDecodeError:
         return JsonResponse({"error": "Invalid JSON format in request body."}, status=400)
 
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
-
 
 
 
