@@ -36,60 +36,35 @@ def get_table_records(request, table_name):
         return JsonResponse({table_name: records_data}, status=200)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
-    
+
 @csrf_exempt
 def query_scope_steps(request):
     print("Querying.......")
-    year = request.GET.get('year')
     quarter = request.GET.get('quarter')
-    scope_type = request.GET.get('scope_type')
-    description = request.GET.get('description')
-    difficulty = request.GET.get('difficulty')
-    transition_percentage = request.GET.get('transition_percentage')
-    company_id = request.GET.get('company_id')
-    plan_name = request.GET.get('plan_name')
-    provider_name = request.GET.get('provider_name')
-
+    company_id = request.GET.get('company')
+    year = request.GET.get('year')  # Can contain multiple years (comma-separated)
     
     filters = {}
-    if year:
-        filters['year'] = year
+
+    # Filter by quarter
     if quarter:
         filters['quarter'] = quarter
-    if scope_type:
-        filters['scope_type'] = scope_type
-    if description:
-        filters['description__icontains'] = description
-    if difficulty:
-        filters['difficulty'] = difficulty
-    if transition_percentage:
-        filters['transition_percentage'] = transition_percentage
 
-    
+    # Filter by company
     if company_id:
         company = get_object_or_404(Companys, company_id=company_id)
         filters['company'] = company
 
-    if plan_name:
-        plans = Plans.objects.filter(plan_name=plan_name)  # Use filter instead of get
-        if plans.exists():
-            filters['plan__id__in'] = plans.values_list('id', flat=True)
-        else:
-            return JsonResponse({"error": f"No plans found with name '{plan_name}'"}, status=404)
+    # Filter by multiple years
+    if year:
+        year_list = [int(y) for y in year.split(',') if y.isdigit()]
+        if year_list:
+            filters['year__in'] = year_list
 
-    if provider_name:
-        providers = Providers.objects.filter(providers_name=provider_name)
-        if providers.exists():
-            provider_ids = providers.values_list('id', flat=True)
-            plan_ids = Plans.objects.filter(provider_id__in=provider_ids).values_list('id', flat=True)
-            filters['plan__id__in'] = plan_ids
-        else:
-            return JsonResponse({"error": f"No providers found with name '{provider_name}'"}, status=404)
-
-    
+    # Query the database with filters (or return all if no filters are provided)
     scope_steps = ScopeSteps.objects.filter(**filters).select_related('company', 'plan__provider')
 
-    
+    # Prepare results
     results = [
         {
             "id": step.id,
@@ -100,10 +75,81 @@ def query_scope_steps(request):
             "difficulty": step.difficulty,
             "transition_percentage": step.transition_percentage,
             "company_name": step.company.company_id,
-            "plan_name": step.plan.plan_name,
-            "provider_name": step.plan.provider.providers_name,
+            "plan_name": step.plan.plan_name if step.plan else None,
+            "provider_name": step.plan.provider.providers_name if step.plan and step.plan.provider else None,
         }
         for step in scope_steps
     ]
 
     return JsonResponse({"data": results}, safe=False)
+
+#@csrf_exempt
+# def query_scope_steps(request):
+#     print("Querying.......")
+#     year = request.GET.get('year')
+#     quarter = request.GET.get('quarter')
+#     scope_type = request.GET.get('scope_type')
+#     description = request.GET.get('description')
+#     difficulty = request.GET.get('difficulty')
+#     transition_percentage = request.GET.get('transition_percentage')
+#     company_id = request.GET.get('company_id')
+#     plan_name = request.GET.get('plan_name')
+#     provider_name = request.GET.get('provider_name')
+
+    
+#     filters = {}
+#     if year:
+#         filters['year'] = year
+#     if quarter:
+#         filters['quarter'] = quarter
+#     if scope_type:
+#         filters['scope_type'] = scope_type
+#     if description:
+#         filters['description__icontains'] = description
+#     if difficulty:
+#         filters['difficulty'] = difficulty
+#     if transition_percentage:
+#         filters['transition_percentage'] = transition_percentage
+
+    
+#     if company_id:
+#         company = get_object_or_404(Companys, company_id=company_id)
+#         filters['company'] = company
+
+#     if plan_name:
+#         plans = Plans.objects.filter(plan_name=plan_name)  # Use filter instead of get
+#         if plans.exists():
+#             filters['plan__id__in'] = plans.values_list('id', flat=True)
+#         else:
+#             return JsonResponse({"error": f"No plans found with name '{plan_name}'"}, status=404)
+
+#     if provider_name:
+#         providers = Providers.objects.filter(providers_name=provider_name)
+#         if providers.exists():
+#             provider_ids = providers.values_list('id', flat=True)
+#             plan_ids = Plans.objects.filter(provider_id__in=provider_ids).values_list('id', flat=True)
+#             filters['plan__id__in'] = plan_ids
+#         else:
+#             return JsonResponse({"error": f"No providers found with name '{provider_name}'"}, status=404)
+
+    
+#     scope_steps = ScopeSteps.objects.filter(**filters).select_related('company', 'plan__provider')
+
+    
+#     results = [
+#         {
+#             "id": step.id,
+#             "year": step.year,
+#             "quarter": step.quarter,
+#             "scope_type": step.scope_type,
+#             "description": step.description,
+#             "difficulty": step.difficulty,
+#             "transition_percentage": step.transition_percentage,
+#             "company_name": step.company.company_id,
+#             "plan_name": step.plan.plan_name,
+#             "provider_name": step.plan.provider.providers_name,
+#         }
+#         for step in scope_steps
+#     ]
+
+#     return JsonResponse({"data": results}, safe=False)
