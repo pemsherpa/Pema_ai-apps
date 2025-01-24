@@ -1,5 +1,6 @@
 from django.db import models
 from pgvector.django import VectorField
+from django.db.models import JSONField
 
 # Company model
 class Companys(models.Model):
@@ -31,7 +32,8 @@ class Plans(models.Model):
     total_cost = models.FloatField()
     peak_cost = models.FloatField(null=True, blank=True)
     off_peak_cost = models.FloatField(null=True, blank=True)
-    data=models.TextField(null=True, default="No data is provided")
+    #data=models.TextField(null=True, default="No data is provided")
+    data = JSONField(null=True, default=dict)
 
 # ScopeSteps model
 class ScopeSteps(models.Model):
