@@ -3,3 +3,4 @@ openpyxl
 openai
 requests
 asyncio
+djangorestframework

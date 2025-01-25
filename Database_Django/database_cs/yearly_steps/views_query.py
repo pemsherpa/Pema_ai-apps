@@ -8,7 +8,12 @@ from django.http import JsonResponse
 from django.apps import apps
 from django.shortcuts import get_object_or_404
 from .models import *
+from yearly_steps.models import ShoppingCartContent
+from django.db.models import Q
+import json
 
+from .serializers import ShoppingCartContentSerializer
+from rest_framework.views import APIView
 
 def get_table_records(request, table_name):
     try:
@@ -83,73 +88,101 @@ def query_scope_steps(request):
 
     return JsonResponse({"data": results}, safe=False)
 
-#@csrf_exempt
-# def query_scope_steps(request):
-#     print("Querying.......")
-#     year = request.GET.get('year')
-#     quarter = request.GET.get('quarter')
-#     scope_type = request.GET.get('scope_type')
-#     description = request.GET.get('description')
-#     difficulty = request.GET.get('difficulty')
-#     transition_percentage = request.GET.get('transition_percentage')
-#     company_id = request.GET.get('company_id')
-#     plan_name = request.GET.get('plan_name')
-#     provider_name = request.GET.get('provider_name')
+
+#MY CODE
+
+@csrf_exempt
+def shopping_cart(request):
+    print("Get shopping cart method.")
+    return JsonResponse("Hello world",status=200)
+
+@csrf_exempt
+def get_shopping_cart_content(request):
+    """
+    API to fetch ShoppingCartContent data based on company_id.
+    """
+    print("Get shopping cart method.")
+    if request.method != "GET":
+        return JsonResponse({"error": "Only GET requests are allowed."}, status=405)
+
+    company_id = request.GET.get('company_id')
+    if not company_id:
+        return JsonResponse({"error": "company_id parameter is required."}, status=400)
+
+    print(company_id)
+    try:
+        # Filter records by company_id
+        records = ShoppingCartContent.objects.filter(company_id=company_id)
+
+        # Prepare JSON response
+        records_data = [
+            {
+                "id": record.id,
+                "year": record.scope_step.year,
+                "quarter": record.scope_step.quarter,
+                "scope_type": record.scope_step.scope_type,
+                "description": record.scope_step.description,
+                "difficulty": record.scope_step.difficulty,
+                "transition_percentage": record.scope_step.transition_percentage,
+                "company_name": record.company.company_id,
+                "plan_name": record.scope_step.plan.plan_name if record.scope_step.plan else None,
+                "provider_name": record.scope_step.plan.provider.providers_name if record.scope_step.plan and record.scope_step.plan.provider else None,
+            }
+            for record in records
+        ]
+        print(records_data)
+
+        return JsonResponse({"shopping_cart_content": records_data}, status=200)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+@csrf_exempt
+def delete_shopping_cart_content(request):
+    """
+    API to delete a ShoppingCartContent row based on plan_name, company_id, and provider_name.
+    """
+    if request.method != "POST":
+        return JsonResponse({"error": "Only POST requests are allowed."}, status=405)
+
+    try:
+        body = json.loads(request.body)
+        plan_name = body.get('plan_name')
+        company_id = body.get('company_id')
+        provider_name = body.get('provider_name')
+
+        # Validate inputs
+        if not (plan_name and company_id and provider_name):
+            return JsonResponse({"error": "plan_name, company_id, and provider_name are required."}, status=400)
+
+        # Query the record
+        record = ShoppingCartContent.objects.filter(
+            Q(scope_step__plan__plan_name=plan_name) &
+            Q(company_id=company_id) &
+            Q(scope_step__plan__provider__providers_name=provider_name)
+        ).first()
+
+        if not record:
+            return JsonResponse({"error": "No matching record found."}, status=404)
+
+        # Delete the record
+        record.delete()
+        return JsonResponse({"message": "Record deleted successfully."}, status=200)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+    
+
 
     
-#     filters = {}
-#     if year:
-#         filters['year'] = year
-#     if quarter:
-#         filters['quarter'] = quarter
-#     if scope_type:
-#         filters['scope_type'] = scope_type
-#     if description:
-#         filters['description__icontains'] = description
-#     if difficulty:
-#         filters['difficulty'] = difficulty
-#     if transition_percentage:
-#         filters['transition_percentage'] = transition_percentage
+class ShoppingCartContentView(APIView):
+    def get(self, request):
+        company_id = request.GET.get('company_id')
+        if not company_id:
+            return JsonResponse({"error": "company_id parameter is required."}, status=400)
 
-    
-#     if company_id:
-#         company = get_object_or_404(Companys, company_id=company_id)
-#         filters['company'] = company
+        records = ShoppingCartContent.objects.filter(company_id=company_id)
+        serializer = ShoppingCartContentSerializer(records, many=True)
+        return JsonResponse({"shopping_cart_content": serializer.data}, status=200)
 
-#     if plan_name:
-#         plans = Plans.objects.filter(plan_name=plan_name)  # Use filter instead of get
-#         if plans.exists():
-#             filters['plan__id__in'] = plans.values_list('id', flat=True)
-#         else:
-#             return JsonResponse({"error": f"No plans found with name '{plan_name}'"}, status=404)
 
-#     if provider_name:
-#         providers = Providers.objects.filter(providers_name=provider_name)
-#         if providers.exists():
-#             provider_ids = providers.values_list('id', flat=True)
-#             plan_ids = Plans.objects.filter(provider_id__in=provider_ids).values_list('id', flat=True)
-#             filters['plan__id__in'] = plan_ids
-#         else:
-#             return JsonResponse({"error": f"No providers found with name '{provider_name}'"}, status=404)
 
-    
-#     scope_steps = ScopeSteps.objects.filter(**filters).select_related('company', 'plan__provider')
-
-    
-#     results = [
-#         {
-#             "id": step.id,
-#             "year": step.year,
-#             "quarter": step.quarter,
-#             "scope_type": step.scope_type,
-#             "description": step.description,
-#             "difficulty": step.difficulty,
-#             "transition_percentage": step.transition_percentage,
-#             "company_name": step.company.company_id,
-#             "plan_name": step.plan.plan_name,
-#             "provider_name": step.plan.provider.providers_name,
-#         }
-#         for step in scope_steps
-#     ]
-
-#     return JsonResponse({"data": results}, safe=False)

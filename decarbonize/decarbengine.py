@@ -57,7 +57,7 @@ from yearly_steps.views_json_yearly import *
 class DecarbEngine:
     def __init__(self, commuting_data,dynamic_data,firm,weights,pre_flight_cost,decarb_goals):
         self.GOOGLE_MAPS_API_KEY = "AIzaSyDNBM20_Bc2on1-q14X8NE-hWTa1imUhH4"
-        self.FLIGHT_API_KEY = 'd5eda685d4d4494a8c72e39acf747e7567b17b02ce55a90b21db1f61665a1f1b' #Replaced the API Key on 20/01, 
+        self.FLIGHT_API_KEY = '07ca28add927e7dcc2756d7d2a88a0e164b6ef28cfa34ef3eb2f90ea5c9a4279' #Replaced the API Key on 24/01, by Aniketh
         self.OIL_PRICE_API_KEY = 'jDLAcmPbuXd1CMXRjKFZMliukSgC6ujhUjnKaxOf'
         self.COORDINATES_API_KEY = "7111777279e746248e1eea239d8ed555"   #Replaced the API Key on 17/01
         self.firm = firm

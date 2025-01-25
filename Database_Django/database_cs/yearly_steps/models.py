@@ -4,10 +4,12 @@ from django.db.models import JSONField
 
 # Company model
 class Companys(models.Model):
-    company_id = models.IntegerField(unique=True)  # Unique identifier for referencing
+    company_id = models.AutoField(primary_key=True)
+    #company_id = models.IntegerField(unique=True)  # Unique identifier for referencing
 
 # ScopeTotal model
 class ScopeTotals(models.Model):
+    id = models.AutoField(primary_key=True)
     company = models.ForeignKey(Companys, on_delete=models.CASCADE)
     scope_1_total = models.FloatField()
     scope_2_total = models.FloatField()
@@ -20,12 +22,14 @@ class ScopeTotals(models.Model):
 
 # Providers model
 class Providers(models.Model):
+    id = models.AutoField(primary_key=True)
     providers_name = models.CharField(max_length=255, unique=True)
     phone_number = models.CharField(max_length=255)
     website_link = models.CharField(max_length=255)
     description = models.TextField()
 
 class Plans(models.Model):
+    id = models.AutoField(primary_key=True)
     provider = models.ForeignKey(Providers, on_delete=models.CASCADE)
     plan_name = models.CharField(max_length=100)
     carbon_cost = models.FloatField()
@@ -37,6 +41,7 @@ class Plans(models.Model):
 
 # ScopeSteps model
 class ScopeSteps(models.Model):
+    id = models.AutoField(primary_key=True)
     company = models.ForeignKey(Companys, on_delete=models.CASCADE)
     plan = models.ForeignKey(Plans, on_delete=models.CASCADE)
     year = models.IntegerField()
@@ -50,16 +55,16 @@ class ScopeSteps(models.Model):
 # Shopping cart 
 
 class ShoppingCartContent(models.Model):
+    id = models.AutoField(primary_key=True)
     company = models.ForeignKey(Companys, on_delete=models.CASCADE)
     scope_step = models.ForeignKey(ScopeSteps, on_delete=models.CASCADE)
-    class Meta:
-        managed = True
-        db_table = 'shopping_cart_content'
+     
 
 
 # Tables for Anomaly detection
 
 class Total_CO2e(models.Model):
+    id = models.AutoField(primary_key=True)
     comp = models.IntegerField()
     scope = models.IntegerField()
     subcategory = models.FloatField()
