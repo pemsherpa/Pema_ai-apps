@@ -21,7 +21,8 @@ urlpatterns = [
     path('detect-cosine-anomalies', detect_cosine_anomalies, name='detect_cosine_anomalies'),\
     path('query_scope_steps', query_scope_steps, name='query_scope_steps'),
     path('<str:table_name>', get_table_records, name='get_table_records'),
-    path('shopping-cart-content', ShoppingCartContentView.as_view(), name='shopping_cart_content'),
+    #path('shopping_cart_content', shopping_cart_content, name='shopping_cart_content'),
+    path('shopping_cart_content', ShoppingCartContentView.as_view(), name='shopping_cart_content'),
     path('delete_shopping_cart_content', delete_shopping_cart_content, name='delete_shopping_cart_content')
 ]
 

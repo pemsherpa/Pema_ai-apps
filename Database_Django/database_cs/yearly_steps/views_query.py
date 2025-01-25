@@ -12,7 +12,7 @@ from yearly_steps.models import ShoppingCartContent
 from django.db.models import Q
 import json
 
-from .serializers import ShoppingCartContentSerializer
+from yearly_steps.serializers import ShoppingCartContentSerializer
 from rest_framework.views import APIView
 
 def get_table_records(request, table_name):
@@ -91,13 +91,13 @@ def query_scope_steps(request):
 
 #MY CODE
 
-@csrf_exempt
-def shopping_cart(request):
-    print("Get shopping cart method.")
-    return JsonResponse("Hello world",status=200)
+# @csrf_exempt
+# def shopping_cart_content(request):
+#     print("Get shopping cart method.")
+#     return JsonResponse("Hello world",status=200)
 
 @csrf_exempt
-def get_shopping_cart_content(request):
+def shopping_cart_content(request):
     """
     API to fetch ShoppingCartContent data based on company_id.
     """
@@ -173,16 +173,23 @@ def delete_shopping_cart_content(request):
     
 
 
-    
 class ShoppingCartContentView(APIView):
     def get(self, request):
         company_id = request.GET.get('company_id')
         if not company_id:
             return JsonResponse({"error": "company_id parameter is required."}, status=400)
 
-        records = ShoppingCartContent.objects.filter(company_id=company_id)
-        serializer = ShoppingCartContentSerializer(records, many=True)
-        return JsonResponse({"shopping_cart_content": serializer.data}, status=200)
+        try:
+            # Query the database for shopping cart contents by company_id
+            records = ShoppingCartContent.objects.filter(company_id=company_id)
 
+            if not records.exists():
+                return JsonResponse({"error": "No records found for the given company_id."}, status=404)
 
+            # Serialize the query results
+            serializer = ShoppingCartContentSerializer(records, many=True)
+            return JsonResponse({"shopping_cart_content": serializer.data}, status=200)
 
+        except Exception as e:
+            # Catch unexpected errors
+            return JsonResponse({"error": str(e)}, status=500)

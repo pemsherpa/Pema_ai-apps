@@ -58,7 +58,6 @@ class ShoppingCartContent(models.Model):
     id = models.AutoField(primary_key=True)
     company = models.ForeignKey(Companys, on_delete=models.CASCADE)
     scope_step = models.ForeignKey(ScopeSteps, on_delete=models.CASCADE)
-     
 
 
 # Tables for Anomaly detection
