@@ -8,10 +8,6 @@ from yearly_steps.views_query import *
 from django.urls import path, include
 from django.urls import path
 
-
-
-
-
 urlpatterns = [
     # Other URLs
     path('load-json', load_json_data, name='load_json'),
@@ -20,8 +16,7 @@ urlpatterns = [
     path('create-vector-table', create_and_update_vector_table, name='create_vector_table'),
     #path('detect_anomalies', detect_anomalies, name='detect_anomalies'),
     path('', lambda request: render(request, 'yearly_steps/index.html'), name='home'),
-    path('add-shopping-cart', add_shopping_cart, name='add_shopping_cart'),
-    #path('add-to-cart', add_to_cart, name='add_to_cart'),
+    path('add-shopping-cart', add_shopping_cart, name='add_shopping_cart'),                    #add_shopping_cart
     path('detect-iqr-anomalies', detect_iqr_anomalies, name='detect_iqr_anomalies'),
     path('detect-cosine-anomalies', detect_cosine_anomalies, name='detect_cosine_anomalies'),\
     path('query_scope_steps', query_scope_steps, name='query_scope_steps'),
