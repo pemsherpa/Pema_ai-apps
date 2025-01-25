@@ -87,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'yearly_quarter_steps',  # Replace with your database name
         'USER': 'postgres',  # Replace with your database user
-        'PASSWORD': 'gowri',  # Replace with your database password
+        'PASSWORD': 'root',  # Replace with your database password
         'HOST': 'localhost',  # Database host
         'PORT': '5432',  # PostgreSQL port
         'CONN_MAX_AGE': 600,
@@ -135,3 +135,4 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+APPEND_SLASH = False
