@@ -65,41 +65,27 @@ def get_shopping_cart_content(request):
 
 
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_http_methods
-from django.shortcuts import get_object_or_404
-from .models import ShoppingCartContent, Plans, Providers, Companys, ScopeSteps
-import json
-
 @csrf_exempt
-@require_http_methods(["POST"])  # Ensures that only POST requests are allowed
+@require_http_methods(["GET"])  # Ensures that only GET requests are allowed
 def delete_shopping_cart(request):
     try:
-        # Debug: Print the request method and body for troubleshooting
+        # Debug: Print the request method and params for troubleshooting
         print(f"Request method: {request.method}")
-        print(f"Request body: {request.body.decode('utf-8')}")  # Log the request body
+        print(f"Request parameters: {request.GET}")  # Log the query parameters
 
-        # Ensure the body is not empty
-        if not request.body:
-            return JsonResponse({"status": "error", "message": "Request body is empty."}, status=400)
+        # Get the parameters from the query string
+        plan_name = request.GET.get("plan_name")
+        company_id = request.GET.get("company_id")
+        provider_name = request.GET.get("provider_name")
 
-        # Parse the JSON body
-        try:
-            body = json.loads(request.body)
-        except json.JSONDecodeError:
-            return JsonResponse({"status": "error", "message": "Invalid JSON format."}, status=400)
+        # Log the parameters for debugging
+        print(f"Received parameters: plan_name={plan_name}, company_id={company_id}, provider_name={provider_name}")
 
-        # Get the plan_name, company_id, and provider_name from the request body
-        plan_name = body.get("plan_name")
-        company_id = body.get("company_id")
-        provider_name = body.get("provider_name")
-
-        # Ensure plan_name, company_id, and provider_name are provided
-        if not plan_name or not company_id or not provider_name:
+        # Ensure all required parameters are provided
+        if not (plan_name and company_id and provider_name):
             return JsonResponse({"status": "error", "message": "plan_name, company_id, and provider_name are required."}, status=400)
 
-        # Fetch the related provider, plan, and scope_step
+        # Fetch the related provider, plan, and company
         provider = get_object_or_404(Providers, providers_name=provider_name)
         plan = get_object_or_404(Plans, plan_name=plan_name, provider=provider)
         company = get_object_or_404(Companys, company_id=company_id)
@@ -107,7 +93,7 @@ def delete_shopping_cart(request):
         # Fetch the corresponding scope_step for the given company_id and plan
         scope_step = get_object_or_404(ScopeSteps, company=company, plan=plan)
 
-        # Delete the shopping cart item that matches the scope_step_id and company_id
+        # Fetch the shopping cart item based on company and scope_step
         shopping_cart_item = get_object_or_404(ShoppingCartContent, company=company, scope_step=scope_step)
         
         # Deleting the item
@@ -119,3 +105,51 @@ def delete_shopping_cart(request):
     except Exception as e:
         # Catch any unexpected exceptions and return a general error
         return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
+# @csrf_exempt
+# @require_http_methods(["POST"])  # Ensures that only POST requests are allowed
+# def delete_shopping_cart(request):
+#     try:
+#         # Debug: Print the request method and body for troubleshooting
+#         print(f"Request method: {request.method}")
+#         print(f"Request body: {request.body.decode('utf-8')}")  # Log the request body
+
+#         # Ensure the body is not empty
+#         if not request.body:
+#             return JsonResponse({"status": "error", "message": "Request body is empty."}, status=400)
+
+#         # Parse the JSON body
+#         try:
+#             body = json.loads(request.body)
+#         except json.JSONDecodeError:
+#             return JsonResponse({"status": "error", "message": "Invalid JSON format."}, status=400)
+
+#         # Get the plan_name, company_id, and provider_name from the request body
+#         plan_name = body.get("plan_name")
+#         company_id = body.get("company_id")
+#         provider_name = body.get("provider_name")
+
+#         # Ensure plan_name, company_id, and provider_name are provided
+#         if not plan_name or not company_id or not provider_name:
+#             return JsonResponse({"status": "error", "message": "plan_name, company_id, and provider_name are required."}, status=400)
+
+#         # Fetch the related provider, plan, and scope_step
+#         provider = get_object_or_404(Providers, providers_name=provider_name)
+#         plan = get_object_or_404(Plans, plan_name=plan_name, provider=provider)
+#         company = get_object_or_404(Companys, company_id=company_id)
+
+#         # Fetch the corresponding scope_step for the given company_id and plan
+#         scope_step = get_object_or_404(ScopeSteps, company=company, plan=plan)
+
+#         # Delete the shopping cart item that matches the scope_step_id and company_id
+#         shopping_cart_item = get_object_or_404(ShoppingCartContent, company=company, scope_step=scope_step)
+        
+#         # Deleting the item
+#         shopping_cart_item.delete()
+
+#         # Return a success message
+#         return JsonResponse({"status": "success", "message": "ShoppingCartContent item deleted successfully."}, status=200)
+
+#     except Exception as e:
+#         # Catch any unexpected exceptions and return a general error
+#         return JsonResponse({"status": "error", "message": str(e)}, status=500)

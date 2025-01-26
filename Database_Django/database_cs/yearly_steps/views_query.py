@@ -249,41 +249,41 @@ def add_shopping_cart(request):
 #         return JsonResponse({"error": str(e)}, status=500)
 
 
-@csrf_exempt
-def delete_shopping_cart(request):
-    """
-    API to delete a ShoppingCartContent row based on plan_name, company_id, and provider_name.
-    """
-    if request.method != "GET":
-        return JsonResponse({"error": "Only GET requests are allowed."}, status=405)
+# @csrf_exempt
+# def delete_shopping_cart(request):
+#     """
+#     API to delete a ShoppingCartContent row based on plan_name, company_id, and provider_name.
+#     """
+#     if request.method != "GET":
+#         return JsonResponse({"error": "Only GET requests are allowed."}, status=405)
 
-    try:
-        body = json.loads(request.body)
-        plan_name = body.get('plan_name')
-        company_id = body.get('company_id')
-        provider_name = body.get('provider_name')
+#     try:
+#         body = json.loads(request.body)
+#         plan_name = body.get('plan_name')
+#         company_id = body.get('company_id')
+#         provider_name = body.get('provider_name')
         
-        print("Plan_name, provider_name, comapany_id", plan_name,provider_name,company_id)
+#         print("Plan_name, provider_name, comapany_id", plan_name,provider_name,company_id)
 
-        # Validate inputs
-        if not (plan_name and company_id and provider_name):
-            return JsonResponse({"error": "plan_name, company_id, and provider_name are required."}, status=400)
+#         # Validate inputs
+#         if not (plan_name and company_id and provider_name):
+#             return JsonResponse({"error": "plan_name, company_id, and provider_name are required."}, status=400)
 
-        # Query the record
-        record = ShoppingCartContent.objects.filter(
-            Q(scope_step__plan__plan_name=plan_name) &
-            Q(company_id=company_id) &
-            Q(scope_step__plan__provider__providers_name=provider_name)
-        ).first()
-        print(record)
-        if not record:
-            return JsonResponse({"error": "No matching record found."}, status=404)
+#         # Query the record
+#         record = ShoppingCartContent.objects.filter(
+#             Q(scope_step__plan__plan_name=plan_name) &
+#             Q(company_id=company_id) &
+#             Q(scope_step__plan__provider__providers_name=provider_name)
+#         ).first()
+#         print(record)
+#         if not record:
+#             return JsonResponse({"error": "No matching record found."}, status=404)
 
-        # Delete the record
-        record.delete()
-        return JsonResponse({"message": "Record deleted successfully."}, status=200)
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
+#         # Delete the record
+#         record.delete()
+#         return JsonResponse({"message": "Record deleted successfully."}, status=200)
+#     except Exception as e:
+#         return JsonResponse({"error": str(e)}, status=500)
 
 # from django.core.exceptions import ObjectDoesNotExist
 # @csrf_exempt
