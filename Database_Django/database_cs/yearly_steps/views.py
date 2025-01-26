@@ -12,32 +12,35 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_http_methods
 # CART
 
-
-@csrf_exempt
-@require_http_methods(["GET"]) 
-def get_shopping_cart(request):
+@csrf_exempt  # Exempt from CSRF for testing (remove in production)
+@require_http_methods(["GET"])  # Restrict method to GET
+def get_shopping_cart_content(request):
     try:
-        # Get company_id from query parameters
+        # Get 'company_id' from query parameters
         company_id = request.GET.get("company_id")
-        print(company_id)
-        if not company_id:
-            return JsonResponse({"status": "error", "message": "Missing company_id parameter."}, status=400)
 
-        # Fetch data from ShoppingCartContent filtered by company_id
-        shopping_cart_items = ShoppingCartContent.objects.filter(company_id=company_id).select_related('company', 'scope_step')
+        # Validate input
+        if not company_id:
+            return JsonResponse({"status": "error", "message": "Missing 'company_id' parameter."}, status=400)
+
+        # Fetch records for the given company_id
+        shopping_cart_items = ShoppingCartContent.objects.filter(company_id=company_id)
 
         # Serialize the data
         data = [
             {
                 "id": item.id,
-                "company_name": item.company.name,  # Access related Companys name
-                "scope_step_name": item.scope_step.name,  # Access related ScopeSteps name
+                "company_id": item.company_id,
+                "scope_step_id": item.scope_step_id
             }
             for item in shopping_cart_items
         ]
 
+        # Return JSON response
         return JsonResponse({"status": "success", "data": data}, status=200)
+
     except Exception as e:
+        # Handle unexpected errors
         return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
 
