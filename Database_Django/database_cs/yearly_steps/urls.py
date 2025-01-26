@@ -24,7 +24,7 @@ urlpatterns = [
     #path('shopping_cart_content', shopping_cart_content, name='shopping_cart_content'),
     #path('shopping_cart_content', ShoppingCartContentView.as_view(), name='shopping_cart_content'),
     path('delete-shopping-cart', delete_shopping_cart, name='delete_shopping_cart_content'),
-    path('get-shopping-cart/', get_shopping_cart_content, name='get_shopping_cart_content'), #get_shopping_cart_content
+    path('get-shopping-cart', get_shopping_cart_content, name='get_shopping_cart_content'), #get_shopping_cart_content
 
 ]
 
