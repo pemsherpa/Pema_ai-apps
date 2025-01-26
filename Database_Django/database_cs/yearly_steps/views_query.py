@@ -42,13 +42,14 @@ def get_table_records(request, table_name):
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
 
+
 @csrf_exempt
 def query_scope_steps(request):
     print("Querying.......")
     quarter = request.GET.get('quarter')
     company_id = request.GET.get('company')
     year = request.GET.get('year')  # Can contain multiple years (comma-separated)
-    
+
     filters = {}
 
     # Filter by quarter
@@ -82,6 +83,14 @@ def query_scope_steps(request):
             "company_name": step.company.company_id,
             "plan_name": step.plan.plan_name if step.plan else None,
             "provider_name": step.plan.provider.providers_name if step.plan and step.plan.provider else None,
+            "phone_number": step.plan.provider.phone_number if step.plan and step.plan.provider else None,
+            "website_link": step.plan.provider.website_link if step.plan and step.plan.provider else None,
+            "provider_description": step.plan.provider.description if step.plan and step.plan.provider else None,
+            "carbon_cost": step.plan.carbon_cost if step.plan else None,
+            "total_cost": step.plan.total_cost if step.plan else None,
+            "peak_cost": step.plan.peak_cost if step.plan else None,
+            "off_peak_cost": step.plan.off_peak_cost if step.plan else None,
+            "data": step.plan.data if step.plan else None,
         }
         for step in scope_steps
     ]
@@ -89,12 +98,55 @@ def query_scope_steps(request):
     return JsonResponse({"data": results}, safe=False)
 
 
-#MY CODE
-
 # @csrf_exempt
-# def shopping_cart_content(request):
-#     print("Get shopping cart method.")
-#     return JsonResponse("Hello world",status=200)
+# def query_scope_steps(request):
+#     print("Querying.......")
+#     quarter = request.GET.get('quarter')
+#     company_id = request.GET.get('company')
+#     year = request.GET.get('year')  # Can contain multiple years (comma-separated)
+    
+#     filters = {}
+
+#     # Filter by quarter
+#     if quarter:
+#         filters['quarter'] = quarter
+
+#     # Filter by company
+#     if company_id:
+#         company = get_object_or_404(Companys, company_id=company_id)
+#         filters['company'] = company
+
+#     # Filter by multiple years
+#     if year:
+#         year_list = [int(y) for y in year.split(',') if y.isdigit()]
+#         if year_list:
+#             filters['year__in'] = year_list
+
+#     # Query the database with filters (or return all if no filters are provided)
+#     scope_steps = ScopeSteps.objects.filter(**filters).select_related('company', 'plan__provider')
+
+#     # Prepare results
+#     results = [
+#         {
+#             "id": step.id,
+#             "year": step.year,
+#             "quarter": step.quarter,
+#             "scope_type": step.scope_type,
+#             "description": step.description,
+#             "difficulty": step.difficulty,
+#             "transition_percentage": step.transition_percentage,
+#             "company_name": step.company.company_id,
+#             "plan_name": step.plan.plan_name if step.plan else None,
+#             "provider_name": step.plan.provider.providers_name if step.plan and step.plan.provider else None,
+#             "provider_phone_number": step.plan.provider.phone_number if step.plan and step.plan.provider else None,
+#             "provider_website_link": step.plan.provider.website_link if step.plan and step.plan.provider else None,
+#             "provider_description": step.plan.provider.description if step.plan and step.plan.provider else None,
+#         }
+#         for step in scope_steps
+#     ]
+
+#     return JsonResponse({"data": results}, safe=False)
+
 
 @csrf_exempt
 def shopping_cart_content(request):
