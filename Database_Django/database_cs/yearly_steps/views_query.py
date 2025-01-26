@@ -11,6 +11,8 @@ from .models import *
 from yearly_steps.models import ShoppingCartContent
 from django.db.models import Q
 import json
+from .serializers import *
+from django.views.decorators.http import require_http_methods
 
 from yearly_steps.serializers import ShoppingCartContentSerializer
 from rest_framework.views import APIView
@@ -147,61 +149,121 @@ def query_scope_steps(request):
 
 #     return JsonResponse({"data": results}, safe=False)
 
-
 @csrf_exempt
-def shopping_cart_content(request):
-    """
-    API to fetch ShoppingCartContent data based on company_id.
-    """
-    print("Get shopping cart method.")
-    if request.method != "GET":
-        return JsonResponse({"error": "Only GET requests are allowed."}, status=405)
-
-    company_id = request.GET.get('company_id')
-    if not company_id:
-        return JsonResponse({"error": "company_id parameter is required."}, status=400)
-
-    print(company_id)
+@require_http_methods(["POST"])  # Ensure only POST requests are allowed
+def add_shopping_cart(request):
     try:
-        # Filter records by company_id
-        records = ShoppingCartContent.objects.filter(company_id=company_id)
+        # Parse input data from query parameters
+        provider_name = request.GET.get('provider_name')
+        company_id = request.GET.get('company_id')
+        plan_name = request.GET.get('plan_name')
 
-        # Prepare JSON response
-        records_data = [
-            {
-                "id": record.id,
-                "year": record.scope_step.year,
-                "quarter": record.scope_step.quarter,
-                "scope_type": record.scope_step.scope_type,
-                "description": record.scope_step.description,
-                "difficulty": record.scope_step.difficulty,
-                "transition_percentage": record.scope_step.transition_percentage,
-                "company_name": record.company.company_id,
-                "plan_name": record.scope_step.plan.plan_name if record.scope_step.plan else None,
-                "provider_name": record.scope_step.plan.provider.providers_name if record.scope_step.plan and record.scope_step.plan.provider else None,
-            }
-            for record in records
-        ]
-        print(records_data)
+        # Validate input data
+        if not (provider_name and company_id and plan_name):
+            return JsonResponse(
+                {"error": "Missing required fields: provider_name, company_id, plan_name."},
+                status=400
+            )
 
-        return JsonResponse({"shopping_cart_content": records_data}, status=200)
+        # Fetch the company
+        company = get_object_or_404(Companys, company_id=company_id)
+
+        # Fetch the provider
+        provider = get_object_or_404(Providers, providers_name=provider_name)
+
+        # Fetch the plan
+        plan = get_object_or_404(Plans, provider=provider, plan_name=plan_name)
+
+        # Fetch the corresponding scope steps
+        scope_steps = ScopeSteps.objects.filter(company=company, plan=plan)
+
+        if not scope_steps.exists():
+            return JsonResponse(
+                {"error": "No scope steps found for the specified company and plan."},
+                status=404
+            )
+
+        # Add each scope step to the shopping cart
+        added_steps = []
+        already_in_cart = []
+
+        for scope_step in scope_steps:
+            shopping_cart_entry, created = ShoppingCartContent.objects.get_or_create(
+                company=company, scope_step=scope_step
+            )
+            if created:
+                added_steps.append(scope_step.id)  # Use scope_step.id for unique identification
+            else:
+                already_in_cart.append(scope_step.id)
+
+        response_data = {
+            "message": "Shopping cart updated successfully.",
+            "added_steps": added_steps,
+            "already_in_cart": already_in_cart,
+        }
+
+        return JsonResponse(response_data, status=200)
+
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+    
+
+# @csrf_exempt
+# def shopping_cart_content(request):
+#     """
+#     API to fetch ShoppingCartContent data based on company_id.
+#     """
+#     print("Get shopping cart method.")
+#     if request.method != "GET":
+#         return JsonResponse({"error": "Only GET requests are allowed."}, status=405)
+
+#     company_id = request.GET.get('company_id')
+#     if not company_id:
+#         return JsonResponse({"error": "company_id parameter is required."}, status=400)
+
+#     print(company_id)
+#     try:
+#         # Filter records by company_id
+#         records = ShoppingCartContent.objects.filter(company_id=company_id)
+
+#         # Prepare JSON response
+#         records_data = [
+#             {
+#                 "id": record.id,
+#                 "year": record.scope_step.year,
+#                 "quarter": record.scope_step.quarter,
+#                 "scope_type": record.scope_step.scope_type,
+#                 "description": record.scope_step.description,
+#                 "difficulty": record.scope_step.difficulty,
+#                 "transition_percentage": record.scope_step.transition_percentage,
+#                 "company_name": record.company.company_id,
+#                 "plan_name": record.scope_step.plan.plan_name if record.scope_step.plan else None,
+#                 "provider_name": record.scope_step.plan.provider.providers_name if record.scope_step.plan and record.scope_step.plan.provider else None,
+#             }
+#             for record in records
+#         ]
+#         print(records_data)
+
+#         return JsonResponse({"shopping_cart_content": records_data}, status=200)
+#     except Exception as e:
+#         return JsonResponse({"error": str(e)}, status=500)
 
 
 @csrf_exempt
-def delete_shopping_cart_content(request):
+def delete_shopping_cart(request):
     """
     API to delete a ShoppingCartContent row based on plan_name, company_id, and provider_name.
     """
-    if request.method != "POST":
-        return JsonResponse({"error": "Only POST requests are allowed."}, status=405)
+    if request.method != "GET":
+        return JsonResponse({"error": "Only GET requests are allowed."}, status=405)
 
     try:
         body = json.loads(request.body)
         plan_name = body.get('plan_name')
         company_id = body.get('company_id')
         provider_name = body.get('provider_name')
+        
+        print("Plan_name, provider_name, comapany_id", plan_name,provider_name,company_id)
 
         # Validate inputs
         if not (plan_name and company_id and provider_name):
@@ -213,7 +275,7 @@ def delete_shopping_cart_content(request):
             Q(company_id=company_id) &
             Q(scope_step__plan__provider__providers_name=provider_name)
         ).first()
-
+        print(record)
         if not record:
             return JsonResponse({"error": "No matching record found."}, status=404)
 
@@ -222,26 +284,54 @@ def delete_shopping_cart_content(request):
         return JsonResponse({"message": "Record deleted successfully."}, status=200)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
-    
 
+# from django.core.exceptions import ObjectDoesNotExist
+# @csrf_exempt
+# @require_http_methods(["POST"])
+# def delete_shopping_cart(request):
+#     if request.method == "POST":
+#         try:
+#             # Parse request body for required parameters
+#             body = json.loads(request.body)
+#             plan_name = body.get("plan_name")
+#             company_id = body.get("company_id")
+#             provider_name = body.get("provider_name")
+#             # Validate input parameters
+#             if not (plan_name and company_id and provider_name):
+#                 return JsonResponse({"status": "error", "message": "plan_name, company_id, and provider_name are required."}, status=400)
+#             # Find and delete the matching row in ShoppingCartContent
+#             shopping_cart_item = get_object_or_404(
+#                 ShoppingCartContent,
+#                 plan_name=plan_name,
+#                 company_id=company_id,
+#                 provider_name=provider_name,
+#             )
+#             shopping_cart_item.delete()
+#             return JsonResponse({"status": "success", "message": "Item deleted successfully."}, status=200)
+#         except ObjectDoesNotExist:
+#             return JsonResponse({"status": "error", "message": "Item not found."}, status=404)
+#         except Exception as e:
+#             return JsonResponse({"status": "error", "message": str(e)}, status=500)
+#     else:
+#         return JsonResponse({"status": "error", "message": "Invalid request method. Use POST."}, status=405)
 
-class ShoppingCartContentView(APIView):
-    def get(self, request):
-        company_id = request.GET.get('company_id')
-        if not company_id:
-            return JsonResponse({"error": "company_id parameter is required."}, status=400)
+# class ShoppingCartContentView(APIView):
+#     def get(self, request):
+#         company_id = request.GET.get('company_id')
+#         if not company_id:
+#             return JsonResponse({"error": "company_id parameter is required."}, status=400)
 
-        try:
-            # Query the database for shopping cart contents by company_id
-            records = ShoppingCartContent.objects.filter(company_id=company_id)
+#         try:
+#             # Query the database for shopping cart contents by company_id
+#             records = ShoppingCartContent.objects.filter(company_id=company_id)
 
-            if not records.exists():
-                return JsonResponse({"error": "No records found for the given company_id."}, status=404)
+#             if not records.exists():
+#                 return JsonResponse({"error": "No records found for the given company_id."}, status=404)
 
-            # Serialize the query results
-            serializer = ShoppingCartContentSerializer(records, many=True)
-            return JsonResponse({"shopping_cart_content": serializer.data}, status=200)
+#             # Serialize the query results
+#             serializer = ShoppingCartContentSerializer(records, many=True)
+#             return JsonResponse({"shopping_cart_content": serializer.data}, status=200)
 
-        except Exception as e:
-            # Catch unexpected errors
-            return JsonResponse({"error": str(e)}, status=500)
+#         except Exception as e:
+#             # Catch unexpected errors
+#             return JsonResponse({"error": str(e)}, status=500)
