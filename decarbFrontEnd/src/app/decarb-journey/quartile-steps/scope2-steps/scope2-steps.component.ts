@@ -15,11 +15,14 @@ export class Scope2StepsComponent implements AfterViewInit {
     description: string;
     cost_savings: number;
     co2_savings: number;
-    transition: number;
+    transition_percentage: number;
     difficulty: number;
     isCompleted: boolean;
     recommenedProvider: any[];
-    providerInfo: any[];
+    provider_name: any[];
+    provider_description: string;
+    phone_number: string;
+    website_link: string;
   };
 
   @Input() totalSteps = 4;
@@ -32,21 +35,21 @@ export class Scope2StepsComponent implements AfterViewInit {
   constructor(private router: Router, private elementRef: ElementRef) { }
 
   handleClick(): void {
-    console.log('Step clicked, toggling completion and expansion...');
+    //console.log('Step clicked, toggling completion and expansion...');
     this.toggleCompletion();
     this.toggleExpansion();
-    console.log("I am here",this.stepData.transition)
+    //console.log("I am here",this.stepData.transition_percentage)
   }
 
   toggleCompletion(): void {
     this.stepData.isCompleted = !this.stepData.isCompleted;
     this.stepToggled.emit(this.stepData);
-    console.log('Step completion toggled:', this.stepData.isCompleted);
+    //console.log('Step completion toggled:', this.stepData.isCompleted);
   }
 
   toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;
-    console.log('Step expansion toggled:', this.isExpanded);
+    //console.log('Step expansion toggled:', this.isExpanded);
     setTimeout(() => {
       this.updateLineHeight();
     }, 50);

@@ -16,10 +16,10 @@
       </div>
     </div>
 
-
+<!-- {{ stepData | json }} -->
     <!-- Step Header with 20px Gap -->
     <div class="step-header" (click)="handleClick()">
-      <span class="title">{{ stepData.title }}</span>
+      <span class="title">{{ stepData.description }}</span>
       <span class="dropdown-arrow">
         <ng-container *ngIf="isExpanded; else downArrow">
           <!-- Up Arrow -->
@@ -63,8 +63,8 @@
 
       <!-- Provider List -->
       <div class="dropdown-content">
-        <ul *ngIf="stepData?.providerInfo?.length">
-          <li *ngFor="let provider of stepData?.providerInfo" class="provider-item">
+        <ul *ngIf="stepData.provider_name">
+          <!-- <li *ngFor="let provider of stepData?.provider_name" class="provider-item">
             <strong>{{ provider.name }}</strong> - {{ provider?.details }}
             <br>
             Renewable Percentage: {{ provider?.renewablePercentage }}%
@@ -72,13 +72,23 @@
             Phone: {{ provider?.phone }}
             <br>
             <a *ngIf="provider?.website" [href]="provider?.website" target="_blank">Visit Website</a>
+          </li> -->
+          <li class="provider-item">
+            <strong>{{ stepData.provider_name }}</strong>
+            - {{ stepData.provider_description}}
+            <br>
+            <b>Renewable Percentage:</b> {{stepData.transition_percentage}}%
+            <br>
+            <b>Phone No.</b> {{stepData.phone_number}}
+            <br>
+            <a *ngIf="stepData?.website_link" [href]="stepData.website_link" target="_blank">Visit Website</a>
           </li>
         </ul>
       </div>
     </div>
 
     <!-- Fallback Message -->
-    <div *ngIf="stepData?.providerInfo?.length === 0">
+    <div *ngIf="stepData?.provider_name?.length === 0">
       <p>No provider information available.</p>
     </div>
 

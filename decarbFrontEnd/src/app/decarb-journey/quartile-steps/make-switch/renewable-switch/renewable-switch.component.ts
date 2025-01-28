@@ -39,10 +39,10 @@ export class RenewableSwitchComponent implements AfterViewInit {
     const state = history.state;
     this.stepData = state.data || null;
 
-    this.co2Data = this.stepData.co2_savings
-    this.costData = this.stepData.cost_savings
+    this.co2Data = this.stepData.carbon_cost
+    this.costData = this.stepData.total_cost
 
-    console.log(this.stepData);
+    //console.log(this.stepData);
     this.http.get<any>('assets/yearly_quarterly_steps.json').subscribe(data => {
       // Assign the current details from the fetched data
       if (data && data.cs_backend_data.current_details) {
@@ -110,20 +110,20 @@ export class RenewableSwitchComponent implements AfterViewInit {
   }
 
   onSubmit() {
-    console.log('User Details Submitted:', this.userDetails);
+    //console.log('User Details Submitted:', this.userDetails);
     alert('Thank you! Your details have been submitted.');
   }
 
   previousCard() {
     this.activeIndex = (this.activeIndex > 0) ? this.activeIndex - 1 : this.stepData.providerInfo.length - 1;
     this.RenderChart(this.activeIndex)
-    console.log(this.activeIndex);
+    //console.log(this.activeIndex);
   }
 
   nextCard() {
     this.activeIndex = (this.activeIndex < this.stepData.providerInfo.length - 1) ? this.activeIndex + 1 : 0;
     this.RenderChart(this.activeIndex);
-    console.log(this.activeIndex);
+    //console.log(this.activeIndex);
   }
 
   getImagePath(providerName: string): string {

@@ -15,13 +15,13 @@ interface BaseScope3Data {
   transition: number;
   difficulty: number;
   isCompleted: boolean;
-  type: 'flight' | 'commute' | 'recommendation';
+  type: 'commute' | 'recommendation'; //'flight' |
 }
 
-interface FlightData extends BaseScope3Data {
-  type: 'flight';
-  stops: number;
-}
+// interface FlightData extends BaseScope3Data {
+//   type: 'flight';
+//   stops: number;
+// }
 
 interface CommuteMember {
   id: number;
@@ -68,17 +68,24 @@ interface Provider {
 
 interface RecommendationData extends BaseScope3Data {
   type: 'recommendation';
-  recommendations: {
+  providerInfo: {
     plan: string;
     message: string;
+    name: string | null;
+    company: string;
+    details: string;
+    location: string;
+    phone: string;
+    website: string;
     carbonSavings: number;
     costSavings: number;
-    providers: Provider[];
+    total_cost: number;
+    renewablePercent: number | null;
     recommendedProvider: Provider;
   }[];
 }
 
-type Scope3StepData = FlightData | CommuteData | RecommendationData;
+type Scope3StepData = CommuteData | RecommendationData //| FlightData
 
 @Component({
   selector: 'app-scope3-step',
@@ -128,9 +135,9 @@ export class Scope3StepsComponent {
       case 'commute':
         routerPath = '/make-switch/carpool'
         break
-      case 'flight':
-        routerPath = '/make-switch/flights1'
-        break
+      // case 'flight':
+      //   routerPath = '/make-switch/flights1'
+      //   break
       case 'recommendation':
         routerPath = '/make-switch/cru'
         break
@@ -212,9 +219,9 @@ export class Scope3StepsComponent {
 
 
   // Helper methods to check type
-  isFlightStep(): boolean {
-    return this.stepData.type === 'flight';
-  }
+  // isFlightStep(): boolean {
+  //   return this.stepData.type === 'flight';
+  // }
 
   isCommuteStep(): boolean {
     return this.stepData.type === 'commute';

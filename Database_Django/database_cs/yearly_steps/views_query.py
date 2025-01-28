@@ -97,6 +97,11 @@ def query_scope_steps(request):
         for step in scope_steps
     ]
 
+    response = JsonResponse({"data": results}, safe=False)
+    response["Access-Control-Allow-Origin"] = "http://localhost:4200"
+    response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+    response["Access-Control-Allow-Headers"] = "Content-Type"
+
     return JsonResponse({"data": results}, safe=False)
 
 

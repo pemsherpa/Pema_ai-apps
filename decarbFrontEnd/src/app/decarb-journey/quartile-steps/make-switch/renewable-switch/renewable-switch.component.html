@@ -46,12 +46,12 @@
                                     <div class="details">
                                         <div class="details-box">
                                             <div class="details-item">
-                                                <div class="detail-value" *ngIf="stepData.cost_savings">${{ stepData.cost_savings }}</div>
-                                                <div class="detail-label" *ngIf="stepData.cost_savings">Cost Savings</div>
+                                                <div class="detail-value" *ngIf="stepData.total_cost">${{ stepData.total_cost }}</div>
+                                                <div class="detail-label" *ngIf="stepData.total_cost">Cost Savings</div>
                                             </div>
                                             <div class="details-item">
-                                                <div class="detail-value" *ngIf="stepData.co2_savings">{{ stepData.co2_savings }}kCO2</div>
-                                                <div class="detail-label" *ngIf="stepData.co2_savings">CO2 Savings</div>
+                                                <div class="detail-value" *ngIf="stepData.carbon_cost">{{ stepData.carbon_cost }}kCO2</div>
+                                                <div class="detail-label" *ngIf="stepData.carbon_cost">CO2 Savings</div>
                                             </div>
                                         </div>
                                     </div>
@@ -60,7 +60,7 @@
                                         {{ provider.details }}
                                         <br />
                                         <br />
-                                        Renewable Percentage: {{ provider.renewablePercentage }}% <br />
+                                        Renewable Percentage: {{ provider.transition_percentage }}% <br />
                                         <i class="fa fa-phone"></i> {{ provider.phone }} <br />
                                         <a *ngIf="provider.website" [href]="provider.website" target="_blank">Visit
                                             Website</a>

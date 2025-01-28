@@ -80,7 +80,7 @@ export class CarpoolComponent implements OnInit, AfterViewInit {
     if (this.stepData && this.stepData.commuteData) {
       this.step_groups = this.stepData.commuteData
       this.groups = [...this.step_groups]
-      // console.log("Showing groups: ", this.groups)
+      //console.log("Showing groups: ", this.groups)
       this.createMarkers(this.groups)
     } else {
       console.error("Failed to fetch groups")
@@ -122,15 +122,15 @@ export class CarpoolComponent implements OnInit, AfterViewInit {
   flattenStepData(stepData: any[]): any[] {
     const commuteData = this.stepData.commuteData
 
-    const flattedData = commuteData.map((group: { group: any; members: any[]; savings: { distance: any; money: any; emission: any; }; }) => ({
+    const flattedData = commuteData.map((group: { group: any; members: any[]; distance_saving: any; money_saving: any; emission_saving: any; }) => ({
       group: group.group,
-      distance: Math.max(...group.members.map(member => member.distance)),
+      distance: Math.max(...group.members.map(member => member.distanceFromFrim)),
       frequency: Math.max(...group.members.map(member => member.frequency)),
       membersCount: group.members.length,
       location: group.members[0]?.location,
-      milesSaved: group.savings.distance,
-      moneySaved: group.savings.money,
-      emissionSaved: group.savings.emission
+      milesSaved: group.distance_saving,
+      moneySaved: group.money_saving,
+      emissionSaved: group.emission_saving
     }))
     return flattedData
   }
@@ -243,7 +243,7 @@ export class CarpoolComponent implements OnInit, AfterViewInit {
 
       if (selectedMarker) {
         // console.log("SelectedMarker: ", selectedMarker)
-        console.log("marker data: ", selectedMarkerData.groupInfo)
+        //console.log("marker data: ", selectedMarkerData.groupInfo)
         this.openInfoWindow(selectedMarker, selectedMarkerData.groupInfo);
       } else {
         console.error(`MapMarker instance not found for group: ${groupNumber}`);
@@ -257,7 +257,7 @@ export class CarpoolComponent implements OnInit, AfterViewInit {
   openInfoWindow(markerRef: MapMarker, groupInfo: Groups) {
     this.selectedGroupMark = groupInfo;
 
-    console.log(this.selectedGroupMark)
+    //console.log(this.selectedGroupMark)
     // this.dataSource.data = groupInfo.commute_rec;
 
     this.changeDetectorRef.detectChanges(); // Trigger change detection
