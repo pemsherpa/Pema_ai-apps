@@ -77,7 +77,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
     const storedYears = sessionStorage.getItem('selectedYears');
     if (storedYears) {
       this.selectedYears = JSON.parse(storedYears);
-      console.log(storedYears)
+      //console.log(storedYears)
     } else {
       // Default to selecting all years
       this.availableYears.forEach((year) => (this.selectedYears[year] = true));
@@ -333,7 +333,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
     );
   }
   onItemChecked(CartItem: ShoppingCartItem): void {
-    console.log("print",CartItem)
+    //console.log("print",CartItem)
     // this.addItem(CartItem);
   }
   
@@ -375,9 +375,9 @@ export class DecarbQuartileSectionComponent implements OnInit {
     });
   
     // Logs for debugging
-    console.log('Cart item emitted:', cartItem);
-    console.log('Step', item.company_name);
-    console.log('I am correct', item);
+    // console.log('Cart item emitted:', cartItem);
+    // console.log('Step', item.company_name);
+    // console.log('I am correct', item);
   }
   
  
@@ -385,12 +385,12 @@ export class DecarbQuartileSectionComponent implements OnInit {
 
 
   addItem(item: ShoppingCartItem): Observable<ShoppingCartItem> {
-    console.log("shop",item)
-    console.log("I am getting called");
-    console.log("I am the cart item", item);
+    // console.log("shop",item)
+    // console.log("I am getting called");
+    // console.log("I am the cart item", item);
     
     // Perform the API call here
-    return this.http.post<ShoppingCartItem>('http://127.0.0.1:8000/yearly_steps/add-shopping-cart',  item )
+    return this.http.post<ShoppingCartItem>('http://127.0.0.1:8000/yearly_steps/add-shopping-cart/',  item )
     
       .pipe( 
         

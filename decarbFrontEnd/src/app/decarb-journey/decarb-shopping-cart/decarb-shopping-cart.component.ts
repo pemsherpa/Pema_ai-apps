@@ -120,7 +120,7 @@ export class DecarbShoppingCartComponent implements OnInit {
     this.updateProgress();
     
     
-    console.log("GOWRIIIIII",itemToRemove)
+    // console.log("GOWRIIIIII",itemToRemove)
     this.deleteItem(itemToRemove).subscribe({
       next: (response) => {
         console.log('Item deleted from backend:', response);
@@ -144,7 +144,7 @@ export class DecarbShoppingCartComponent implements OnInit {
     
   
     return this.http.get<any>(
-      'http://127.0.0.1:8000/yearly_steps/delete-shopping-cart', 
+      'http://127.0.0.1:8000/yearly_steps/delete-shopping-cart/', 
       { params }
     ).pipe(
       tap({
@@ -164,7 +164,6 @@ export class DecarbShoppingCartComponent implements OnInit {
     if (!existingItem) {
       this.cartItems.push(item);
       //this.saveItemToDatabase(item);
-      console.log("I'm adding..... ")
     }
   }
 

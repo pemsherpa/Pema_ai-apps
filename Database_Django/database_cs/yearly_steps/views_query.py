@@ -158,17 +158,33 @@ def query_scope_steps(request):
 @require_http_methods(["POST"])  # Ensure only POST requests are allowed
 def add_shopping_cart(request):
     try:
+        data = json.loads(request.body)
         # Parse input data from query parameters
-        provider_name = request.GET.get('provider_name')
-        company_name = request.GET.get('company_name')
-        plan_name = request.GET.get('plan_name')
-        
+        provider_name = data.get('provider_name')
+        company_name = data.get('company_name')
+        plan_name = data.get('plan_name')
+
         # Validate input data
         if not (provider_name and company_name and plan_name):
-            return JsonResponse(
-                {"error": "Missing required fields: provider_name, company_id, plan_name."},
-                status=400
-            )
+            if not provider_name:
+                return JsonResponse(
+                    {"error": "Missing required fields: provider_name"},
+                    status=400
+                )
+            elif not company_name:
+                return JsonResponse(
+                    {"error": "Missing required fields:company_name"},
+                    status=400
+                )
+            elif not plan_name:
+                return JsonResponse(
+                    {"error": "Missing required fields: plan_name."},
+                    status=400
+                )
+            else:
+                return JsonResponse(
+                    {"error:" "I have no clue this is so weird"}
+                )
 
         # Fetch the company
         company = get_object_or_404(Companys, company_id=company_name)

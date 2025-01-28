@@ -72,7 +72,7 @@ def delete_shopping_cart(request):
         # Debug: Print the request method and params for troubleshooting
         print(f"Request method: {request.method}")
         print(f"Request parameters: {request.GET}")  # Log the query parameters
-
+    
         # Get the parameters from the query string
         plan_name = request.GET.get("plan_name")
         company_name = request.GET.get("company_name")

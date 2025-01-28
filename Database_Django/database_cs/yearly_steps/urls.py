@@ -16,13 +16,13 @@ urlpatterns = [
     path('create-vector-table', create_and_update_vector_table, name='create_vector_table'),
     #path('detect_anomalies', detect_anomalies, name='detect_anomalies'),
     path('', lambda request: render(request, 'yearly_steps/index.html'), name='home'),
-    path('add-shopping-cart', add_shopping_cart, name='add_shopping_cart'),                    #add_shopping_cart
+    path('add-shopping-cart/', add_shopping_cart, name='add_shopping_cart'),                    #add_shopping_cart
     path('detect-iqr-anomalies', detect_iqr_anomalies, name='detect_iqr_anomalies'),
     path('detect-cosine-anomalies', detect_cosine_anomalies, name='detect_cosine_anomalies'),\
     path('query_scope_steps/', query_scope_steps, name='query_scope_steps'),
     #path('shopping_cart_content', shopping_cart_content, name='shopping_cart_content'),
     #path('shopping_cart_content', ShoppingCartContentView.as_view(), name='shopping_cart_content'),
-    path('delete-shopping-cart', delete_shopping_cart, name='delete_shopping_cart_content'),
+    path('delete-shopping-cart/', delete_shopping_cart, name='delete_shopping_cart_content'),
     path('get-shopping-cart', get_shopping_cart_content, name='get_shopping_cart_content'), #get_shopping_cart_content
 
 ]

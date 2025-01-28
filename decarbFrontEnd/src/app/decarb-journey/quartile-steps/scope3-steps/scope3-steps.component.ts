@@ -107,21 +107,21 @@ export class Scope3StepsComponent {
   constructor(private router: Router, private elementRef: ElementRef) { }
 
   handleClick(): void {
-    console.log('Step clicked, toggling completion and expansion...');
+    //console.log('Step clicked, toggling completion and expansion...');
     this.toggleCompletion();
     this.toggleExpansion();
-    console.log("I am here", this.stepData.transition);
+    //console.log("I am here", this.stepData.transition);
   }
 
   toggleCompletion(): void {
     this.stepData.isCompleted = !this.stepData.isCompleted;
     this.stepToggled.emit(this.stepData);
-    console.log('Step completion toggled:', this.stepData.isCompleted);
+    //console.log('Step completion toggled:', this.stepData.isCompleted);
   }
 
   toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;
-    console.log('Step expansion toggled:', this.isExpanded);
+    //console.log('Step expansion toggled:', this.isExpanded);
 
     setTimeout(() => {
       this.updateLineHeight();
