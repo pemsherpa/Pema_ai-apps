@@ -160,18 +160,18 @@ def add_shopping_cart(request):
     try:
         # Parse input data from query parameters
         provider_name = request.GET.get('provider_name')
-        company_id = request.GET.get('company_id')
+        company_name = request.GET.get('company_name')
         plan_name = request.GET.get('plan_name')
-
+        
         # Validate input data
-        if not (provider_name and company_id and plan_name):
+        if not (provider_name and company_name and plan_name):
             return JsonResponse(
                 {"error": "Missing required fields: provider_name, company_id, plan_name."},
                 status=400
             )
 
         # Fetch the company
-        company = get_object_or_404(Companys, company_id=company_id)
+        company = get_object_or_404(Companys, company_id=company_name)
 
         # Fetch the provider
         provider = get_object_or_404(Providers, providers_name=provider_name)

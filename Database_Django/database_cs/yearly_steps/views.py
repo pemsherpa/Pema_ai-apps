@@ -75,20 +75,20 @@ def delete_shopping_cart(request):
 
         # Get the parameters from the query string
         plan_name = request.GET.get("plan_name")
-        company_id = request.GET.get("company_id")
+        company_name = request.GET.get("company_name")
         provider_name = request.GET.get("provider_name")
 
         # Log the parameters for debugging
-        print(f"Received parameters: plan_name={plan_name}, company_id={company_id}, provider_name={provider_name}")
+        print(f"Received parameters: plan_name={plan_name}, company_name={company_name}, provider_name={provider_name}")
 
         # Ensure all required parameters are provided
-        if not (plan_name and company_id and provider_name):
-            return JsonResponse({"status": "error", "message": "plan_name, company_id, and provider_name are required."}, status=400)
+        if not (plan_name and company_name and provider_name):
+            return JsonResponse({"status": "error", "message": "plan_name, company_name, and provider_name are required."}, status=400)
 
         # Fetch the related provider, plan, and company
         provider = get_object_or_404(Providers, providers_name=provider_name)
         plan = get_object_or_404(Plans, plan_name=plan_name, provider=provider)
-        company = get_object_or_404(Companys, company_id=company_id)
+        company = get_object_or_404(Companys, company_id=company_name)
 
         # Fetch the corresponding scope_step for the given company_id and plan
         scope_step = get_object_or_404(ScopeSteps, company=company, plan=plan)

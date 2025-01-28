@@ -60,7 +60,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
   }>();
   @Output() itemCart= new EventEmitter<{
     provider_name:string;
-    company_id:number;
+    company_name:number;
     plan_name:string;
 
   }>();
@@ -353,8 +353,8 @@ export class DecarbQuartileSectionComponent implements OnInit {
   
     const item: ShoppingCartItem = {
       provider_name: step.providerInfo[0]?.name || '',
-      company_id: step.company_id,
-      plan_name: step.providerInfo[0]?.plan_name || '',
+      company_name: step.company_name,
+      plan_name: step.plan_name || '',
     };
   
     // Emit the combined cart item to the parent
@@ -364,7 +364,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
     this.itemCart.emit(item);
 
     console.log('Payload being sent to the API:', item); // Add this log
-  if (!item.provider_name || !item.company_id || !item.plan_name) {
+  if (!item.provider_name || !item.company_name || !item.plan_name) {
     console.error('Missing required fields in the payload:', item);
   }
   
@@ -376,7 +376,7 @@ export class DecarbQuartileSectionComponent implements OnInit {
   
     // Logs for debugging
     console.log('Cart item emitted:', cartItem);
-    console.log('Step', item.company_id);
+    console.log('Step', item.company_name);
     console.log('I am correct', item);
   }
   

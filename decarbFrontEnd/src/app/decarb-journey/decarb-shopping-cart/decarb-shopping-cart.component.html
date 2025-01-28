@@ -69,16 +69,16 @@
 <p>Cost Savings</p>
 <p>CO2 Savings</p></div>
 <!-- Journey Items -->
-<div *ngFor="let item of cartItems; let i = index" class="journey-item">
+<div *ngFor="let item of items; let i = index" class="journey-item">
   <button class="remove-btn" (click)="removeItem(i)">×</button>
   
   <!-- Content aligned horizontally -->
-  <div class="journey-item-info">
+  <div *ngFor="let item of cartItems"class="journey-item-info">
     <h4>{{ item.name }}</h4>
     <p class="transition-percentage">{{ item.transition | number: '1.2-2' }}% Transition</p>
   </div>
   
-  <div class="savings-container">
+  <div *ngFor="let item of cartItems"class="savings-container">
     <p class="savings">{{ formatCostSavings(item.cost_savings) }}</p>
     <p class="savings">{{ item.co2_savings | number: '1.2-2' }} kgCO2e</p>
   </div>

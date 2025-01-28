@@ -1,5 +1,5 @@
 export interface ShoppingCartItem {
     provider_name: string;
-    company_id: number;
+    company_name: number;
     plan_name: string;
   };

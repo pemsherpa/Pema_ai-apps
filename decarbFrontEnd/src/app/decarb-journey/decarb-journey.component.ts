@@ -21,35 +21,28 @@ export class DecarbJourneyComponent implements AfterViewInit {
   constructor(private router: Router) {}
 
   ngAfterViewInit(): void {
-    // Restore cart items from sessionStorage
-    const storedCartItems = sessionStorage.getItem('cartItems');
-    if (storedCartItems && this.shoppingcartComponent) {
-      this.shoppingcartComponent.cartItems = JSON.parse(storedCartItems);
-      this.shoppingcartComponent.updateProgress();
-    }
-
-    // Restore selected years from sessionStorage
-    const storedYears = sessionStorage.getItem('selectedYears');
-    if (storedYears && this.quartileSectionComponent) {
-      const years = JSON.parse(storedYears);
-      this.quartileSectionComponent.selectedYears = { ...years }; // Directly assign the restored state
-      this.quartileSectionComponent.loadDataForYearAndQuarter(); // Reload data based on restored years
-    }
-
-    // Fetch scope data if needed
+    // Ensure the shopping cart and quartile components are initialized
     if (this.shoppingcartComponent) {
       this.shoppingcartComponent.fetchScopeData();
     }
   }
+
   cart: ShoppingCartItem[] = [];
-  
 
   onItemAddedToCart(item: ShoppingCartItem): void {
     this.cart.push(item); // Add to the cartItems array
-    console.log(item)
+    console.log(item);
   }
-  onItemChecked(event: {company_id:number, name: string; cost_savings: number; co2_savings: number; transition: number; isChecked: boolean }) {
-    const {company_id, name, cost_savings, co2_savings, isChecked } = event;
+
+  onItemChecked(event: {
+    company_id: number;
+    name: string;
+    cost_savings: number;
+    co2_savings: number;
+    transition: number;
+    isChecked: boolean;
+  }) {
+    const { company_id, name, cost_savings, co2_savings, isChecked } = event;
     const transition = event.transition || 0;
 
     if (isChecked) {
@@ -63,8 +56,6 @@ export class DecarbJourneyComponent implements AfterViewInit {
       }
     }
 
-    // Save updated cart items to sessionStorage
-    sessionStorage.setItem('cartItems', JSON.stringify(this.shoppingcartComponent.cartItems));
     this.shoppingcartComponent.updateProgress(); // Update UI
   }
 

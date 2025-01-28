@@ -114,14 +114,17 @@ export class DecarbShoppingCartComponent implements OnInit {
   }
 
   removeItem(index: number) {
+
     const itemToRemove = this.items[index];
-    console.log(this.items)
     this.items.splice(index, 1);
     this.updateProgress();
+    
+    
     console.log("GOWRIIIIII",itemToRemove)
     this.deleteItem(itemToRemove).subscribe({
       next: (response) => {
         console.log('Item deleted from backend:', response);
+        
       },
       error: (error) => {
         console.error('Error deleting item from backend:', error);
@@ -135,7 +138,7 @@ export class DecarbShoppingCartComponent implements OnInit {
     
     const params = new HttpParams()
       .set('provider_name', item.provider_name)
-      .set('company_id', item.company_id) // Ensure company_id is a string
+      .set('company_name', item.company_name) // Ensure company_id is a string
       .set('plan_name', item.plan_name);
   
     
@@ -157,7 +160,7 @@ export class DecarbShoppingCartComponent implements OnInit {
   
 
   addItem(item: CartItem) {
-    const existingItem = this.cartItems.find(cartItem => cartItem.company_id === item.company_id);
+    const existingItem = this.cartItems.find(cartItem => cartItem.company_id === item.company_id)
     if (!existingItem) {
       this.cartItems.push(item);
       //this.saveItemToDatabase(item);
