@@ -23,12 +23,14 @@
 
 <div class="content">
   <div class="main-content">
-      <cs-decarb-quartile-section (itemChecked)="onItemChecked($event)"></cs-decarb-quartile-section>
+      <cs-decarb-quartile-section (itemChecked)="onItemChecked($event)"(itemCart)="onItemAddedToCart($event)"></cs-decarb-quartile-section>
+      
+
       <div>
       </div>
   </div>
   <div class="side-content">
-      <cs-decarb-shopping-cart></cs-decarb-shopping-cart>
+    <cs-decarb-shopping-cart [items]="cart"></cs-decarb-shopping-cart>
   </div>
 </div>
 

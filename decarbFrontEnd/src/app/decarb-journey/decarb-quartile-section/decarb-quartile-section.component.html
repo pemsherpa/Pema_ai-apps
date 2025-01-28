@@ -22,7 +22,7 @@
     <app-scope1-step
       *ngSwitchCase="1"
       [stepData]="step"
-      (stepToggled)="onStepToggling(step);">
+      (stepToggled)="onStepToggled(step);">
     </app-scope1-step>
 
     <!-- Scope 2 -->
@@ -34,7 +34,7 @@
     <app-scope2-step
       *ngSwitchCase="2"
       [stepData]="step"
-      (stepToggled)="onStepToggling(step); onItemChecked($event); onStepToggled(step)">
+      (stepToggled)=" onItemChecked($event); onStepToggled($event)">
     </app-scope2-step>
 
     <!-- Scope 3 -->
@@ -46,7 +46,7 @@
     <app-scope3-step
       *ngSwitchCase="3"
       [stepData]="step"
-      (stepToggled)="onStepToggling(step); onItemChecked($event); onStepToggled(step)">
+      (stepToggled)=" onItemChecked($event); onStepToggled(step)">
     </app-scope3-step>
 
   </ng-container>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpParams  } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { CommonModule } from '@angular/common';
@@ -7,7 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { Scope1StepsComponent } from '../quartile-steps/scope1-steps/scope1-steps.component';
 import { Scope2StepsComponent } from '../quartile-steps/scope2-steps/scope2-steps.component';
 import { Scope3StepsComponent } from '../quartile-steps/scope3-steps/scope3-steps.component';
-import {CartItem} from '../../cart-item.model';
+import {ShoppingCartItem} from '../../cart-item.model';
+import { tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
+
 
 interface StepData {
   id: number;
@@ -56,14 +59,13 @@ export class DecarbQuartileSectionComponent implements OnInit {
     isChecked: boolean;
   }>();
   @Output() itemCart= new EventEmitter<{
+    provider_name:string;
     company_id:number;
-    name:string;
-    cost_savings:number;
-    co2_savings:number;
-    transition:number;
+    plan_name:string;
 
   }>();
   @Output() makeSwitchClicked = new EventEmitter<string>();
+  @Output() items = new EventEmitter<ShoppingCartItem>();
 
   constructor(private http: HttpClient) {}
 
@@ -330,20 +332,12 @@ export class DecarbQuartileSectionComponent implements OnInit {
       }))
     );
   }
-  onItemChecked(CartItem: CartItem): void {
-    console.log(CartItem)
-    this.addItem(CartItem);
+  onItemChecked(CartItem: ShoppingCartItem): void {
+    console.log("print",CartItem)
+    // this.addItem(CartItem);
   }
   
-  addItem(cartItem: CartItem): void {
-    console.log("I am gettting called")
-    // Perform the API call here
-    console.log(cartItem)
-    this.http.post('http://127.0.0.1:8000/yearly_steps/add-shopping-cart', cartItem).subscribe({
-      next: (response) => console.log('Item added to cart:', response),
-      error: (error) => console.error('Error adding item to cart:', error),
-    });
-  }
+  
   
 
   onStepToggled(step: any): void {
@@ -355,26 +349,67 @@ export class DecarbQuartileSectionComponent implements OnInit {
       transition: step.transition_percentage,
       providerInfo: step.providerInfo,
       isChecked: step.isCompleted,
-     };
+    };
   
-  //   // Emit the cart item to the parent
+    const item: ShoppingCartItem = {
+      provider_name: step.providerInfo[0]?.name || '',
+      company_id: step.company_id,
+      plan_name: step.providerInfo[0]?.plan_name || '',
+    };
+  
+    // Emit the combined cart item to the parent
     this.itemChecked.emit(cartItem);
   
-  //   // The API call is no longer triggered here
+    // Emit the additional item for shopping cart
+    this.itemCart.emit(item);
+
+    console.log('Payload being sent to the API:', item); // Add this log
+  if (!item.provider_name || !item.company_id || !item.plan_name) {
+    console.error('Missing required fields in the payload:', item);
+  }
+  
+    // Add the item to the cart
+    this.addItem(item).subscribe({
+      next: (response) => console.log('API Response:', response),
+      error: (error) => console.error('Error while adding item to cart:', error),
+    });
+  
+    // Logs for debugging
     console.log('Cart item emitted:', cartItem);
-   }
-  onStepToggling(step:any):void{
-    const item:CartItem={
-      company_id:step.company_id,
-      name:step.title,
-      cost_savings:step.cost_savings,
-      co2_savings:step.co2_savings,
-      transition:step.transition
-};
-console.log("Step",item.company_id)
-console.log("I am correct",item)
-this.itemCart.emit(item);
+    console.log('Step', item.company_id);
+    console.log('I am correct', item);
   }
+  
+ 
+
+
+
+  addItem(item: ShoppingCartItem): Observable<ShoppingCartItem> {
+    console.log("shop",item)
+    console.log("I am getting called");
+    console.log("I am the cart item", item);
+    
+    // Perform the API call here
+    return this.http.post<ShoppingCartItem>('http://127.0.0.1:8000/yearly_steps/add-shopping-cart',  item )
+    
+      .pipe( 
+        
+        tap({
+          next: (response) => console.log('Item added to cart:', response),
+          error: (error) => console.error('Error adding item to cart:', error),
+          
+        }),
+        catchError((error) => {
+          console.error('Error in POST request:', error);
+          throw error; // rethrow the error after logging
+        })
+      );
+      
+      
   }
+  
+  
+  }
+  
 
 

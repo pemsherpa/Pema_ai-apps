@@ -1,7 +1,5 @@
-export interface CartItem {
+export interface ShoppingCartItem {
+    provider_name: string;
     company_id: number;
-    name: string;
-    cost_savings: number;
-    co2_savings: number;
-    transition: number; // percentage of transition
+    plan_name: string;
   };

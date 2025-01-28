@@ -1,6 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import {ShoppingCartItem} from '../../cart-item.model';
+import { tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 interface CartItem {
   company_id: number;
@@ -9,6 +13,7 @@ interface CartItem {
   co2_savings: number;
   transition: number; // percentage of transition
 };
+
 
 interface ScopeData {
   scope_1_total: number;
@@ -36,6 +41,7 @@ export class DecarbShoppingCartComponent implements OnInit {
   cartItems: CartItem[] = [
     
   ];
+  @Input() items: ShoppingCartItem[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -108,9 +114,47 @@ export class DecarbShoppingCartComponent implements OnInit {
   }
 
   removeItem(index: number) {
-    this.cartItems.splice(index, 1);
+    const itemToRemove = this.items[index];
+    console.log(this.items)
+    this.items.splice(index, 1);
     this.updateProgress();
+    console.log("GOWRIIIIII",itemToRemove)
+    this.deleteItem(itemToRemove).subscribe({
+      next: (response) => {
+        console.log('Item deleted from backend:', response);
+      },
+      error: (error) => {
+        console.error('Error deleting item from backend:', error);
+        // Optionally, re-add the item to the cart if the deletion fails
+        // this.cartItems.splice(index, 0, itemToRemove);
+      }
+    });
   }
+  deleteItem(item: ShoppingCartItem): Observable<any> {
+    // Construct the query parameters for the GET request
+    
+    const params = new HttpParams()
+      .set('provider_name', item.provider_name)
+      .set('company_id', item.company_id) // Ensure company_id is a string
+      .set('plan_name', item.plan_name);
+  
+    
+  
+    return this.http.get<any>(
+      'http://127.0.0.1:8000/yearly_steps/delete-shopping-cart', 
+      { params }
+    ).pipe(
+      tap({
+        next: (response) => console.log('Item deleted successfully:', response),
+        error: (error) => console.error('Error deleting item from cart:', error),
+      }),
+      catchError((error) => {
+        console.error('Error in HTTP GET request:', error);
+        throw error; // rethrow the error after logging
+      })
+    );
+  }
+  
 
   addItem(item: CartItem) {
     const existingItem = this.cartItems.find(cartItem => cartItem.company_id === item.company_id);

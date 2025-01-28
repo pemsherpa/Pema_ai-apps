@@ -109,8 +109,8 @@
                     "description": "Analyze commuting costs and emissions for carpool",
                     "difficulty": 3,
                     "cost_savings": 10.584073680802689,
-                    "co2_savings": 118.29520106515875,
-                    "total_cost": 104.10296313943876,
+                    "co2_savings": 118.29520106515088,
+                    "total_cost": 104.10296313943022,
                     "total_emissions": 35.34718452013363,
                     "transition_percentage": 25,
                     "commute_step_recommendations": [
@@ -225,10 +225,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 },
                                 {
@@ -241,10 +241,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 },
                                 {
@@ -257,17 +257,17 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 }
                             ],
                             "message": null,
-                            "money_saving": 18.4499959497035,
-                            "emission_saving": 61.61667339984247,
-                            "distance_saving": 2.9522345087581114
+                            "money_saving": 18.449995949701087,
+                            "emission_saving": 61.61667339983438,
+                            "distance_saving": 2.952234508757403
                         },
                         {
                             "group": 4,
@@ -282,10 +282,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 16.623703526274333,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.977666689964756,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 16.623703526272205,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.97766668996412,
                                     "carpool_group": 4
                                 }
                             ],
@@ -401,11 +401,11 @@
                             },
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "MCE_Light_Green(61%Renewable)",
-                                "renewable percent provided": 61.0,
-                                "phone_number": "1-888-632-3674",
-                                "website_link": "https://mcecleanenergy.org/home-electrification/",
-                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                                "company": "SJCE_GreenSource(60%Renewable)",
+                                "renewable percent provided": 60.0,
+                                "phone_number": "1-833-432-2454",
+                                "website_link": "https://sanjosecleanenergy.org/",
+                                "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -414,11 +414,11 @@
                             },
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "SJCE_GreenSource(60%Renewable)",
-                                "renewable percent provided": 60.0,
-                                "phone_number": "1-833-432-2454",
-                                "website_link": "https://sanjosecleanenergy.org/",
-                                "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                                "company": "MCE_Light_Green(61%Renewable)",
+                                "renewable percent provided": 61.0,
+                                "phone_number": "1-888-632-3674",
+                                "website_link": "https://mcecleanenergy.org/home-electrification/",
+                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -484,8 +484,8 @@
                     "description": "Analyze commuting costs and emissions for carpool",
                     "difficulty": 3,
                     "cost_savings": 10.584073680802689,
-                    "co2_savings": 118.29520106515875,
-                    "total_cost": 104.10296313943876,
+                    "co2_savings": 118.29520106515088,
+                    "total_cost": 104.10296313943022,
                     "total_emissions": 35.34718452013363,
                     "transition_percentage": 25,
                     "commute_step_recommendations": [
@@ -600,10 +600,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 },
                                 {
@@ -616,10 +616,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 },
                                 {
@@ -632,17 +632,17 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 }
                             ],
                             "message": null,
-                            "money_saving": 18.4499959497035,
-                            "emission_saving": 61.61667339984247,
-                            "distance_saving": 2.9522345087581114
+                            "money_saving": 18.449995949701087,
+                            "emission_saving": 61.61667339983438,
+                            "distance_saving": 2.952234508757403
                         },
                         {
                             "group": 4,
@@ -657,10 +657,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 16.623703526274333,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.977666689964756,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 16.623703526272205,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.97766668996412,
                                     "carpool_group": 4
                                 }
                             ],
@@ -763,11 +763,11 @@
                         "provider_info": [
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "MCE_Deep_Green(100%Renewable)",
+                                "company": "Ava Renewable 100",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-888-632-3674",
-                                "website_link": "https://mcecleanenergy.org/home-electrification/",
-                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                                "phone_number": "1-833-699-3223",
+                                "website_link": "https://avaenergy.org/change-my-plan/",
+                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -789,11 +789,11 @@
                             },
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "Ava Renewable 100",
+                                "company": "MCE_Deep_Green(100%Renewable)",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-833-699-3223",
-                                "website_link": "https://avaenergy.org/change-my-plan/",
-                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                                "phone_number": "1-888-632-3674",
+                                "website_link": "https://mcecleanenergy.org/home-electrification/",
+                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -803,11 +803,11 @@
                         ],
                         "our recommendation": {
                             "plan_name": "B-19_PV",
-                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "company": "Ava Renewable 100",
                             "renewable percent provided": 100.0,
-                            "phone_number": "1-888-632-3674",
-                            "website_link": "https://mcecleanenergy.org/home-electrification/",
-                            "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/",
+                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                             "Carbon savings": 90.0,
                             "Cost savings": 5.95,
                             "Peak Cost": 92.11,
@@ -859,8 +859,8 @@
                     "description": "Analyze commuting costs and emissions for carpool",
                     "difficulty": 3,
                     "cost_savings": 10.584073680802689,
-                    "co2_savings": 118.29520106515875,
-                    "total_cost": 104.10296313943876,
+                    "co2_savings": 118.29520106515088,
+                    "total_cost": 104.10296313943022,
                     "total_emissions": 35.34718452013363,
                     "transition_percentage": 25,
                     "commute_step_recommendations": [
@@ -975,10 +975,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 },
                                 {
@@ -991,10 +991,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 },
                                 {
@@ -1007,17 +1007,17 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 }
                             ],
                             "message": null,
-                            "money_saving": 18.4499959497035,
-                            "emission_saving": 61.61667339984247,
-                            "distance_saving": 2.9522345087581114
+                            "money_saving": 18.449995949701087,
+                            "emission_saving": 61.61667339983438,
+                            "distance_saving": 2.952234508757403
                         },
                         {
                             "group": 4,
@@ -1032,10 +1032,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 16.623703526274333,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.977666689964756,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 16.623703526272205,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.97766668996412,
                                     "carpool_group": 4
                                 }
                             ],
@@ -1138,11 +1138,11 @@
                         "provider_info": [
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "MCE_Deep_Green(100%Renewable)",
+                                "company": "Ava Renewable 100",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-888-632-3674",
-                                "website_link": "https://mcecleanenergy.org/home-electrification/",
-                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                                "phone_number": "1-833-699-3223",
+                                "website_link": "https://avaenergy.org/change-my-plan/",
+                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -1164,11 +1164,11 @@
                             },
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "Ava Renewable 100",
+                                "company": "MCE_Deep_Green(100%Renewable)",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-833-699-3223",
-                                "website_link": "https://avaenergy.org/change-my-plan/",
-                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                                "phone_number": "1-888-632-3674",
+                                "website_link": "https://mcecleanenergy.org/home-electrification/",
+                                "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -1178,11 +1178,11 @@
                         ],
                         "our recommendation": {
                             "plan_name": "B-19_PV",
-                            "company": "MCE_Deep_Green(100%Renewable)",
+                            "company": "Ava Renewable 100",
                             "renewable percent provided": 100.0,
-                            "phone_number": "1-888-632-3674",
-                            "website_link": "https://mcecleanenergy.org/home-electrification/",
-                            "description of the company": "Since 2010, MCE has set the standard for clean energy in California. Our team is dedicated to fostering an equitable, clean, affordable, and reliable energy economy, guided by a commitment to our community. MCE is governed by a board of local elected officials who ensure our work reflects the unique needs of all our member communities.",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/",
+                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                             "Carbon savings": 90.0,
                             "Cost savings": 5.95,
                             "Peak Cost": 92.11,
@@ -1234,8 +1234,8 @@
                     "description": "Analyze commuting costs and emissions for carpool",
                     "difficulty": 3,
                     "cost_savings": 10.584073680802689,
-                    "co2_savings": 118.29520106515875,
-                    "total_cost": 104.10296313943876,
+                    "co2_savings": 118.29520106515088,
+                    "total_cost": 104.10296313943022,
                     "total_emissions": 35.34718452013363,
                     "transition_percentage": 25,
                     "commute_step_recommendations": [
@@ -1350,10 +1350,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 },
                                 {
@@ -1366,10 +1366,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 },
                                 {
@@ -1382,17 +1382,17 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 }
                             ],
                             "message": null,
-                            "money_saving": 18.4499959497035,
-                            "emission_saving": 61.61667339984247,
-                            "distance_saving": 2.9522345087581114
+                            "money_saving": 18.449995949701087,
+                            "emission_saving": 61.61667339983438,
+                            "distance_saving": 2.952234508757403
                         },
                         {
                             "group": 4,
@@ -1407,10 +1407,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 16.623703526274333,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.977666689964756,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 16.623703526272205,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.97766668996412,
                                     "carpool_group": 4
                                 }
                             ],
@@ -1513,11 +1513,11 @@
                         "provider_info": [
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "SJCE_TotalGreen(100%Renewable)",
+                                "company": "Ava Renewable 100",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-833-432-2454",
-                                "website_link": "https://sanjosecleanenergy.org/",
-                                "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                                "phone_number": "1-833-699-3223",
+                                "website_link": "https://avaenergy.org/change-my-plan/",
+                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -1526,11 +1526,11 @@
                             },
                             {
                                 "plan_name": "B-19_PV",
-                                "company": "Ava Renewable 100",
+                                "company": "SJCE_TotalGreen(100%Renewable)",
                                 "renewable percent provided": 100.0,
-                                "phone_number": "1-833-699-3223",
-                                "website_link": "https://avaenergy.org/change-my-plan/",
-                                "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
+                                "phone_number": "1-833-432-2454",
+                                "website_link": "https://sanjosecleanenergy.org/",
+                                "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
                                 "Carbon savings": 90.0,
                                 "Cost savings": 5.95,
                                 "Peak Cost": 92.11,
@@ -1553,11 +1553,11 @@
                         ],
                         "our recommendation": {
                             "plan_name": "B-19_PV",
-                            "company": "SJCE_TotalGreen(100%Renewable)",
+                            "company": "Ava Renewable 100",
                             "renewable percent provided": 100.0,
-                            "phone_number": "1-833-432-2454",
-                            "website_link": "https://sanjosecleanenergy.org/",
-                            "description of the company": "As a Community Choice Energy program, we\u2019re committed to adding renewable energy to the grid and finding solutions to improve reliability for the health of our customers and planet.We build and source clean electricity for you so just by being our customer, you\u2019re helping to improve air quality, reduce pollution, and fight climate change.",
+                            "phone_number": "1-833-699-3223",
+                            "website_link": "https://avaenergy.org/change-my-plan/",
+                            "description of the company": "Ava Community Energy (Ava) exists to provide more renewable energy at competitive rates to our customers. We reinvest the earnings back into the community to create local green energy jobs, local programs, and clean power projects. We supply electricity to all accounts (residential, business, and municipal) and PG&E delivers it to you.",
                             "Carbon savings": 90.0,
                             "Cost savings": 5.95,
                             "Peak Cost": 92.11,
@@ -1609,8 +1609,8 @@
                     "description": "Analyze commuting costs and emissions for carpool",
                     "difficulty": 3,
                     "cost_savings": 10.584073680802689,
-                    "co2_savings": 118.29520106515875,
-                    "total_cost": 104.10296313943876,
+                    "co2_savings": 118.29520106515088,
+                    "total_cost": 104.10296313943022,
                     "total_emissions": 35.34718452013363,
                     "transition_percentage": 25,
                     "commute_step_recommendations": [
@@ -1725,10 +1725,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 },
                                 {
@@ -1741,10 +1741,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 },
                                 {
@@ -1757,17 +1757,17 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 14.9613331736469,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.47990002096828,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 14.961333173644986,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.479900020967708,
                                     "carpool_group": 3
                                 }
                             ],
                             "message": null,
-                            "money_saving": 18.4499959497035,
-                            "emission_saving": 61.61667339984247,
-                            "distance_saving": 2.9522345087581114
+                            "money_saving": 18.449995949701087,
+                            "emission_saving": 61.61667339983438,
+                            "distance_saving": 2.952234508757403
                         },
                         {
                             "group": 4,
@@ -1782,10 +1782,10 @@
                                         37.8518374,
                                         -122.2869208
                                     ],
-                                    "distance": 2.7706172543790553,
-                                    "emission": 16.623703526274333,
-                                    "distance_from_firm": 2.7706172543790553,
-                                    "cost": 4.977666689964756,
+                                    "distance": 2.7706172543787013,
+                                    "emission": 16.623703526272205,
+                                    "distance_from_firm": 2.7706172543787013,
+                                    "cost": 4.97766668996412,
                                     "carpool_group": 4
                                 }
                             ],
