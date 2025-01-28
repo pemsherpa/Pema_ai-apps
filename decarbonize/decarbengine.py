@@ -146,8 +146,7 @@ class DecarbEngine:
         new_emissions = carpool_saving_emission,
         cur_emissions=commuting_emissions,
         description="Analyze commuting costs and emissions for carpool", 
-        difficulty= 3,transition_percentage=25,commute_steps=commute_steps
-     )
+        difficulty= 3,transition_percentage=25,commute_steps=commute_steps)
         self.steps.append(commuting_step)
 
     def init_flight_analyzer(self, origin, destination, departure_date, return_date):
@@ -155,7 +154,6 @@ class DecarbEngine:
 
     def run_flight_step(self, origin, destination, departure_date, return_date):
         self.init_flight_analyzer(origin, destination, departure_date, return_date)
-
         #flight costs
         optimal_flight = self.flight_analyzer.analyze_flight_costs()
         flight_step = self.create_flight_step(optimal_flight, 3)
@@ -208,6 +206,7 @@ class DecarbEngine:
         self.run_electric_step()
         self.run_flight_optimizer_step()
         self.run_CRU_step()
+        self.run_flight_analyzer()
 
         return self.steps
     
@@ -271,7 +270,7 @@ class DecarbEngine:
         scope1_target = .55 
         scope2_target = .75 
         scope3_target = .25
-        time_frame = 5
+        time_frame = 1
         decarb_goals = DecarbCustomerGoals(time_frame,customer_id, year, scope1_emissions, scope2_emissions, scope3_emissions, scope1_target, scope2_target, scope3_target)
         return decarb_goals
 
@@ -284,8 +283,7 @@ class DecarbEngine:
         pre_cost = 800
         decarb_engine = DecarbEngine(commuting_data, df_dynamic, firm, weights,pre_cost, decarb_goals)
         decarb_steps = decarb_engine.run_decarb_engine()
-        decarb_engine.run_flight_analyzer()
-        decarb_engine.compute_zscore()
+        dict_zscore = decarb_engine.get_dict_zscore(decarb_steps)
 
         electric_recs = []
         for step in decarb_steps:
@@ -293,8 +291,6 @@ class DecarbEngine:
                 # Electric_Recommendations
                 electric_recs = step.recommendations
                 break
-
-        
 
     def get_cur_quadrant(self):
         x = datetime.datetime.now().month
@@ -338,74 +334,70 @@ class DecarbEngine:
     #Hardcoded data for now
         json_data = {
             "company_id": company_id,
-            "current_details":{
+            "current_details": {
               "current_provider":"ABC",
               "current_plan":"PLAN-A",
               "current_cost":2000,
               "current_emissions":20000
             },
             "scope_total": {
-            "scope_1_total": 100,
-            "scope_2_total": 50,
-            "scope_3_total": 10,
-            "scope_total": 160,
-            "scope_1_target": 0.75,
-            "scope_2_target": 1.0,
-            "scope_3_target": 0.50,
-            "target_timeframe": 5
+                "scope_1_total": 100,
+                "scope_2_total": 50,
+                "scope_3_total": 10,
+                "scope_total": 160,
+                "scope_1_target": 0.75,
+                "scope_2_target": 1.0,
+                "scope_3_target": 0.50,
+                "target_timeframe": 5
+            }
         }
-    }
-
         return json_data
         
     def create_decarb_engine_with_yearly_goals(decarb_goals, output_file='yearly_quarterly_steps.json'):
-    # Step 1: Initialize the decarbonization engine
-     firm = '2107 Addison St, Berkeley, CA'
-     commuting_data = DecarbEngine.create_commuting_test_df()
-     df_dynamic = DecarbEngine.create_dynamic_test_df()
-     
-     weights = DecarbWeight(0.4, 0.3, 0.2, 0.1)
-     pre_cost = 800
-     decarb_engine = DecarbEngine(commuting_data, df_dynamic, firm, weights, pre_cost, decarb_goals)
-     decarb_steps = decarb_engine.run_decarb_engine()
-     decarb_engine.run_flight_analyzer()
-     dict_zscore = decarb_engine.get_dict_zscore(decarb_steps)
-     print("DECARB",decarb_steps)
-     #data such as facilities--> For calcualtion of transition percentage
-     current_quarter = decarb_engine.get_cur_quadrant() 
-     current_year = int(decarb_goals.year)
-     yearly_steps_orig = decarb_engine.init_yearly_steps(decarb_goals.customer_id,decarb_goals.timeframe, current_year, current_quarter)
-     
-     yearly_steps=[]
-
-     electric_step = None
-     cru_step=None
-     flight_optimizer= None
-     flight_step=None
-     
-     commute_step=None
-     for goal_yr in range(decarb_goals.timeframe):
-      cur_goal_yr = current_year + goal_yr
-      cur_goal_quarter = current_quarter
-
-      for quarter in range(1, 5):  # Iterate through all four quarters
-        for quarter_step in yearly_steps_orig:
-            if quarter_step.year == cur_goal_yr and quarter_step.quarter == quarter:
-                # Add steps to the corresponding quarter
-                for step in decarb_steps:
-                    if isinstance(step, ElectricDecarbStep):
-                            electric_step = step  
-                    else:
-                            quarter_step.add_step(step)                               
-                
-                # Append quarter_step if it's not already in yearly_steps
-                if quarter_step not in yearly_steps:
-                    yearly_steps.append(quarter_step)
+        # Step 1: Initialize the decarbonization engine
+        firm = '2107 Addison St, Berkeley, CA'
+        commuting_data = DecarbEngine.create_commuting_test_df()
+        df_dynamic = DecarbEngine.create_dynamic_test_df()
+        weights = DecarbWeight(0.4, 0.3, 0.2, 0.1)
+        pre_cost = 800
+        decarb_engine = DecarbEngine(commuting_data, df_dynamic, firm, weights, pre_cost, decarb_goals)
+        decarb_steps = decarb_engine.run_decarb_engine()
+        dict_zscore = decarb_engine.get_dict_zscore(decarb_steps)
+        print("DECARB",decarb_steps)
+        #data such as facilities--> For calcualtion of transition percentage
+        current_quarter = decarb_engine.get_cur_quadrant() 
+        current_year = int(decarb_goals.year)
+        yearly_steps_orig = decarb_engine.init_yearly_steps(decarb_goals.customer_id,decarb_goals.timeframe, current_year, current_quarter)
         
+        yearly_steps=[]
+        electric_step = None
+        cru_step=None
+        flight_optimizer= None
+        flight_step=None
+        
+        commute_step=None
+        for goal_yr in range(decarb_goals.timeframe):
+            cur_goal_yr = current_year + goal_yr
+            cur_goal_quarter = current_quarter
+
+            for quarter in range(1, 5):  # Iterate through all four quarters
+                for quarter_step in yearly_steps_orig:
+                    if quarter_step.year == cur_goal_yr and quarter_step.quarter == quarter:
+                        # Add steps to the corresponding quarter
+                        for step in decarb_steps:
+                            if isinstance(step, ElectricDecarbStep):
+                                electric_step = step  
+                            else:
+                                quarter_step.add_step(step)                               
+                        
+                        # Append quarter_step if it's not already in yearly_steps
+                        if quarter_step not in yearly_steps:
+                            yearly_steps.append(quarter_step)
+            
         # Update current quarter for the next iteration
         cur_goal_quarter = (cur_goal_quarter % 4) + 1
-      for quarter_step in yearly_steps_orig:
-             if quarter_step.year == cur_goal_yr and quarter_step.quarter == 4:
+        for quarter_step in yearly_steps_orig:
+            if quarter_step.year == cur_goal_yr and quarter_step.quarter == 4:
                 for step in decarb_steps:
                     if isinstance(step, CRUDecarbStep):
                         cru_step = step
@@ -420,44 +412,44 @@ class DecarbEngine:
 
                 if quarter_step not in yearly_steps:
                     yearly_steps.append(quarter_step)
-      
-     # Add Electric Steps as Quarter Steps, once per Year
-     cur_e_year = current_year
-     for goal_yr in range(decarb_goals.timeframe):
-      
-        cur_e_year =current_year+goal_yr
-        print(goal_yr)
-        e_rec = electric_step.recommendations['recommendations'][goal_yr]
-        cru_rec=cru_step.recommendations
-        for quarter_step in yearly_steps_orig:
-            if quarter_step.year == cur_e_year and quarter_step.quarter == current_quarter:
-              print("Adding the electric rec once a year")
-              print(e_rec)
-              quarter_step.add_electric_step(e_rec, electric_step) 
-        for quarter_step in yearly_steps_orig:
-            if quarter_step.year == cur_e_year and quarter_step.quarter == 3:
-              print("Adding the optimiser rec once a year")
-              print(flight_optimizer)
-              print("commute",commute_step)
-              quarter_step.add_flight_step(flight_step)
-              quarter_step.add_flight_step(flight_optimizer)  
-              quarter_step.add_commute_step(commute_step)
-              
-        for quarter_step in yearly_steps_orig:
-            if quarter_step.year == cur_e_year and quarter_step.quarter == 4:
-              print("Adding the CRU rec once a year")
-              print(cru_step)
-              quarter_step.add_cru_step(cru_rec,cru_step)  
-          
-    # Step 5: Ensure CRU is only purchased once a year
-     decarb_engine.add_cru_steps(yearly_steps)
-     output_data=decarb_engine.query_cs_backend_api(10)
+        
+        # Add Electric Steps as Quarter Steps, once per Year
+        cur_e_year = current_year
+        for goal_yr in range(decarb_goals.timeframe):
+            cur_e_year =current_year+goal_yr
+            print(goal_yr)
+            if (electric_step):
+                e_rec = electric_step.recommendations['recommendations'][goal_yr]
+                for quarter_step in yearly_steps_orig:
+                    if quarter_step.year == cur_e_year and quarter_step.quarter == current_quarter:
+                        print("Adding the electric rec once a year")
+                        print(e_rec)
+                        quarter_step.add_electric_step(e_rec, electric_step) 
+            for quarter_step in yearly_steps_orig:
+                if quarter_step.year == cur_e_year and quarter_step.quarter == 3:
+                    print("Adding the optimiser rec once a year")
+                    print(flight_optimizer)
+                    print("commute",commute_step)
+                    if(flight_step):
+                        quarter_step.add_flight_step(flight_step)
+                    if(flight_optimizer):
+                        quarter_step.add_flight_step(flight_optimizer)  
+                    if(commute_step):
+                        quarter_step.add_commute_step(commute_step)
 
-     data=decarb_engine.output_json_to_file(output_data,yearly_steps, output_file)
-     load_json_data(data,output_data)
-     
-
-    
+            if (cru_step):
+                cru_rec=cru_step.recommendations
+                for quarter_step in yearly_steps_orig:
+                    if quarter_step.year == cur_e_year and quarter_step.quarter == 4:
+                        print("Adding the CRU rec once a year")
+                        print(cru_step)
+                        quarter_step.add_cru_step(cru_rec,cru_step)  
+                
+        # Step 5: Ensure CRU is only purchased once a year
+        decarb_engine.add_cru_steps(yearly_steps)
+        output_data=decarb_engine.query_cs_backend_api(10)
+        data=decarb_engine.output_json_to_file(output_data,yearly_steps, output_file)
+        load_json_data(data,output_data)
 
     def init_yearly_steps(self, company_id,timeframe, current_year, current_quarter):
      # Step 3: Create quarterly goals
@@ -471,7 +463,6 @@ class DecarbEngine:
                 company_id=company_id,
                 year=cur_year,
                 quarter=cur_quarter,
-                
             )
             yearly_steps.append(quarter_step)
             cur_quarter+=1
@@ -529,8 +520,6 @@ class DecarbEngine:
             this_step_type = step.step_type.name
             dict_zscore[this_step_type] = this_z_score
 
-           
-
         num_steps = len(decarb_steps)
         dict_zscore["avg-zscore"] = total_zscore / num_steps if num_steps > 0 else 0
         return dict_zscore
@@ -551,7 +540,6 @@ class DecarbEngine:
             json.dump(output_data, f, indent=4)
 
         print(json_data_serializable)
-
         return json_data_serializable
 
     def create_CRU_step(self):
