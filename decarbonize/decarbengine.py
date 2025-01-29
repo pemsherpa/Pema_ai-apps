@@ -150,20 +150,50 @@ class DecarbEngine:
         self.steps.append(commuting_step)
 
     def init_flight_analyzer(self, origin, destination, departure_date, return_date):
-        self.flight_analyzer = FlightDataAnalyzer(self.FLIGHT_API_KEY,self.weights, origin, destination, departure_date, return_date)
+        try:
+            self.flight_analyzer = FlightDataAnalyzer(
+                api_key=self.FLIGHT_API_KEY,
+                weights=self.weights,
+                origin=origin,
+                destination=destination,
+                departure_date=departure_date,
+                return_date=return_date
+            )
+            print("Flight analyzer initialized successfully.")
+        except Exception as e:
+            print(f"Error initializing flight analyzer: {e}")
 
     def run_flight_step(self, origin, destination, departure_date, return_date):
         self.init_flight_analyzer(origin, destination, departure_date, return_date)
-        #flight costs
         optimal_flight = self.flight_analyzer.analyze_flight_costs()
-        flight_step = self.create_flight_step(optimal_flight, 3)
+
+        # Creating flight step
+        flight_step = {
+            "cur_cost": float(self.pre_flight_cost),
+            "new_cost": float(optimal_flight['Price'].iloc[0]),
+            "cur_emissions": float(optimal_flight['Carbon Emissions'].iloc[0] * 1.1),
+            "new_emissions": float(optimal_flight['Carbon Emissions'].iloc[0]),
+            "description": "Analyze flight costs and emissions",
+            "difficulty": 3,
+            "transition_percentage": 50.0,
+            "data": {
+                "is_round_trip": True,
+                "travel_class": optimal_flight['Travel Class'].iloc[0],
+                "departure_airport": origin,
+                "arrival_airport": destination,
+                "num_stops": 1
+            }
+        }
+
         self.steps.append(flight_step)
+        return flight_step
 
     def run_return_flight_step(self):
         # Assumes that run_flight_step has been called first.
         return_flight = self.flight_analyzer.get_return_flight_options()
         return_flight_step = self.create_flight_step(return_flight, 3)
         self.steps.append(return_flight_step)
+
     def run_CRU_step(self):
         # CRU Step
         cru_step = self.create_CRU_step()
@@ -201,11 +231,11 @@ class DecarbEngine:
         return savings
     
     def run_decarb_engine(self):
-        self.run_commuting_step()
-        self.run_carpool_step()
-        self.run_electric_step()
+        # self.run_commuting_step()
+        # self.run_carpool_step()
+        # self.run_electric_step()
         self.run_flight_optimizer_step()
-        self.run_CRU_step()
+        # self.run_CRU_step()
         self.run_flight_analyzer()
 
         return self.steps
@@ -229,7 +259,7 @@ class DecarbEngine:
             description="Analyze flight costs and emissions",
             num_stops=return_flight['Stops'].iloc[0],
             difficulty=difficulty,
-            transition_percentage=50
+            transition_percentage=50,
         )
         return return_flight_step
     
@@ -298,27 +328,27 @@ class DecarbEngine:
     
     # Helper function to handle JSON serialization
     def convert_to_json_serializable(self, data):
-        if isinstance(data, dict):
-            return {key: self.convert_to_json_serializable(value) for key, value in data.items()}
-        elif isinstance(data, list):
-            return [self.convert_to_json_serializable(item) for item in data]
-        elif isinstance(data, np.integer):
-            return int(data)
-        elif isinstance(data, np.floating):
-            return float(data)
-        elif isinstance(data, np.ndarray):
-            return data.tolist()
-        elif isinstance(data, ProviderInfo):
-            return data.to_dict()
-        elif isinstance(data, ProviderInfoCru):
-            return data.to_dict()
-        elif isinstance(data, set):
-            return list(data)
-        elif isinstance(data, pd.DataFrame):
-        # Convert DataFrame to a list of dictionaries (JSON serializable format)
-            return data.to_dict(orient='records')
-        else:
-            return data
+            if isinstance(data, dict):
+                return {key: self.convert_to_json_serializable(value) for key, value in data.items()}
+            elif isinstance(data, list):
+                return [self.convert_to_json_serializable(item) for item in data]
+            elif isinstance(data, np.integer):
+                return int(data)
+            elif isinstance(data, np.floating):
+                return float(data)
+            elif isinstance(data, np.ndarray):
+                return data.tolist()
+            elif isinstance(data, ProviderInfo):
+                return data.to_dict()
+            elif isinstance(data, ProviderInfoCru):
+                return data.to_dict()
+            elif isinstance(data, set):
+                return list(data)
+            elif isinstance(data, pd.DataFrame):
+            # Convert DataFrame to a list of dictionaries (JSON serializable format)
+                return data.to_dict(orient='records')
+            else:
+                return data
         
     def query_cs_backend_api(self,company_id):
         """
@@ -353,7 +383,7 @@ class DecarbEngine:
         }
         return json_data
         
-    def create_decarb_engine_with_yearly_goals(decarb_goals, output_file='yearly_quarterly_steps.json'):
+    def create_decarb_engine_with_yearly_goals(self,decarb_goals, output_file='yearly_quarterly_steps.json'):
         # Step 1: Initialize the decarbonization engine
         firm = '2107 Addison St, Berkeley, CA'
         commuting_data = DecarbEngine.create_commuting_test_df()
@@ -368,13 +398,13 @@ class DecarbEngine:
         current_quarter = decarb_engine.get_cur_quadrant() 
         current_year = int(decarb_goals.year)
         yearly_steps_orig = decarb_engine.init_yearly_steps(decarb_goals.customer_id,decarb_goals.timeframe, current_year, current_quarter)
-        
-        yearly_steps=[]
+        flight_step = self.run_flight_step("LAX", "JFK", "2025-01-30", "2025-01-31")
+
+        yearly_steps = []
         electric_step = None
         cru_step=None
         flight_optimizer= None
         flight_step=None
-        
         commute_step=None
         for goal_yr in range(decarb_goals.timeframe):
             cur_goal_yr = current_year + goal_yr
@@ -426,15 +456,13 @@ class DecarbEngine:
                         print(e_rec)
                         quarter_step.add_electric_step(e_rec, electric_step) 
             for quarter_step in yearly_steps_orig:
-                if quarter_step.year == cur_e_year and quarter_step.quarter == 3:
-                    print("Adding the optimiser rec once a year")
-                    print(flight_optimizer)
-                    print("commute",commute_step)
-                    if(flight_step):
+                if quarter_step.year == cur_e_year and quarter_step.quarter == 3:  # Add flight data in Q3
+                    print("Adding the flight step and optimizer once a year")
+                    if flight_step:
                         quarter_step.add_flight_step(flight_step)
-                    if(flight_optimizer):
-                        quarter_step.add_flight_step(flight_optimizer)  
-                    if(commute_step):
+                    if flight_optimizer:
+                        quarter_step.add_flight_step(flight_optimizer)
+                    if commute_step:
                         quarter_step.add_commute_step(commute_step)
 
             if (cru_step):

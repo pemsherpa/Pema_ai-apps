@@ -85,7 +85,6 @@
             "scope2_steps": [],
             "scope3_steps": [
                 {
-                    "description": "Analyze flight costs and emissions, with 1 stop(s)",
                     "difficulty": 3,
                     "cost_savings": -21,
                     "co2_savings": 35300.00000000006,
